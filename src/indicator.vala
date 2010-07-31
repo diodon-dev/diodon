@@ -24,9 +24,19 @@ namespace Diodon
     *
     * @author Oliver Sauder <os@esite.ch>
     */
-   public class ClipboardIndicator : GLib.Object
+   public class Indicator : GLib.Object
    {
-       
+        private AppIndicator.Indicator indicator;
+        private Gtk.Menu appMenu;
+        
+        /**
+         * Default constructor.
+         */ 
+        public ClipboardIndicator()
+        {
+            // setup indicator
+            //
+        }
    }  
 }
  
