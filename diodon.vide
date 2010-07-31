@@ -1,0 +1,34 @@
+--- !Project
+name: diodon
+author: Diodon Team
+version: 0.1
+license: /usr/share/common-licenses/GPL-2
+builder: native
+builder-options: !NativeBuilderOptions
+  debug: false
+  thread: false
+  disable-assert: false
+  disable-checking: false
+  disable-non-null: false
+  save-temps: false
+  quiet: false
+  other: 
+executable-options:
+  program: 
+  arguments: 
+  working-dir: /home/sao/src/bzr/launchpad/projects/diodon/trunk/
+  environment: []
+files:
+- path: COPYING
+- path: src/main.vala
+- path: src/indicator.vala
+- path: src/clipboard-entry.vala
+- path: src/clipboard-storage.vala
+- path: src/xml-clipboard-storage.vala
+packages:
+- name: gtk+-2.0
+- name: glib-2.0
+- name: gee-1.0
+- name: appindicator-0.1
+vapi_dir:
+- path: /home/sao/src/bzr/launchpad/projects/diodon/trunk/vapi
