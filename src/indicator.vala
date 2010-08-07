@@ -18,25 +18,62 @@
  
 namespace Diodon
 {
-   /**
-    * ClipboardIndicator class. Handling interaction
-    * with the application indicator icon.
-    *
-    * @author Oliver Sauder <os@esite.ch>
-    */
-   public class Indicator : GLib.Object
-   {
+    /**
+     * ClipboardIndicator class. Handling interaction
+     * with the application indicator icon.
+     *
+     * @author Oliver Sauder <os@esite.ch>
+     */
+    public class Indicator : GLib.Object
+    {
         private AppIndicator.Indicator indicator;
         private Gtk.Menu appMenu;
         
         /**
          * Default constructor.
          */ 
-        public ClipboardIndicator()
+        public Indicator()
         {
-            // setup indicator
-            //
+            // Setup indicator
+            indicator = new AppIndicator.Indicator("diodon", "applications-utilities",
+                AppIndicator.Category.APPLICATION_STATUS);
+            indicator.set_status(AppIndicator.Status.ACTIVE);
+            indicator.set_attention_icon("indicator-messages-new");
+            indicator.set_icon("distributor-logo");
+            
+            // Setup application menu
+            appMenu = new Gtk.Menu();
+            
+            Gtk.SeparatorMenuItem sepItem = new Gtk.SeparatorMenuItem();
+            appMenu.append(sepItem);
+            
+            Gtk.MenuItem clearItem = new Gtk.MenuItem.with_label("Clear");
+            clearItem.activate.connect(on_clicked_clear);
+            appMenu.append(clearItem);
+            
+            Gtk.ImageMenuItem quitItem = new Gtk.ImageMenuItem.from_stock(
+                Gtk.STOCK_QUIT, null);
+            quitItem.activate.connect(Gtk.main_quit);
+            appMenu.append(quitItem);
+            
+            appMenu.show_all();
+            indicator.set_menu(appMenu);
         }
-   }  
+        
+        /**
+         * Clear event handler removing all clipboard entries.
+         */
+        private void on_clicked_clear()
+        {
+            /*foreach (var v in menuItems.values) {
+                v.destroy();
+            }
+            
+            menuItems.clear();
+            stmtClear.step();
+            stmtClear.reset();
+            add_clearitem();*/
+        }
+    }  
 }
  

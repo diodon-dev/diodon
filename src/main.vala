@@ -28,10 +28,16 @@ namespace Diodon
     {
         public static int main (string[] args)
         {
+            // setup gettext TODO: get it up and running
+            //Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALE_DIR);
+            //Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
+    
+            // setup indicator
+            Indicator indicator = new Indicator();
+            
             Gtk.init (ref args);
-            
             Gtk.main();
-            
+
             return 0;
         }
     }

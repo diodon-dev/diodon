@@ -19,16 +19,16 @@ executable-options:
   working-dir: /home/sao/src/bzr/launchpad/projects/diodon/trunk/
   environment: []
 files:
-- path: COPYING
-- path: src/main.vala
-- path: src/indicator.vala
-- path: src/clipboard-entry.vala
-- path: src/clipboard-storage.vala
 - path: src/xml-clipboard-storage.vala
+- path: src/clipboard-storage.vala
+- path: src/clipboard-entry.vala
+- path: src/indicator.vala
+- path: src/main.vala
+- path: COPYING
 packages:
-- name: gtk+-2.0
-- name: glib-2.0
-- name: gee-1.0
 - name: appindicator-0.1
+- name: gee-1.0
+- name: glib-2.0
+- name: gtk+-2.0
 vapi_dir:
 - path: /home/sao/src/bzr/launchpad/projects/diodon/trunk/vapi
