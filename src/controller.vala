@@ -27,8 +27,6 @@ namespace Diodon
      * on to the controller where the logic is implemented how to manage
      * those requests.
      * 
-     * TODO: implement events so indicator do not have to be called directly
-     * but called by event.
      * 
      * @author Oliver Sauder <os@esite.ch>
      */
