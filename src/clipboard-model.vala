@@ -57,6 +57,15 @@ namespace Diodon
         }
         
         /**
+         * clear items and resetting selected item 
+         */
+        public void clear_items()
+        {
+            storage.remove_all_items();
+            selected_item = null;
+        }
+        
+        /**
          * add given item
          * 
          * @param item item to be added

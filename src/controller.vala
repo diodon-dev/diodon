@@ -39,6 +39,16 @@ namespace Diodon
         private Gtk.Clipboard clipboard;
         
         /**
+         * Called when a item has been selected.
+         */
+        private signal void on_select_item(ClipboardItem item);
+        
+        /**
+         * Called when items need to be cleared
+         */ 
+        private signal void on_clear_items();
+        
+        /**
          * Constructor.
          * 
          * @param indicator diodon indicator
@@ -46,18 +56,36 @@ namespace Diodon
          * @param clipboard gtk clipboard
          */
         public Controller(Indicator indicator, ClipboardModel model, Gtk.Clipboard clipboard)
-        {
-            this.indicator = indicator;
+        {            
             this.model = model;
             this.clipboard = clipboard;
+            this.indicator = indicator;
         }
         
         /**
-         * Starts the process collection clipboard information
+         * Starts the process collection clipboard information and listing
+         * to user events.
          */
         public void start()
         {
              Timeout.add(500, fetch_clipboard_info);
+             
+             indicator.on_quit.connect(quit);
+             indicator.on_clear.connect(clear_items);
+             
+             on_select_item.connect(model.select_item);
+             on_select_item.connect(indicator.select_item);
+             
+             on_clear_items.connect(model.clear_items);
+             on_clear_items.connect(indicator.clear_items);
+        }
+        
+        /**
+         * Clear all items from the clipboard
+         */
+        private void clear_items()
+        {
+            on_clear_items();
         }
         
         /**
@@ -78,10 +106,17 @@ namespace Diodon
             if(text != null && text != "") {
                 if(text != model.get_selected_item().get_text()) {
                     ClipboardItem item = new ClipboardItem(text);
-                    model.select_item(item);
-                    indicator.select_item(item);
+                    on_select_item(item);
                 }
             }
+        }
+        
+        /**
+         * Quit diodon
+         */
+        private void quit()
+        {
+            Gtk.main_quit();
         }
     }  
 }

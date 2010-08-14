@@ -31,9 +31,14 @@ namespace Diodon
             // setup gettext TODO: get it up and running
             //Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALE_DIR);
             //Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
-    
-            // setup indicator
+
+            // setup controller    
             Indicator indicator = new Indicator();
+            IClipboardStorage storage = new XmlClipboardStorage();
+            ClipboardModel model = new ClipboardModel(storage);
+            Gtk.Clipboard clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);
+            Controller controller = new Controller(indicator, model, clipboard);
+            controller.start();
             
             Gtk.init (ref args);
             Gtk.main();

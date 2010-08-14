@@ -51,6 +51,11 @@ namespace Diodon
         {
             items.add(item);
         }
+        
+        public void remove_all_items()
+        {
+            items.clear();
+        }
     }  
 }
  

@@ -49,5 +49,10 @@ namespace Diodon
          * @param item item to be removed
          */
         public abstract void remove_item(ClipboardItem item);
+        
+        /**
+         * Remove all items from storage
+         */
+        public abstract void remove_all_items();
     }  
 }

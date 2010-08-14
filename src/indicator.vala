@@ -30,12 +30,11 @@ namespace Diodon
     {
         private AppIndicator.Indicator indicator;
         private Gtk.Menu menu;
-        private ArrayList<Gtk.MenuItem> menu_items;
         
         /**
          * called when application exits
          */
-        public signal void on_quit(Gtk.MenuItem item);
+        public signal void on_quit();
         
         /**
          * called when all items need to be cleared
@@ -64,9 +63,8 @@ namespace Diodon
             clear_item.activate.connect(on_clicked_clear);
             menu.append(clear_item);
             
-            Gtk.ImageMenuItem quit_item = new Gtk.ImageMenuItem.from_stock(
-                Gtk.STOCK_QUIT, null);
-            //quit_item.activate.connect(on_quit);
+            Gtk.MenuItem quit_item = new Gtk.MenuItem.with_label("Quit");
+            quit_item.activate.connect(on_clicked_quit);
             menu.append(quit_item);
             
             menu.show_all();
@@ -83,47 +81,29 @@ namespace Diodon
         }
         
         /**
-         * Prepend given entry to menu.
+         * Prepend given item to menu.
          * 
          * @param entry entry to be added
          */
-        public void add_entry(ClipboardItem item)
+        public void prepend_item(ClipboardItem item)
         {
-            /*Gtk.MenuItem clipboard_item =
-                new Gtk.MenuItem.with_label(entry.get_label());
-            clipboard_item.activate.connect()*/
         }
         
         /**
-         * 
-        private void on_clicked_clipboarditem(MenuItem item)
-        {
-            item.set_arg
-            
-            foreach (var k in menuItems.keys) {
-                if (menuItems.get(k) == item) {
-                    stmtQueryData.bind_int64(1, k);
-                    stmtQueryData.step();
-                    clipboard.set_text(stmtQueryData.column_text(0), -1);
-                    stmtQueryData.reset();
-                    return;
-                }
-            }
-        }
-        
-        /**
-         * Clear event handler removing all clipboard entries.
+         * Remove all clipboard menu items from menu
          */
+        public void clear_items()
+        { 
+        }
+        
         private void on_clicked_clear()
         {
-            /*foreach (var v in menuItems.values) {
-                v.destroy();
-            }
-            
-            menuItems.clear();
-            stmtClear.step();
-            stmtClear.reset();
-            add_clearitem();*/
+            on_clear();
+        }
+        
+        private void on_clicked_quit()
+        {
+            on_quit();
         }
     }  
 }
