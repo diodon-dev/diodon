@@ -33,6 +33,16 @@ namespace Diodon
         private ArrayList<Gtk.MenuItem> menu_items;
         
         /**
+         * called when application exits
+         */
+        public signal void on_quit();
+        
+        /**
+         * called when all items need to be cleared
+         */
+        public signal void on_clear();
+        
+        /**
          * Default constructor.
          */ 
         public Indicator()
@@ -56,7 +66,7 @@ namespace Diodon
             
             Gtk.ImageMenuItem quit_item = new Gtk.ImageMenuItem.from_stock(
                 Gtk.STOCK_QUIT, null);
-            quit_item.activate.connect(Gtk.main_quit);
+            quit_item.activate.connect(on_quit);
             menu.append(quit_item);
             
             menu.show_all();
