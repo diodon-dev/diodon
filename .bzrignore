@@ -1,1 +1,3 @@
-diodon
+.waf*
+_build_
+.lock-wscript

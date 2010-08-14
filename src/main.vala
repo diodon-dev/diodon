@@ -19,8 +19,8 @@
 namespace Diodon
 {
     /**
-     * Main class. Providing functionality to
-     * start diodon.
+     * Main class is responisble for creating all needed views, controllers
+     * and models and starting the GUI application.
      *
      * @author Oliver Sauder <os@esite.ch>
      */
