@@ -1,0 +1,12 @@
+#! /usr/bin/env python
+# encoding: utf-8
+# Oliver Sauder, 2010
+
+prog = bld.new_task_gen (
+  features = 'cc cprogram',
+  target = 'diodon',
+  vapi_dirs = '../vapi',
+  uselib = 'GTK GEE APPINDICATOR',
+  packages = 'gtk+-2.0 gee-1.0 appindicator-0.1',
+  source = bld.path.ant_glob (incl='**/*.vala'))
+

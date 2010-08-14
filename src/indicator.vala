@@ -35,7 +35,7 @@ namespace Diodon
         /**
          * called when application exits
          */
-        public signal void on_quit();
+        public signal void on_quit(Gtk.MenuItem item);
         
         /**
          * called when all items need to be cleared
@@ -66,7 +66,7 @@ namespace Diodon
             
             Gtk.ImageMenuItem quit_item = new Gtk.ImageMenuItem.from_stock(
                 Gtk.STOCK_QUIT, null);
-            quit_item.activate.connect(on_quit);
+            //quit_item.activate.connect(on_quit);
             menu.append(quit_item);
             
             menu.show_all();
@@ -87,11 +87,11 @@ namespace Diodon
          * 
          * @param entry entry to be added
          */
-        public void add_entry(ClipboardEntry entry)
+        public void add_entry(ClipboardItem item)
         {
-            Gtk.MenuItem clipboard_item =
+            /*Gtk.MenuItem clipboard_item =
                 new Gtk.MenuItem.with_label(entry.get_label());
-            clipboard_item.activate.connect()
+            clipboard_item.activate.connect()*/
         }
         
         /**

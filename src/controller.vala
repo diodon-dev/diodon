@@ -45,7 +45,7 @@ namespace Diodon
          * @param model clipboard model
          * @param clipboard gtk clipboard
          */
-        public ClipboardManager(Indicator indicator, ClipboardModel model, Gtk.Clipboard clipboard)
+        public Controller(Indicator indicator, ClipboardModel model, Gtk.Clipboard clipboard)
         {
             this.indicator = indicator;
             this.model = model;
@@ -77,8 +77,9 @@ namespace Diodon
         {
             if(text != null && text != "") {
                 if(text != model.get_selected_item().get_text()) {
-                    model.select_item(new ClipboardEntry(text));
-                    Indicator.select_item(item);
+                    ClipboardItem item = new ClipboardItem(text);
+                    model.select_item(item);
+                    indicator.select_item(item);
                 }
             }
         }

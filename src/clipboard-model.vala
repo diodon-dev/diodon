@@ -61,7 +61,7 @@ namespace Diodon
          * 
          * @param item item to be added
          */
-        public ClipboardItem add_item(ClipboardItem item)
+        public void add_item(ClipboardItem item)
         {
             storage.add_item(item);
         }

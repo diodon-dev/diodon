@@ -34,22 +34,22 @@ namespace Diodon
     
         public XmlClipboardStorage()
         {
-            entries = new ArrayList<ClipboardEntry>();
+            items = new ArrayList<ClipboardItem>();
         }
         
         public void remove_item(ClipboardItem item)
         {
-            entries.remove(item);
+            items.remove(item);
         }
         
-        public ArrayList<ClipboardEntry> get_items()
+        public ArrayList<ClipboardItem> get_items()
         {
             return items;
         }
         
-        public void add_item(ClipboardItem entry)
+        public void add_item(ClipboardItem item)
         {
-            items.add(entry);
+            items.add(item);
         }
     }  
 }
