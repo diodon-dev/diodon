@@ -30,35 +30,26 @@ namespace Diodon
      */
     public class XmlClipboardStorage : GLib.Object, IClipboardStorage
     {
-        private ArrayList<ClipboardEntry> entries;
+        private ArrayList<ClipboardItem> items;
     
-        /**
-         * Default constructor
-         */
         public XmlClipboardStorage()
         {
             entries = new ArrayList<ClipboardEntry>();
         }
         
-        /**
-         * Get all available clipboard entries from current xml file
-         * 
-         * @return get all clipboard entries in right order
-         */
-        public ArrayList<ClipboardEntry> get_entries()
+        public void remove_item(ClipboardItem item)
         {
-            return entries;
+            entries.remove(item);
         }
         
-        /**
-         * Add given entry to storage and save xml
-         * file straight away
-         * 
-         * @param entry entry to be added
-         */
-        public void add_entry(ClipboardEntry entry)
+        public ArrayList<ClipboardEntry> get_items()
         {
-            entries.add(entry);
+            return items;
+        }
+        
+        public void add_item(ClipboardItem entry)
+        {
+            items.add(entry);
         }
     }  
 }

@@ -1,0 +1,87 @@
+/*
+ * Diodon - GTK+ clipboard manager.
+ * Copyright (C) 2010 Diodon Team <diodon-team@lists.launchpad.net>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+using Gee;
+
+namespace Diodon
+{
+    /**
+     * The controller is responsible to interact with the 
+     * Gtk clipboard and passing on information to the given ClipboardModel
+     * and Indicator. Furthermore, user interactions on the indicator are passed
+     * on to the controller where the logic is implemented how to manage
+     * those requests.
+     * 
+     * TODO: implement events so indicator do not have to be called directly
+     * but called by event.
+     * 
+     * @author Oliver Sauder <os@esite.ch>
+     */
+    public class Controller : GLib.Object
+    {
+        private Indicator indicator;
+        private ClipboardModel model;
+        private Gtk.Clipboard clipboard;
+        
+        /**
+         * Constructor.
+         * 
+         * @param indicator diodon indicator
+         * @param model clipboard model
+         * @param clipboard gtk clipboard
+         */
+        public ClipboardManager(Indicator indicator, ClipboardModel model, Gtk.Clipboard clipboard)
+        {
+            this.indicator = indicator;
+            this.model = model;
+            this.clipboard = clipboard;
+        }
+        
+        /**
+         * Starts the process collection clipboard information
+         */
+        public void start()
+        {
+             Timeout.add(500, fetch_clipboard_info);
+        }
+        
+        /**
+         * Fetching text from clipboard
+         */
+        private bool fetch_clipboard_info()
+        {
+            clipboard.request_text(clipboard_text_received);
+            return true;
+        }
+        
+        /**
+         * Handling text retrieved from clipboard by adding it to the storage
+         * and appending it to the menu of the indicator
+         */
+        private void clipboard_text_received(Gtk.Clipboard clipboard, string? text)
+        {
+            if(text != null && text != "") {
+                if(text != model.get_selected_item().get_text()) {
+                    model.select_item(new ClipboardEntry(text));
+                    Indicator.select_item(item);
+                }
+            }
+        }
+    }  
+}
+ 

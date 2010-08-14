@@ -19,21 +19,33 @@
 namespace Diodon
 {
     /**
-     * ClipboardEntry class. Representing one
-     * entry in the clipboard with all its information.
+     * Represents an immutable item in the clipboard with all its information.
+     * 
+     * TODO; consider using a interface for a clipboard item to implement
+     * the represantation of coping files or buffers.
      *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class ClipboardEntry : GLib.Object
+    public class ClipboardItem : GLib.Object
     {
+        private string text;
+       
         /**
-         * plain text
-         */
-        public string text { get; set; default = ""; }
-        
+         * Simple text constrcutor
+         * 
+         * @param text plain text
+         */ 
+        public ClipboardItem(string text)
+        {
+            this.text = text;
+        }
+    
         /**
-         * represantion of entry for user interface
+         * get plain text
          */
-        public string label { get; set; default = ""; }
+        public string get_text()
+        {
+            return text;
+        }
     }  
 }

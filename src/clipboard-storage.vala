@@ -30,17 +30,24 @@ namespace Diodon
     public interface IClipboardStorage
     {
         /**
-         * Get all available clipboard entries.
+         * Get all available clipboard items.
          * 
          * @return get all clipboard entries in right order
          */
-        public abstract ArrayList<ClipboardEntry> get_entries();
+        public abstract ArrayList<ClipboardItem> get_items();
         
         /**
-         * Add given entry to storage
+         * Add given teim to storage
          * 
-         * @param entry entry to be added
+         * @param item item to be added
          */
-        public abstract void add_entry(ClipboardEntry entry);
+        public abstract void add_item(ClipboardItem item);
+        
+        /**
+         * remove given item from storage
+         * 
+         * @param item item to be removed
+         */
+        public abstract void remove_item(ClipboardItem item);
     }  
 }

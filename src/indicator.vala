@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
+using Gee;
+ 
 namespace Diodon
 {
     /**
@@ -27,7 +29,8 @@ namespace Diodon
     public class Indicator : GLib.Object
     {
         private AppIndicator.Indicator indicator;
-        private Gtk.Menu appMenu;
+        private Gtk.Menu menu;
+        private ArrayList<Gtk.MenuItem> menu_items;
         
         /**
          * Default constructor.
@@ -42,22 +45,60 @@ namespace Diodon
             indicator.set_icon("distributor-logo");
             
             // Setup application menu
-            appMenu = new Gtk.Menu();
+            menu = new Gtk.Menu();
             
-            Gtk.SeparatorMenuItem sepItem = new Gtk.SeparatorMenuItem();
-            appMenu.append(sepItem);
+            Gtk.SeparatorMenuItem sep_item = new Gtk.SeparatorMenuItem();
+            menu.append(sep_item);
             
-            Gtk.MenuItem clearItem = new Gtk.MenuItem.with_label("Clear");
-            clearItem.activate.connect(on_clicked_clear);
-            appMenu.append(clearItem);
+            Gtk.MenuItem clear_item = new Gtk.MenuItem.with_label("Clear");
+            clear_item.activate.connect(on_clicked_clear);
+            menu.append(clear_item);
             
-            Gtk.ImageMenuItem quitItem = new Gtk.ImageMenuItem.from_stock(
+            Gtk.ImageMenuItem quit_item = new Gtk.ImageMenuItem.from_stock(
                 Gtk.STOCK_QUIT, null);
-            quitItem.activate.connect(Gtk.main_quit);
-            appMenu.append(quitItem);
+            quit_item.activate.connect(Gtk.main_quit);
+            menu.append(quit_item);
             
-            appMenu.show_all();
-            indicator.set_menu(appMenu);
+            menu.show_all();
+            indicator.set_menu(menu);
+        }
+        
+        /**
+         * Select item by moving it to the top of the menu
+         * 
+         * @param item item to be selected
+         */
+        public void select_item(ClipboardItem item)
+        {
+        }
+        
+        /**
+         * Prepend given entry to menu.
+         * 
+         * @param entry entry to be added
+         */
+        public void add_entry(ClipboardEntry entry)
+        {
+            Gtk.MenuItem clipboard_item =
+                new Gtk.MenuItem.with_label(entry.get_label());
+            clipboard_item.activate.connect()
+        }
+        
+        /**
+         * 
+        private void on_clicked_clipboarditem(MenuItem item)
+        {
+            item.set_arg
+            
+            foreach (var k in menuItems.keys) {
+                if (menuItems.get(k) == item) {
+                    stmtQueryData.bind_int64(1, k);
+                    stmtQueryData.step();
+                    clipboard.set_text(stmtQueryData.column_text(0), -1);
+                    stmtQueryData.reset();
+                    return;
+                }
+            }
         }
         
         /**
