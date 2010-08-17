@@ -32,6 +32,8 @@ namespace Diodon
             //Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALE_DIR);
             //Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
 
+            Gtk.init (ref args);
+            
             // setup controller    
             Indicator indicator = new Indicator();
             IClipboardStorage storage = new XmlClipboardStorage();
@@ -40,9 +42,7 @@ namespace Diodon
             Controller controller = new Controller(indicator, model, clipboard);
             controller.start();
             
-            Gtk.init (ref args);
             Gtk.main();
-
             return 0;
         }
     }
