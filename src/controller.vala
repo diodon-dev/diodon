@@ -102,7 +102,8 @@ namespace Diodon
         private void clipboard_text_received(Gtk.Clipboard clipboard, string? text)
         {
             if(text != null && text != "") {
-                if(text != model.get_selected_item().get_text()) {
+                ClipboardItem selected_item = model.get_selected_item();
+                if(selected_item == null || text != selected_item.get_text()) {
                     ClipboardItem item = new ClipboardItem(text);
                     on_select_item(item);
                 }
