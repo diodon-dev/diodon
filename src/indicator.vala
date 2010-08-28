@@ -78,6 +78,22 @@ namespace Diodon
          */
         public void select_item(ClipboardItem item)
         {
+            foreach(Gtk.Widget menu_item in menu.get_children())
+            {
+                if(item is ClipboardMenuItem)
+                {
+                    ClipboardMenuItem clipboard_item = (ClipboardMenuItem)item;
+                    
+                    // TODO: this is only a workaround. Figure out what the
+                    // correct way is to implement a equals method on a object
+                    if(item == clipboard_item.get_clipboard_item())
+                    {
+                        clipboard_item.highlight_item();
+                    }
+                    
+                    break;
+                }
+            }
         }
         
         /**

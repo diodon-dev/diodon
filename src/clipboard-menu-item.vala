@@ -52,6 +52,29 @@ namespace Diodon
         {
             return item;
         }
+        
+        /**
+         * Highlight item by changing label to bold
+         */        
+        public void highlight_item()
+        {
+            Gtk.Label label = get_menu_label();
+            label.set_markup("<b>%s</b>".printf(get_label()));
+            
+            set_label("test");
+        }
+        
+        /**
+         * Gets the child of Gtk.Bin base class which represents
+         * a Gtk.Label object.
+         *
+         * @return gtk label 
+         */ 
+        private Gtk.Label get_menu_label()
+        {
+            Gtk.Label menu_label = (Gtk.Label) get_child();
+            return menu_label;
+        }
     }
 }
 
