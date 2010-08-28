@@ -90,21 +90,34 @@ namespace Diodon
             ClipboardMenuItem menu_item = new ClipboardMenuItem(item);
             menu_item.show();
             menu.prepend(menu_item);
-            indicator.set_menu(menu);
         }
         
         /**
          * Remove all clipboard menu items from menu
          */
         public void clear_items()
-        { 
+        {
+            foreach(Gtk.Widget item in menu.get_children())
+            {
+                if(item is ClipboardMenuItem)
+                {
+                    menu.remove(item);
+                    item.destroy();
+                }
+            }
         }
         
+        /**
+         * User event: clicked menu item clear
+         */
         private void on_clicked_clear()
         {
             on_clear();
         }
         
+        /**
+         * User event: clicked menu item quit
+         */
         private void on_clicked_quit()
         {
             on_quit();
