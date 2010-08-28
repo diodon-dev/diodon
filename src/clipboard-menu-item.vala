@@ -15,45 +15,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 using Gee;
 
 namespace Diodon
 {
     /**
-     * IClipboardStorage interface. Defining methods
-     * to store clipboard data into a data container
-     * such as xml or sql.
-     *
+     * A gtk menu item holding a clipboard item.
+     * 
      * @author Oliver Sauder <os@esite.ch>
      */
-    public interface IClipboardStorage : GLib.Object
+    public class ClipboardMenuItem : Gtk.MenuItem
     {
-        /**
-         * Get all available clipboard items.
-         * 
-         * @return get all clipboard entries in right order
-         */
-        public abstract ArrayList<ClipboardItem> get_items();
+        private ClipboardItem item;
         
         /**
-         * Add given teim to storage
+         * Clipboard item constructor
          * 
-         * @param item item to be added
+         * @param item clipboard item 
          */
-        public abstract void add_item(ClipboardItem item);
+        public ClipboardMenuItem(ClipboardItem item)
+        {
+            this.item = item;
+            
+            string label = item.get_text().replace("\n", " ");
+            if (label.length > 50) {
+                label = label.substring(0, 50) + "...";
+            }
+            set_label(label);
+        }
         
         /**
-         * remove given item from storage
-         * 
-         * @param item item to be removed
+         * Get encapsualted clipboard item
          */
-        public abstract void remove_item(ClipboardItem item);
-        
-        /**
-         * Remove all items from storage
-         */
-        public abstract void remove_all_items();
-    }  
+        public ClipboardItem get_clipboard_item()
+        {
+            return item;
+        }
+    }
 }
 

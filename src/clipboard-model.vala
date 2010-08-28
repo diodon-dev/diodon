@@ -81,16 +81,8 @@ namespace Diodon
          * @param item item to be selected
          */         
         public void select_item(ClipboardItem item)
-        {
-            // if there is a selected item, remove it first
-            // before selecting a new one
-            if(selected_item != null)
-            {
-                storage.remove_item(selected_item);
-            }
-            
+        {  
             selected_item = item;
-            storage.add_item(selected_item);
         }
     }  
 }

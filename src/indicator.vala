@@ -87,6 +87,10 @@ namespace Diodon
          */
         public void prepend_item(ClipboardItem item)
         {
+            ClipboardMenuItem menu_item = new ClipboardMenuItem(item);
+            menu_item.show();
+            menu.prepend(menu_item);
+            indicator.set_menu(menu);
         }
         
         /**

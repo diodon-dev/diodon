@@ -42,6 +42,11 @@ namespace Diodon
         private signal void on_select_item(ClipboardItem item);
         
         /**
+         * Called when a new item has been available
+         */
+        private signal void on_new_item(ClipboardItem item);
+        
+        /**
          * Called when items need to be cleared
          */ 
         private signal void on_clear_items();
@@ -76,6 +81,9 @@ namespace Diodon
              
              on_clear_items.connect(model.clear_items);
              on_clear_items.connect(indicator.clear_items);
+             
+             on_new_item.connect(model.add_item);
+             on_new_item.connect(indicator.prepend_item);
         }
         
         /**
@@ -105,6 +113,7 @@ namespace Diodon
                 ClipboardItem selected_item = model.get_selected_item();
                 if(selected_item == null || text != selected_item.get_text()) {
                     ClipboardItem item = new ClipboardItem(text);
+                    on_new_item(item);
                     on_select_item(item);
                 }
             }
