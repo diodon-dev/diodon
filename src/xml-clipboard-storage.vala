@@ -32,26 +32,41 @@ namespace Diodon
     {
         private ArrayList<ClipboardItem> items;
     
+        /**
+         * Default constructor
+         */
         public XmlClipboardStorage()
         {
             items = new ArrayList<ClipboardItem>(ClipboardItem.equal_func);
         }
         
+        /**
+	     * {@inheritDoc}
+	     */
         public void remove_item(ClipboardItem item)
         {
             items.remove(item);
         }
         
+        /**
+	     * {@inheritDoc}
+	     */
         public ArrayList<ClipboardItem> get_items()
         {
             return items;
         }
         
+        /**
+	     * {@inheritDoc}
+	     */
         public void add_item(ClipboardItem item)
         {
             items.add(item);
         }
         
+        /**
+	     * {@inheritDoc}
+	     */
         public void clear()
         {
             items.clear();

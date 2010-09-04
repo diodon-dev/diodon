@@ -32,6 +32,11 @@ namespace Diodon
         private Gtk.Menu menu;
         
         /**
+         * HashMap of all available clipboard items
+         */
+        private HashMap<ClipboardItem, ClipboardMenuItem> clipboard_menu_items;
+        
+        /**
          * called when application exits
          */
         public signal void on_quit();
@@ -76,6 +81,9 @@ namespace Diodon
             
             menu.show_all();
             indicator.set_menu(menu);
+            
+            clipboard_menu_items = new HashMap<ClipboardItem, ClipboardMenuItem>(
+                ClipboardItem.hash_func, ClipboardItem.equal_func);
         }
         
         /**
@@ -85,20 +93,8 @@ namespace Diodon
          */
         public void select_item(ClipboardItem item)
         {
-            foreach(Gtk.Widget widget in menu.get_children())
-            {
-                if(widget is ClipboardMenuItem)
-                {
-                    ClipboardMenuItem menu_item = (ClipboardMenuItem)widget;
-                    
-                    if(ClipboardItem.equal_func(item, menu_item.get_clipboard_item()))
-                    {
-                        menu_item.highlight_item();
-                    }
-                    
-                    break;
-                }
-            }
+            ClipboardMenuItem menu_item = clipboard_menu_items.get(item);
+            menu_item.highlight_item();
         }
         
         /**
@@ -111,6 +107,7 @@ namespace Diodon
             ClipboardMenuItem menu_item = new ClipboardMenuItem(item);
             menu_item.activate.connect(on_clicked_item);
             menu_item.show();
+            clipboard_menu_items.set(item, menu_item);
             menu.prepend(menu_item);
         }
         
@@ -119,13 +116,12 @@ namespace Diodon
          */
         public void clear_items()
         {
-            foreach(Gtk.Widget widget in menu.get_children())
+            foreach(ClipboardItem item in clipboard_menu_items.keys)
             {
-                if(widget is ClipboardMenuItem)
-                {
-                    menu.remove(widget);
-                    widget.destroy();
-                }
+                ClipboardMenuItem menu_item;
+                clipboard_menu_items.unset(item, out menu_item);
+                menu.remove(menu_item);
+                menu_item.destroy();
             }
         }
         
@@ -136,19 +132,13 @@ namespace Diodon
          */
         public void remove_item(ClipboardItem item)
         {
-            foreach(Gtk.Widget widget in menu.get_children())
+            ClipboardMenuItem menu_item = null;
+            clipboard_menu_items.unset(item, out menu_item);
+            if(menu_item != null)
             {
-                if(widget is ClipboardMenuItem)
-                {
-                    ClipboardMenuItem menu_item = (ClipboardMenuItem) widget;
-                    
-                    if(ClipboardItem.equal_func(menu_item.get_clipboard_item(), item))
-                    {
-                        menu.remove(widget);
-                        widget.destroy();
-                    }
-                }
-            } 
+                menu.remove(menu_item);
+                menu_item.destroy();
+            }
         }
         
         /**

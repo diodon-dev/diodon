@@ -55,10 +55,32 @@ namespace Diodon
          * in future releases of libgee (currenlty in development version 0.7.0)
          * there will be a interface called hashable which should be implemented
          * instead of this inconvinient equal func method.
+         * 
+         * @param item_a item to be compared
+         * @param item_b other item to be comparted
+         * 
+         * @return true if equal; otherwise false.
          */
         public static bool equal_func(ClipboardItem* item_a, ClipboardItem* item_b)
         {
             return str_equal(item_a->get_text(), item_b->get_text());
+        }
+        
+        /**
+         * hash func helper creating hash code for clipboard item.
+         *
+         * TODO:
+         * in future releases of libgee (currenlty in development version 0.7.0)
+         * there will be a interface called hashable which should be implemented
+         * instead of this inconvinient hash func method.
+         * 
+         * @param item item to create hash from
+         * 
+         * @return generated hash code
+         */
+        public static uint hash_func (ClipboardItem* item)
+        {
+            return str_hash(item->get_text());
         }
     }  
 }
