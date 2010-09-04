@@ -61,7 +61,7 @@ namespace Diodon
          */
         public void clear_items()
         {
-            storage.remove_all_items();
+            storage.clear();
             selected_item = null;
         }
         
@@ -83,6 +83,16 @@ namespace Diodon
         public void select_item(ClipboardItem item)
         {  
             selected_item = item;
+        }
+        
+        /**
+         * Remove clipboard item from storage
+         *
+         * @param item item to be removed
+         */
+        public void remove_item(ClipboardItem item)
+        {
+            storage.remove_item(item);
         }
     }  
 }

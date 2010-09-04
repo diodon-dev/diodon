@@ -43,6 +43,8 @@ namespace Diodon
         
         /**
          * called when a item has been selected in the menu
+         * 
+         * @param item item to be selected
          */
         public signal void on_select_item(ClipboardItem item);
         
@@ -119,14 +121,36 @@ namespace Diodon
          */
         public void clear_items()
         {
-            foreach(Gtk.Widget item in menu.get_children())
+            foreach(Gtk.Widget widget in menu.get_children())
             {
-                if(item is ClipboardMenuItem)
+                if(widget is ClipboardMenuItem)
                 {
-                    menu.remove(item);
-                    item.destroy();
+                    menu.remove(widget);
+                    widget.destroy();
                 }
             }
+        }
+        
+        /**
+         * Remove given item from menu
+         * 
+         * @param item item to be removed
+         */
+        public void remove_item(ClipboardItem item)
+        {
+            foreach(Gtk.Widget widget in menu.get_children())
+            {
+                if(widget is ClipboardMenuItem)
+                {
+                    ClipboardMenuItem menu_item = (ClipboardMenuItem) widget;
+                    
+                    if(menu_item.get_clipboard_item() == item)
+                    {
+                        menu.remove(widget);
+                        widget.destroy();
+                    }
+                }
+            } 
         }
         
         /**
@@ -147,6 +171,8 @@ namespace Diodon
         
         /**
          * User event: clicked clipboard menu item
+         * 
+         * @param menu_item menu item clicked
          */
         private void on_clicked_item(Gtk.MenuItem menu_item)
         {

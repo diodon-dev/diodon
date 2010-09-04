@@ -53,7 +53,7 @@ namespace Diodon
         /**
          * Remove all items from storage
          */
-        public abstract void remove_all_items();
+        public abstract void clear();
     }  
 }
 

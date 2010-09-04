@@ -47,6 +47,11 @@ namespace Diodon
         private signal void on_new_item(ClipboardItem item);
         
         /**
+         * Called when a item needs to be removed
+         */
+        private signal void on_remove_item(ClipboardItem item);
+        
+        /**
          * Called when items need to be cleared
          */ 
         private signal void on_clear_items();
@@ -85,14 +90,22 @@ namespace Diodon
              
              on_new_item.connect(model.add_item);
              on_new_item.connect(indicator.prepend_item);
+             
+             on_remove_item.connect(model.remove_item);
+             on_remove_item.connect(indicator.remove_item);
         }
         
         /**
          * Select item by moving it onto the top of the menu
-         * and data storate and then copying it to the clipboard
+         * respectively data storage and then copying it to the clipboard
+         *
+         * @param item item to be selected
          */
         private void select_item(ClipboardItem item)
         {
+            on_remove_item(item);
+            on_new_item(item);
+            on_select_item(item);
             clipboard.set_text(item.get_text(), -1);
         }
         
@@ -106,6 +119,8 @@ namespace Diodon
         
         /**
          * Fetching text from clipboard
+         *
+         * @return currently always true
          */
         private bool fetch_clipboard_info()
         {
@@ -116,6 +131,9 @@ namespace Diodon
         /**
          * Handling text retrieved from clipboard by adding it to the storage
          * and appending it to the menu of the indicator
+         * 
+         * @param clipboard gtk clipboard
+         * @param text text received
          */
         private void clipboard_text_received(Gtk.Clipboard clipboard, string? text)
         {
@@ -123,6 +141,7 @@ namespace Diodon
                 ClipboardItem selected_item = model.get_selected_item();
                 if(selected_item == null || text != selected_item.get_text()) {
                     ClipboardItem item = new ClipboardItem(text);
+                    on_remove_item(item);
                     on_new_item(item);
                     on_select_item(item);
                 }

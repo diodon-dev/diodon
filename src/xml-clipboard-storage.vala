@@ -52,7 +52,7 @@ namespace Diodon
             items.add(item);
         }
         
-        public void remove_all_items()
+        public void clear()
         {
             items.clear();
         }
