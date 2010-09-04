@@ -52,11 +52,6 @@ namespace Diodon
         private signal void on_remove_item(ClipboardItem item);
         
         /**
-         * Called when items need to be cleared
-         */ 
-        private signal void on_clear_items();
-        
-        /**
          * Constructor.
          * 
          * @param indicator diodon indicator
@@ -85,9 +80,6 @@ namespace Diodon
              on_select_item.connect(model.select_item);
              on_select_item.connect(indicator.select_item);
              
-             on_clear_items.connect(model.clear_items);
-             on_clear_items.connect(indicator.clear_items);
-             
              on_new_item.connect(model.add_item);
              on_new_item.connect(indicator.prepend_item);
              
@@ -110,11 +102,17 @@ namespace Diodon
         }
         
         /**
-         * Clear all items from the clipboard
+         * Clear all items from the clipboard and reset selected items
          */
         private void clear_items()
         {
-            on_clear_items();
+            // remove all items from indicator first
+            foreach(ClipboardItem item in model.get_items())
+            {
+                indicator.remove_item(item);
+            }
+            
+            model.clear_items();
         }
         
         /**

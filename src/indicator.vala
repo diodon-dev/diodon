@@ -112,20 +112,6 @@ namespace Diodon
         }
         
         /**
-         * Remove all clipboard menu items from menu
-         */
-        public void clear_items()
-        {
-            foreach(ClipboardItem item in clipboard_menu_items.keys)
-            {
-                ClipboardMenuItem menu_item;
-                clipboard_menu_items.unset(item, out menu_item);
-                menu.remove(menu_item);
-                menu_item.destroy();
-            }
-        }
-        
-        /**
          * Remove given item from menu
          * 
          * @param item item to be removed
