@@ -75,6 +75,7 @@ namespace Diodon
              
              indicator.on_quit.connect(quit);
              indicator.on_clear.connect(clear_items);
+             indicator.on_select_item.connect(select_item);
              
              on_select_item.connect(model.select_item);
              on_select_item.connect(indicator.select_item);
@@ -84,6 +85,15 @@ namespace Diodon
              
              on_new_item.connect(model.add_item);
              on_new_item.connect(indicator.prepend_item);
+        }
+        
+        /**
+         * Select item by moving it onto the top of the menu
+         * and data storate and then copying it to the clipboard
+         */
+        private void select_item(ClipboardItem item)
+        {
+            clipboard.set_text(item.get_text(), -1);
         }
         
         /**

@@ -42,6 +42,11 @@ namespace Diodon
         public signal void on_clear();
         
         /**
+         * called when a item has been selected in the menu
+         */
+        public signal void on_select_item(ClipboardItem item);
+        
+        /**
          * Default constructor.
          */ 
         public Indicator()
@@ -72,7 +77,7 @@ namespace Diodon
         }
         
         /**
-         * Select item by moving it to the top of the menu
+         * Select item by highlighting it.
          * 
          * @param item item to be selected
          */
@@ -104,6 +109,7 @@ namespace Diodon
         public void prepend_item(ClipboardItem item)
         {
             ClipboardMenuItem menu_item = new ClipboardMenuItem(item);
+            menu_item.activate.connect(on_clicked_item);
             menu_item.show();
             menu.prepend(menu_item);
         }
@@ -137,6 +143,15 @@ namespace Diodon
         private void on_clicked_quit()
         {
             on_quit();
+        }
+        
+        /**
+         * User event: clicked clipboard menu item
+         */
+        private void on_clicked_item(Gtk.MenuItem menu_item)
+        {
+            ClipboardMenuItem clipboard_menu_item = (ClipboardMenuItem)menu_item;
+            on_select_item(clipboard_menu_item.get_clipboard_item());
         }
     }  
 }
