@@ -59,10 +59,8 @@ namespace Diodon
          */        
         public void highlight_item()
         {
-            Gtk.Label label = get_menu_label();
-            label.set_markup("<b>%s</b>".printf(get_label()));
-            
-            set_label("test");
+            /*Gtk.Label label = get_menu_label();
+            label.set_markup("<b>%s</b>".printf(get_label()));*/
         }
         
         /**

@@ -34,7 +34,7 @@ namespace Diodon
     
         public XmlClipboardStorage()
         {
-            items = new ArrayList<ClipboardItem>();
+            items = new ArrayList<ClipboardItem>(ClipboardItem.equal_func);
         }
         
         public void remove_item(ClipboardItem item)

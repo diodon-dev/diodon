@@ -47,5 +47,18 @@ namespace Diodon
         {
             return text;
         }
+        
+        /**
+         * equal func helper comparing two clipboard items.
+         *
+         * TODO:
+         * in future releases of libgee (currenlty in development version 0.7.0)
+         * there will be a interface called hashable which should be implemented
+         * instead of this inconvinient equal func method.
+         */
+        public static bool equal_func(ClipboardItem* item_a, ClipboardItem* item_b)
+        {
+            return str_equal(item_a->get_text(), item_b->get_text());
+        }
     }  
 }
