@@ -55,6 +55,7 @@ namespace Diodon
         
         /**
          * Highlight item by changing label to bold
+         * TODO: get this up and running
          */        
         public void highlight_item()
         {
