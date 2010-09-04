@@ -120,11 +120,8 @@ namespace Diodon
         {
             ClipboardMenuItem menu_item = null;
             clipboard_menu_items.unset(item, out menu_item);
-            if(menu_item != null)
-            {
-                menu.remove(menu_item);
-                menu_item.destroy();
-            }
+            menu.remove(menu_item);
+            menu_item.destroy();
         }
         
         /**

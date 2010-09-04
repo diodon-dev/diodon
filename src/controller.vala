@@ -139,7 +139,12 @@ namespace Diodon
                 ClipboardItem selected_item = model.get_selected_item();
                 if(selected_item == null || text != selected_item.get_text()) {
                     ClipboardItem item = new ClipboardItem(text);
-                    on_remove_item(item);
+                    
+                    // remove item from clipboard if it already exists
+                    if(model.get_items().contains(item)) {
+                        on_remove_item(item);
+                    }
+                    
                     on_new_item(item);
                     on_select_item(item);
                 }
