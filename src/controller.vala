@@ -107,8 +107,7 @@ namespace Diodon
         private void clear_items()
         {
             // remove all items from indicator first
-            foreach(ClipboardItem item in model.get_items())
-            {
+            foreach(ClipboardItem item in model.get_items()) {
                 indicator.remove_item(item);
             }
             

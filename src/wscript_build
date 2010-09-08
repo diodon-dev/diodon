@@ -6,7 +6,7 @@ prog = bld.new_task_gen (
   features = 'cc cprogram',
   target = 'diodon',
   vapi_dirs = '../vapi',
-  uselib = 'GTK GEE APPINDICATOR',
-  packages = 'gtk+-2.0 gee-1.0 appindicator-0.1',
+  uselib = 'GTK GEE APPINDICATOR XML',
+  packages = 'gtk+-2.0 gee-1.0 appindicator-0.1 libxml-2.0',
   source = bld.path.ant_glob (incl='**/*.vala'))
 

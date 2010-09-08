@@ -28,6 +28,9 @@ namespace Diodon
     {
         public static int main (string[] args)
         {
+            string diodon_dir =  Environment.get_home_dir()
+                + "/.local/share/diodon";
+        
             // setup gettext TODO: get it up and running
             //Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALE_DIR);
             //Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
@@ -36,7 +39,7 @@ namespace Diodon
             
             // setup controller    
             Indicator indicator = new Indicator();
-            IClipboardStorage storage = new XmlClipboardStorage();
+            IClipboardStorage storage = new XmlClipboardStorage(diodon_dir, "storage.xml");
             ClipboardModel model = new ClipboardModel(storage);
             Gtk.Clipboard clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);
             Controller controller = new Controller(indicator, model, clipboard);

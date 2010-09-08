@@ -21,38 +21,20 @@ using Gee;
 namespace Diodon
 {
     /**
-     * Xml clipboard storage implementation using
-     * libxml2 to store parse and write the xml file.
-     * Xml will always be flushed after storage has changed.
+     * Memory clipboard storage implementation.
      * 
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class XmlClipboardStorage : GLib.Object, IClipboardStorage
+    public class MemoryClipboardStorage : GLib.Object, IClipboardStorage
     {
         private ArrayList<ClipboardItem> items;
-        private string xml_file;
     
         /**
-         * Xml file constructor.
-         * 
-         * @param directory directory file is located
-         * @param file xml file name
+         * Default constructor
          */
-        public XmlClipboardStorage(string directory, string file)
+        public MemoryClipboardStorage()
         {
             items = new ArrayList<ClipboardItem>(ClipboardItem.equal_func);
-            
-            // make sure that all parent directories exists
-            try {
-                File dir = File.new_for_path(directory);
-                if(!dir.query_exists(null)) {
-                    dir.make_directory_with_parents(null);
-                }
-            } catch (Error e) {
-                warning ("could not create directory %s", directory);
-            }
-            
-            xml_file = directory + "/" + file;
         }
         
         /**
@@ -61,7 +43,6 @@ namespace Diodon
         public void remove_item(ClipboardItem item)
         {
             items.remove(item);
-            write();
         }
         
         /**
@@ -78,7 +59,6 @@ namespace Diodon
         public void add_item(ClipboardItem item)
         {
             items.add(item);
-            write();
         }
         
         /**
@@ -87,29 +67,6 @@ namespace Diodon
         public void clear()
         {
             items.clear();
-            write();
-        }
-        
-        /**
-         * Write storage to xml file
-         */
-        public void write()
-        {
-            Xml.TextWriter writer = new Xml.TextWriter.filename(xml_file);
-            writer.set_indent(true);
-            writer.set_indent_string ("\t");
-
-            writer.start_document ();
-            writer.start_element ("clipboard");
-            
-            foreach(ClipboardItem item in items) {
-                writer.write_element("item", item.get_text());
-            }
-            
-            writer.end_element();
-            writer.end_document();
-            
-            writer.flush();
         }
     }  
 }
