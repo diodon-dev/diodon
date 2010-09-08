@@ -53,6 +53,7 @@ namespace Diodon
             }
             
             xml_file = directory + "/" + file;
+            load();
         }
         
         /**
@@ -88,6 +89,26 @@ namespace Diodon
         {
             items.clear();
             write();
+        }
+        
+        /**
+         * Load storage xml to memory
+         */
+        public void load()
+        {   
+            Xml.TextReader reader = new Xml.TextReader.filename(xml_file);
+            
+            while(reader.read() == 1) {
+                // import node when it is a item element
+                if("item" == reader.name() && reader.node_type() == 1) {
+                    string value = reader.read_string();
+                    if(value != null) {
+                        debug("Add item " + value + " to clipboard.");
+                        ClipboardItem item = new ClipboardItem(value);
+                        items.add(item);
+                    }
+                }    
+            }
         }
         
         /**
