@@ -85,6 +85,11 @@ namespace Diodon
              
              on_remove_item.connect(model.remove_item);
              on_remove_item.connect(indicator.remove_item);
+             
+             // add all available items from storage to indicator
+             foreach(ClipboardItem item in model.get_items()) {
+                indicator.prepend_item(item);
+             }
         }
         
         /**
