@@ -1,0 +1,21 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Diodon 0.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-08 22:48+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Oliver Sauder <os@esite.ch>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+
+#: ../src/indicator.vala:74
+msgid "Clear"
+msgstr "Leeren"
+
+#: ../src/indicator.vala:78
+msgid "Quit"
+msgstr "Beenden"
+

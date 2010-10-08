@@ -2,8 +2,8 @@
 # encoding: utf-8
 # Oliver Sauder, 2010
 
-import intltool
-import Scripting
+import intltool, os, traceback, pproc as subprocess
+import Scripting, Options, Utils
 
 NAME = 'Diodon'
 VERSION = '0.0.1'
@@ -20,6 +20,8 @@ def set_options(opt):
     opt.tool_options('compiler_cc')
     opt.tool_options('vala')
     opt.tool_options('gnu_dirs')
+    opt.add_option ('--update-po', action='store_true', default=False,
+        help='Update localization files', dest='update_po')
 
 def configure(conf):
     conf.check_tool('compiler_cc cc vala intltool gnu_dirs')
@@ -50,4 +52,28 @@ def dist ():
   # set the compression type to gzip (default is bz2)
   Scripting.g_gz = 'gz'
   Scripting.dist (APPNAME, VERSION)
-
+  
+def shutdown ():
+    if Options.options.update_po:
+        os.chdir('./po')
+        try:
+            try:
+                size_old = os.stat (APPNAME + '.pot').st_size
+            except:
+                size_old = 0
+            subprocess.call (['intltool-update', '-p', '-g', APPNAME])
+            size_new = os.stat (APPNAME + '.pot').st_size
+            if size_new <> size_old:
+                Utils.pprint ('YELLOW', "Updated po template.")
+                try:
+                    command = 'intltool-update -r -g %s' % APPNAME
+                    Utils.exec_command (command)
+                    Utils.pprint ('YELLOW', "Updated translations.")
+                except:
+                    Utils.pprint ('RED', "Failed to update translations.")
+        except:
+            traceback.print_exc(file=open("errlog.txt","a"))
+            Utils.pprint ('RED', "Failed to generate po template.")
+            Utils.pprint ('RED', "Make sure intltool is installed.")
+        os.chdir ('..')
+        
