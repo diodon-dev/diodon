@@ -71,11 +71,11 @@ namespace Diodon
             Gtk.SeparatorMenuItem sep_item = new Gtk.SeparatorMenuItem();
             menu.append(sep_item);
             
-            Gtk.MenuItem clear_item = new Gtk.MenuItem.with_label("Clear");
+            Gtk.MenuItem clear_item = new Gtk.MenuItem.with_label(_("Clear"));
             clear_item.activate.connect(on_clicked_clear);
             menu.append(clear_item);
             
-            Gtk.MenuItem quit_item = new Gtk.MenuItem.with_label("Quit");
+            Gtk.MenuItem quit_item = new Gtk.MenuItem.with_label(_("Quit"));
             quit_item.activate.connect(on_clicked_quit);
             menu.append(quit_item);
             

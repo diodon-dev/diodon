@@ -2,6 +2,7 @@
 # encoding: utf-8
 # Oliver Sauder, 2010
 
+import intltool
 import Scripting
 
 NAME = 'Diodon'
@@ -21,12 +22,13 @@ def set_options(opt):
     opt.tool_options('gnu_dirs')
 
 def configure(conf):
-    conf.check_tool('compiler_cc cc vala gnu_dirs')
+    conf.check_tool('compiler_cc cc vala intltool gnu_dirs')
     conf.check_cfg(package='glib-2.0',         uselib_store='GLIB',         atleast_version='2.10.0', mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gtk+-2.0',         uselib_store='GTK',          atleast_version='2.10.0', mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gee-1.0',          uselib_store='GEE',          atleast_version='0.5.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='libxml-2.0',       uselib_store='XML',          atleast_version='2.7.6',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='appindicator-0.1', uselib_store='APPINDICATOR', atleast_version='0.2.3',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='vala-1.0',         uselib_store='VALA',         atleast_version='0.8.0',  mandatory=1, args='--cflags --libs')
 
     conf.define ('PACKAGE_NAME', APPNAME)
     conf.define ('GETTEXT_PACKAGE', APPNAME)
@@ -35,9 +37,14 @@ def configure(conf):
     conf.define ('WEBSITE', WEBSITE)
     conf.define ('APPNAME', NAME)
     conf.define ('VAPI_VERSION', VERSION_MAJOR)
+    
+    # set 'default' variant
+    conf.define ('DEBUG', 0)
+    conf.env['CCFLAGS']=['-O2']
+    conf.write_config_header ('config.h')
    
 def build(bld):
-    bld.add_subdirs('src')
+    bld.add_subdirs('po src')
 
 def dist ():
   # set the compression type to gzip (default is bz2)
