@@ -2,6 +2,8 @@
 # encoding: utf-8
 # Oliver Sauder, 2010
 
+import Options
+
 prog = bld.new_task_gen (
   features = 'cc cprogram',
   target = 'diodon',
@@ -11,3 +13,5 @@ prog = bld.new_task_gen (
   packages = 'gtk+-2.0 gee-1.0 appindicator-0.1 libxml-2.0',
   source = bld.path.ant_glob (incl='**/*.vala'))
 
+if Options.options.debug:
+  prog.env = bld.env_of_name ('debug').copy ()

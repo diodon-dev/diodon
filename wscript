@@ -20,8 +20,8 @@ def set_options(opt):
     opt.tool_options('compiler_cc')
     opt.tool_options('vala')
     opt.tool_options('gnu_dirs')
-    opt.add_option ('--update-po', action='store_true', default=False,
-        help='Update localization files', dest='update_po')
+    opt.add_option('--update-po', action='store_true', default=False, dest='update_po', help='Update localization files')
+    opt.add_option('--debug',     action='store_true', default=False, dest='debug',     help='Debug mode')
 
 def configure(conf):
     conf.check_tool('compiler_cc cc vala intltool gnu_dirs')
@@ -44,6 +44,17 @@ def configure(conf):
     conf.define ('DEBUG', 0)
     conf.env['CCFLAGS']=['-O2']
     conf.write_config_header ('config.h')
+    
+    # set 'debug' variant
+    env_debug = conf.env.copy ()
+    env_debug.set_variant ('debug')
+    conf.set_env_name ('debug', env_debug)
+    
+    conf.setenv ('debug')
+    conf.define ('DEBUG', 1)
+    conf.env['CCFLAGS'] = ['-O0', '-g3']
+    conf.env['VALAFLAGS'] = ['-g', '-v']
+    conf.write_config_header ('config.h', env=env_debug)
    
 def build(bld):
     bld.add_subdirs('po src')
