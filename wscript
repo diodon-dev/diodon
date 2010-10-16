@@ -25,12 +25,11 @@ def set_options(opt):
 
 def configure(conf):
     conf.check_tool('compiler_cc cc vala intltool gnu_dirs')
-    conf.check_cfg(package='glib-2.0',         uselib_store='GLIB',         atleast_version='2.10.0', mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='gtk+-2.0',         uselib_store='GTK',          atleast_version='2.10.0', mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='gee-1.0',          uselib_store='GEE',          atleast_version='0.5.0',  mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='libxml-2.0',       uselib_store='XML',          atleast_version='2.7.6',  mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='appindicator-0.1', uselib_store='APPINDICATOR', atleast_version='0.2.3',  mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='vala-1.0',         uselib_store='VALA',         atleast_version='0.8.0',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='glib-2.0',         uselib_store='GLIB',         atleast_version='2.10.0',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='gtk+-2.0',         uselib_store='GTK',          atleast_version='2.10.0',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='gee-1.0',          uselib_store='GEE',          atleast_version='0.5.0',   mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='libxml-2.0',       uselib_store='XML',          atleast_version='2.7.6',   mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='appindicator-0.1', uselib_store='APPINDICATOR', atleast_version='0.2.3',   mandatory=1, args='--cflags --libs')
 
     conf.define ('PACKAGE_NAME', APPNAME)
     conf.define ('GETTEXT_PACKAGE', APPNAME)
