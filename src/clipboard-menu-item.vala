@@ -46,7 +46,7 @@ namespace Diodon
         }
         
         /**
-         * Get encapsualted clipboard item
+         * Get encapsulated clipboard item
          */
         public ClipboardItem get_clipboard_item()
         {

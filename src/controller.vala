@@ -116,6 +116,7 @@ namespace Diodon
                 indicator.remove_item(item);
             }
             
+            clipboard.clear();
             model.clear_items();
         }
         

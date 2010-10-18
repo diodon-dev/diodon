@@ -22,7 +22,7 @@ namespace Diodon
      * Represents an immutable item in the clipboard with all its information.
      * 
      * TODO; consider using a interface for a clipboard item to implement
-     * the represantation of coping files or buffers.
+     * the representation of coping files or buffers.
      *
      * @author Oliver Sauder <os@esite.ch>
      */
@@ -31,7 +31,7 @@ namespace Diodon
         private string text;
        
         /**
-         * Simple text constrcutor
+         * Simple text constructor
          * 
          * @param text plain text
          */ 
@@ -52,12 +52,12 @@ namespace Diodon
          * equal func helper comparing two clipboard items.
          *
          * TODO:
-         * in future releases of libgee (currenlty in development version 0.7.0)
+         * in future releases of libgee (currently in development version 0.7.0)
          * there will be a interface called hashable which should be implemented
-         * instead of this inconvinient equal func method.
+         * instead of this inconvenient equal func method.
          * 
          * @param item_a item to be compared
-         * @param item_b other item to be comparted
+         * @param item_b other item to be compared
          * 
          * @return true if equal; otherwise false.
          */
@@ -70,9 +70,9 @@ namespace Diodon
          * hash func helper creating hash code for clipboard item.
          *
          * TODO:
-         * in future releases of libgee (currenlty in development version 0.7.0)
+         * in future releases of libgee (currently in development version 0.7.0)
          * there will be a interface called hashable which should be implemented
-         * instead of this inconvinient hash func method.
+         * instead of this inconvenient hash func method.
          * 
          * @param item item to create hash from
          * 

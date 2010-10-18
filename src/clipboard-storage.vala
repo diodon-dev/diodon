@@ -37,7 +37,7 @@ namespace Diodon
         public abstract ArrayList<ClipboardItem> get_items();
         
         /**
-         * Add given teim to storage
+         * Add given item to storage
          * 
          * @param item item to be added
          */
