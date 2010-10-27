@@ -5,11 +5,11 @@
 import Options
 
 prog = bld.new_task_gen (
-  features = 'cc cprogram',
+  features = 'c cprogram',
   target = 'diodon',
   vapi_dirs = '../vapi',
   uselib = 'GTK GEE APPINDICATOR XML',
-  ccflags = ['-include', 'config.h'],
+  cflags = ['-include', 'config.h'],
   packages = 'gtk+-2.0 gee-1.0 appindicator-0.1 libxml-2.0',
   source = bld.path.ant_glob (incl='**/*.vala'))
 
