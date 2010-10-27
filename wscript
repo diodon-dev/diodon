@@ -43,18 +43,14 @@ def configure(conf):
     # set 'default' variant
     conf.define ('DEBUG', 0)
     conf.env['CFLAGS']=['-O2']
-    conf.write_config_header ('config.h')
+    conf.write_config_header ('config.h', remove=False)
     
     # set 'debug' variant
-    #env_debug = conf.env.copy ()
-    #env_debug.set_variant ('debug')
-    #conf.set_env_name ('debug', env_debug)
-    
-    #conf.setenv ('debug')
-    #conf.define ('DEBUG', 1)
-    #conf.env['CFLAGS'] = ['-O0', '-g3']
-    #conf.env['VALAFLAGS'] = ['-g', '-v']
-    #conf.write_config_header ('config.h', env=env_debug)
+    conf.set_env_name ('debug', env=conf.env.derive())
+    conf.define ('DEBUG', 1)
+    conf.env['CFLAGS'] = ['-O0', '-g3']
+    conf.env['VALAFLAGS'] = ['-g', '-v']
+    conf.write_config_header ('debug/config.h')
    
 def build(bld):
     bld.add_subdirs('po src')
