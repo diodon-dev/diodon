@@ -26,16 +26,16 @@ namespace Diodon
      */
     public class Main
     {
-        public static int main (string[] args)
+        public static int main(string[] args)
         {
             string diodon_dir =  Environment.get_home_dir()
                 + "/.local/share/diodon";
         
-            // setup gettext TODO: get it up and running
-            //Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALE_DIR);
-            //Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
+            // setup gettext
+            Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+            Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
 
-            Gtk.init (ref args);
+            Gtk.init(ref args);
             
             // setup controller    
             Indicator indicator = new Indicator();

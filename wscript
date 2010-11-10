@@ -42,7 +42,6 @@ def configure(conf):
     conf.define ('COPYRIGHT', COPYRIGHT)
     conf.define ('WEBSITE', WEBSITE)
     conf.define ('APPNAME', NAME)
-    conf.define ('VAPI_VERSION', VERSION_MAJOR)
     
     # set 'default' variant
     conf.define ('DEBUG', 0)

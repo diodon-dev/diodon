@@ -10,7 +10,7 @@ prog = bld.new_task_gen (
   vapi_dirs = '../vapi',
   uselib = 'GTK GEE APPINDICATOR XML',
   cflags = ['-include', 'config.h'],
-  packages = 'gtk+-2.0 gee-1.0 appindicator-0.1 libxml-2.0',
+  packages = 'gtk+-2.0 gee-1.0 appindicator-0.1 libxml-2.0 config',
   source = bld.path.ant_glob (incl='**/*.vala'))
 
 if Options.options.debug:
