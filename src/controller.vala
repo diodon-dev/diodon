@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using Gee;
-
 namespace Diodon
 {
     /**
@@ -34,7 +32,7 @@ namespace Diodon
     {
         private Indicator indicator;
         private ClipboardModel model;
-        private Gtk.Clipboard clipboard;
+        private Gee.List<Gtk.Clipboard> clipboards;
         
         /**
          * Called when a item has been selected.
@@ -58,10 +56,10 @@ namespace Diodon
          * @param model clipboard model
          * @param clipboard gtk clipboard
          */
-        public Controller(Indicator indicator, ClipboardModel model, Gtk.Clipboard clipboard)
+        public Controller(Indicator indicator, ClipboardModel model, Gee.List<Gtk.Clipboard> clipboards)
         {            
             this.model = model;
-            this.clipboard = clipboard;
+            this.clipboards = clipboards;
             this.indicator = indicator;
         }
         
@@ -103,7 +101,10 @@ namespace Diodon
             on_remove_item(item);
             on_new_item(item);
             on_select_item(item);
-            clipboard.set_text(item.get_text(), -1);
+            
+            foreach(Gtk.Clipboard clipboard in clipboards) {
+                clipboard.set_text(item.get_text(), -1);
+            }
         }
         
         /**
@@ -116,7 +117,10 @@ namespace Diodon
                 indicator.remove_item(item);
             }
             
-            clipboard.clear();
+            foreach(Gtk.Clipboard clipboard in clipboards) {
+                clipboard.clear();
+            }
+            
             model.clear_items();
         }
         
@@ -127,7 +131,10 @@ namespace Diodon
          */
         private bool fetch_clipboard_info()
         {
-            clipboard.request_text(clipboard_text_received);
+            foreach(Gtk.Clipboard clipboard in clipboards) {
+                clipboard.request_text(clipboard_text_received);
+            }
+            
             return true;
         }
         
