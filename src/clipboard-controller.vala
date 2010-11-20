@@ -21,14 +21,14 @@ namespace Diodon
     /**
      * The controller is responsible to interact with the 
      * Gtk clipboard and passing on information to the given ClipboardModel
-     * and Indicator. Furthermore, user interactions on the indicator are passed
-     * on to the controller where the logic is implemented how to manage
-     * those requests.
+     * and Indicator. Furthermore, clipboard user interactions on the indicator
+     * are passed on to this controller where the logic is implemented
+     * how to manage such requests.
      * 
      * 
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class Controller : GLib.Object
+    public class ClipboardController : GLib.Object
     {
         private Indicator indicator;
         private ClipboardModel model;
@@ -56,7 +56,7 @@ namespace Diodon
          * @param model clipboard model
          * @param clipboard gtk clipboard
          */
-        public Controller(Indicator indicator, ClipboardModel model, Gee.List<Gtk.Clipboard> clipboards)
+        public ClipboardController(Indicator indicator, ClipboardModel model, Gee.List<Gtk.Clipboard> clipboards)
         {            
             this.model = model;
             this.clipboards = clipboards;

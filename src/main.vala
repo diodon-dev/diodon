@@ -47,7 +47,7 @@ namespace Diodon
             clipboards.add(clipboard);
             clipboards.add(primary);
             
-            Controller controller = new Controller(indicator, model, clipboards);
+            ClipboardController controller = new ClipboardController(indicator, model, clipboards);
             controller.start();
             
             Gtk.main();
