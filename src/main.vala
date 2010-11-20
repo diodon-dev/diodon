@@ -38,7 +38,7 @@ namespace Diodon
             Gtk.init(ref args);
             
             // setup controller    
-            Indicator indicator = new Indicator();
+            IndicatorView indicator = new IndicatorView();
             IClipboardStorage storage = new XmlClipboardStorage(diodon_dir, "storage.xml");
             ClipboardModel model = new ClipboardModel(storage);
             Gtk.Clipboard clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);

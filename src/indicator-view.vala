@@ -26,7 +26,7 @@ namespace Diodon
      *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class Indicator : GLib.Object
+    public class IndicatorView : GLib.Object
     {
         private AppIndicator.Indicator indicator;
         private Gtk.Menu menu;
@@ -56,7 +56,7 @@ namespace Diodon
         /**
          * Default constructor.
          */ 
-        public Indicator()
+        public IndicatorView()
         {
             // Setup indicator
             indicator = new AppIndicator.Indicator("diodon", "applications-utilities",

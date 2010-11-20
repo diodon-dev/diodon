@@ -30,7 +30,7 @@ namespace Diodon
      */
     public class ClipboardController : GLib.Object
     {
-        private Indicator indicator;
+        private IndicatorView indicator;
         private ClipboardModel model;
         private Gee.List<Gtk.Clipboard> clipboards;
         
@@ -56,7 +56,7 @@ namespace Diodon
          * @param model clipboard model
          * @param clipboard gtk clipboard
          */
-        public ClipboardController(Indicator indicator, ClipboardModel model, Gee.List<Gtk.Clipboard> clipboards)
+        public ClipboardController(IndicatorView indicator, ClipboardModel model, Gee.List<Gtk.Clipboard> clipboards)
         {            
             this.model = model;
             this.clipboards = clipboards;
