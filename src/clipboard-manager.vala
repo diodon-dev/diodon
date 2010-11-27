@@ -21,7 +21,10 @@ namespace Diodon
     /**
      * This class is in charge of retrieving information from
      * the gnome clipboard(s) and passing on such to the processes connected
-     * to the given signals. 
+     * to the given signals.
+     *
+     * TODO: consider using a different design pattern to handle
+     * primary and clipboard selection
      * 
      * @author Oliver Sauder <os@esite.ch>
      */
@@ -59,7 +62,8 @@ namespace Diodon
         {
             primary = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY);
             clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);
-            Timeout.add(500, request_data);
+            Timeout.add(500, request_primary_text);
+            Timeout.add(500, request_clipboard_text);
         }
         
         /**
@@ -99,24 +103,29 @@ namespace Diodon
         }
         
         /**
-         * Requests text and images from set clipboards.
-         *
-         * TODO: implement requesting of images
-         *
-         * @return currently this process always continues; therefore per default true.
+         * Requests text from the primary selection.
+         * 
+         * @return always true.
          */
-        private bool request_data()
+        private bool request_primary_text()
         {
-            // that's currently the only way I know to pass
-            // on a signal call to a delegate parameter
             request_text(primary, (text) => {
                 on_primary_text_received(text); 
              });
-            request_text(clipboard, (text) => {
+             return true;
+        }
+        
+        /**
+         * Requests text from the clipboard selection.
+         * 
+         * @return always true.
+         */
+        private bool request_clipboard_text()
+        {
+             request_text(clipboard, (text) => {
                 on_clipboard_text_received(text);
              });
-            
-            return true;  
+             return true;
         }
         
         /**
