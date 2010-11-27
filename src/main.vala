@@ -41,13 +41,8 @@ namespace Diodon
             IndicatorView indicator = new IndicatorView();
             IClipboardStorage storage = new XmlClipboardStorage(diodon_dir, "storage.xml");
             ClipboardModel model = new ClipboardModel(storage);
-            Gtk.Clipboard clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);
-            Gtk.Clipboard primary = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY);
-            Gee.List<Gtk.Clipboard> clipboards = new Gee.ArrayList<Gtk.Clipboard>();
-            clipboards.add(clipboard);
-            clipboards.add(primary);
-            
-            ClipboardController controller = new ClipboardController(indicator, model, clipboards);
+            ClipboardManager clipboard_manager = new ClipboardManager();
+            Controller controller = new Controller(indicator, model, clipboard_manager);
             controller.start();
             
             Gtk.main();

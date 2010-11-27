@@ -59,7 +59,7 @@ namespace Diodon
         /**
          * clear items and resetting selected item 
          */
-        public void clear_items()
+        public void clear()
         {
             storage.clear();
             selected_item = null;

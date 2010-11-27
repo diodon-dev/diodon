@@ -125,6 +125,19 @@ namespace Diodon
         }
         
         /**
+         * Delete all clipboard menu items from indicator
+         */
+        public void clear()
+        {
+            foreach(ClipboardMenuItem menu_item in clipboard_menu_items.values) {
+                menu.remove(menu_item);
+                menu_item.destroy();
+            }
+            
+            clipboard_menu_items.clear();
+        }
+        
+        /**
          * User event: clicked menu item clear
          */
         private void on_clicked_clear()
