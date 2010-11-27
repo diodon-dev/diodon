@@ -20,151 +20,78 @@ namespace Diodon
 {
     /**
      * This class is in charge of retrieving information from
-     * the gnome clipboard(s) and passing on such to the processes connected
+     * the encapsulated gnome clipboard and passing on such to the processes connected
      * to the given signals.
-     *
-     * TODO: consider using a different design pattern to handle
-     * primary and clipboard selection
      * 
      * @author Oliver Sauder <os@esite.ch>
      */
     public class ClipboardManager : GLib.Object
     {
-        private Gtk.Clipboard primary = null;
+        private ClipboardType type;
         private Gtk.Clipboard clipboard = null;
         
         /**
-         * delegate definition to determine when text has been received
+         * Called when text from the clipboard has been received
          * 
-         * @param text received text
-         */ 
-        private delegate void TextReceivedFunc(string text);
-        
-        /**
-         * Called when text of the primary selection clipboard has been received
-         * 
-         * @param text received primary selection text which is never null or empty
+         * @param type type of clipboard text belongs to
+         * @param text received text from clipboard which is never null or empty
          */
-        public signal void on_primary_text_received(string text);
+        public signal void on_text_received(ClipboardType type, string text);
         
         /**
-         * Called when text of the clipboard has been received
-         * 
-         * @param text received clipboard text which is never null or empty
+         * Constructor
+         *
+         * @param clipboard clipboard to be managed
+         * @param type of clipboard
          */
-        public signal void on_clipboard_text_received(string text);
+        public ClipboardManager(Gtk.Clipboard clipboard, ClipboardType type)
+        {
+            this.clipboard = clipboard;
+            this.type = type;
+        }
         
         /**
-         * Starts the process requesting text from the primary selection
-         * and clipboard.
+         * Starts the process requesting text from encapsulated clipboard.
          */
         public void start()
         {
-            primary = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY);
-            clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);
-            Timeout.add(500, request_primary_text);
-            Timeout.add(500, request_clipboard_text);
+            Timeout.add(500, request_text);
         }
         
         /**
-         * Select item in primary selection
+         * Select text of given item in the managed clipboard.
          *
          * @param item item to be selected
          */
-        public void select_item_in_primary(ClipboardItem item)
+        public void select_item(ClipboardItem item)
         {
-            select_text(primary, item.get_text());
+            clipboard.set_text(item.text, -1);
         }
-
+        
         /**
-         * Select item in clipboard.
+         * Clear managed clipboard 
+         */
+        public void clear()
+        {
+            clipboard.clear();
+        }
+        
+        /**
+         * Request text from managed clipboard. If result is valid
+         * on_text_received will be called.
          *
-         * @param item item to be selected
-         */        
-        public void select_item_in_clipboard(ClipboardItem item)
-        {
-            select_text(clipboard, item.get_text());
-        }
-        
-        /**
-         * Clear primary selection
+         * @return currently always true
          */
-        public void clear_primary()
+        private bool request_text()
         {
-            clear_selection(primary);
-        }
-        
-        /**
-         * Clear clipboard selection
-         */
-        public void clear_clipboard()
-        {
-            clear_selection(clipboard);
-        }
-        
-        /**
-         * Requests text from the primary selection.
-         * 
-         * @return always true.
-         */
-        private bool request_primary_text()
-        {
-            request_text(primary, (text) => {
-                on_primary_text_received(text); 
-             });
-             return true;
-        }
-        
-        /**
-         * Requests text from the clipboard selection.
-         * 
-         * @return always true.
-         */
-        private bool request_clipboard_text()
-        {
-             request_text(clipboard, (text) => {
-                on_clipboard_text_received(text);
-             });
-             return true;
-        }
-        
-        /**
-         * Request text from the given clipboard. If result is valid
-         * given function will be called.
-         *
-         * @param selection selection to retrieve text from
-         * @param func function to be called when text has been
-         *  retrieved successfully
-         */
-        private void request_text(Gtk.Clipboard selection, TextReceivedFunc func)
-        {
-            string text = selection.wait_for_text();
+            string text = clipboard.wait_for_text();
             
             // check if text is valid
             if(text != null && text != "") {
-                func(text);
+                on_text_received(type, text);
             }
-        }
-        
-        /**
-         * Select text in the given clipboard.
-         *
-         * @param selection selection for text selection
-         * @param text text to be selected
-         */
-        private void select_text(Gtk.Clipboard selection, string text)
-        {
-            selection.set_text(text, -1);
-        }
-        
-        /**
-         * Clear given selection 
-         * 
-         * @param selection selection to be cleared
-         */
-        private void clear_selection(Gtk.Clipboard selection)
-        {
-            selection.clear();
+            
+             return true;
         }
     }  
 }

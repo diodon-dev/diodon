@@ -29,7 +29,12 @@ namespace Diodon
     {
         private IndicatorView indicator_view;
         private ClipboardModel clipboard_model;
-        private ClipboardManager clipboard_manager;
+        private Gee.ArrayList<ClipboardManager> clipboard_managers;
+        
+        /**
+         * Called when a item needs to be copied to a clipboard selection.
+         */
+        private signal void on_copy_selection(ClipboardItem item);
         
         /**
          * Called when a item has been selected.
@@ -56,14 +61,14 @@ namespace Diodon
          * 
          * @param indicator_view diodon indicator
          * @param clipboard_model clipboard model
-         * @param clipboard_manager clipboard manager
+         * @param clipboard_managers list of clipboard managers
          */
         public Controller(IndicatorView indicator_view, ClipboardModel clipboard_model,
-            ClipboardManager clipboard_manager)
+            Gee.ArrayList<ClipboardManager> clipboard_managers)
         {            
             this.indicator_view = indicator_view;
             this.clipboard_model = clipboard_model;
-            this.clipboard_manager = clipboard_manager;
+            this.clipboard_managers = clipboard_managers;
         }
         
         /**
@@ -87,8 +92,9 @@ namespace Diodon
             indicator_view.on_clear.connect(clear);
             indicator_view.on_select_item.connect(select_item);
             
-            clipboard_manager.on_clipboard_text_received.connect(text_received);
-            clipboard_manager.on_primary_text_received.connect(text_received);
+            foreach(ClipboardManager clipboard_manager in clipboard_managers) {
+                clipboard_manager.on_text_received.connect(text_received);
+            }
         }
         
         /**
@@ -96,8 +102,11 @@ namespace Diodon
          */
         private void attach_signals()
         {
-            on_select_item.connect(clipboard_manager.select_item_in_primary);
-            on_select_item.connect(clipboard_manager.select_item_in_clipboard);
+            foreach(ClipboardManager clipboard_manager in clipboard_managers) {
+                on_copy_selection.connect(clipboard_manager.select_item);
+                on_clear.connect(clipboard_manager.clear);
+            }
+            
             on_select_item.connect(clipboard_model.select_item);
             on_select_item.connect(indicator_view.select_item);
 
@@ -107,8 +116,6 @@ namespace Diodon
             on_remove_item.connect(clipboard_model.remove_item);
             on_remove_item.connect(indicator_view.remove_item);
             
-            on_clear.connect(clipboard_manager.clear_primary);
-            on_clear.connect(clipboard_manager.clear_clipboard);
             on_clear.connect(indicator_view.clear);
             on_clear.connect(clipboard_model.clear);
         }
@@ -123,7 +130,9 @@ namespace Diodon
                 indicator_view.prepend_item(item);
             }
             
-            clipboard_manager.start();
+            foreach(ClipboardManager clipboard_manager in clipboard_managers) {
+                clipboard_manager.start();
+            }
         }
         
         /**
@@ -137,6 +146,7 @@ namespace Diodon
             on_remove_item(item);
             on_new_item(item);
             on_select_item(item);
+            on_copy_selection(item);
         }
         
         /**
@@ -153,11 +163,13 @@ namespace Diodon
          * 
          * @param text text received
          */
-        private void text_received(string text)
+        private void text_received(ClipboardType type, string text)
         {
-            ClipboardItem selected_item = clipboard_model.get_selected_item();
-            if(selected_item == null || text != selected_item.get_text()) {
-                ClipboardItem item = new ClipboardItem(text);
+            ClipboardItem current_item = clipboard_model.get_current_item(type);
+            if(current_item == null || text != current_item.text) {
+                debug("received text from clipboard " +
+                    "%d".printf(type) + ": " + text);
+                ClipboardItem item = new ClipboardItem(type, text);
                 
                 // remove item from clipboard if it already exists
                 if(clipboard_model.get_items().contains(item)) {

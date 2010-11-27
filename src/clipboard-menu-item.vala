@@ -38,7 +38,7 @@ namespace Diodon
         {
             this.item = item;
             
-            string label = item.get_text().replace("\n", " ");
+            string label = item.text.replace("\n", " ");
             if (label.length > 50) {
                 label = label.substring(0, 50) + "...";
             }

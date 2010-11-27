@@ -104,7 +104,7 @@ namespace Diodon
                     string value = reader.read_string();
                     if(value != null) {
                         debug("Add item " + value + " to clipboard.");
-                        ClipboardItem item = new ClipboardItem(value);
+                        ClipboardItem item = new ClipboardItem(ClipboardType.NONE, value);
                         items.add(item);
                     }
                 }    
@@ -124,7 +124,7 @@ namespace Diodon
             writer.start_element ("clipboard");
             
             foreach(ClipboardItem item in items) {
-                writer.write_element("item", item.get_text());
+                writer.write_element("item", item.text);
             }
             
             writer.end_element();

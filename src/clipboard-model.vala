@@ -29,21 +29,23 @@ namespace Diodon
     public class ClipboardModel
     {
         private IClipboardStorage storage;
-        private ClipboardItem selected_item;
+        private Gee.HashMap<ClipboardType, ClipboardItem> current_items;
  
         public ClipboardModel(IClipboardStorage storage)
         {
-            this.storage = storage;      
+            this.storage = storage;     
+            this.current_items = new Gee.HashMap<ClipboardType, ClipboardItem>();
         }
         
         /**
-         * Get currently selected item.
+         * Get currently selected item for given clipboard type
          * 
+         * @param type clipboard type
          * @return clipboard item
          */
-        public ClipboardItem get_selected_item()
+        public ClipboardItem get_current_item(ClipboardType type)
         {
-            return selected_item;
+            return current_items.get(type);
         }
         
         /**
@@ -62,7 +64,7 @@ namespace Diodon
         public void clear()
         {
             storage.clear();
-            selected_item = null;
+            current_items.clear();
         }
         
         /**
@@ -82,7 +84,7 @@ namespace Diodon
          */         
         public void select_item(ClipboardItem item)
         {  
-            selected_item = item;
+            current_items.set(item.clipboard_type, item);
         }
         
         /**

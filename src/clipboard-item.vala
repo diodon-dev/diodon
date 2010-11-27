@@ -28,24 +28,35 @@ namespace Diodon
      */
     public class ClipboardItem : GLib.Object
     {
-        private string text;
+        private string _text;
+        private ClipboardType _clipboard_type;
        
         /**
          * Simple text constructor
          * 
+         * @param type clipboard type item is coming from
          * @param text plain text
          */ 
-        public ClipboardItem(string text)
+        public ClipboardItem(ClipboardType clipboard_type, string text)
         {
-            this.text = text;
+            _clipboard_type = clipboard_type;
+            _text = text;
         }
     
         /**
          * get plain text
          */
-        public string get_text()
+        public string text
         {
-            return text;
+            get { return _text; }
+        }
+
+        /**
+         * get clipboard type item is coming from
+         */        
+        public ClipboardType clipboard_type
+        {
+            get { return _clipboard_type; }
         }
         
         /**
@@ -63,7 +74,7 @@ namespace Diodon
          */
         public static bool equal_func(ClipboardItem* item_a, ClipboardItem* item_b)
         {
-            return str_equal(item_a->get_text(), item_b->get_text());
+            return str_equal(item_a->text, item_b->text);
         }
         
         /**
@@ -80,7 +91,7 @@ namespace Diodon
          */
         public static uint hash_func (ClipboardItem* item)
         {
-            return str_hash(item->get_text());
+            return str_hash(item->text);
         }
     }  
 }
