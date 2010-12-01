@@ -69,11 +69,11 @@ namespace Diodon
          *
          * @return gtk label 
          */ 
-        private Gtk.Label get_menu_label()
+        /*private Gtk.Label get_menu_label()
         {
             Gtk.Label menu_label = (Gtk.Label) get_child();
             return menu_label;
-        }
+        }*/
     }
 }
 

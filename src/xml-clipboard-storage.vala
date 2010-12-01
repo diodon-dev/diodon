@@ -40,7 +40,7 @@ namespace Diodon
          */
         public XmlClipboardStorage(string directory, string file)
         {
-            items = new ArrayList<ClipboardItem>(ClipboardItem.equal_func);
+            items = new ArrayList<ClipboardItem>((GLib.EqualFunc?)ClipboardItem.equal_func);
             
             // make sure that all parent directories exists
             try {

@@ -28,29 +28,22 @@ namespace Diodon
     {
         public static int main(string[] args)
         {
-            string diodon_dir =  Environment.get_home_dir()
-                + "/.local/share/diodon";
-        
             // setup gettext
             Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
             Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
 
+            // setup gtk
             Gtk.init(ref args);
             
-            // setup controller    
-            IndicatorView indicator = new IndicatorView();
+            // setup storage    
+            string diodon_dir =  Environment.get_home_dir()
+                + "/.local/share/diodon";
             IClipboardStorage storage = new XmlClipboardStorage(diodon_dir, "storage.xml");
             ClipboardModel model = new ClipboardModel(storage);
-            
-            Gee.ArrayList<ClipboardManager> clipboard_managers = new Gee.ArrayList<ClipboardManager>();
-            Gtk.Clipboard clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);
-            ClipboardManager clipboard_manager = new ClipboardManager(clipboard, ClipboardType.CLIPBOARD);
-            clipboard_managers.add(clipboard_manager);
-            Gtk.Clipboard primary = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY);
-            ClipboardManager primary_manager = new ClipboardManager(primary, ClipboardType.PRIMARY);
-            clipboard_managers.add(primary_manager);
-            
-            Controller controller = new Controller(indicator, model, clipboard_managers);
+
+            // setup controller            
+            Controller controller = new Controller();
+            controller.clipboard_model = model;
             controller.start();
             
             Gtk.main();

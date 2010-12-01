@@ -27,10 +27,6 @@ namespace Diodon
      */
     public class Controller : GLib.Object
     {
-        private IndicatorView indicator_view;
-        private ClipboardModel clipboard_model;
-        private Gee.ArrayList<ClipboardManager> clipboard_managers;
-        
         /**
          * Called when a item needs to be copied to a clipboard selection.
          */
@@ -55,20 +51,54 @@ namespace Diodon
          * Called when all items need to be cleared
          */
         private signal void on_clear();
+
+        /**
+         * indicator view property
+         */        
+        public IndicatorView indicator_view { get; set; default = new IndicatorView(); }
         
         /**
-         * Constructor.
-         * 
-         * @param indicator_view diodon indicator
-         * @param clipboard_model clipboard model
-         * @param clipboard_managers list of clipboard managers
+         * configuration manager property
          */
-        public Controller(IndicatorView indicator_view, ClipboardModel clipboard_model,
-            Gee.ArrayList<ClipboardManager> clipboard_managers)
+        public ConfigurationManager configuration_manager { get; set; default = new ConfigurationManager(); }
+        
+         /**
+         * clipboard managers. Per default a primary and clipboard manager
+         * are initialized in the default constructor.
+         */
+        public Gee.HashMap<ClipboardType, ClipboardManager> clipboard_managers
+        {
+            get;
+            set;
+        }
+        
+        /**
+         * clipboard model property default set to a memory storage.
+         */
+        public ClipboardModel clipboard_model
+        {
+            get;
+            set;
+            default = new ClipboardModel(new MemoryClipboardStorage());
+         }
+        
+        /**
+         * configuration model property
+         */
+        public ConfigurationModel configuration_model { get; set; default = new ConfigurationModel(); }
+        
+        /**
+         * Default constructor
+         */
+        public Controller()
         {            
-            this.indicator_view = indicator_view;
-            this.clipboard_model = clipboard_model;
-            this.clipboard_managers = clipboard_managers;
+            clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
+            Gtk.Clipboard clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);
+            ClipboardManager clipboard_manager = new ClipboardManager(clipboard, ClipboardType.CLIPBOARD);
+            clipboard_managers.set(ClipboardType.CLIPBOARD, clipboard_manager);
+            Gtk.Clipboard primary = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY);
+            ClipboardManager primary_manager = new ClipboardManager(primary, ClipboardType.PRIMARY);
+            clipboard_managers.set(ClipboardType.PRIMARY, primary_manager);    
         }
         
         /**
@@ -88,13 +118,24 @@ namespace Diodon
          */
         private void connect_signals()
         {
+            // indicator
             indicator_view.on_quit.connect(quit);
             indicator_view.on_clear.connect(clear);
             indicator_view.on_select_item.connect(select_item);
             
-            foreach(ClipboardManager clipboard_manager in clipboard_managers) {
-                clipboard_manager.on_text_received.connect(text_received);
-            }
+            // use clipboard configuration
+            configuration_manager.add_bool_notify(configuration_model.use_clipboard_key,
+                () => { enable_clipboard_manager(ClipboardType.CLIPBOARD); },
+                () => { disable_clipboard_manager(ClipboardType.CLIPBOARD); },
+                configuration_model.use_clipboard
+            );
+            
+            // use primary configuration
+            configuration_manager.add_bool_notify(configuration_model.use_primary_key,
+                () => { enable_clipboard_manager(ClipboardType.PRIMARY); },
+                () => { disable_clipboard_manager(ClipboardType.PRIMARY); },
+                configuration_model.use_primary
+            );
         }
         
         /**
@@ -102,11 +143,6 @@ namespace Diodon
          */
         private void attach_signals()
         {
-            foreach(ClipboardManager clipboard_manager in clipboard_managers) {
-                on_copy_selection.connect(clipboard_manager.select_item);
-                on_clear.connect(clipboard_manager.clear);
-            }
-            
             on_select_item.connect(clipboard_model.select_item);
             on_select_item.connect(indicator_view.select_item);
 
@@ -130,7 +166,7 @@ namespace Diodon
                 indicator_view.prepend_item(item);
             }
             
-            foreach(ClipboardManager clipboard_manager in clipboard_managers) {
+            foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
                 clipboard_manager.start();
             }
         }
@@ -148,14 +184,6 @@ namespace Diodon
             on_select_item(item);
             on_copy_selection(item);
         }
-        
-        /**
-         * Clear all items from the clipboard and reset selected items
-         */
-        private void clear()
-        {
-            on_clear();
-        }
        
         /**
          * Handling text retrieved from clipboard by adding it to the storage
@@ -167,8 +195,7 @@ namespace Diodon
         {
             ClipboardItem current_item = clipboard_model.get_current_item(type);
             if(current_item == null || text != current_item.text) {
-                debug("received text from clipboard " +
-                    "%d".printf(type) + ": " + text);
+                debug("received text from clipboard " + "%d".printf(type) + ": " + text);
                 ClipboardItem item = new ClipboardItem(type, text);
                 
                 // remove item from clipboard if it already exists
@@ -179,6 +206,42 @@ namespace Diodon
                 on_new_item(item);
                 on_select_item(item);
             }
+        }
+        
+        /**
+         * connect and attach to signals of given clipboard type to enable it.
+         *
+         * @param type type of clipboard
+         */
+        private void enable_clipboard_manager(ClipboardType type)
+        {
+            debug("enable_clipboard_manager");
+            ClipboardManager manager = clipboard_managers.get(type);
+            manager.on_text_received.connect(text_received);
+            on_copy_selection.connect(manager.select_item);
+            on_clear.connect(manager.clear);
+        }
+        
+        /**
+         * disconnect and dis-attach to signals of given manager to disable it.
+         *
+         * @param type type of clipboard
+         */
+        private void disable_clipboard_manager(ClipboardType type)
+        {
+            debug("disable_clipboard_manager");
+            ClipboardManager manager = clipboard_managers.get(type);
+            manager.on_text_received.disconnect(text_received);
+            on_copy_selection.disconnect(manager.select_item);
+            on_clear.disconnect(manager.clear);
+        }
+        
+        /**
+         * Clear all items from the clipboard and reset selected items
+         */
+        private void clear()
+        {
+            on_clear();
         }
         
         /**

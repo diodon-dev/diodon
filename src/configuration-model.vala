@@ -19,41 +19,31 @@
 namespace Diodon
 {
     /**
-     * This controller is responsible for interacting with the GConf
-     * sub system. Configuration changes will be passed onto the
-     * ClipboardController and the configuration state will be stored in the
-     * ConfigurationModel.
-     * 
+     * The configruation model encapsulates the configuration state.
+     *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class ConfigurationController : GLib.Object
+    public class ConfigurationModel : GLib.Object
     {
         /**
-         * gconf client
+         * key of use primary key flag
          */
-        //private GConf.Client client;
+        public string use_primary_key { get { return "/clipboard/use_primary"; } }
         
         /**
-         * Constructor.
+         * flag whether primary selection is enabled
          */
-        public ConfigurationController()
-        {
-            // client = GConf.Client.get_default();
-        }
-
-        /**
-         * Starts process initializing configuration values with user defined
-         * gconf options and hooks onto the gconf callback to be notified when a
-         * gconf option has been changed.
-         */
-        public void start()
-        {
-            
-        }
+        public bool use_primary { get; set; default = true; }
         
-        public void update_configuration()
-        {
-        }
+        /**
+         * key of use clipboard key flag
+         */
+        public string use_clipboard_key { get { return "/clipboard/use_clipboard"; } }
+        
+        /**
+         * flag whether clipboard is enabled
+         */
+        public bool use_clipboard { get; set; default = true; }
     }
 }
 

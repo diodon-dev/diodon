@@ -83,7 +83,7 @@ namespace Diodon
             indicator.set_menu(menu);
             
             clipboard_menu_items = new HashMap<ClipboardItem, ClipboardMenuItem>(
-                ClipboardItem.hash_func, ClipboardItem.equal_func);
+                (GLib.HashFunc?)ClipboardItem.hash_func, (GLib.EqualFunc?)ClipboardItem.equal_func);
         }
         
         /**
