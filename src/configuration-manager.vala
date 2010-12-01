@@ -54,7 +54,12 @@ namespace Diodon
         public ConfigurationManager()
         {
             client = GConf.Client.get_default();
-            client.add_dir(GCONF_APP_PATH, GConf.ClientPreloadType.RECURSIVE);
+            
+            try {
+                client.add_dir(GCONF_APP_PATH, GConf.ClientPreloadType.RECURSIVE);
+            } catch(GLib.Error e) {
+                warning("Could not add directory listener to GConf client. Error: " + e.message);
+            }
         }
         
         /**
