@@ -215,7 +215,6 @@ namespace Diodon
          */
         private void enable_clipboard_manager(ClipboardType type)
         {
-            debug("enable_clipboard_manager");
             ClipboardManager manager = clipboard_managers.get(type);
             manager.on_text_received.connect(text_received);
             on_copy_selection.connect(manager.select_item);
@@ -229,7 +228,6 @@ namespace Diodon
          */
         private void disable_clipboard_manager(ClipboardType type)
         {
-            debug("disable_clipboard_manager");
             ClipboardManager manager = clipboard_managers.get(type);
             manager.on_text_received.disconnect(text_received);
             on_copy_selection.disconnect(manager.select_item);

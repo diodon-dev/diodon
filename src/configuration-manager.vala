@@ -54,6 +54,7 @@ namespace Diodon
         public ConfigurationManager()
         {
             client = GConf.Client.get_default();
+            client.add_dir(GCONF_APP_PATH, GConf.ClientPreloadType.RECURSIVE);
         }
         
         /**
@@ -90,7 +91,6 @@ namespace Diodon
                     enable_disable_handler(entry.get_value().get_bool(),
                         enable_func, disable_func);
                 });
-                client.notify_add(GCONF_APP_PATH + key, gconf_cb);
             } catch(GLib.Error e) {
                 warning("Could not add notify of key " + key + " (Error: )" + e.message);
             }
@@ -105,6 +105,7 @@ namespace Diodon
         public void set_bool_value(string key, bool value)
         {
             try {
+                // TODO: check if value is writable before writing
                 client.set_bool(GCONF_APP_PATH + key, value);
             } catch(GLib.Error e) {
                 warning("Could not change boolean value of key " + key + " to " + 
@@ -124,11 +125,6 @@ namespace Diodon
                 disable_func();
             }
         }
-        
-        private void gconf_cb (GConf.Client gc, uint cxnid, GConf.Entry entry) {
-            debug("Updated key " + entry.get_key());
-        }
-
     }
 }
 
