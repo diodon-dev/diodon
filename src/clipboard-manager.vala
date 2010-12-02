@@ -44,9 +44,15 @@ namespace Diodon
          * @param clipboard clipboard to be managed
          * @param type of clipboard
          */
-        public ClipboardManager(Gtk.Clipboard clipboard, ClipboardType type)
+        public ClipboardManager(ClipboardType type)
         {
-            this.clipboard = clipboard;
+            // TODO: might consider this block to be replaced with a HashMap
+            if(type == ClipboardType.CLIPBOARD) {
+                this.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);
+            } else if(type == ClipboardType.PRIMARY) {
+                this.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY);
+            }
+            
             this.type = type;
         }
         

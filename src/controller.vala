@@ -92,13 +92,12 @@ namespace Diodon
          */
         public Controller()
         {            
+            // initialize needed clipboard managers
+            // TODO: checkout how to get values from enum
+            // to generalize this code
             clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
-            Gtk.Clipboard clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);
-            ClipboardManager clipboard_manager = new ClipboardManager(clipboard, ClipboardType.CLIPBOARD);
-            clipboard_managers.set(ClipboardType.CLIPBOARD, clipboard_manager);
-            Gtk.Clipboard primary = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY);
-            ClipboardManager primary_manager = new ClipboardManager(primary, ClipboardType.PRIMARY);
-            clipboard_managers.set(ClipboardType.PRIMARY, primary_manager);    
+            clipboard_managers.set(ClipboardType.CLIPBOARD, new ClipboardManager(ClipboardType.CLIPBOARD));
+            clipboard_managers.set(ClipboardType.PRIMARY, new ClipboardManager(ClipboardType.PRIMARY));
         }
         
         /**
