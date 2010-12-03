@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using Gee;
-
 namespace Diodon
 {
     /**
@@ -27,14 +25,14 @@ namespace Diodon
      */
     public class MemoryClipboardStorage : GLib.Object, IClipboardStorage
     {
-        private ArrayList<ClipboardItem> items;
+        private Gee.ArrayList<ClipboardItem> items;
     
         /**
          * Default constructor
          */
         public MemoryClipboardStorage()
         {
-            items = new ArrayList<ClipboardItem>((GLib.EqualFunc?)ClipboardItem.equal_func);
+            items = new Gee.ArrayList<ClipboardItem>((GLib.EqualFunc?)ClipboardItem.equal_func);
         }
         
         /**
@@ -48,7 +46,7 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public ArrayList<ClipboardItem> get_items()
+        public Gee.ArrayList<ClipboardItem> get_items()
         {
             return items;
         }

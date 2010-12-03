@@ -25,6 +25,8 @@ namespace Diodon
      */
     public class ConfigurationModel : GLib.Object
     {
+        private int _clipboard_size = 25;
+    
         /**
          * key of use primary key flag
          */
@@ -44,6 +46,29 @@ namespace Diodon
          * flag whether clipboard is enabled
          */
         public bool use_clipboard { get; set; default = true; }
+        
+        /**
+         * key of clipboard history size
+         */
+        public string clipboard_size_key { get { return "/clipboard/clipboard_size"; } }
+        
+        /**
+         * size of clipboard history.
+         * Value must be bigger than 0 and lower than 100.
+         */
+        public int clipboard_size
+        {
+            get
+            { 
+                return _clipboard_size;
+            }
+            set
+            {
+                if(value > 0 && value < 100) {
+                    _clipboard_size = value;
+                }
+            }
+        }
     }
 }
 

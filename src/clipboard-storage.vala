@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
-using Gee;
-
 namespace Diodon
 {
     /**
@@ -34,7 +32,7 @@ namespace Diodon
          * 
          * @return get all clipboard entries in right order
          */
-        public abstract ArrayList<ClipboardItem> get_items();
+        public abstract Gee.ArrayList<ClipboardItem> get_items();
         
         /**
          * Add given item to storage

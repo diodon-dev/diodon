@@ -121,20 +121,6 @@ namespace Diodon
             indicator_view.on_quit.connect(quit);
             indicator_view.on_clear.connect(clear);
             indicator_view.on_select_item.connect(select_item);
-            
-            // use clipboard configuration
-            configuration_manager.add_bool_notify(configuration_model.use_clipboard_key,
-                () => { enable_clipboard_manager(ClipboardType.CLIPBOARD); },
-                () => { disable_clipboard_manager(ClipboardType.CLIPBOARD); },
-                configuration_model.use_clipboard
-            );
-            
-            // use primary configuration
-            configuration_manager.add_bool_notify(configuration_model.use_primary_key,
-                () => { enable_clipboard_manager(ClipboardType.PRIMARY); },
-                () => { disable_clipboard_manager(ClipboardType.PRIMARY); },
-                configuration_model.use_primary
-            );
         }
         
         /**
@@ -165,9 +151,36 @@ namespace Diodon
                 indicator_view.prepend_item(item);
             }
             
+            init_configuration();
+            
+             // start clipboard managers
             foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
                 clipboard_manager.start();
             }
+        }
+        
+        /**
+         * Initialize configuration values
+         */
+        private void init_configuration()
+        {
+             // use clipboard configuration
+            configuration_manager.add_bool_notify(configuration_model.use_clipboard_key,
+                () => { enable_clipboard_manager(ClipboardType.CLIPBOARD); },
+                () => { disable_clipboard_manager(ClipboardType.CLIPBOARD); },
+                configuration_model.use_clipboard
+            );
+            
+            // use primary configuration
+            configuration_manager.add_bool_notify(configuration_model.use_primary_key,
+                () => { enable_clipboard_manager(ClipboardType.PRIMARY); },
+                () => { disable_clipboard_manager(ClipboardType.PRIMARY); },
+                configuration_model.use_primary
+            );
+            
+            // clipboard size
+            configuration_manager.add_int_notify(configuration_model.clipboard_size_key,
+                change_clipboard_size, configuration_model.clipboard_size);
         }
         
         /**
@@ -204,6 +217,31 @@ namespace Diodon
                 
                 on_new_item(item);
                 on_select_item(item);
+            }
+        }
+        
+        /**
+         * Change size of clipboard history which might cause removing
+         * of some items.
+         * 
+         * @param size clipboard history size
+         */
+        private void change_clipboard_size(int size)
+        {
+            configuration_model.clipboard_size = size;
+
+            if(configuration_model.clipboard_size < clipboard_model.get_items().size) {
+                debug("bigger than");
+                // create copy of items as otherwise
+                // removing in a loop does not work
+                Gee.ArrayList<ClipboardItem> items = new Gee.ArrayList<ClipboardItem>();
+                items.add_all(clipboard_model.get_items());
+                
+                int remove = items.size - configuration_model.clipboard_size;
+                for(int i = 0; i < remove; ++i) {
+                    ClipboardItem item = items.get(i);
+                    on_remove_item(item);
+                }
             }
         }
         

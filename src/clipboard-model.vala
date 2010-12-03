@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
-using Gee;
-
 namespace Diodon
 {
     /**
@@ -53,7 +51,7 @@ namespace Diodon
          * 
          * @return list of clipboard items
          */
-        public ArrayList<ClipboardItem> get_items()
+        public Gee.ArrayList<ClipboardItem> get_items()
         {
             return storage.get_items();
         }

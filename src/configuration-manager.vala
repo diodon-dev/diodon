@@ -92,8 +92,9 @@ namespace Diodon
             
             try {
                 client.notify_add(GCONF_APP_PATH + key, (client, cxnid, entry) => {
-                    debug("Value of key " + entry.get_key() + " has changed to " + "%d".printf(value));
-                    change_int_func(entry.get_value().get_int());
+                    int new_value = entry.get_value().get_int();
+                    debug("Value of key " + entry.get_key() + " has changed to " + "%d".printf(new_value));
+                    change_int_func(new_value);
                 });
             } catch(GLib.Error e) {
                 warning("Could not add notify of key " + key + " (Error: )" + e.message);
