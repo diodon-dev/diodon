@@ -29,6 +29,11 @@ namespace Diodon
         private IClipboardStorage storage;
         private Gee.HashMap<ClipboardType, ClipboardItem> current_items;
  
+        /** 
+         * Storage constructor
+         *
+         * @param storage
+         */
         public ClipboardModel(IClipboardStorage storage)
         {
             this.storage = storage;     
@@ -47,6 +52,22 @@ namespace Diodon
         }
         
         /**
+         * Get last respectively oldest available clipboard item
+         *
+         * @return last item or null if no item is available
+         */
+        public ClipboardItem get_last_item()
+        {
+            ClipboardItem item = null;
+            
+            if(get_size() > 0) {
+                item = get_items().get(0);
+            }
+            
+            return item;
+        }
+        
+        /**
          * Get all clipboard items
          * 
          * @return list of clipboard items
@@ -54,6 +75,16 @@ namespace Diodon
         public Gee.ArrayList<ClipboardItem> get_items()
         {
             return storage.get_items();
+        }
+        
+        /**
+         * Get number of items available
+         *
+         * @return number of items
+         */
+        public int get_size()
+        {
+            return get_items().size;
         }
         
         /**

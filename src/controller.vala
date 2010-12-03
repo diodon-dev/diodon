@@ -215,6 +215,11 @@ namespace Diodon
                     on_remove_item(item);
                 }
                 
+                // check if maximum clipboard size has been reached
+                if(configuration_model.clipboard_size == clipboard_model.get_size()) {
+                    on_remove_item(clipboard_model.get_last_item());
+                }
+                
                 on_new_item(item);
                 on_select_item(item);
             }
@@ -230,8 +235,7 @@ namespace Diodon
         {
             configuration_model.clipboard_size = size;
 
-            if(configuration_model.clipboard_size < clipboard_model.get_items().size) {
-                debug("bigger than");
+            if(configuration_model.clipboard_size < clipboard_model.get_size()) {
                 // create copy of items as otherwise
                 // removing in a loop does not work
                 Gee.ArrayList<ClipboardItem> items = new Gee.ArrayList<ClipboardItem>();
