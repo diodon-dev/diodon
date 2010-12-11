@@ -51,6 +51,13 @@ namespace Diodon
          * Called when all items need to be cleared
          */
         private signal void on_clear();
+        
+        /**
+         * Called when the menu needs to be shown
+         *
+         * @param event 
+         */
+        private signal void on_show_menu(Gdk.Event event);
 
         /**
          * indicator view property
@@ -61,6 +68,11 @@ namespace Diodon
          * configuration manager property
          */
         public ConfigurationManager configuration_manager { get; set; default = new ConfigurationManager(); }
+        
+        /**
+         * keybinding manager property
+         */
+        public KeybindingManager keybinding_manager { get; set; default = new KeybindingManager(); }
         
          /**
          * clipboard managers. Per default a primary and clipboard manager
@@ -139,6 +151,8 @@ namespace Diodon
             
             on_clear.connect(indicator_view.clear);
             on_clear.connect(clipboard_model.clear);
+            
+            on_show_menu.connect(indicator_view.show_menu);
         }
         
         /**
@@ -157,6 +171,8 @@ namespace Diodon
             foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
                 clipboard_manager.start();
             }
+            
+            keybinding_manager.init();
         }
         
         /**
@@ -181,6 +197,10 @@ namespace Diodon
             // clipboard size
             configuration_manager.add_int_notify(configuration_model.clipboard_size_key,
                 change_clipboard_size, configuration_model.clipboard_size);
+            
+            // history_accelerator
+            configuration_manager.add_string_notify(configuration_model.history_accelerator_key,
+                change_history_accelerator, configuration_model.history_accelerator);
         }
         
         /**
@@ -247,6 +267,26 @@ namespace Diodon
                     on_remove_item(item);
                 }
             }
+        }
+
+        /**
+         * change history accelerator key and bind new key to open_history.
+         *
+         * @param accelerator accelerator parseable by Gtk.accelerator_parse
+         */        
+        private void change_history_accelerator(string accelerator)
+        {
+            keybinding_manager.unbind(configuration_model.history_accelerator);
+            configuration_model.history_accelerator = accelerator;
+            keybinding_manager.bind(accelerator, open_history);
+        }
+
+        /**
+         * Open indicator to view history
+         */        
+        private void open_history(Gdk.Event event)
+        {
+            on_show_menu(event);
         }
         
         /**

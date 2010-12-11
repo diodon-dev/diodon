@@ -137,6 +137,15 @@ namespace Diodon
         }
         
         /**
+         * Show indicator menu
+         */
+        public void show_menu(Gdk.Event event)
+        {
+            menu.select_first(false);
+            menu.popup(null, null, null, event.button.button, event.get_time());
+        }
+        
+        /**
          * User event: clicked menu item clear
          */
         private void on_clicked_clear()

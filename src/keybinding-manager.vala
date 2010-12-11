@@ -52,7 +52,12 @@ namespace Diodon
             public KeybindingHandlerFunc handler { get; set; }
         }
         
-        public delegate void KeybindingHandlerFunc();
+        /**
+         * Keybinding func needed to bind key to handler
+         * 
+         * @param event passing on gdk event
+         */
+        public delegate void KeybindingHandlerFunc(Gdk.Event event);
     
         /**
          * initialize keybinding
@@ -135,7 +140,7 @@ namespace Diodon
                 foreach(Keybinding binding in bindings) {
                     if(xevent->xkey.keycode == binding.keycode && xevent.xkey.state == binding.modifiers) {
                         // call all handlers with pressed key and modifiers
-                        binding.handler();
+                        binding.handler(gdk_event);
                     }
                 }
              }
