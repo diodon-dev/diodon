@@ -123,7 +123,21 @@ namespace Diodon
         {
             debug("Unbinding key " + accelerator);
             
+            Gdk.Window rootwin = Gdk.get_default_root_window();     
+            X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
+            X.ID xid = Gdk.x11_drawable_get_xid(rootwin);
             
+            // unbind all keys with given accelerator
+            Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
+            foreach(Keybinding binding in bindings) {
+                if(str_equal(accelerator, binding.accelerator)) {
+                    display.ungrab_key(binding.keycode, binding.modifiers, xid);
+                    remove_bindings.add(binding);                    
+                }
+            }
+            
+            // remove unbinded keys
+            bindings.remove_all(remove_bindings);
         }
         
         /**
