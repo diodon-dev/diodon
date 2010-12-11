@@ -43,6 +43,8 @@ namespace Diodon
          */
         public delegate void ChangeIntFunc(int value);
         
+        public delegate void ChangeStringFunc(string value);
+        
         /**
          * delegate to be called when a value has been enabled
          */
@@ -64,6 +66,40 @@ namespace Diodon
                 client.add_dir(GCONF_APP_PATH, GConf.ClientPreloadType.RECURSIVE);
             } catch(GLib.Error e) {
                 warning("Could not add directory listener to GConf client. Error: " + e.message);
+            }
+        }
+        
+        /**
+         * Add notify function for given diodon key of a string value. First
+         * notify will be called immediately with the already available value
+         * if valid otherwise the default value will be returned.
+         * 
+         * @param key configuration key
+         * @param change_string_func called when value has been changed
+         * @param default default value to be set if not available
+         */
+        public void add_string_notify(string key, ChangeStringFunc change_string_func, string default)
+        {
+            string value = default;
+             try {
+                GConf.Value conf_value = get_value(key);
+                value = conf_value.get_string();
+            } catch(GLib.Error e) {
+                debug("Boolean value of key " + key + " is not available yet.");
+                set_string_value(key, default);
+            }
+            
+            // initial call
+            change_string_func(value);
+            
+            try {
+                client.notify_add(GCONF_APP_PATH + key, (client, cxnid, entry) => {
+                    string new_value = entry.get_value().get_string();
+                    debug("Value of key " + entry.get_key() + " has changed to " + new_value);
+                    change_string_func(new_value);
+                });
+            } catch(GLib.Error e) {
+                warning("Could not add notify of key " + key + " (Error: )" + e.message);
             }
         }
         
@@ -98,6 +134,23 @@ namespace Diodon
                 });
             } catch(GLib.Error e) {
                 warning("Could not add notify of key " + key + " (Error: )" + e.message);
+            }
+        }
+        
+        /**
+         * Set string value to given key.
+         * 
+         * @param key value key
+         * @param value value to set
+         */
+        public void set_string_value(string key, string value)
+        {
+            try {
+                // TODO: check if value is writable before writing
+                client.set_string(GCONF_APP_PATH + key, value);
+            } catch(GLib.Error e) {
+                warning("Could not change string value of key " + key + " to " + 
+                    value.to_string() + " (Error: )" + e.message);
             }
         }
         

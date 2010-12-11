@@ -19,7 +19,7 @@
 namespace Diodon
 {
     /**
-     * The configruation model encapsulates the configuration state.
+     * The configuration model encapsulates the configuration state.
      *
      * @author Oliver Sauder <os@esite.ch>
      */
@@ -58,17 +58,25 @@ namespace Diodon
          */
         public int clipboard_size
         {
-            get
-            { 
+            get { 
                 return _clipboard_size;
             }
-            set
-            {
+            set {
                 if(value > 0 && value < 100) {
                     _clipboard_size = value;
                 }
             }
         }
+        
+        /**
+         * key for clipboard history accelerator
+         */
+       public string history_accelerator_key { get { return "/keybindings/history"; } }
+       
+       /**
+        * clipboard history accelerator
+        */
+       public string history_accelerator { get; set; default = "<Ctrl><Alt>V"; }
     }
 }
 

@@ -38,7 +38,7 @@ namespace Diodon
         private class Keybinding
         {
             public Keybinding(string accelerator, int keycode,
-                Gdk.ModifierType modifiers, KeybindingHandler handler)
+                Gdk.ModifierType modifiers, KeybindingHandlerFunc handler)
             {
                 this.accelerator = accelerator;
                 this.keycode = keycode;
@@ -49,10 +49,10 @@ namespace Diodon
             public string accelerator { get; set; }
             public int keycode { get; set; }
             public Gdk.ModifierType modifiers { get; set; }
-            public KeybindingHandler handler { get; set; }
+            public KeybindingHandlerFunc handler { get; set; }
         }
         
-        public delegate void KeybindingHandler();
+        public delegate void KeybindingHandlerFunc();
     
         /**
          * initialize keybinding
@@ -76,7 +76,7 @@ namespace Diodon
          * @param accelerator accelerator parsable by Gtk.accelerator_parse
          * @param handler handler called when given accelerator is pressed
          */
-        public void bind(string accelerator, KeybindingHandler handler)
+        public void bind(string accelerator, KeybindingHandlerFunc handler)
         {
             debug("Binding key " + accelerator);
             
