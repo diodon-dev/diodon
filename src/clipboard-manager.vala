@@ -97,7 +97,7 @@ namespace Diodon
                 on_text_received(type, text);
             }
             
-             return true;
+            return true;
         }
     }  
 }

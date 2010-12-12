@@ -30,6 +30,7 @@ namespace Diodon
     {
         private AppIndicator.Indicator indicator;
         private Gtk.Menu menu;
+        private Gtk.MenuItem empty_item;
         
         /**
          * HashMap of all available clipboard items
@@ -66,6 +67,10 @@ namespace Diodon
             
             // Setup application menu
             menu = new Gtk.Menu();
+            
+            empty_item = new Gtk.MenuItem.with_label(_("<Empty>"));
+            empty_item.set_sensitive(false);
+            menu.append(empty_item);
             
             Gtk.SeparatorMenuItem sep_item = new Gtk.SeparatorMenuItem();
             menu.append(sep_item);
@@ -107,6 +112,7 @@ namespace Diodon
             menu_item.activate.connect(on_clicked_item);
             menu_item.show();
             clipboard_menu_items.set(item, menu_item);
+            clipboard_is_empty(false);
             menu.prepend(menu_item);
         }
         
@@ -134,6 +140,7 @@ namespace Diodon
             }
             
             clipboard_menu_items.clear();
+            clipboard_is_empty(true);
         }
         
         /**
@@ -143,6 +150,18 @@ namespace Diodon
         {
             menu.select_first(false);
             menu.popup(null, null, null, event.button.button, event.get_time());
+        }
+        
+        /**
+         * Show or hide the empty clipboard label
+         */
+        private void clipboard_is_empty(bool is_empty)
+        {
+            if (is_empty) {
+                empty_item.set_visible(true);
+            } else {
+                empty_item.set_visible(false);
+            }
         }
         
         /**
