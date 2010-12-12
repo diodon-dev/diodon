@@ -36,8 +36,8 @@ namespace Diodon
             Gtk.init(ref args);
             
             // setup storage    
-            string diodon_dir =  Environment.get_home_dir()
-                + "/.local/share/diodon";
+            string diodon_dir =  Environment.get_user_data_dir()
+                + "/diodon";
             IClipboardStorage storage = new XmlClipboardStorage(diodon_dir, "storage.xml");
             ClipboardModel model = new ClipboardModel(storage);
 
