@@ -149,8 +149,8 @@ namespace Diodon
             on_remove_item.connect(clipboard_model.remove_item);
             on_remove_item.connect(indicator_view.remove_item);
             
-            on_clear.connect(indicator_view.clear);
             on_clear.connect(clipboard_model.clear);
+            on_clear.connect(indicator_view.clear);
             
             on_show_menu.connect(indicator_view.show_menu);
         }
