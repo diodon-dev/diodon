@@ -112,7 +112,6 @@ namespace Diodon
             menu_item.activate.connect(on_clicked_item);
             menu_item.show();
             clipboard_menu_items.set(item, menu_item);
-            clipboard_is_empty(false);
             menu.prepend(menu_item);
         }
         
@@ -140,7 +139,6 @@ namespace Diodon
             }
             
             clipboard_menu_items.clear();
-            clipboard_is_empty(true);
         }
         
         /**
@@ -153,15 +151,19 @@ namespace Diodon
         }
         
         /**
-         * Show or hide the empty clipboard label
+         * Show empty clipboard label
          */
-        private void clipboard_is_empty(bool is_empty)
+        public void show_empty_item()
         {
-            if (is_empty) {
-                empty_item.set_visible(true);
-            } else {
-                empty_item.set_visible(false);
-            }
+            empty_item.set_visible(true);
+        }
+        
+        /**
+         * Hide empty clipboard label
+         */
+        public void hide_empty_item()
+        {
+            empty_item.set_visible(false);
         }
         
         /**
