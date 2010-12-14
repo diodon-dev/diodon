@@ -164,6 +164,7 @@ namespace Diodon
         {
              // add all available items from storage to indicator
             foreach(ClipboardItem item in clipboard_model.get_items()) {
+                indicator_view.hide_empty_item();
                 indicator_view.prepend_item(item);
             }
             
