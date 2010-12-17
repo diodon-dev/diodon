@@ -79,7 +79,9 @@ namespace Diodon
          */
         public void clear()
         {
-            clipboard.clear();
+            clipboard.set_text("", -1);
+            // FIXME: this does not seem to do anything
+            //clipboard.clear();
         }
         
         /**
