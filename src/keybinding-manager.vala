@@ -64,10 +64,6 @@ namespace Diodon
          */
         public void init()
         {
-            // must be called before opening a display
-            // or calling any other Xlib function
-            X.init_threads();
-            
             // init filter to retrieve X.Events
             Gdk.Window rootwin = Gdk.get_default_root_window();
             if(rootwin != null) {
