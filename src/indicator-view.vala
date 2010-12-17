@@ -63,7 +63,6 @@ namespace Diodon
             indicator = new AppIndicator.Indicator("diodon", "gtk-paste",
                 AppIndicator.Category.APPLICATION_STATUS);
             indicator.set_status(AppIndicator.Status.ACTIVE);
-            indicator.set_attention_icon("indicator-messages-new");
             
             // Setup application menu
             menu = new Gtk.Menu();
