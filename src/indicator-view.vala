@@ -144,10 +144,10 @@ namespace Diodon
         /**
          * Show indicator menu
          */
-        public void show_menu(Gdk.Event event)
+        public void show_menu()
         {
             menu.select_first(false);
-            menu.popup(null, null, null, event.button.button, event.get_time());
+            menu.popup(null, null, null, 0, Gtk.get_current_event_time());
         }
         
         /**

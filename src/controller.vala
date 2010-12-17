@@ -57,7 +57,7 @@ namespace Diodon
          *
          * @param event 
          */
-        private signal void on_show_menu(Gdk.Event event);
+        private signal void on_show_menu();
 
         /**
          * indicator view property
@@ -287,9 +287,14 @@ namespace Diodon
         /**
          * Open indicator to view history
          */        
-        private void open_history(Gdk.Event event)
+        private void open_history()
         {
-            on_show_menu(event);
+            // execute show_menu in main loop
+            // do avoid dead lock
+            Timeout.add(100, () => {
+                on_show_menu();
+                return false; // stop timer calls    
+            });
         }
         
         /**
