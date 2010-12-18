@@ -30,8 +30,8 @@ def configure(conf):
     conf.load('vala', funs='')
     conf.check_vala(min_version=(0,10,0))
     
-    conf.check_cfg(package='glib-2.0',         uselib_store='GLIB',         atleast_version='2.10.0',  mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='gtk+-2.0',         uselib_store='GTK',          atleast_version='2.10.0',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='glib-2.0',         uselib_store='GLIB',         atleast_version='2.22.0',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='gtk+-2.0',         uselib_store='GTK',          atleast_version='2.22.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gdk-x11-2.0',      uselib_store='GDKX',         atleast_version='2.22.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gee-1.0',          uselib_store='GEE',          atleast_version='0.5.0',   mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='libxml-2.0',       uselib_store='XML',          atleast_version='2.7.6',   mandatory=1, args='--cflags --libs')
