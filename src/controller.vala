@@ -197,6 +197,13 @@ namespace Diodon
                 configuration_model.use_primary
             );
             
+            // synchronize clipboards
+            configuration_manager.add_bool_notify(configuration_model.synchronize_clipboards_key,
+                () => { configuration_model.synchronize_clipboards = true; },
+                () => { configuration_model.synchronize_clipboards = false; },
+                configuration_model.synchronize_clipboards
+            );
+            
             // clipboard size
             configuration_manager.add_int_notify(configuration_model.clipboard_size_key,
                 change_clipboard_size, configuration_model.clipboard_size);
@@ -245,6 +252,16 @@ namespace Diodon
                 
                 on_new_item(item);
                 on_select_item(item);
+                
+                if(configuration_model.synchronize_clipboards) {
+                    // set text on all other clipboards then current type
+                    foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
+                        if(type != clipboard_manager.clipboard_type) {
+                            debug("sync");
+                            clipboard_manager.select_item(item);
+                        }
+                    }
+                }
             }
         }
         

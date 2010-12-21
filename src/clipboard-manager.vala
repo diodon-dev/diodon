@@ -39,6 +39,11 @@ namespace Diodon
         public signal void on_text_received(ClipboardType type, string text);
         
         /**
+         * get type of given clipboard manager
+         */
+        public ClipboardType clipboard_type { get { return type; } }
+        
+        /**
          * Constructor
          *
          * @param clipboard clipboard to be managed

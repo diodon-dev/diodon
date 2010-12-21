@@ -38,7 +38,7 @@ namespace Diodon
         public bool use_primary { get; set; default = true; }
         
         /**
-         * key of use clipboard key flag
+         * key for use clipboard key flag
          */
         public string use_clipboard_key { get { return "/clipboard/use_clipboard"; } }
         
@@ -46,6 +46,16 @@ namespace Diodon
          * flag whether clipboard is enabled
          */
         public bool use_clipboard { get; set; default = true; }
+        
+        /**
+         * key for synchronize clipboards flag
+         */
+        public string synchronize_clipboards_key { get { return "/clipboard/synchronize_clipboards"; } }
+        
+        /**
+         * flag whether clipboards should be in sync
+         */
+        public bool synchronize_clipboards { get; set; default = false; }
         
         /**
          * key of clipboard history size
