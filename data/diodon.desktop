@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Diodon
+GenericName=Clipboard Manager
+Comment=Clipboard Manager for GNOME
+Icon=gtk-pastie
+OnlyShowIn=GNOME;
+Exec=diodon
+Terminal=false
+Categories=GTK;GNOME;Application;Utility;
+StartupNotify=false
+
