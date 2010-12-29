@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
 Version=1.0
-Name=Diodon
-GenericName=Clipboard Manager
+_Name=Diodon
+_GenericName=Clipboard Manager
 Comment=Clipboard Manager for GNOME
 Icon=gtk-pastie
 OnlyShowIn=GNOME;

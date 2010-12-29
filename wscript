@@ -59,7 +59,7 @@ def configure(conf):
     conf.write_config_header ('debug/config.h')
    
 def build(bld):
-    bld.add_subdirs('po src')
+    bld.add_subdirs('po src data')
 
 def dist(ctx):
   # set the compression type to gzip (default is bz2)

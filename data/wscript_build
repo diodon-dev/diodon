@@ -1,0 +1,13 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+bld.new_task_gen (
+  features = 'intltool_in',
+  podir = '../po',
+  source = 'diodon.desktop.in',
+  flags = ["-d", "-q", "-u", "-c"],
+  install_path = "${DATADIR}/applications")
+
+#install_files('PREFIX', 'lib/bonobo/servers/', 'GNOME_media_applet.server')
+#install_files('PREFIX', 'share/gnome-2.0/ui/', 'GNOME_media_applet.xml')
+
