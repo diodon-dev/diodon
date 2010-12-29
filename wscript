@@ -3,7 +3,7 @@
 # Oliver Sauder, 2010
 
 import subprocess, os, traceback
-import Scripting, Options, Logs, Utils
+import Options, Logs
 
 NAME = 'Diodon'
 VERSION = '0.0.1'
@@ -61,10 +61,9 @@ def configure(conf):
 def build(bld):
     bld.add_subdirs('po src')
 
-def dist ():
+def dist(ctx):
   # set the compression type to gzip (default is bz2)
-  Scripting.g_gz = 'gz'
-  Scripting.dist (APPNAME, VERSION)
+  ctx.algo = "tar.gz"
   
 def shutdown(self):
     if Options.options.update_po:
