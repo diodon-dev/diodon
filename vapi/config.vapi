@@ -30,5 +30,6 @@ namespace Config
   public const string WEBSITE;
   
   public const string LOCALEDIR;
+  public const string SHAREDIR;
 }
 

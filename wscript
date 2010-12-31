@@ -45,6 +45,7 @@ def configure(conf):
     conf.define ('COPYRIGHT', COPYRIGHT)
     conf.define ('WEBSITE', WEBSITE)
     conf.define ('APPNAME', NAME)
+    conf.define ('SHAREDIR', os.path.join(conf.env['DATADIR'], APPNAME));
     
     # set 'default' variant
     conf.define ('DEBUG', 0)

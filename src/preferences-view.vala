@@ -49,7 +49,7 @@ namespace Diodon
                 try {
                     // builder
                     Gtk.Builder builder = new Gtk.Builder();
-                    builder.add_from_file("/home/sao/src/bzr/launchpad/projects/diodon/trunk/data/preferences.ui");
+                    builder.add_from_file(Path.build_filename(Config.SHAREDIR, "preferences.ui"));
                     
                     // use_clipboard
                     Gtk.ToggleButton use_clipboard = 
@@ -92,7 +92,7 @@ namespace Diodon
                     preferences = builder.get_object("dialog_preferences") as Gtk.Dialog;
                     preferences.show_all();
                 }
-                catch(GLib.Error e) {
+                catch(Error e) {
                     error("Could not initialize preferences dialog. Error: " + e.message);
                 }
             }
