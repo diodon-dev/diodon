@@ -104,6 +104,7 @@ namespace Diodon
         public void hide()
         {
             preferences.hide_all();
+            preferences.destroy();
             preferences = null;
         }
     }
