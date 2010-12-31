@@ -65,6 +65,11 @@ namespace Diodon
         public IndicatorView indicator_view { get; set; default = new IndicatorView(); }
         
         /**
+         * preferences dialog view property
+         */
+        public PreferencesView preferences_view { get; set; }
+        
+        /**
          * configuration manager property
          */
         public ConfigurationManager configuration_manager { get; set; default = new ConfigurationManager(); }
@@ -132,6 +137,7 @@ namespace Diodon
             // indicator
             indicator_view.on_quit.connect(quit);
             indicator_view.on_clear.connect(clear);
+            indicator_view.on_show_preferences.connect(show_preferences);
             indicator_view.on_select_item.connect(select_item);
         }
         
@@ -162,6 +168,11 @@ namespace Diodon
          */
         private void init()
         {
+            // do not overwrite property injected view
+            if(preferences_view == null) {
+                preferences_view = new PreferencesView(this);
+            }
+            
              // add all available items from storage to indicator
             foreach(ClipboardItem item in clipboard_model.get_items()) {
                 indicator_view.hide_empty_item();
@@ -185,23 +196,35 @@ namespace Diodon
         {
              // use clipboard configuration
             configuration_manager.add_bool_notify(configuration_model.use_clipboard_key,
-                () => { enable_clipboard_manager(ClipboardType.CLIPBOARD); },
-                () => { disable_clipboard_manager(ClipboardType.CLIPBOARD); },
-                configuration_model.use_clipboard
+                () => {
+                    enable_clipboard_manager(ClipboardType.CLIPBOARD);
+                    configuration_model.use_clipboard = true;                        
+                },
+                () => {
+                    disable_clipboard_manager(ClipboardType.CLIPBOARD);
+                    configuration_model.use_clipboard = false;
+                },
+                configuration_model.use_clipboard // default value
             );
             
             // use primary configuration
             configuration_manager.add_bool_notify(configuration_model.use_primary_key,
-                () => { enable_clipboard_manager(ClipboardType.PRIMARY); },
-                () => { disable_clipboard_manager(ClipboardType.PRIMARY); },
-                configuration_model.use_primary
+                () => {
+                    enable_clipboard_manager(ClipboardType.PRIMARY);
+                    configuration_model.use_primary = true;
+                },
+                () => {
+                    disable_clipboard_manager(ClipboardType.PRIMARY);
+                    configuration_model.use_primary = false;
+                },
+                configuration_model.use_primary // default value
             );
             
             // synchronize clipboards
             configuration_manager.add_bool_notify(configuration_model.synchronize_clipboards_key,
                 () => { configuration_model.synchronize_clipboards = true; },
                 () => { configuration_model.synchronize_clipboards = false; },
-                configuration_model.synchronize_clipboards
+                configuration_model.synchronize_clipboards // default value
             );
             
             // clipboard size
@@ -257,7 +280,6 @@ namespace Diodon
                     // set text on all other clipboards then current type
                     foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
                         if(type != clipboard_manager.clipboard_type) {
-                            debug("sync");
                             clipboard_manager.select_item(item);
                         }
                     }
@@ -338,6 +360,25 @@ namespace Diodon
             manager.on_text_received.disconnect(text_received);
             on_copy_selection.disconnect(manager.select_item);
             on_clear.disconnect(manager.clear);
+        }
+        
+        /**
+         * Event called when on the preferences dialog the use clipboard
+         * check box has been toggled.
+         */
+        [CCode (instance_pos = -1)]
+        public void on_toggle_use_clipboard()
+        {
+            configuration_manager.set_bool_value(
+                configuration_model.use_clipboard_key, !configuration_model.use_clipboard);
+        }
+        
+        /**
+         * Show preferences dialog
+         */
+        private void show_preferences()
+        {
+            preferences_view.show(configuration_model);
         }
         
         /**

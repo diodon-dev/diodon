@@ -48,6 +48,11 @@ namespace Diodon
         public signal void on_clear();
         
         /**
+         * called when preferences dialog needs to be shown
+         */
+        public signal void on_show_preferences();
+        
+        /**
          * called when a item has been selected in the menu
          * 
          * @param item item to be selected
@@ -77,6 +82,10 @@ namespace Diodon
             Gtk.MenuItem clear_item = new Gtk.MenuItem.with_label(_("Clear"));
             clear_item.activate.connect(on_clicked_clear);
             menu.append(clear_item);
+            
+            Gtk.MenuItem preferences_item = new Gtk.MenuItem.with_label(_("Preferences"));
+            preferences_item.activate.connect(on_clicked_preferences);
+            menu.append(preferences_item);
             
             Gtk.MenuItem quit_item = new Gtk.MenuItem.with_label(_("Quit"));
             quit_item.activate.connect(on_clicked_quit);
@@ -171,6 +180,14 @@ namespace Diodon
         private void on_clicked_clear()
         {
             on_clear();
+        }
+        
+        /**
+         * User event: clicked menu item preferences
+         */
+        private void on_clicked_preferences()
+        {
+            on_show_preferences();
         }
         
         /**
