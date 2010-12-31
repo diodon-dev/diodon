@@ -52,7 +52,7 @@ namespace Diodon
                 warning ("could not create directory %s", directory);
             }
             
-            xml_file = directory + "/" + file;
+            xml_file = Path.build_filename(directory, file);
             load();
         }
         
