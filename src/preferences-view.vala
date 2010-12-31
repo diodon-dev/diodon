@@ -28,24 +28,14 @@ namespace Diodon
      */
     public class PreferencesView : GLib.Object
     {
-        private Gtk.Builder builder;
+        private Gtk.Dialog preferences;
         
-        /**
-         * Constructor.
-         *
-         * @param object object to connect signals too
-         */
-        public PreferencesView(GLib.Object object)
-        {
-            try {
-                builder = new Gtk.Builder();
-                builder.add_from_file("/home/sao/src/bzr/launchpad/projects/diodon/trunk/data/preferences.ui");
-                builder.connect_signals(object);
-            }
-            catch(GLib.Error e) {
-                error("Could not initialize preferences dialog. Error: " + e.message);
-            }
-        }
+        public signal void on_change_use_clipboard();
+        public signal void on_change_use_primary();
+        public signal void on_change_synchronize_clipboards();
+        public signal void on_change_clipboard_size(int size);
+        public signal void on_change_history_accelerator(string accelerator);
+        public signal void on_close();
         
         /**
          * Show preferences view
@@ -54,26 +44,67 @@ namespace Diodon
          */
         public void show(ConfigurationModel model)
         {
-            if(builder != null)
-            {
-                Gtk.ToggleButton use_clipboard = builder.get_object("checkbutton_use_clipboard") as Gtk.ToggleButton;
-                use_clipboard.active = model.use_clipboard;
-                
-                Gtk.ToggleButton use_primary = builder.get_object("checkbutton_use_primary") as Gtk.ToggleButton;
-                use_primary.active = model.use_primary;
-                
-                Gtk.ToggleButton synchronize_clipboards = builder.get_object("checkbutton_synchronize_clipboards") as Gtk.ToggleButton;
-                synchronize_clipboards.active = model.synchronize_clipboards;
-                
-                Gtk.SpinButton clipboard_size = builder.get_object("spinbutton_clipboard_size") as Gtk.SpinButton;
-                clipboard_size.value = model.clipboard_size;
-                
-                Gtk.Entry history_key = builder.get_object("entry_history_key") as Gtk.Entry;
-                history_key.text = model.history_accelerator;
-                
-                Gtk.Dialog preferences = builder.get_object("dialog_preferences") as Gtk.Dialog;
-                preferences.show_all();
+            // check if preferences window is already open
+            if(preferences == null) {
+                try {
+                    // builder
+                    Gtk.Builder builder = new Gtk.Builder();
+                    builder.add_from_file("/home/sao/src/bzr/launchpad/projects/diodon/trunk/data/preferences.ui");
+                    
+                    // use_clipboard
+                    Gtk.ToggleButton use_clipboard = 
+                        builder.get_object("checkbutton_use_clipboard") as Gtk.ToggleButton;
+                    use_clipboard.active = model.use_clipboard;
+                    use_clipboard.toggled.connect(() => { on_change_use_clipboard(); } );
+                    
+                    // use_primary
+                    Gtk.ToggleButton use_primary = builder.get_object("checkbutton_use_primary") as Gtk.ToggleButton;
+                    use_primary.active = model.use_primary;
+                    use_primary.toggled.connect(() => { on_change_use_primary(); } );
+                    
+                    // synchronize_clipboards
+                    Gtk.ToggleButton synchronize_clipboards = 
+                        builder.get_object("checkbutton_synchronize_clipboards") as Gtk.ToggleButton;
+                    synchronize_clipboards.active = model.synchronize_clipboards;
+                    synchronize_clipboards.toggled.connect(() => { on_change_synchronize_clipboards(); } );
+                    
+                    // clipboard_size
+                    Gtk.SpinButton clipboard_size = 
+                        builder.get_object("spinbutton_clipboard_size") as Gtk.SpinButton;
+                    clipboard_size.value = model.clipboard_size;
+                    clipboard_size.changed.connect(() => {
+                        on_change_clipboard_size(clipboard_size.get_value_as_int());
+                    });
+                    
+                    // history_accelerator
+                    Gtk.Entry history_accelerator = 
+                        builder.get_object("entry_history_accelerator") as Gtk.Entry;
+                    history_accelerator.text = model.history_accelerator;
+                    history_accelerator.changed.connect(() => {
+                        on_change_history_accelerator(history_accelerator.get_text());
+                    });
+                    
+                    // close
+                    Gtk.Button close = builder.get_object("button_close") as Gtk.Button;
+                    close.clicked.connect(() => { on_close(); } );
+                    
+                    // preferences
+                    preferences = builder.get_object("dialog_preferences") as Gtk.Dialog;
+                    preferences.show_all();
+                }
+                catch(GLib.Error e) {
+                    error("Could not initialize preferences dialog. Error: " + e.message);
+                }
             }
+        }
+        
+        /**
+         * Hide preferences view
+         */ 
+        public void hide()
+        {
+            preferences.hide_all();
+            preferences = null;
         }
     }
 }

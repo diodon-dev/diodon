@@ -64,7 +64,7 @@ namespace Diodon
         
         /**
          * size of clipboard history.
-         * Value must be bigger than 0 and lower than 100.
+         * Value must be bigger than 0 and lower or equal than 100.
          */
         public int clipboard_size
         {
@@ -72,7 +72,7 @@ namespace Diodon
                 return _clipboard_size;
             }
             set {
-                if(value > 0 && value < 100) {
+                if(value > 0 && value <= 100) {
                     _clipboard_size = value;
                 }
             }

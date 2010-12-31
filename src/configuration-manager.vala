@@ -69,6 +69,43 @@ namespace Diodon
             }
         }
         
+               
+        /**
+         * Add notify function for given diodon key of a boolean value. First
+         * notify will be called immediately with the already available value
+         * if valid otherwise the default value will be returned.
+         * 
+         * @param key configuration key
+         * @param enable_func called when value has been enabled
+         * @param disbale_func called when value has been disabled
+         * @param default default to be set when not available
+         */
+        public void add_bool_notify(string key, EnableFunc enable_func, DisbaleFunc disable_func, bool default)
+        {            
+            bool value = default;
+            try {
+                GConf.Value conf_value = get_value(key);
+                value = conf_value.get_bool();
+            } catch(GLib.Error e) {
+                debug("Boolean value of key " + key + " is not available yet.");
+                set_bool_value(key, default);
+            }
+            
+            // initial call
+            enable_disable_handler(value, enable_func, disable_func);
+                
+            try {
+                client.notify_add(GCONF_APP_PATH + key, (client, cxnid, entry) => {
+                    bool new_value = entry.get_value().get_bool();
+                    debug("Value of key " + entry.get_key() + " has changed to " + new_value.to_string());
+                    enable_disable_handler(entry.get_value().get_bool(),
+                        enable_func, disable_func);
+                });
+            } catch(GLib.Error e) {
+                warning("Could not add notify of key " + key + " (Error: )" + e.message);
+            }
+        }
+        
         /**
          * Add notify function for given diodon key of a string value. First
          * notify will be called immediately with the already available value
@@ -168,41 +205,6 @@ namespace Diodon
             } catch(GLib.Error e) {
                 warning("Could not change integer value of key " + key + " to " + 
                     value.to_string() + " (Error: )" + e.message);
-            }
-        }
-        
-        /**
-         * Add notify function for given diodon key of a boolean value. First
-         * notify will be called immediately with the already available value
-         * if valid otherwise the default value will be returned.
-         * 
-         * @param key configuration key
-         * @param enable_func called when value has been enabled
-         * @param disbale_func called when value has been disabled
-         * @param default default to be set when not available
-         */
-        public void add_bool_notify(string key, EnableFunc enable_func, DisbaleFunc disable_func, bool default)
-        {            
-            bool value = default;
-            try {
-                GConf.Value conf_value = get_value(key);
-                value = conf_value.get_bool();
-            } catch(GLib.Error e) {
-                debug("Boolean value of key " + key + " is not available yet.");
-                set_bool_value(key, default);
-            }
-            
-            // initial call
-            enable_disable_handler(value, enable_func, disable_func);
-                
-            try {
-                client.notify_add(GCONF_APP_PATH + key, (client, cxnid, entry) => {
-                    debug("Value of key " + entry.get_key() + " has changed to " + value.to_string());
-                    enable_disable_handler(entry.get_value().get_bool(),
-                        enable_func, disable_func);
-                });
-            } catch(GLib.Error e) {
-                warning("Could not add notify of key " + key + " (Error: )" + e.message);
             }
         }
         

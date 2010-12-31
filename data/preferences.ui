@@ -27,7 +27,6 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="on_use_clipboard"/>
                   </object>
                   <packing>
                     <property name="position">0</property>
@@ -74,9 +73,7 @@
                       <object class="GtkSpinButton" id="spinbutton_clipboard_size">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="max_length">99</property>
-                        <property name="invisible_char">•</property>
-                        <property name="snap_to_ticks">True</property>
+                        <property name="adjustment">adjustment1</property>
                         <property name="numeric">True</property>
                       </object>
                       <packing>
@@ -116,7 +113,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry_history_key">
+                      <object class="GtkEntry" id="entry_history_accelerator">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">•</property>
@@ -131,9 +128,6 @@
                   <packing>
                     <property name="position">0</property>
                   </packing>
-                </child>
-                <child>
-                  <placeholder/>
                 </child>
               </object>
               <packing>
@@ -184,5 +178,13 @@
     <action-widgets>
       <action-widget response="0">button_close</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="value">25</property>
+    <property name="lower">1</property>
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+    <property name="page_size">10</property>
   </object>
 </interface>

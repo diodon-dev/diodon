@@ -67,7 +67,7 @@ namespace Diodon
         /**
          * preferences dialog view property
          */
-        public PreferencesView preferences_view { get; set; }
+        public PreferencesView preferences_view { get; set; default = new PreferencesView(); }
         
         /**
          * configuration manager property
@@ -139,6 +139,14 @@ namespace Diodon
             indicator_view.on_clear.connect(clear);
             indicator_view.on_show_preferences.connect(show_preferences);
             indicator_view.on_select_item.connect(select_item);
+            
+            // preferences
+            preferences_view.on_change_use_clipboard.connect(change_use_clipboard_configuration);
+            preferences_view.on_change_use_primary.connect(change_use_primary_configuration);
+            preferences_view.on_change_synchronize_clipboards.connect(change_synchronize_clipboards_configuration);
+            preferences_view.on_change_clipboard_size.connect(change_clipboard_size_configuration);
+            preferences_view.on_change_history_accelerator.connect(change_history_accelerator_configuration);
+            preferences_view.on_close.connect(hide_preferences);
         }
         
         /**
@@ -168,11 +176,6 @@ namespace Diodon
          */
         private void init()
         {
-            // do not overwrite property injected view
-            if(preferences_view == null) {
-                preferences_view = new PreferencesView(this);
-            }
-            
              // add all available items from storage to indicator
             foreach(ClipboardItem item in clipboard_model.get_items()) {
                 indicator_view.hide_empty_item();
@@ -310,6 +313,17 @@ namespace Diodon
                 }
             }
         }
+        
+         /**
+         * Change setting of clipboard_size in configuration manager
+         *
+         * @param size clipboard size
+         */        
+        private void change_clipboard_size_configuration(int size)
+        {
+            configuration_manager.set_int_value(
+                configuration_model.clipboard_size_key, size);
+        }
 
         /**
          * change history accelerator key and bind new key to open_history.
@@ -321,6 +335,17 @@ namespace Diodon
             keybinding_manager.unbind(configuration_model.history_accelerator);
             configuration_model.history_accelerator = accelerator;
             keybinding_manager.bind(accelerator, open_history);
+        }
+        
+        /**
+         * Change setting of history_accelerator in configuration manager
+         *
+         * @param accelerator accelerator parseable by Gtk.accelerator_parse
+         */        
+        private void change_history_accelerator_configuration(string accelerator)
+        {
+            configuration_manager.set_string_value(
+                configuration_model.history_accelerator_key, accelerator);
         }
 
         /**
@@ -361,16 +386,35 @@ namespace Diodon
             on_copy_selection.disconnect(manager.select_item);
             on_clear.disconnect(manager.clear);
         }
-        
+
         /**
-         * Event called when on the preferences dialog the use clipboard
-         * check box has been toggled.
-         */
-        [CCode (instance_pos = -1)]
-        public void on_toggle_use_clipboard()
+         * Change setting of use_clipboard in configuration manager
+         */        
+        private void change_use_clipboard_configuration()
         {
             configuration_manager.set_bool_value(
-                configuration_model.use_clipboard_key, !configuration_model.use_clipboard);
+                configuration_model.use_clipboard_key,
+                !configuration_model.use_clipboard);
+        }
+        
+        /**
+         * Change setting of use_primary in configuration manager
+         */        
+        private void change_use_primary_configuration()
+        {
+            configuration_manager.set_bool_value(
+                configuration_model.use_primary_key,
+                !configuration_model.use_primary);
+        }
+        
+        /**
+         * Change setting of synchronize_clipboards in configuration manager
+         */        
+        private void change_synchronize_clipboards_configuration()
+        {
+            configuration_manager.set_bool_value(
+                configuration_model.synchronize_clipboards_key,
+                !configuration_model.synchronize_clipboards);
         }
         
         /**
@@ -379,6 +423,14 @@ namespace Diodon
         private void show_preferences()
         {
             preferences_view.show(configuration_model);
+        }
+        
+        /**
+         * Hide preferences dialog
+         */
+        private void hide_preferences()
+        {
+            preferences_view.hide();
         }
         
         /**
