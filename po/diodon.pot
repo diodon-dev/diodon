@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-29 22:37+0100\n"
+"POT-Creation-Date: 2011-01-01 19:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,17 +22,53 @@ msgid "Clipboard Manager"
 msgstr ""
 
 #: ../data/diodon.desktop.in.h:2
-msgid "Clipboard Manager for GNOME"
+msgid "Diodon"
 msgstr ""
 
-#: ../src/indicator-view.vala:70
+#: ../data/preferences.ui.h:1
+msgid "Clipboard"
+msgstr ""
+
+#: ../data/preferences.ui.h:2
+msgid "Clipboard size"
+msgstr ""
+
+#: ../data/preferences.ui.h:3
+msgid "Diodon Preferences"
+msgstr ""
+
+#: ../data/preferences.ui.h:4
+msgid "History key"
+msgstr ""
+
+#: ../data/preferences.ui.h:5
+msgid "Hotkeys"
+msgstr ""
+
+#: ../data/preferences.ui.h:6
+msgid "Synchronize clipboards"
+msgstr ""
+
+#: ../data/preferences.ui.h:7
+msgid "Use clipboard (Ctrl+V)"
+msgstr ""
+
+#: ../data/preferences.ui.h:8
+msgid "Use primary selection"
+msgstr ""
+
+#: ../src/indicator-view.vala:75
 msgid "<Empty>"
 msgstr ""
 
-#: ../src/indicator-view.vala:77
+#: ../src/indicator-view.vala:82
 msgid "Clear"
 msgstr ""
 
-#: ../src/indicator-view.vala:81
+#: ../src/indicator-view.vala:86
+msgid "Preferences"
+msgstr ""
+
+#: ../src/indicator-view.vala:90
 msgid "Quit"
 msgstr ""
