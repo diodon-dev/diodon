@@ -1,0 +1,13 @@
+Build Diodon
+=======================
+
+Diodon uses the WAF build system. To build and install Diodon use these commands:
+
+    ./waf configure
+    ./waf build
+    sudo ./waf install
+
+For uninstalling type this:
+
+    sudo ./waf uninstall
+
