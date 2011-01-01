@@ -8,4 +8,5 @@ bld.new_task_gen (
   flags = ["-d", "-q", "-u", "-c"],
   install_path = "${DATADIR}/applications")
 
+bld.install_files('${SYSCONFDIR}/xdg/autostart', 'diodon.desktop')
 bld.install_files('${DATADIR}/diodon', 'preferences.ui')
