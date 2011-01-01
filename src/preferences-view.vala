@@ -49,6 +49,7 @@ namespace Diodon
                 try {
                     // builder
                     Gtk.Builder builder = new Gtk.Builder();
+                    builder.set_translation_domain(Config.GETTEXT_PACKAGE);
                     builder.add_from_file(Path.build_filename(Config.SHAREDIR, "preferences.ui"));
                     
                     // use_clipboard
