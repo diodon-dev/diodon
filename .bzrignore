@@ -2,3 +2,4 @@
 _build_
 .lock-wafbuild
 .valencia
+.intlcache

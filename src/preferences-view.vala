@@ -91,6 +91,7 @@ namespace Diodon
                     
                     // preferences
                     preferences = builder.get_object("dialog_preferences") as Gtk.Dialog;
+                    preferences.destroy.connect_after(reset);
                     preferences.show_all();
                 }
                 catch(Error e) {
@@ -106,6 +107,13 @@ namespace Diodon
         {
             preferences.hide_all();
             preferences.destroy();
+        }
+        
+        /**
+         * Reset preferences dialog
+         */
+        public void reset()
+        {
             preferences = null;
         }
     }
