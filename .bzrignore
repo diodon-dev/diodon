@@ -1,3 +1,4 @@
 .waf*
 _build_
-.*
+.lock-wafbuild
+.valencia
