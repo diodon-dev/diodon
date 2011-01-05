@@ -96,6 +96,7 @@ namespace Diodon
          */
         public void load()
         {   
+            debug("Read storage file " + xml_file);
             Xml.TextReader reader = new Xml.TextReader.filename(xml_file);
             
             while(reader.read() == 1) {
