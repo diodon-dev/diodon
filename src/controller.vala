@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2010 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2010-2011 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
@@ -110,11 +110,9 @@ namespace Diodon
         public Controller()
         {            
             // initialize needed clipboard managers
-            // TODO: checkout how to get values from enum
-            // to generalize this code
             clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
             clipboard_managers.set(ClipboardType.CLIPBOARD, new ClipboardManager(ClipboardType.CLIPBOARD));
-            clipboard_managers.set(ClipboardType.PRIMARY, new ClipboardManager(ClipboardType.PRIMARY));
+            clipboard_managers.set(ClipboardType.PRIMARY, new PrimaryClipboardManager());
         }
         
         /**

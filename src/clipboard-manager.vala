@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2010 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2010-2011 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
@@ -90,6 +90,17 @@ namespace Diodon
         }
         
         /**
+         * Checks if the given text can be accepted.
+         *
+         * @param text clipboard text
+         * @return always true in the default implementation
+         */
+        protected virtual bool is_accepted(string text)
+        {
+            return true;
+        }
+        
+        /**
          * Request text from managed clipboard. If result is valid
          * on_text_received will be called.
          *
@@ -99,8 +110,8 @@ namespace Diodon
         {
             string text = clipboard.wait_for_text();
             
-            // check if text is valid
-            if(text != null && text != "") {
+            // check if text is valid and accepted
+            if(text != null && text != "" && is_accepted(text)) {
                 on_text_received(type, text);
             }
             
