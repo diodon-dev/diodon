@@ -1,71 +1,74 @@
+# French translation for diodon
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the diodon package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Diodon 0.0.1\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: diodon\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-01-01 22:17+0100\n"
-"PO-Revision-Date: 2011-01-01 21:48+0000\n"
-"Last-Translator: Oliver Sauder <os@esite.ch>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2011-01-02 02:59+0000\n"
+"Last-Translator: Thibault Févry <Unknown>\n"
+"Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-01-02 05:37+0000\n"
+"X-Launchpad-Export-Date: 2011-01-03 05:39+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-"Language: \n"
-"X-Poedit-Language: German\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
-msgstr "Zwischenablage-Manager"
+msgstr "Gestionnaire de presse-papiers"
 
 #: ../data/diodon.desktop.in.h:2
 msgid "Clipboard Manager for GNOME"
-msgstr "Zwischenablage-Manager für Gnome"
+msgstr "Gestionnaire de presse-papiers pour GNOME"
 
 #: ../data/preferences.ui.h:1
 msgid "Clipboard"
-msgstr "Zwischenablage"
+msgstr "Presse-papiers"
 
 #: ../data/preferences.ui.h:2
 msgid "Clipboard size"
-msgstr "Grösse der Zwischenablage"
+msgstr "Taille du presse-papiers"
 
 #: ../data/preferences.ui.h:3
 msgid "Diodon Preferences"
-msgstr "Diodon Einstellungen"
+msgstr "Préférences de Diodon"
 
 #: ../data/preferences.ui.h:4
 msgid "History key"
-msgstr "Verlauf-Tastenkombination"
+msgstr "Raccourci clavier pour l'historique"
 
 #: ../data/preferences.ui.h:5
 msgid "Hotkeys"
-msgstr "Tastenkombinationen"
+msgstr "Raccourcis clavier"
 
 #: ../data/preferences.ui.h:6
 msgid "Synchronize clipboards"
-msgstr "Zwischenablagen synchronisieren"
+msgstr "Synchroniser les presse-papiers"
 
 #: ../data/preferences.ui.h:7
 msgid "Use clipboard (Ctrl+V)"
-msgstr "Kopieren benutzen (Ctrl+V)"
+msgstr "Utiliser le presse-papiers (Ctrl+V)"
 
 #: ../data/preferences.ui.h:8
 msgid "Use primary selection"
-msgstr "Auswahl Zwischenablage benutzen"
+msgstr ""
 
 #: ../src/indicator-view.vala:75
 msgid "<Empty>"
-msgstr "<Leer>"
+msgstr "<Vide>"
 
 #: ../src/indicator-view.vala:82
 msgid "Clear"
-msgstr "Leeren"
+msgstr "Effacer"
 
 #: ../src/indicator-view.vala:86
 msgid "Preferences"
-msgstr "Einstellungen"
+msgstr "Préférences"
 
 #: ../src/indicator-view.vala:90
 msgid "Quit"
-msgstr "Beenden"
+msgstr "Quitter"
