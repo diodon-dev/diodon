@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-01 22:17+0100\n"
+"POT-Creation-Date: 2011-01-19 20:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,14 +46,18 @@ msgid "Hotkeys"
 msgstr ""
 
 #: ../data/preferences.ui.h:6
-msgid "Synchronize clipboards"
+msgid "Keep clipboard content"
 msgstr ""
 
 #: ../data/preferences.ui.h:7
-msgid "Use clipboard (Ctrl+V)"
+msgid "Synchronize clipboards"
 msgstr ""
 
 #: ../data/preferences.ui.h:8
+msgid "Use clipboard (Ctrl+V)"
+msgstr ""
+
+#: ../data/preferences.ui.h:9
 msgid "Use primary selection"
 msgstr ""
 
