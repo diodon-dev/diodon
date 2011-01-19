@@ -39,6 +39,13 @@ namespace Diodon
         public signal void on_text_received(ClipboardType type, string text);
         
         /**
+         * Called when the clipboard is empty
+         *
+         * @param type type of clipboard which is empty
+         */
+        public signal void on_empty(ClipboardType type);
+        
+        /**
          * get type of given clipboard manager
          */
         public ClipboardType clipboard_type { get { return type; } }
@@ -115,8 +122,26 @@ namespace Diodon
                 on_text_received(type, text);
             }
             
+            // for performance reasons, only check
+            // clipboard if text is not available
+            if(text == null) {
+                check_clipboard();
+            }
+            
             return true;
+        }
+        
+        /**
+         * Check if clipboard content has been lost.
+         */
+        private void check_clipboard()
+        {
+            Gdk.Atom[] targets = null;
+            if(!clipboard.wait_for_targets(targets)) {
+                on_empty(type);
+            }
         }
     }  
 }
+
  

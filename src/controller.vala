@@ -145,6 +145,10 @@ namespace Diodon
             preferences_view.on_change_clipboard_size.connect(change_clipboard_size_configuration);
             preferences_view.on_change_history_accelerator.connect(change_history_accelerator_configuration);
             preferences_view.on_close.connect(hide_preferences);
+            
+            foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
+                clipboard_manager.on_empty.connect(clipboard_empty);
+            }
         }
         
         /**
@@ -285,6 +289,22 @@ namespace Diodon
                         }
                     }
                 }
+            }
+        }
+        
+        /**
+         * Called when clipboard is empty and data might be needed to restored
+         * 
+         * @param type clipboard type
+         */
+        private void clipboard_empty(ClipboardType type)
+        {               
+            // check if a item is there to restore lost content
+            ClipboardItem item = clipboard_model.get_current_item(type);
+            if(item != null) {
+                debug("Clipboard " + "%d".printf(type) + " is empty.");   
+                ClipboardManager manager = clipboard_managers.get(type);
+                manager.select_item(item);
             }
         }
         
