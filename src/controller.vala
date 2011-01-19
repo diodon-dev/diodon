@@ -145,10 +145,6 @@ namespace Diodon
             preferences_view.on_change_clipboard_size.connect(change_clipboard_size_configuration);
             preferences_view.on_change_history_accelerator.connect(change_history_accelerator_configuration);
             preferences_view.on_close.connect(hide_preferences);
-            
-            foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
-                clipboard_manager.on_empty.connect(clipboard_empty);
-            }
         }
         
         /**
@@ -230,6 +226,13 @@ namespace Diodon
                 () => { configuration_model.synchronize_clipboards = true; },
                 () => { configuration_model.synchronize_clipboards = false; },
                 configuration_model.synchronize_clipboards // default value
+            );
+            
+            // keep clipboard content
+            configuration_manager.add_bool_notify(configuration_model.keep_clipboard_content_key,
+                enable_keep_clipboard_content,
+                disable_keep_clipboard_content,
+                configuration_model.keep_clipboard_content  // default value
             );
             
             // clipboard size
@@ -403,6 +406,32 @@ namespace Diodon
             manager.on_text_received.disconnect(text_received);
             on_copy_selection.disconnect(manager.select_item);
             on_clear.disconnect(manager.clear);
+        }
+        
+        /**
+         * connect to signals of all clipboard manager to enable
+         * keep clipboard content support
+         */
+        private void enable_keep_clipboard_content()
+        {
+            foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
+                clipboard_manager.on_empty.connect(clipboard_empty);
+            }
+            
+            configuration_model.keep_clipboard_content = true;
+        }
+        
+        /**
+         * disconnect to signals of all clipboard manager to disable
+         * keep clipboard content support
+         */
+        private void disable_keep_clipboard_content()
+        {
+            foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
+                clipboard_manager.on_empty.disconnect(clipboard_empty);
+            }
+            
+            configuration_model.keep_clipboard_content = false;
         }
 
         /**
