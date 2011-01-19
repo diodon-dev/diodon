@@ -85,7 +85,7 @@
                       <object class="GtkSpinButton" id="spinbutton_clipboard_size">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="adjustment">adjustment1</property>
+                        <property name="adjustment">adjustment_clipboard_size</property>
                         <property name="numeric">True</property>
                       </object>
                       <packing>
@@ -192,7 +192,7 @@
       <action-widget response="0">button_close</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkAdjustment" id="adjustment1">
+  <object class="GtkAdjustment" id="adjustment_clipboard_size">
     <property name="value">25</property>
     <property name="lower">1</property>
     <property name="upper">100</property>

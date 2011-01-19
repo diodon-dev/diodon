@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2010 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2010-2011 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -80,7 +80,10 @@ namespace Diodon
                     Gtk.SpinButton clipboard_size = 
                         builder.get_object("spinbutton_clipboard_size") as Gtk.SpinButton;
                     clipboard_size.value = model.clipboard_size;
-                    clipboard_size.changed.connect(() => {
+                    clipboard_size.value_changed.connect(() => {
+                        on_change_clipboard_size(clipboard_size.get_value_as_int());
+                    });
+                    clipboard_size.editing_done.connect(() => {
                         on_change_clipboard_size(clipboard_size.get_value_as_int());
                     });
                     
