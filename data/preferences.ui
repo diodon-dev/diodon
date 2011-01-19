@@ -57,6 +57,18 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkCheckButton" id="checkbutton_keep_cliboard_content">
+                    <property name="label" translatable="yes">Keep clipboard content</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkHBox" id="hbox1">
                     <property name="visible">True</property>
                     <child>
@@ -83,7 +95,7 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="position">3</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
               </object>

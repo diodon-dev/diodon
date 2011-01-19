@@ -142,6 +142,7 @@ namespace Diodon
             preferences_view.on_change_use_clipboard.connect(change_use_clipboard_configuration);
             preferences_view.on_change_use_primary.connect(change_use_primary_configuration);
             preferences_view.on_change_synchronize_clipboards.connect(change_synchronize_clipboards_configuration);
+            preferences_view.on_change_keep_cliboard_content.connect(change_keep_clipboard_content_configuration);
             preferences_view.on_change_clipboard_size.connect(change_clipboard_size_configuration);
             preferences_view.on_change_history_accelerator.connect(change_history_accelerator_configuration);
             preferences_view.on_close.connect(hide_preferences);
@@ -462,6 +463,16 @@ namespace Diodon
             configuration_manager.set_bool_value(
                 configuration_model.synchronize_clipboards_key,
                 !configuration_model.synchronize_clipboards);
+        }
+        
+         /**
+         * Change setting of keep_clipboard_content in configuration manager
+         */  
+        private void change_keep_clipboard_content_configuration()
+        {
+            configuration_manager.set_bool_value(
+                configuration_model.keep_clipboard_content_key,
+                !configuration_model.keep_clipboard_content);
         }
         
         /**
