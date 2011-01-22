@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-19 20:56+0100\n"
+"POT-Creation-Date: 2011-01-22 16:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,33 +46,21 @@ msgid "Hotkeys"
 msgstr ""
 
 #: ../data/preferences.ui.h:6
-msgid "Keep clipboard content"
+msgid "S_ynchronize clipboards"
 msgstr ""
 
 #: ../data/preferences.ui.h:7
-msgid "Synchronize clipboards"
+msgid "Use _primary selection"
 msgstr ""
 
 #: ../data/preferences.ui.h:8
-msgid "Use clipboard (Ctrl+V)"
+msgid "Use clipboard (Ctrl+_V)"
 msgstr ""
 
 #: ../data/preferences.ui.h:9
-msgid "Use primary selection"
+msgid "_Keep clipboard content"
 msgstr ""
 
 #: ../src/indicator-view.vala:75
 msgid "<Empty>"
-msgstr ""
-
-#: ../src/indicator-view.vala:82
-msgid "Clear"
-msgstr ""
-
-#: ../src/indicator-view.vala:86
-msgid "Preferences"
-msgstr ""
-
-#: ../src/indicator-view.vala:90
-msgid "Quit"
 msgstr ""

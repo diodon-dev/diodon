@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Diodon 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-19 20:56+0100\n"
+"POT-Creation-Date: 2011-01-22 16:42+0100\n"
 "PO-Revision-Date: 2011-01-01 21:48+0000\n"
 "Last-Translator: Oliver Sauder <os@esite.ch>\n"
 "Language-Team: \n"
@@ -43,33 +43,33 @@ msgid "Hotkeys"
 msgstr "Tastenkombinationen"
 
 #: ../data/preferences.ui.h:6
-msgid "Keep clipboard content"
-msgstr ""
-
-#: ../data/preferences.ui.h:7
-msgid "Synchronize clipboards"
+#, fuzzy
+msgid "S_ynchronize clipboards"
 msgstr "Zwischenablagen synchronisieren"
 
+#: ../data/preferences.ui.h:7
+#, fuzzy
+msgid "Use _primary selection"
+msgstr "Auswahl Zwischenablage benutzen"
+
 #: ../data/preferences.ui.h:8
-msgid "Use clipboard (Ctrl+V)"
+#, fuzzy
+msgid "Use clipboard (Ctrl+_V)"
 msgstr "Kopieren benutzen (Ctrl+V)"
 
 #: ../data/preferences.ui.h:9
-msgid "Use primary selection"
-msgstr "Auswahl Zwischenablage benutzen"
+msgid "_Keep clipboard content"
+msgstr ""
 
 #: ../src/indicator-view.vala:75
 msgid "<Empty>"
 msgstr "<Leer>"
 
-#: ../src/indicator-view.vala:82
-msgid "Clear"
-msgstr "Leeren"
+#~ msgid "Clear"
+#~ msgstr "Leeren"
 
-#: ../src/indicator-view.vala:86
-msgid "Preferences"
-msgstr "Einstellungen"
+#~ msgid "Preferences"
+#~ msgstr "Einstellungen"
 
-#: ../src/indicator-view.vala:90
-msgid "Quit"
-msgstr "Beenden"
+#~ msgid "Quit"
+#~ msgstr "Beenden"

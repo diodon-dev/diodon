@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-19 20:56+0100\n"
+"POT-Creation-Date: 2011-01-22 16:42+0100\n"
 "PO-Revision-Date: 2011-01-02 02:59+0000\n"
 "Last-Translator: Thibault Févry <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -47,33 +47,32 @@ msgid "Hotkeys"
 msgstr "Raccourcis clavier"
 
 #: ../data/preferences.ui.h:6
-msgid "Keep clipboard content"
-msgstr ""
-
-#: ../data/preferences.ui.h:7
-msgid "Synchronize clipboards"
+#, fuzzy
+msgid "S_ynchronize clipboards"
 msgstr "Synchroniser les presse-papiers"
 
+#: ../data/preferences.ui.h:7
+msgid "Use _primary selection"
+msgstr ""
+
 #: ../data/preferences.ui.h:8
-msgid "Use clipboard (Ctrl+V)"
+#, fuzzy
+msgid "Use clipboard (Ctrl+_V)"
 msgstr "Utiliser le presse-papiers (Ctrl+V)"
 
 #: ../data/preferences.ui.h:9
-msgid "Use primary selection"
+msgid "_Keep clipboard content"
 msgstr ""
 
 #: ../src/indicator-view.vala:75
 msgid "<Empty>"
 msgstr "<Vide>"
 
-#: ../src/indicator-view.vala:82
-msgid "Clear"
-msgstr "Effacer"
+#~ msgid "Clear"
+#~ msgstr "Effacer"
 
-#: ../src/indicator-view.vala:86
-msgid "Preferences"
-msgstr "Préférences"
+#~ msgid "Preferences"
+#~ msgstr "Préférences"
 
-#: ../src/indicator-view.vala:90
-msgid "Quit"
-msgstr "Quitter"
+#~ msgid "Quit"
+#~ msgstr "Quitter"
