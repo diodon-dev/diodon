@@ -22,10 +22,11 @@
                 <property name="visible">True</property>
                 <child>
                   <object class="GtkCheckButton" id="checkbutton_use_clipboard">
-                    <property name="label" translatable="yes">Use clipboard (Ctrl+V)</property>
+                    <property name="label" translatable="yes">Use clipboard (Ctrl+_V)</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                   </object>
                   <packing>
@@ -34,10 +35,11 @@
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="checkbutton_use_primary">
-                    <property name="label" translatable="yes">Use primary selection</property>
+                    <property name="label" translatable="yes">Use _primary selection</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                   </object>
                   <packing>
@@ -46,10 +48,11 @@
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="checkbutton_synchronize_clipboards">
-                    <property name="label" translatable="yes">Synchronize clipboards</property>
+                    <property name="label" translatable="yes">S_ynchronize clipboards</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                   </object>
                   <packing>
@@ -58,10 +61,11 @@
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="checkbutton_keep_cliboard_content">
-                    <property name="label" translatable="yes">Keep clipboard content</property>
+                    <property name="label" translatable="yes">_Keep clipboard content</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                   </object>
                   <packing>
