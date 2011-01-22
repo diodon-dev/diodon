@@ -10,3 +10,4 @@ bld.new_task_gen (
 
 bld.install_files('${SYSCONFDIR}/xdg/autostart', 'diodon.desktop')
 bld.install_files('${DATADIR}/diodon', 'preferences.ui')
+bld.install_files('${MANDIR}/man1', 'diodon.1.gz')
