@@ -1,4 +1,4 @@
-# French translation for diodon
+# Slovak translation for diodon
 # Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the diodon package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
@@ -6,77 +6,61 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-01-22 16:42+0100\n"
-"PO-Revision-Date: 2011-01-05 12:54+0000\n"
-"Last-Translator: Oliver Sauder <os@esite.ch>\n"
-"Language-Team: French <fr@li.org>\n"
+"PO-Revision-Date: 2011-01-25 23:17+0000\n"
+"Last-Translator: DAG Software <Unknown>\n"
+"Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-01-23 05:27+0000\n"
+"X-Launchpad-Export-Date: 2011-01-26 05:17+0000\n"
 "X-Generator: Launchpad (build 12177)\n"
-"Language: fr\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
-msgstr "Gestionnaire de presse-papiers"
+msgstr "Správca schránky"
 
 #: ../data/diodon.desktop.in.h:2
 msgid "Clipboard Manager for GNOME"
-msgstr "Gestionnaire de presse-papiers pour GNOME"
+msgstr "Správca schránky pre GNOME"
 
 #: ../data/preferences.ui.h:1
 msgid "Clipboard"
-msgstr "Presse-papiers"
+msgstr "Schránka"
 
 #: ../data/preferences.ui.h:2
 msgid "Clipboard size"
-msgstr "Taille du presse-papiers"
+msgstr "Veľkosť schránky"
 
 #: ../data/preferences.ui.h:3
 msgid "Diodon Preferences"
-msgstr "Préférences de Diodon"
+msgstr "Diodon nastavenia"
 
 #: ../data/preferences.ui.h:4
 msgid "History key"
-msgstr "Raccourci clavier pour l'historique"
+msgstr "Kľúč k histórii"
 
 #: ../data/preferences.ui.h:5
 msgid "Hotkeys"
-msgstr "Raccourcis clavier"
+msgstr "Klávesové skratky"
 
 #: ../data/preferences.ui.h:6
 msgid "S_ynchronize clipboards"
-msgstr ""
+msgstr "S_ynchronizovať schránky"
 
 #: ../data/preferences.ui.h:7
 msgid "Use _primary selection"
-msgstr ""
+msgstr "Použiť _primárny výber"
 
 #: ../data/preferences.ui.h:8
 msgid "Use clipboard (Ctrl+_V)"
-msgstr ""
+msgstr "Použiť schránku (Ctrrl+_V)"
 
 #: ../data/preferences.ui.h:9
 msgid "_Keep clipboard content"
-msgstr ""
+msgstr "Ponechať obsah schrán_ky"
 
 #: ../src/indicator-view.vala:75
 msgid "<Empty>"
-msgstr "<Vide>"
-
-#~ msgid "Use clipboard (Ctrl+V)"
-#~ msgstr "Utiliser le presse-papiers (Ctrl+V)"
-
-#~ msgid "Synchronize clipboards"
-#~ msgstr "Synchroniser les presse-papiers"
-
-#~ msgid "Preferences"
-#~ msgstr "Préférences"
-
-#~ msgid "Clear"
-#~ msgstr "Effacer"
-
-#~ msgid "Quit"
-#~ msgstr "Quitter"
+msgstr "<Prázdne>"

@@ -3,20 +3,20 @@ msgstr ""
 "Project-Id-Version: Diodon 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-01-22 16:42+0100\n"
-"PO-Revision-Date: 2011-01-01 21:48+0000\n"
+"PO-Revision-Date: 2011-01-19 20:32+0000\n"
 "Last-Translator: Oliver Sauder <os@esite.ch>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-01-02 05:37+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-01-23 05:27+0000\n"
+"X-Generator: Launchpad (build 12177)\n"
+"Language: \n"
 "X-Poedit-Language: German\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
-msgstr "Zwischenablage-Manager"
+msgstr ""
 
 #: ../data/diodon.desktop.in.h:2
 msgid "Clipboard Manager for GNOME"
@@ -43,19 +43,16 @@ msgid "Hotkeys"
 msgstr "Tastenkombinationen"
 
 #: ../data/preferences.ui.h:6
-#, fuzzy
 msgid "S_ynchronize clipboards"
-msgstr "Zwischenablagen synchronisieren"
+msgstr ""
 
 #: ../data/preferences.ui.h:7
-#, fuzzy
 msgid "Use _primary selection"
-msgstr "Auswahl Zwischenablage benutzen"
+msgstr ""
 
 #: ../data/preferences.ui.h:8
-#, fuzzy
 msgid "Use clipboard (Ctrl+_V)"
-msgstr "Kopieren benutzen (Ctrl+V)"
+msgstr ""
 
 #: ../data/preferences.ui.h:9
 msgid "_Keep clipboard content"
@@ -68,8 +65,23 @@ msgstr "<Leer>"
 #~ msgid "Clear"
 #~ msgstr "Leeren"
 
+#~ msgid "Quit"
+#~ msgstr "Beenden"
+
+#~ msgid "Use primary selection"
+#~ msgstr "Auswahl Zwischenablage benutzen"
+
+#~ msgid "Diodon"
+#~ msgstr "Diodon"
+
+#~ msgid "Use clipboard (Ctrl+V)"
+#~ msgstr "Kopieren benutzen (Ctrl+V)"
+
+#~ msgid "Synchronize clipboards"
+#~ msgstr "Zwischenablagen synchronisieren"
+
 #~ msgid "Preferences"
 #~ msgstr "Einstellungen"
 
-#~ msgid "Quit"
-#~ msgstr "Beenden"
+#~ msgid "Keep clipboard content"
+#~ msgstr "Leere Zwischenablage verhindern"
