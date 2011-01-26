@@ -26,6 +26,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="tooltip_text" translatable="yes">Adds the text which is copied to the clipboard with e.g. Ctrl + V to the clipboard history.</property>
                     <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                   </object>
@@ -39,6 +40,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="tooltip_text" translatable="yes">Adds the primary selection (an area of the screen which is selected with the mouse) to the clipboard history.</property>
                     <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                   </object>
@@ -52,6 +54,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="tooltip_text" translatable="yes">Synchronizes the selection (an area of the screen which is selected with the mouse) and the clipboard so that anything in the selection is immediately available in the clipboard and vice versa e.g. for pasting with Ctrl + V and the middle mouse button.</property>
                     <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                   </object>
@@ -65,6 +68,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="tooltip_text" translatable="yes">Prevents an empty clipboard. For instance when an application exits, the clipboard would usually be emptied.</property>
                     <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                   </object>
@@ -75,6 +79,7 @@
                 <child>
                   <object class="GtkHBox" id="hbox1">
                     <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Number of items in the clipboard history.</property>
                     <child>
                       <object class="GtkLabel" id="label_clipboard_size">
                         <property name="visible">True</property>
@@ -119,6 +124,7 @@
                 <child>
                   <object class="GtkHBox" id="hbox2">
                     <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Hotkey to quickly allow you to access the clipboard history.</property>
                     <child>
                       <object class="GtkLabel" id="label_history_key">
                         <property name="visible">True</property>
