@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-22 16:42+0100\n"
+"POT-Creation-Date: 2011-01-29 11:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,38 +26,72 @@ msgid "Clipboard Manager for GNOME"
 msgstr ""
 
 #: ../data/preferences.ui.h:1
-msgid "Clipboard"
+msgid ""
+"Adds the primary selection (an area of the screen which is selected with the "
+"mouse) to the clipboard history."
 msgstr ""
 
 #: ../data/preferences.ui.h:2
-msgid "Clipboard size"
+msgid ""
+"Adds the text which is copied to the clipboard with e.g. Ctrl + V to the "
+"clipboard history."
 msgstr ""
 
 #: ../data/preferences.ui.h:3
-msgid "Diodon Preferences"
+msgid "Clipboard"
 msgstr ""
 
 #: ../data/preferences.ui.h:4
-msgid "History key"
+msgid "Clipboard size"
 msgstr ""
 
 #: ../data/preferences.ui.h:5
-msgid "Hotkeys"
+msgid "Diodon Preferences"
 msgstr ""
 
 #: ../data/preferences.ui.h:6
-msgid "S_ynchronize clipboards"
+msgid "History key"
 msgstr ""
 
 #: ../data/preferences.ui.h:7
-msgid "Use _primary selection"
+msgid "Hotkey to quickly allow you to access the clipboard history."
 msgstr ""
 
 #: ../data/preferences.ui.h:8
-msgid "Use clipboard (Ctrl+_V)"
+msgid "Hotkeys"
 msgstr ""
 
 #: ../data/preferences.ui.h:9
+msgid "Number of items in the clipboard history."
+msgstr ""
+
+#: ../data/preferences.ui.h:10
+msgid ""
+"Prevents an empty clipboard. For instance when an application exits, the "
+"clipboard would usually be emptied."
+msgstr ""
+
+#: ../data/preferences.ui.h:11
+msgid "S_ynchronize clipboards"
+msgstr ""
+
+#: ../data/preferences.ui.h:12
+msgid ""
+"Synchronizes the selection (an area of the screen which is selected with the "
+"mouse) and the clipboard so that anything in the selection is immediately "
+"available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
+"the middle mouse button."
+msgstr ""
+
+#: ../data/preferences.ui.h:13
+msgid "Use _primary selection"
+msgstr ""
+
+#: ../data/preferences.ui.h:14
+msgid "Use clipboard (Ctrl+_V)"
+msgstr ""
+
+#: ../data/preferences.ui.h:15
 msgid "_Keep clipboard content"
 msgstr ""
 

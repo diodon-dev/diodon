@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Diodon 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-22 16:42+0100\n"
+"POT-Creation-Date: 2011-01-29 11:40+0100\n"
 "PO-Revision-Date: 2011-01-19 20:32+0000\n"
 "Last-Translator: Oliver Sauder <os@esite.ch>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-01-23 05:27+0000\n"
 "X-Generator: Launchpad (build 12177)\n"
-"Language: \n"
 "X-Poedit-Language: German\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -23,38 +23,72 @@ msgid "Clipboard Manager for GNOME"
 msgstr "Zwischenablage-Manager für Gnome"
 
 #: ../data/preferences.ui.h:1
+msgid ""
+"Adds the primary selection (an area of the screen which is selected with the "
+"mouse) to the clipboard history."
+msgstr ""
+
+#: ../data/preferences.ui.h:2
+msgid ""
+"Adds the text which is copied to the clipboard with e.g. Ctrl + V to the "
+"clipboard history."
+msgstr ""
+
+#: ../data/preferences.ui.h:3
 msgid "Clipboard"
 msgstr "Zwischenablage"
 
-#: ../data/preferences.ui.h:2
+#: ../data/preferences.ui.h:4
 msgid "Clipboard size"
 msgstr "Grösse der Zwischenablage"
 
-#: ../data/preferences.ui.h:3
+#: ../data/preferences.ui.h:5
 msgid "Diodon Preferences"
 msgstr "Diodon Einstellungen"
 
-#: ../data/preferences.ui.h:4
+#: ../data/preferences.ui.h:6
 msgid "History key"
 msgstr "Verlauf-Tastenkombination"
 
-#: ../data/preferences.ui.h:5
-msgid "Hotkeys"
-msgstr "Tastenkombinationen"
-
-#: ../data/preferences.ui.h:6
-msgid "S_ynchronize clipboards"
-msgstr ""
-
 #: ../data/preferences.ui.h:7
-msgid "Use _primary selection"
+msgid "Hotkey to quickly allow you to access the clipboard history."
 msgstr ""
 
 #: ../data/preferences.ui.h:8
+msgid "Hotkeys"
+msgstr "Tastenkombinationen"
+
+#: ../data/preferences.ui.h:9
+msgid "Number of items in the clipboard history."
+msgstr ""
+
+#: ../data/preferences.ui.h:10
+msgid ""
+"Prevents an empty clipboard. For instance when an application exits, the "
+"clipboard would usually be emptied."
+msgstr ""
+
+#: ../data/preferences.ui.h:11
+msgid "S_ynchronize clipboards"
+msgstr ""
+
+#: ../data/preferences.ui.h:12
+msgid ""
+"Synchronizes the selection (an area of the screen which is selected with the "
+"mouse) and the clipboard so that anything in the selection is immediately "
+"available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
+"the middle mouse button."
+msgstr ""
+
+#: ../data/preferences.ui.h:13
+msgid "Use _primary selection"
+msgstr ""
+
+#: ../data/preferences.ui.h:14
 msgid "Use clipboard (Ctrl+_V)"
 msgstr ""
 
-#: ../data/preferences.ui.h:9
+#: ../data/preferences.ui.h:15
 msgid "_Keep clipboard content"
 msgstr ""
 
