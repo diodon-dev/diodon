@@ -33,6 +33,21 @@ namespace Diodon
         private Gee.List<Keybinding> bindings = new Gee.ArrayList<Keybinding>();
         
         /**
+         * locked modifiers used to grab all keys whatever lock key
+         * is pressed.
+         */
+        private static uint[] lock_modifiers = {
+            0,
+            Gdk.ModifierType.MOD2_MASK, // NUM_LOCK
+            Gdk.ModifierType.LOCK_MASK, // CAPS_LOCK
+            Gdk.ModifierType.MOD5_MASK, // SCROLL_LOCK
+            Gdk.ModifierType.MOD2_MASK|Gdk.ModifierType.LOCK_MASK,
+            Gdk.ModifierType.MOD2_MASK|Gdk.ModifierType.MOD5_MASK,
+            Gdk.ModifierType.LOCK_MASK|Gdk.ModifierType.MOD5_MASK,
+            Gdk.ModifierType.MOD2_MASK|Gdk.ModifierType.LOCK_MASK|Gdk.ModifierType.MOD5_MASK
+        };
+        
+        /**
          * Helper class to store keybinding
          */
         private class Keybinding
@@ -96,8 +111,12 @@ namespace Diodon
                 // even when grabing of key fails
                 Gdk.error_trap_push();
 
-                // grab key finally                
-                display.grab_key(keycode, modifiers, xid, false, X.GrabMode.Async, X.GrabMode.Async);
+                // grab key finally
+                // also grab all keys which are combined with a lock key such NumLock
+                foreach(uint lock_modifier in lock_modifiers) {     
+                    display.grab_key(keycode, modifiers|lock_modifier, xid, false,
+                        X.GrabMode.Async, X.GrabMode.Async);
+                }
                 
                 // wait until all X request have been processed
                 Gdk.flush();
@@ -127,7 +146,9 @@ namespace Diodon
             Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
             foreach(Keybinding binding in bindings) {
                 if(str_equal(accelerator, binding.accelerator)) {
-                    display.ungrab_key(binding.keycode, binding.modifiers, xid);
+                    foreach(uint lock_modifier in lock_modifiers) {
+                        display.ungrab_key(binding.keycode, binding.modifiers, xid);
+                    }
                     remove_bindings.add(binding);                    
                 }
             }
@@ -148,7 +169,9 @@ namespace Diodon
              
              if(xevent->type == X.EventType.KeyPress) {
                 foreach(Keybinding binding in bindings) {
-                    if(xevent->xkey.keycode == binding.keycode && xevent.xkey.state == binding.modifiers) {
+                    // remove NumLock, CapsLock and ScrollLock from key state
+                    uint event_mods = xevent.xkey.state & ~ (lock_modifiers[7]);
+                    if(xevent->xkey.keycode == binding.keycode && event_mods == binding.modifiers) {
                         // call all handlers with pressed key and modifiers
                         binding.handler(gdk_event);
                     }
