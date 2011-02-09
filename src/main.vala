@@ -24,29 +24,64 @@ namespace Diodon
      *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class Main
+    public class Main : GLib.Object
     {
+        /**
+         * determine if debug mode is enabled
+         */
+        private static bool debug = false;
+        
+        private static const OptionEntry[] options = {
+            { "debug", 'd', 0, OptionArg.NONE, ref debug, "Enable debug mode.", null },
+            { null }
+        };
+    
+        /**
+         * Callback to mute log message
+         */
+        private static void mute_log_handler(string? log_domain,
+            LogLevelFlags log_levels, string message)
+        {
+        }
+    
         public static int main(string[] args)
         {
-            // setup gettext
-            Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
-            Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
+            try {
+                // setup gettext
+                Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+                Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
+                
+                // init option context
+                OptionContext opt_context = new OptionContext("- Clipboard Manager for GNOME");
+                opt_context.set_help_enabled(true);
+                opt_context.add_main_entries(options, null);
+                opt_context.parse(ref args);
+                
+                // mute debug log if not enabled
+                if(!debug) {
+                    Log.set_handler(null, LogLevelFlags.LEVEL_DEBUG, mute_log_handler);
+                }
 
-            // setup gtk
-            Gtk.init(ref args);
-            
-            // setup storage    
-            string diodon_dir = Path.build_filename(Environment.get_user_data_dir(), Config.PACKAGE_NAME);
-            IClipboardStorage storage = new XmlClipboardStorage(diodon_dir, "storage.xml");
-            ClipboardModel model = new ClipboardModel(storage);
+                // setup gtk
+                Gtk.init(ref args);
+                
+                // setup storage    
+                string diodon_dir = Path.build_filename(Environment.get_user_data_dir(), Config.PACKAGE_NAME);
+                IClipboardStorage storage = new XmlClipboardStorage(diodon_dir, "storage.xml");
+                ClipboardModel model = new ClipboardModel(storage);
 
-            // setup controller            
-            Controller controller = new Controller();
-            controller.clipboard_model = model;
-            controller.start();
-            
-            Gtk.main();
-            return 0;
+                // setup controller            
+                Controller controller = new Controller();
+                controller.clipboard_model = model;
+                controller.start();
+                
+                Gtk.main();
+                
+                return 0;
+            } catch(OptionError e) {
+                stdout.printf("Option parsing failed: %s\n", e.message);
+                return 1;
+            }
         }
     }
 }
