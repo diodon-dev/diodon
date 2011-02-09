@@ -32,7 +32,7 @@ namespace Diodon
         private static bool debug = false;
         
         private static const OptionEntry[] options = {
-            { "debug", 'd', 0, OptionArg.NONE, ref debug, "Enable debug mode.", null },
+            { "debug", 'd', 0, OptionArg.NONE, ref debug, "Enable debug mode", null },
             { null }
         };
     
