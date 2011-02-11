@@ -60,11 +60,11 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="checkbutton_use_clipboard">
-                    <property name="label" translatable="yes">Use clipboard (Ctrl+_V)</property>
+                    <property name="label" translatable="yes">_Use clipboard (Ctrl+C)</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="tooltip_text" translatable="yes">Adds the text which is copied to the clipboard with e.g. Ctrl + V to the clipboard history.</property>
+                    <property name="tooltip_text" translatable="yes">Adds the text which is copied to the clipboard with e.g. Ctrl + C to the clipboard history.</property>
                     <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>

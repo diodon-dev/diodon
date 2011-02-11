@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-29 11:40+0100\n"
+"POT-Creation-Date: 2011-02-11 18:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 
 #: ../data/preferences.ui.h:2
 msgid ""
-"Adds the text which is copied to the clipboard with e.g. Ctrl + V to the "
+"Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
 
@@ -88,11 +88,11 @@ msgid "Use _primary selection"
 msgstr ""
 
 #: ../data/preferences.ui.h:14
-msgid "Use clipboard (Ctrl+_V)"
+msgid "_Keep clipboard content"
 msgstr ""
 
 #: ../data/preferences.ui.h:15
-msgid "_Keep clipboard content"
+msgid "_Use clipboard (Ctrl+C)"
 msgstr ""
 
 #: ../src/indicator-view.vala:75
