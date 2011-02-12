@@ -50,13 +50,15 @@ def configure(conf):
     # set 'default' variant
     conf.define ('DEBUG', 0)
     conf.env['CFLAGS']=['-O2']
+    conf.env['VALAFLAGS'] = ['--disable-assert']
     conf.write_config_header ('config.h', remove=False)
     
     # set 'debug' variant
     conf.set_env_name ('debug', env=conf.env.derive())
     conf.define ('DEBUG', 1)
-    conf.env['CFLAGS'] = ['-O0', '-g3']
-    conf.env['VALAFLAGS'] = ['-g', '-v']
+    if Options.options.debug:
+        conf.env['CFLAGS'] = ['-O0', '-g3']
+        conf.env['VALAFLAGS'] = ['-g', '-v', '--enable-checking']
     conf.write_config_header ('debug/config.h')
    
 def build(bld):
