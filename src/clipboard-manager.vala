@@ -80,10 +80,12 @@ namespace Diodon
         
         /**
          * Starts the process requesting text from encapsulated clipboard.
+         * The owner has to change when new data is set in the clipboard
+         * therefore just connecting to owner_change will do the trick.
          */
         public void start()
         {
-            Timeout.add(500, request_text);
+            clipboard.owner_change.connect(request_text);
         }
         
         /**
@@ -121,9 +123,9 @@ namespace Diodon
          * Request text from managed clipboard. If result is valid
          * on_text_received will be called.
          *
-         * @return currently always true
+         * @param event owner change event
          */
-        private bool request_text()
+        protected void request_text()
         {
             string text = clipboard.wait_for_text();
             
@@ -143,8 +145,6 @@ namespace Diodon
             if(text == null) {
                 check_clipboard();
             }
-            
-            return true;
         }
         
         /**

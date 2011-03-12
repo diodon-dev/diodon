@@ -135,7 +135,7 @@ namespace Diodon
             selection_data.set_uris(uris);
             
             // set special nautilus target which should copy the files
-            // nautilus has defined 8 as format so we have to use 8 as well
+            // 8 number of bits in a unit are used
             string copy_files_data = "copy\n" + join("\n", uris);
             selection_data.set(copy_files, 8, string_to_uchar_array(copy_files_data));
         }
