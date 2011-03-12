@@ -267,12 +267,37 @@ namespace Diodon
          */
         private void text_received(ClipboardType type, string text)
         {
+            IClipboardItem item = new TextClipboardItem(type, text);
+            item_received(item);
+        }
+        
+        /**
+         * Handling paths retrieved from clipboard by adding it to the storage
+         * and appending it to the menu of the indicator
+         * 
+         * @param paths paths received
+         */
+        private void uris_received(ClipboardType type, string paths)
+        {
+            IClipboardItem item = new FileClipboardItem(type, paths);
+            item_received(item);
+        }
+        
+        /**
+         * Handling given item by checking if item is equal last added item
+         * and if not so, adding it to history and indicator.
+         *
+         * @param item item received
+         */
+        private void item_received(IClipboardItem item)
+        {
+            ClipboardType type = item.get_clipboard_type();
+            string label = item.get_label();
             IClipboardItem current_item = clipboard_model.get_current_item(type);
             
-            // check if received text is different to last received text
-            if(current_item == null || text != current_item.get_clipboard_data()) {
-                debug("received text from clipboard " + "%d".printf(type) + ": " + text);
-                IClipboardItem item = new TextClipboardItem(type, text);
+            // check if received item is different from last item
+            if(current_item == null || !IClipboardItem.equal_func(current_item, item)) {
+                debug("received item from clipboard " + "%d".printf(type) + ": " + label);
                 
                 // remove item from clipboard if it already exists
                 if(clipboard_model.get_items().contains(item)) {
@@ -289,7 +314,8 @@ namespace Diodon
 
                 // when synchronization is enabled                
                 // set text on all other clipboards then current type
-                if(configuration_model.synchronize_clipboards) {
+                // only text can be synchronized
+                if(item is TextClipboardItem && configuration_model.synchronize_clipboards) {
                     foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
                         if(type != clipboard_manager.clipboard_type) {
                             clipboard_manager.select_item(item);
@@ -385,7 +411,7 @@ namespace Diodon
                 return false; // stop timer
             });
         }
-        
+
         /**
          * connect and attach to signals of given clipboard type to enable it.
          *
@@ -395,10 +421,11 @@ namespace Diodon
         {
             ClipboardManager manager = clipboard_managers.get(type);
             manager.on_text_received.connect(text_received);
+            manager.on_uris_received.connect(uris_received);
             on_copy_selection.connect(manager.select_item);
             on_clear.connect(manager.clear);
         }
-        
+
         /**
          * disconnect and dis-attach to signals of given manager to disable it.
          *
@@ -408,6 +435,7 @@ namespace Diodon
         {
             ClipboardManager manager = clipboard_managers.get(type);
             manager.on_text_received.disconnect(text_received);
+            manager.on_uris_received.disconnect(uris_received);
             on_copy_selection.disconnect(manager.select_item);
             on_clear.disconnect(manager.clear);
         }

@@ -26,6 +26,11 @@ namespace Diodon
     public class FileClipboardItem : GLib.Object, IClipboardItem
     {
         /**
+         * a special target type for copying files so nautilus can paste it
+         */
+        private static Gdk.Atom copy_files = Gdk.Atom.intern_static_string("x-special/gnome-copied-files");
+        
+        /**
          * file paths separated with \n
          */
         private string _paths;
@@ -81,13 +86,24 @@ namespace Diodon
             // create default uri target and text target
             Gtk.TargetEntry[] targets = null;
             Gtk.TargetList target_list = new Gtk.TargetList(targets);
-            target_list.add_uri_targets(0);
             target_list.add_text_targets(0);
+            target_list.add_uri_targets(0);
+            target_list.add(copy_files, 0, 0); // add special nautilus target
+
+            // converting target list to target entries
+            // leaving one target entry for special target (s. below)
+            targets = new Gtk.TargetEntry[target_list.list.length()];
+            int i = 0;
+            foreach(unowned Gtk.TargetPair pair in target_list.list) {
+                targets[i].target = pair.target.name();
+                ++i;
+            }
 
             // set data callbacks with a empty clear func as
             // there is nothing to be cleared
-            clipboard.set_with_data(targets, (Gtk.ClipboardGetFunc)get_clipboard_data_callback,
-                (clipboard, user_data) => {});
+            clipboard.set_with_owner(targets,
+                (Gtk.ClipboardGetFunc)get_clipboard_data_callback,
+                (Gtk.ClipboardClearFunc)clear_clipboard_data_callback, this);
             
             // store data in clipboard so when diodon is closed
             // data still can be pasted
@@ -97,22 +113,74 @@ namespace Diodon
         /**
          * Callback method called by Gtk.Clipboard to get the clipboard data
          * whereas in this case it is the path as text and the uri for
-         * pasting file itself.
+         * pasting file itself. Static as instance to FileClipboardItem is passed on
+         * as user_data.
          */
-        private void get_clipboard_data_callback(Gtk.Clipboard clipboard, Gtk.SelectionData selection_data,
+        private static void get_clipboard_data_callback(Gtk.Clipboard clipboard, Gtk.SelectionData selection_data,
             uint info, void* user_data)
         {
+            debug("clipboard data called");
+            FileClipboardItem item = (FileClipboardItem) user_data;
+            
             // use path as simple text
-            selection_data.set_text(_paths, -1);
+            selection_data.set_text(item._paths, -1);
             
              // convert paths to uris
-            string[] uris = _paths.split("\n");
+            string[] uris = item._paths.split("\n");
             for(int i = 0; i < uris.length; ++i) {
-                string uri = GLib.Uri.escape_string(uris[i], "", true);
+                string uri = uris[i];
                 uri = "file://" + uri;
-                uris[i] = uri;    
+                uris[i] = uri;
             }
             selection_data.set_uris(uris);
+            
+            // set special nautilus target which should copy the files
+            // nautilus has defined 8 as format so we have to use 8 as well
+            string copy_files_data = "copy\n" + join("\n", uris);
+            selection_data.set(copy_files, 8, string_to_uchar_array(copy_files_data));
+        }
+        
+        /**
+         * Callback method called by Gtk.Clipboard to clear data.
+         * Currently empty method as there is nothing to be cleared.
+         */
+        private static void clear_clipboard_data_callback(Gtk.Clipboard clipboard, void* user_data)
+        {
+        }
+
+        /**
+         * Helper method to convert string to uchar array.
+         *
+         * @param str string to be converted
+         */        
+        private static uchar[] string_to_uchar_array(string str)
+        {
+            uchar[] data = new uchar[0];
+            for (int i = 0; i < str.length; ++i) {
+                data += (uchar) str[i];
+            }
+            return data;
+        }
+        
+        /**
+         * Helper method to join a array of string together with
+         * given separator.
+         *
+         * @param separator separator to join string
+         * @param array array of strings to be joined
+         */
+        private static string join(string separator, string[] array)
+        {
+            string result = "";
+            if(array.length > 0) {
+                result = array[0];
+                for(int i = 1; i < array.length; ++i) {
+                    result += separator;
+                    result += array[i];                    
+                }
+            }
+            
+            return result;
         }
     }  
 }
