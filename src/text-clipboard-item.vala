@@ -51,7 +51,7 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-	    public string get_date()
+	    public string get_data()
         {
             return _text;
         }
