@@ -270,7 +270,7 @@ namespace Diodon
             IClipboardItem current_item = clipboard_model.get_current_item(type);
             
             // check if received text is different to last received text
-            if(current_item == null || text != current_item.get_data()) {
+            if(current_item == null || text != current_item.get_clipboard_data()) {
                 debug("received text from clipboard " + "%d".printf(type) + ": " + text);
                 IClipboardItem item = new TextClipboardItem(type, text);
                 

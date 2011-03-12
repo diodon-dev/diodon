@@ -123,7 +123,7 @@ namespace Diodon
             writer.start_element ("clipboard");
             
             foreach(IClipboardItem item in items) {
-                writer.write_element("item", item.get_data());
+                writer.write_element("item", item.get_clipboard_data());
             }          
             
             writer.end_element();

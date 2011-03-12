@@ -46,7 +46,7 @@ namespace Diodon
          *
          * @return data
          */
-        public abstract string get_data();
+        public abstract string get_clipboard_data();
         
         /**
          * Select the current item in the given gtk clipboard
@@ -70,7 +70,7 @@ namespace Diodon
          */
         public static bool equal_func(IClipboardItem* item_a, IClipboardItem* item_b)
         {
-            return str_equal(item_a->get_data(), item_b->get_data());
+            return str_equal(item_a->get_clipboard_data(), item_b->get_clipboard_data());
         }
         
         /**
@@ -87,7 +87,7 @@ namespace Diodon
          */
         public static uint hash_func (IClipboardItem* item)
         {
-            return str_hash(item->get_data());
+            return str_hash(item->get_clipboard_data());
         }
     }    
 }

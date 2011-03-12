@@ -51,7 +51,7 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-	    public string get_data()
+	    public string get_clipboard_data()
         {
             return _text;
         }
@@ -76,6 +76,7 @@ namespace Diodon
         public void to_clipboard(Gtk.Clipboard clipboard)
         {
             clipboard.set_text(_text, -1);
+            clipboard.store();
         }
     }  
 }
