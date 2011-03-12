@@ -42,7 +42,7 @@ namespace Diodon
         {
             items = new ArrayList<ClipboardItem>((GLib.EqualFunc?)ClipboardItem.equal_func);
             
-            // make sure that all parent directories exists
+            // make sure that all parent directories exist
             try {
                 File dir = File.new_for_path(directory);
                 if(!dir.query_exists(null)) {
@@ -126,7 +126,7 @@ namespace Diodon
             
             foreach(ClipboardItem item in items) {
                 writer.write_element("item", item.text);
-            }
+            }          
             
             writer.end_element();
             writer.end_document();

@@ -268,6 +268,8 @@ namespace Diodon
         private void text_received(ClipboardType type, string text)
         {
             ClipboardItem current_item = clipboard_model.get_current_item(type);
+            
+            // check if received text is different to last received text
             if(current_item == null || text != current_item.text) {
                 debug("received text from clipboard " + "%d".printf(type) + ": " + text);
                 ClipboardItem item = new ClipboardItem(type, text);
@@ -284,9 +286,10 @@ namespace Diodon
                 
                 on_new_item(item);
                 on_select_item(item);
-                
+
+                // when synchronization is enabled                
+                // set text on all other clipboards then current type
                 if(configuration_model.synchronize_clipboards) {
-                    // set text on all other clipboards then current type
                     foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
                         if(type != clipboard_manager.clipboard_type) {
                             clipboard_manager.select_item(item);
@@ -379,7 +382,7 @@ namespace Diodon
             // do avoid dead lock
             Timeout.add(100, () => {
                 on_show_menu();
-                return false; // stop timer calls    
+                return false; // stop timer
             });
         }
         
