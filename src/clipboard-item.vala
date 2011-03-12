@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2010 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2011 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -15,49 +15,45 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+ 
 namespace Diodon
 {
     /**
-     * Represents an immutable item in the clipboard with all its information.
-     * 
-     * TODO; consider using a interface for a clipboard item to implement
-     * the representation of coping files or buffers.
+     * Clipboard item interface to be implemented by various different
+     * clipboard item types such as Text,File or Image.
      *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class ClipboardItem : GLib.Object
+    public interface IClipboardItem : GLib.Object
     {
-        private string _text;
-        private ClipboardType _clipboard_type;
-       
-        /**
-         * Simple text constructor
-         * 
-         * @param type clipboard type item is coming from
-         * @param text plain text
-         */ 
-        public ClipboardItem(ClipboardType clipboard_type, string text)
-        {
-            _clipboard_type = clipboard_type;
-            _text = text;
-        }
-    
-        /**
-         * get plain text
-         */
-        public string text
-        {
-            get { return _text; }
-        }
-
         /**
          * get clipboard type item is coming from
-         */        
-        public ClipboardType clipboard_type
-        {
-            get { return _clipboard_type; }
-        }
+         *
+         * @return type of clipboard
+         */  
+        public abstract ClipboardType get_clipboard_type();
+        
+        /**
+         * label of clipboard item used to show in user interface
+         *
+         * @return label of item
+         */  
+        public abstract string get_label();
+        
+        /**
+         * A string representing all information to rebuild a clipboard
+         * item again.
+         *
+         * @return data
+         */
+        public abstract string get_data();
+        
+        /**
+         * Select the current item in the given gtk clipboard
+         *
+         * @param clipboard gtk clipboard
+         */
+        public abstract void to_clipboard(Gtk.Clipboard clipboard);
         
         /**
          * equal func helper comparing two clipboard items.
@@ -72,9 +68,9 @@ namespace Diodon
          * 
          * @return true if equal; otherwise false.
          */
-        public static bool equal_func(ClipboardItem* item_a, ClipboardItem* item_b)
+        public static bool equal_func(IClipboardItem* item_a, IClipboardItem* item_b)
         {
-            return str_equal(item_a->text, item_b->text);
+            return str_equal(item_a->get_data(), item_b->get_data());
         }
         
         /**
@@ -89,9 +85,10 @@ namespace Diodon
          * 
          * @return generated hash code
          */
-        public static uint hash_func (ClipboardItem* item)
+        public static uint hash_func (IClipboardItem* item)
         {
-            return str_hash(item->text);
+            return str_hash(item->get_data());
         }
-    }  
+    }    
 }
+

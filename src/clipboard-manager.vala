@@ -81,9 +81,9 @@ namespace Diodon
          *
          * @param item item to be selected
          */
-        public void select_item(ClipboardItem item)
+        public void select_item(IClipboardItem item)
         {
-            clipboard.set_text(item.text, -1);
+            item.to_clipboard(clipboard);
         }
         
         /**

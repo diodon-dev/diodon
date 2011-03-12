@@ -30,22 +30,22 @@ namespace Diodon
         /**
          * Called when a item needs to be copied to a clipboard selection.
          */
-        private signal void on_copy_selection(ClipboardItem item);
+        private signal void on_copy_selection(IClipboardItem item);
         
         /**
          * Called when a item has been selected.
          */
-        private signal void on_select_item(ClipboardItem item);
+        private signal void on_select_item(IClipboardItem item);
         
         /**
          * Called when a new item has been available
          */
-        private signal void on_new_item(ClipboardItem item);
+        private signal void on_new_item(IClipboardItem item);
         
         /**
          * Called when a item needs to be removed
          */
-        private signal void on_remove_item(ClipboardItem item);
+        private signal void on_remove_item(IClipboardItem item);
         
         /**
          * Called when all items need to be cleared
@@ -176,7 +176,7 @@ namespace Diodon
         private void init()
         {
              // add all available items from storage to indicator
-            foreach(ClipboardItem item in clipboard_model.get_items()) {
+            foreach(IClipboardItem item in clipboard_model.get_items()) {
                 indicator_view.hide_empty_item();
                 indicator_view.prepend_item(item);
             }
@@ -251,7 +251,7 @@ namespace Diodon
          *
          * @param item item to be selected
          */
-        private void select_item(ClipboardItem item)
+        private void select_item(IClipboardItem item)
         {
             on_remove_item(item);
             on_new_item(item);
@@ -267,12 +267,12 @@ namespace Diodon
          */
         private void text_received(ClipboardType type, string text)
         {
-            ClipboardItem current_item = clipboard_model.get_current_item(type);
+            IClipboardItem current_item = clipboard_model.get_current_item(type);
             
             // check if received text is different to last received text
-            if(current_item == null || text != current_item.text) {
+            if(current_item == null || text != current_item.get_data()) {
                 debug("received text from clipboard " + "%d".printf(type) + ": " + text);
-                ClipboardItem item = new ClipboardItem(type, text);
+                IClipboardItem item = new TextClipboardItem(type, text);
                 
                 // remove item from clipboard if it already exists
                 if(clipboard_model.get_items().contains(item)) {
@@ -307,7 +307,7 @@ namespace Diodon
         private void clipboard_empty(ClipboardType type)
         {               
             // check if a item is there to restore lost content
-            ClipboardItem item = clipboard_model.get_current_item(type);
+            IClipboardItem item = clipboard_model.get_current_item(type);
             if(item != null) {
                 debug("Clipboard " + "%d".printf(type) + " is empty.");   
                 ClipboardManager manager = clipboard_managers.get(type);
@@ -328,12 +328,12 @@ namespace Diodon
             if(configuration_model.clipboard_size < clipboard_model.get_size()) {
                 // create copy of items as otherwise
                 // removing in a loop does not work
-                Gee.ArrayList<ClipboardItem> items = new Gee.ArrayList<ClipboardItem>();
+                Gee.ArrayList<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
                 items.add_all(clipboard_model.get_items());
                 
                 int remove = items.size - configuration_model.clipboard_size;
                 for(int i = 0; i < remove; ++i) {
-                    ClipboardItem item = items.get(i);
+                    IClipboardItem item = items.get(i);
                     on_remove_item(item);
                 }
             }

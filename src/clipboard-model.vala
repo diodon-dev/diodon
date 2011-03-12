@@ -27,7 +27,7 @@ namespace Diodon
     public class ClipboardModel
     {
         private IClipboardStorage storage;
-        private Gee.HashMap<ClipboardType, ClipboardItem> current_items;
+        private Gee.HashMap<ClipboardType, IClipboardItem> current_items;
  
         /** 
          * Storage constructor
@@ -37,7 +37,7 @@ namespace Diodon
         public ClipboardModel(IClipboardStorage storage)
         {
             this.storage = storage;     
-            this.current_items = new Gee.HashMap<ClipboardType, ClipboardItem>();
+            this.current_items = new Gee.HashMap<ClipboardType, IClipboardItem>();
         }
         
         /**
@@ -46,7 +46,7 @@ namespace Diodon
          * @param type clipboard type
          * @return clipboard item
          */
-        public ClipboardItem get_current_item(ClipboardType type)
+        public IClipboardItem get_current_item(ClipboardType type)
         {
             return current_items.get(type);
         }
@@ -56,9 +56,9 @@ namespace Diodon
          *
          * @return last item or null if no item is available
          */
-        public ClipboardItem get_last_item()
+        public IClipboardItem get_last_item()
         {
-            ClipboardItem item = null;
+            IClipboardItem item = null;
             
             if(get_size() > 0) {
                 item = get_items().get(0);
@@ -72,7 +72,7 @@ namespace Diodon
          * 
          * @return list of clipboard items
          */
-        public Gee.ArrayList<ClipboardItem> get_items()
+        public Gee.ArrayList<IClipboardItem> get_items()
         {
             return storage.get_items();
         }
@@ -101,7 +101,7 @@ namespace Diodon
          * 
          * @param item item to be added
          */
-        public void add_item(ClipboardItem item)
+        public void add_item(IClipboardItem item)
         {
             storage.add_item(item);
         }
@@ -111,9 +111,9 @@ namespace Diodon
          * 
          * @param item item to be selected
          */         
-        public void select_item(ClipboardItem item)
+        public void select_item(IClipboardItem item)
         {  
-            current_items.set(item.clipboard_type, item);
+            current_items.set(item.get_clipboard_type(), item);
         }
         
         /**
@@ -121,7 +121,7 @@ namespace Diodon
          *
          * @param item item to be removed
          */
-        public void remove_item(ClipboardItem item)
+        public void remove_item(IClipboardItem item)
         {
             storage.remove_item(item);
         }

@@ -19,53 +19,63 @@
 namespace Diodon
 {
     /**
-     * Memory clipboard storage implementation.
-     * 
+     * Represents a text clipboard item holding simple text.
+     *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class MemoryClipboardStorage : GLib.Object, IClipboardStorage
+    public class TextClipboardItem : GLib.Object, IClipboardItem
     {
-        private Gee.ArrayList<IClipboardItem> items;
+        private string _text;
+        private ClipboardType _clipboard_type;
+       
+        /**
+         * Default data constructor needed for reflection.
+         * 
+         * @param type clipboard type item is coming from
+         * @param data simple text
+         */ 
+        public TextClipboardItem(ClipboardType clipboard_type, string data)
+        {
+            _clipboard_type = clipboard_type;
+            _text = data;
+        }
     
         /**
-         * Default constructor
-         */
-        public MemoryClipboardStorage()
+	     * {@inheritDoc}
+	     */
+        public ClipboardType get_clipboard_type()
         {
-            items = new Gee.ArrayList<IClipboardItem>((GLib.EqualFunc?)IClipboardItem.equal_func);
+            return _clipboard_type;
         }
         
         /**
 	     * {@inheritDoc}
 	     */
-        public void remove_item(IClipboardItem item)
+	    public string get_date()
         {
-            items.remove(item);
+            return _text;
+        }
+
+        /**
+	     * {@inheritDoc}
+	     */
+        public string get_label()
+        {
+            // label should not be longer than 50 letters
+            string label = _text.replace("\n", " ");
+            if (label.length > 50) {
+                label = label.substring(0, 50) + "...";
+            }
+            
+            return label;
         }
         
         /**
 	     * {@inheritDoc}
 	     */
-        public Gee.ArrayList<IClipboardItem> get_items()
+        public void to_clipboard(Gtk.Clipboard clipboard)
         {
-            return items;
-        }
-        
-        /**
-	     * {@inheritDoc}
-	     */
-        public void add_item(IClipboardItem item)
-        {
-            items.add(item);
-        }
-        
-        /**
-	     * {@inheritDoc}
-	     */
-        public void clear()
-        {
-            items.clear();
+            clipboard.set_text(_text, -1);
         }
     }  
 }
- 

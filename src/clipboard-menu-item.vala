@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2010 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2010-2011 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using Gee;
-
 namespace Diodon
 {
     /**
@@ -27,30 +25,27 @@ namespace Diodon
      */
     public class ClipboardMenuItem : Gtk.MenuItem
     {
-        private ClipboardItem item;
+        private IClipboardItem _item;
         
         /**
          * Clipboard item constructor
          * 
          * @param item clipboard item 
          */
-        public ClipboardMenuItem(ClipboardItem item)
+        public ClipboardMenuItem(IClipboardItem item)
         {
-            this.item = item;
-            
-            string label = item.text.replace("\n", " ");
-            if (label.length > 50) {
-                label = label.substring(0, 50) + "...";
-            }
-            set_label(label);
+            _item = item;
+            set_label(_item.get_label());
         }
         
         /**
          * Get encapsulated clipboard item
+         *
+         * @return clipboard item
          */
-        public ClipboardItem get_clipboard_item()
+        public IClipboardItem get_clipboard_item()
         {
-            return item;
+            return _item;
         }
         
         /**

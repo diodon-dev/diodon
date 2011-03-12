@@ -35,7 +35,7 @@ namespace Diodon
         /**
          * HashMap of all available clipboard items
          */
-        private HashMap<ClipboardItem, ClipboardMenuItem> clipboard_menu_items;
+        private HashMap<IClipboardItem, ClipboardMenuItem> clipboard_menu_items;
         
         /**
          * called when application exits
@@ -57,7 +57,7 @@ namespace Diodon
          * 
          * @param item item to be selected
          */
-        public signal void on_select_item(ClipboardItem item);
+        public signal void on_select_item(IClipboardItem item);
         
         /**
          * Default constructor.
@@ -94,8 +94,8 @@ namespace Diodon
             menu.show_all();
             indicator.set_menu(menu);
             
-            clipboard_menu_items = new HashMap<ClipboardItem, ClipboardMenuItem>(
-                (GLib.HashFunc?)ClipboardItem.hash_func, (GLib.EqualFunc?)ClipboardItem.equal_func);
+            clipboard_menu_items = new HashMap<IClipboardItem, ClipboardMenuItem>(
+                (GLib.HashFunc?)IClipboardItem.hash_func, (GLib.EqualFunc?)IClipboardItem.equal_func);
         }
         
         /**
@@ -103,7 +103,7 @@ namespace Diodon
          * 
          * @param item item to be selected
          */
-        public void select_item(ClipboardItem item)
+        public void select_item(IClipboardItem item)
         {
             ClipboardMenuItem menu_item = clipboard_menu_items.get(item);
             menu_item.highlight_item();
@@ -114,7 +114,7 @@ namespace Diodon
          * 
          * @param entry entry to be added
          */
-        public void prepend_item(ClipboardItem item)
+        public void prepend_item(IClipboardItem item)
         {
             ClipboardMenuItem menu_item = new ClipboardMenuItem(item);
             menu_item.activate.connect(on_clicked_item);
@@ -128,7 +128,7 @@ namespace Diodon
          * 
          * @param item item to be removed
          */
-        public void remove_item(ClipboardItem item)
+        public void remove_item(IClipboardItem item)
         {
             ClipboardMenuItem menu_item = null;
             clipboard_menu_items.unset(item, out menu_item);

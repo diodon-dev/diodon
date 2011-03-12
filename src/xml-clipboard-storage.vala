@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2010 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2010-2011 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using Gee;
-
 namespace Diodon
 {
     /**
@@ -29,7 +27,7 @@ namespace Diodon
      */
     public class XmlClipboardStorage : GLib.Object, IClipboardStorage
     {
-        private ArrayList<ClipboardItem> items;
+        private Gee.ArrayList<IClipboardItem> items;
         private string xml_file;
     
         /**
@@ -40,7 +38,7 @@ namespace Diodon
          */
         public XmlClipboardStorage(string directory, string file)
         {
-            items = new ArrayList<ClipboardItem>((GLib.EqualFunc?)ClipboardItem.equal_func);
+            items = new Gee.ArrayList<IClipboardItem>((GLib.EqualFunc?)IClipboardItem.equal_func);
             
             // make sure that all parent directories exist
             try {
@@ -59,7 +57,7 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public void remove_item(ClipboardItem item)
+        public void remove_item(IClipboardItem item)
         {
             items.remove(item);
             write();
@@ -68,7 +66,7 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public ArrayList<ClipboardItem> get_items()
+        public Gee.ArrayList<IClipboardItem> get_items()
         {
             return items;
         }
@@ -76,7 +74,7 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public void add_item(ClipboardItem item)
+        public void add_item(IClipboardItem item)
         {
             items.add(item);
             write();
@@ -105,7 +103,7 @@ namespace Diodon
                     string value = reader.read_string();
                     if(value != null) {
                         debug("Add item " + value + " to clipboard.");
-                        ClipboardItem item = new ClipboardItem(ClipboardType.NONE, value);
+                        IClipboardItem item = new TextClipboardItem(ClipboardType.NONE, value);
                         items.add(item);
                     }
                 }    
@@ -124,8 +122,8 @@ namespace Diodon
             writer.start_document ();
             writer.start_element ("clipboard");
             
-            foreach(ClipboardItem item in items) {
-                writer.write_element("item", item.text);
+            foreach(IClipboardItem item in items) {
+                writer.write_element("item", item.get_data());
             }          
             
             writer.end_element();
