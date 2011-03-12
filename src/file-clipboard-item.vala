@@ -79,7 +79,7 @@ namespace Diodon
         public void to_clipboard(Gtk.Clipboard clipboard)
         {
             // create default uri target and text target
-            Gtk.TargetEntry[] targets = new Gtk.TargetEntry[0];
+            Gtk.TargetEntry[] targets = null;
             Gtk.TargetList target_list = new Gtk.TargetList(targets);
             target_list.add_uri_targets(0);
             target_list.add_text_targets(0);

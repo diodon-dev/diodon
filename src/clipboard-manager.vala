@@ -39,6 +39,16 @@ namespace Diodon
         public signal void on_text_received(ClipboardType type, string text);
         
         /**
+         * Called when uris have been received from clipboard.
+         * The given paths are not uris appended with file://
+         * but just full paths.
+         *
+         * @param type type of clipboard uris belong to
+         * @param paths paths separated with /n.
+         */
+        public signal void on_uris_received(ClipboardType type, string paths);
+        
+        /**
          * Called when the clipboard is empty
          *
          * @param type type of clipboard which is empty
@@ -119,7 +129,13 @@ namespace Diodon
             
             // check if text is valid and accepted
             if(text != null && text != "" && is_accepted(text)) {
-                on_text_received(type, text);
+                // check if clipboard content are uris
+                // or just simple text
+                if(clipboard.wait_is_uris_available()) {
+                    on_uris_received(type, text);
+                } else {
+                    on_text_received(type, text);
+                }
             }
             
             // for performance reasons, only check
