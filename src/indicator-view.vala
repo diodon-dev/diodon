@@ -98,6 +98,12 @@ namespace Diodon
                 (GLib.HashFunc?)ClipboardItem.hash_func, (GLib.EqualFunc?)ClipboardItem.equal_func);
         }
         
+        ~IndicatorView()
+        {
+            empty_item.destroy();
+            menu.destroy();
+        }
+        
         /**
          * Select item by highlighting it.
          * 
