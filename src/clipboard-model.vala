@@ -24,7 +24,7 @@ namespace Diodon
      *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class ClipboardModel
+    public class ClipboardModel : GLib.Object
     {
         private IClipboardStorage storage;
         private Gee.HashMap<ClipboardType, ClipboardItem> current_items;
