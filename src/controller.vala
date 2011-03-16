@@ -96,7 +96,8 @@ namespace Diodon
         {
             get;
             set;
-            default = new ClipboardModel(new MemoryClipboardStorage());
+            // currently default for storage not needed
+            //default = new ClipboardModel(new MemoryClipboardStorage());
          }
         
         /**
