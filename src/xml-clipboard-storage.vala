@@ -100,11 +100,34 @@ namespace Diodon
             while(reader.read() == 1) {
                 // import node when it is a item element
                 if("item" == reader.name() && reader.node_type() == 1) {
+                
+                    // get type of item with text item as fallback
+                    string type_name = reader.get_attribute("type");
+                    if(type_name == null || type_name == "") {
+                        // define text as fallback
+                        type_name = typeof(TextClipboardItem).name();
+                    }
+                    
+                    // get value and check if available
                     string value = reader.read_string();
                     if(value != null) {
-                        debug("Add item " + value + " to clipboard.");
-                        IClipboardItem item = new TextClipboardItem(ClipboardType.NONE, value);
-                        items.add(item);
+                        debug("Add item of type " + type_name + " with value \"" + 
+                              value + "\" to clipboard.");
+                        
+                        // FIXME: get this up and running avoiding if, else clauses
+                        // create item with reflection
+                        // Type type = Type.from_name(type_name);
+                        // IClipboardItem item = (IClipboardItem)Object.new(type, ClipboardType.NONE, value);
+                        // items.add(item);
+                        
+                        IClipboardItem item = null;
+                        if(type_name == typeof(FileClipboardItem).name()) {
+                            item = new FileClipboardItem(ClipboardType.NONE, value);
+                        } else {
+                            item = new TextClipboardItem(ClipboardType.NONE, value);
+                        }
+                        
+                        items.add(item);                        
                     }
                 }    
             }
@@ -119,11 +142,14 @@ namespace Diodon
             writer.set_indent(true);
             writer.set_indent_string ("\t");
 
-            writer.start_document ();
+            writer.start_document ("1.0", "UTF-8");
             writer.start_element ("clipboard");
             
             foreach(IClipboardItem item in items) {
-                writer.write_element("item", item.get_clipboard_data());
+                writer.start_element("item");
+                writer.write_attribute("type", item.get_type().name());
+                writer.write_string(item.get_clipboard_data());
+                writer.end_element();
             }          
             
             writer.end_element();
