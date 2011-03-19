@@ -81,7 +81,8 @@ namespace Diodon
                 label = label.substring(0, 50) + "...";
             }
             
-            return label.concat("");
+            // assign a file like unicode character in front
+            return "▤ ".concat(label);
         }
         
         /**
