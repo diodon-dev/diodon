@@ -69,13 +69,19 @@ namespace Diodon
 	     */
         public string get_label()
         {
+            string home = Environment.get_home_dir();
+            
             // label should not be longer than 50 letters
             string label = _paths.replace("\n", " ");
+            
+            // replacing home dir with common known tilde
+            label = label.replace(home, "~");
+            
             if (label.length > 50) {
                 label = label.substring(0, 50) + "...";
             }
             
-            return label;
+            return label.concat("");
         }
         
         /**
