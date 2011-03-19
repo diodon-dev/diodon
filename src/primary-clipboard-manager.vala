@@ -34,6 +34,15 @@ namespace Diodon
         {
             base(ClipboardType.PRIMARY);
         }
+        
+        /**
+         * Owner does not always get changed when selection has been changed
+         * therefore we need a timer for the primary selection.
+         */
+        public override void start()
+        {
+            Timeout.add(500, request_text_callback);
+        }
     
         /**
          * Additionaly check if the mouse button or shift button is pressed
@@ -59,6 +68,17 @@ namespace Diodon
             }
             
             return false;
+        }
+        
+        /**
+         * Helper method for requesting text within a timer
+         * 
+         * @return always true, no stopping of timer
+         */
+        private bool request_text_callback()
+        {
+            request_text();
+            return true;
         }
     }
 }
