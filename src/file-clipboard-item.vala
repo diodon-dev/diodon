@@ -93,8 +93,8 @@ namespace Diodon
             // converting target list to target entries
             // leaving one target entry for special target (s. below)
             targets = new Gtk.TargetEntry[target_list.list.length()];
-            // needed so names will be freed as TargetEntry.target is
-            // a weak reference
+            // TODO: workaround needed so names will be freed as
+            // TargetEntry.target is a weak reference
             string[] names = new string[target_list.list.length()];
             int i = 0;
             foreach(weak Gtk.TargetPair pair in target_list.list) {
