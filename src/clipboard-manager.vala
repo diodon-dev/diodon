@@ -83,7 +83,7 @@ namespace Diodon
          * The owner has to change when new data is set in the clipboard
          * therefore just connecting to owner_change will do the trick.
          */
-        public void start()
+        public virtual void start()
         {
             clipboard.owner_change.connect(request_text);
         }
