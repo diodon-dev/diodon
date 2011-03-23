@@ -36,9 +36,11 @@ namespace Diodon
         }
         
         /**
-         * Create directory with all its parents logging error if not successful
+         * Create directory with all its parents logging error if not successful.
+         * Checks first if directory already exists.
          *
          * @param directory directory to be created
+         * @return returns true if directory already exists or creation was successful
          */
         public static bool make_directory_with_parents(string directory)
         {
