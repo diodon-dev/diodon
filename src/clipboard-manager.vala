@@ -103,9 +103,11 @@ namespace Diodon
          */
         public void clear()
         {
-            clipboard.set_text("", -1);
-            // FIXME: this does not seem to do anything
+            // clearing only works when clipboard is called by a callback
+            // from clipboard itself. This is not the case here
+            // so therefore we just set an empty text to clear the clipboard
             //clipboard.clear();
+            clipboard.set_text("", -1);
         }
         
         /**
