@@ -127,7 +127,7 @@ namespace Diodon
          */
         protected void request_text()
         {
-            string text = clipboard.wait_for_text();
+            string* text = clipboard.wait_for_text();
             
             // check if text is valid and accepted
             if(text != null && text != "" && is_accepted(text)) {
@@ -145,6 +145,12 @@ namespace Diodon
             if(text == null) {
                 check_clipboard();
             }
+            
+            // a workaround for the vapi bug
+            // as wait_for_text should return a string and
+            // not an unowned string as the returned value
+            // needs to be freed
+            delete text;
         }
         
         /**
@@ -159,5 +165,4 @@ namespace Diodon
         }
     }  
 }
-
  
