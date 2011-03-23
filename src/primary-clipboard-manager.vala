@@ -91,7 +91,7 @@ namespace Diodon
         private bool request_text_callback()
         {
             // checking for text
-            if(clipboard.wait_is_text_available()) {
+            if(_clipboard.wait_is_text_available()) {
                 string text = request_text();
                 
                 // check if text can be accepted

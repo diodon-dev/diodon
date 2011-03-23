@@ -28,7 +28,7 @@ namespace Diodon
     public class ClipboardManager : GLib.Object
     {
         protected ClipboardType type;
-        protected Gtk.Clipboard clipboard = null;
+        protected Gtk.Clipboard _clipboard = null;
         
         /**
          * Called when text from the clipboard has been received
@@ -78,9 +78,9 @@ namespace Diodon
         {
             // TODO: might consider this block to be replaced with a HashMap
             if(type == ClipboardType.CLIPBOARD) {
-                this.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);
+                _clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);
             } else if(type == ClipboardType.PRIMARY) {
-                this.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY);
+                _clipboard = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY);
             }
             
             this.type = type;
@@ -93,7 +93,7 @@ namespace Diodon
          */
         public virtual void start()
         {
-            clipboard.owner_change.connect(check_clipboard);
+            _clipboard.owner_change.connect(check_clipboard);
         }
         
         /**
@@ -103,7 +103,7 @@ namespace Diodon
          */
         public virtual void select_item(IClipboardItem item)
         {
-            item.to_clipboard(clipboard);
+            item.to_clipboard(_clipboard);
         }
         
         /**
@@ -115,7 +115,7 @@ namespace Diodon
             // from clipboard itself. This is not the case here
             // so therefore we just set an empty text to clear the clipboard
             //clipboard.clear();
-            clipboard.set_text("", -1);
+            _clipboard.set_text("", -1);
         }
         
         /**
@@ -127,14 +127,14 @@ namespace Diodon
         protected void check_clipboard()
         {
             // checking for text
-            if(clipboard.wait_is_text_available()) {
+            if(_clipboard.wait_is_text_available()) {
                 string text = request_text();
                 
                 // only valid text should be accepted
                 if(text != null && text != "") {
                     // check if clipboard content are uris
                     // or just simple text
-                    if(clipboard.wait_is_uris_available()) {
+                    if(_clipboard.wait_is_uris_available()) {
                         on_uris_received(type, text);
                     } else {
                         on_text_received(type, text);
@@ -142,8 +142,8 @@ namespace Diodon
                 }
             }
             // checking for image
-            else if(clipboard.wait_is_image_available()) {
-                Gdk.Pixbuf? pixbuf = clipboard.wait_for_image();
+            else if(_clipboard.wait_is_image_available()) {
+                Gdk.Pixbuf? pixbuf = _clipboard.wait_for_image();
                 if(pixbuf != null) {
                     on_image_received(type, pixbuf);
                 }
@@ -165,7 +165,7 @@ namespace Diodon
             // as wait_for_text should return a string and
             // not an unowned string as the returned value
             // needs to be freed
-            string* text = clipboard.wait_for_text();
+            string* text = _clipboard.wait_for_text();
             string result = text->dup();
             delete text;
             
@@ -178,7 +178,7 @@ namespace Diodon
         protected void check_clipboard_emptiness()
         {
             Gdk.Atom[] targets = null;
-            if(!clipboard.wait_for_targets(targets)) {
+            if(!_clipboard.wait_for_targets(targets)) {
                 on_empty(type);
             }
         }
