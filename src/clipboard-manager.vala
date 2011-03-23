@@ -27,8 +27,8 @@ namespace Diodon
      */
     public class ClipboardManager : GLib.Object
     {
-        private ClipboardType type;
-        private Gtk.Clipboard clipboard = null;
+        protected ClipboardType type;
+        protected Gtk.Clipboard clipboard = null;
         
         /**
          * Called when text from the clipboard has been received
@@ -47,6 +47,14 @@ namespace Diodon
          * @param paths paths separated with /n.
          */
         public signal void on_uris_received(ClipboardType type, string paths);
+        
+        /**
+         * Called when a image has been received from the clipboard.
+         *
+         * @param type type of clipboard image belongs to
+         * @param pixbuf image as a pixbuf object
+         */
+        public signal void on_image_received(ClipboardType type, Gdk.Pixbuf pixbuf);
         
         /**
          * Called when the clipboard is empty
@@ -85,7 +93,7 @@ namespace Diodon
          */
         public virtual void start()
         {
-            clipboard.owner_change.connect(request_text);
+            clipboard.owner_change.connect(check_clipboard);
         }
         
         /**
@@ -111,54 +119,63 @@ namespace Diodon
         }
         
         /**
-         * Checks if the given text can be accepted.
-         *
-         * @param text clipboard text
-         * @return always true in the default implementation
-         */
-        protected virtual bool is_accepted(string text)
-        {
-            return true;
-        }
-        
-        /**
          * Request text from managed clipboard. If result is valid
          * on_text_received will be called.
          *
          * @param event owner change event
          */
-        protected void request_text()
+        protected void check_clipboard()
         {
-            string* text = clipboard.wait_for_text();
-            
-            // check if text is valid and accepted
-            if(text != null && text != "" && is_accepted(text)) {
-                // check if clipboard content are uris
-                // or just simple text
-                if(clipboard.wait_is_uris_available()) {
-                    on_uris_received(type, text);
-                } else {
-                    on_text_received(type, text);
+            // checking for text
+            if(clipboard.wait_is_text_available()) {
+                string text = request_text();
+                
+                // only valid text should be accepted
+                if(text != null && text != "") {
+                    // check if clipboard content are uris
+                    // or just simple text
+                    if(clipboard.wait_is_uris_available()) {
+                        on_uris_received(type, text);
+                    } else {
+                        on_text_received(type, text);
+                    }
                 }
             }
-            
-            // for performance reasons, only check
-            // clipboard if text is not available
-            if(text == null) {
-                check_clipboard();
+            // checking for image
+            else if(clipboard.wait_is_image_available()) {
+                Gdk.Pixbuf? pixbuf = clipboard.wait_for_image();
+                if(pixbuf != null) {
+                    on_image_received(type, pixbuf);
+                }
             }
-            
+            // checking if clipboard might be empty
+            else {
+                check_clipboard_emptiness();
+            }
+        }
+        
+        /**
+         * request text from clipboard and return it
+         *
+         * @return returns text available in clipboard
+         */
+        protected string request_text()
+        {
             // a workaround for the vapi bug
             // as wait_for_text should return a string and
             // not an unowned string as the returned value
             // needs to be freed
+            string* text = clipboard.wait_for_text();
+            string result = text->dup();
             delete text;
+            
+            return result;
         }
         
         /**
          * Check if clipboard content has been lost.
          */
-        private void check_clipboard()
+        protected void check_clipboard_emptiness()
         {
             Gdk.Atom[] targets = null;
             if(!clipboard.wait_for_targets(targets)) {

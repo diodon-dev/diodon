@@ -21,6 +21,7 @@ namespace Diodon
     /**
      * Specific clipboard manager for primary selection extending
      * basic functionality with primary selection specific use cases.
+     * Note that primary selection clipboard manager only supports text.
      * 
      * @author Oliver Sauder <os@esite.ch>
      */
@@ -58,14 +59,13 @@ namespace Diodon
         }
     
         /**
-         * Additionaly check if the mouse button or shift button is pressed
+         * Check if the mouse button or shift button is pressed
          * before primary selection gets accepted. As otherwise the history
-         * gets flodded with several clipboard items.
+         * gets flooded with several clipboard items.
          *
-         * @param text clipboard text
-         * @return true if accepted; otherwise false.
+         * @return true if button are in an acceptable state; otherwise false.
          */
-        protected override bool is_accepted(string text)
+        private bool check_button_state()
         {
             Gdk.Window rootwin = Gdk.get_default_root_window();
             Gdk.Display display = rootwin.get_display();
@@ -84,13 +84,26 @@ namespace Diodon
         }
         
         /**
-         * Helper method for requesting text within a timer
+         * Helper method for requesting primary text within a timer
          * 
          * @return always true, no stopping of timer
          */
         private bool request_text_callback()
         {
-            request_text();
+            // checking for text
+            if(clipboard.wait_is_text_available()) {
+                string text = request_text();
+                
+                // check if text can be accepted
+                if(text != null && text != "" && check_button_state()) {
+                    on_text_received(type, text);
+                }
+            }
+            // checking if clipboard might be empty
+            else {
+                check_clipboard_emptiness();
+            }
+            
             return true;
         }
     }

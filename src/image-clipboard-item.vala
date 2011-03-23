@@ -81,7 +81,7 @@ namespace Diodon
 	     */
         public string get_label()
         {
-            return "";  // TODO: implement label
+            return "some image";  // TODO: implement label
         }
         
         /**
