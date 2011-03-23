@@ -89,11 +89,11 @@ namespace Diodon
         }
         
         /**
-         * Select text of given item in the managed clipboard.
+         * Select item in the managed clipboard.
          *
          * @param item item to be selected
          */
-        public void select_item(IClipboardItem item)
+        public virtual void select_item(IClipboardItem item)
         {
             item.to_clipboard(clipboard);
         }

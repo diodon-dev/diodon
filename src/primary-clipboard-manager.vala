@@ -43,6 +43,19 @@ namespace Diodon
         {
             Timeout.add(500, request_text_callback);
         }
+        
+        /**
+         * Primary selection only supports text therefore ignoring
+         * all others.
+         *
+         * @param item clipboard item to be selected
+         */
+        public override void select_item(IClipboardItem item)
+        {
+            if(item is TextClipboardItem) {
+                base.select_item(item);
+            }
+        }
     
         /**
          * Additionaly check if the mouse button or shift button is pressed
