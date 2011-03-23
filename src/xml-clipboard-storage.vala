@@ -40,18 +40,10 @@ namespace Diodon
         {
             items = new Gee.ArrayList<IClipboardItem>((GLib.EqualFunc?)IClipboardItem.equal_func);
             
-            // make sure that all parent directories exist
-            try {
-                File dir = File.new_for_path(directory);
-                if(!dir.query_exists(null)) {
-                    dir.make_directory_with_parents(null);
-                }
-            } catch (Error e) {
-                warning ("could not create directory %s", directory);
+            if(Utility.make_directory_with_parents(directory)) {
+                xml_file = Path.build_filename(directory, file);
+                load();
             }
-            
-            xml_file = Path.build_filename(directory, file);
-            load();
         }
         
         /**

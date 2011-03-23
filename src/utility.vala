@@ -34,6 +34,29 @@ namespace Diodon
         {
             return Path.build_filename(Environment.get_user_data_dir(), Config.PACKAGE_NAME);
         }
+        
+        /**
+         * Create directory with all its parents logging error if not successful
+         *
+         * @param directory directory to be created
+         */
+        public static bool make_directory_with_parents(string directory)
+        {
+            bool result = true;
+             
+            // make sure that all parent directories exist
+            try {
+                File dir = File.new_for_path(directory);
+                if(!dir.query_exists(null)) {
+                    result = dir.make_directory_with_parents(null);
+                }
+            } catch (Error e) {
+                warning ("could not create directory %s", directory);
+                result = false;
+            }
+            
+            return result;
+        }
     }
 }
 
