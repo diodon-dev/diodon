@@ -285,6 +285,20 @@ namespace Diodon
         }
         
         /**
+         * Handling image retrieved from clipboard bu adding it to the storage
+         * and appending it to the menu of the indicator.
+         */
+        private void image_received(ClipboardType type, Gdk.Pixbuf pixbuf)
+        {
+            try {
+                IClipboardItem item = new ImageClipboardItem.with_image(type, pixbuf);
+                item_received(item);
+            } catch(GLib.Error e) {
+                warning("Adding image to history failed: " + e.message);
+            }
+        }
+        
+        /**
          * Handling given item by checking if item is equal last added item
          * and if not so, adding it to history and indicator.
          *
@@ -423,6 +437,7 @@ namespace Diodon
             ClipboardManager manager = clipboard_managers.get(type);
             manager.on_text_received.connect(text_received);
             manager.on_uris_received.connect(uris_received);
+            manager.on_image_received.connect(image_received);
             on_copy_selection.connect(manager.select_item);
             on_clear.connect(manager.clear);
         }
