@@ -94,7 +94,7 @@ namespace Diodon
             Gtk.IconSize size = Gtk.IconSize.MENU;
             int width, height;
             if(!Gtk.icon_size_lookup(size, out width, out height)) {
-                // set default when icon lookup fails
+                // set default when icon size lookup fails
                 width = 16;
                 height = 16;
             }
@@ -137,7 +137,7 @@ namespace Diodon
             
             if(item is ImageClipboardItem) {
                 ImageClipboardItem* image_item = (ImageClipboardItem*)item;
-                equals = _pixbuf.equal(image_item->_pixbuf);
+                equals = Utility.compare_pixbufs(_pixbuf, image_item->_pixbuf);
             }
             
             return equals;

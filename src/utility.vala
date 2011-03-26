@@ -59,6 +59,38 @@ namespace Diodon
             
             return result;
         }
+        
+        /**
+         * Compara pixbufs pixel by pixel
+         *
+         * @param pixbufa pix buf to be compared
+         * @param pixbufb pix buf to be compared
+         * @return true if pixbufs are equal; otherwise false.
+         */
+        public static bool compare_pixbufs(Gdk.Pixbuf pixbufa, Gdk.Pixbuf pixbufb)
+        {
+            // check for dimensions
+            if(pixbufa.width != pixbufb.width || 
+                pixbufa.rowstride != pixbufb.rowstride || pixbufa.height != pixbufb.height) {
+                
+                return false; // images have different size
+            }
+            
+            uchar* ptra = (uchar*)pixbufa.pixels;
+            uchar* ptrb = (uchar*)pixbufb.pixels;
+            long size = pixbufa.height * pixbufa.rowstride;
+            
+            for(int i = 0; i < size; ++i) {
+                if(*ptra != *ptrb) {
+                    return false; // one pixels differs
+                }
+                
+                ptra++;
+                ptrb++;
+            }
+            
+            return true;
+        }
     }
 }
 
