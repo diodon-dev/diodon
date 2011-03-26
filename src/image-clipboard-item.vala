@@ -81,7 +81,8 @@ namespace Diodon
 	     */
         public string get_label()
         {
-            return "some image";  // TODO: implement label
+            // label in format [widthx/height]            
+            return "[%dx%d]".printf(_pixbuf.get_width(), _pixbuf.get_height());
         }
         
         /**
