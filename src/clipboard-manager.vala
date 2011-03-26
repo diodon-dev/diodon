@@ -166,9 +166,15 @@ namespace Diodon
          */
         protected Gdk.Pixbuf request_image()
         {
-            // TODO: check how memory leak can be fixed
-            Gdk.Pixbuf pixbuf = _clipboard.wait_for_image();
-            return pixbuf;
+            // a workaround for the vapi bug
+            // as wait_for_image should not return
+            // an unowned pixbuf as the returned value
+            // needs to be freed
+            Gdk.Pixbuf* pixbuf = _clipboard.wait_for_image();
+            Gdk.Pixbuf result = pixbuf->copy();
+            delete pixbuf;
+            
+            return result;
         }
         
          /**
