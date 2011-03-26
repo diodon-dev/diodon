@@ -324,7 +324,8 @@ namespace Diodon
             
             // check if received item is different from last item
             if(current_item == null || !IClipboardItem.equal_func(current_item, item)) {
-                debug("received item from clipboard " + "%d".printf(type) + ": " + label);
+                debug("received item of type %s from clipboard %d with label %s",
+                    item.get_type().name(), type, item.get_label());
                 
                 // remove item from clipboard if it already exists
                 if(clipboard_model.get_items().contains(item)) {
