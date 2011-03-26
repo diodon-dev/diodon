@@ -556,7 +556,16 @@ namespace Diodon
          */
         private void clear()
         {
+            // get list of items for cleaning it up later
+            Gee.ArrayList<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
+                items.add_all(clipboard_model.get_items());
+                
             on_clear();
+            
+            // finally cleaning up items
+            foreach(IClipboardItem item in items) {
+                item.remove();
+            }
         }
         
         /**
