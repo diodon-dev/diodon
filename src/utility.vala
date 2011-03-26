@@ -76,17 +76,24 @@ namespace Diodon
                 return false; // images have different size
             }
             
-            uchar* ptra = (uchar*)pixbufa.pixels;
-            uchar* ptrb = (uchar*)pixbufb.pixels;
-            long size = pixbufa.height * pixbufa.rowstride;
+            uchar* pixelsa = (uchar*)pixbufa.pixels;
+            uchar* pixelsb = (uchar*)pixbufb.pixels;
+            int height = pixbufa.height;
+            int rowstride = pixbufa.rowstride;
+            int width = pixbufa.width;
             
-            for(int i = 0; i < size; ++i) {
-                if(*ptra != *ptrb) {
-                    return false; // one pixels differs
-                }
+            for(int i = 0; i < height; ++i) {
+                uchar* rowa = pixelsa + (i * rowstride);
+                uchar* rowb = pixelsb + (i * rowstride);
                 
-                ptra++;
-                ptrb++;
+                for(int j = 0; j < width; ++j) {
+                    if(*rowa != *rowb) {
+                        return false; // one pixels differs
+                    }
+                    
+                    rowa++;
+                    rowb++;
+                }
             }
             
             return true;
