@@ -115,6 +115,8 @@ namespace Diodon
                         IClipboardItem item = null;
                         if(type_name == typeof(FileClipboardItem).name()) {
                             item = new FileClipboardItem(ClipboardType.NONE, value);
+                        } else if(type_name == typeof(ImageClipboardItem).name()) {
+                            item = new ImageClipboardItem(ClipboardType.NONE, value);
                         } else {
                             item = new TextClipboardItem(ClipboardType.NONE, value);
                         }
