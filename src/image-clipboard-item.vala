@@ -112,10 +112,10 @@ namespace Diodon
                 // are copied to a clipboard in one second
                 int id = Random.int_range(1000, 9999);
                 DateTime now = new DateTime.now_local();
-                string name = now.format("%Y%m%d-%H%M%S") + "%i.bin".printf(id);
+                string name = now.format("%Y%m%d-%H%M%S") + "-%i.png".printf(id);
                 
                 filename = Path.build_filename(image_data_dir, name);
-                pixbuf.save(filename, "bin");
+                pixbuf.save(filename, "png");
             }
         
             return filename;
