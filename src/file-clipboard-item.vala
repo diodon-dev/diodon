@@ -156,6 +156,14 @@ namespace Diodon
         }
         
         /**
+	     * {@inheritDoc}
+	     */
+	    public uint hash()
+        {
+            return str_hash(_paths);
+        }
+        
+        /**
          * Callback method called by Gtk.Clipboard to get the clipboard data
          * whereas in this case it is the path as text and the uri for
          * pasting file itself. Static as instance to FileClipboardItem is passed on

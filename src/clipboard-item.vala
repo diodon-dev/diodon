@@ -78,6 +78,15 @@ namespace Diodon
         public abstract bool equals(IClipboardItem *item);
         
         /**
+         * return hash code for implemented clipboard item
+         *
+         * @return hash code
+         *
+         * TODO: see todo hash_func
+         */
+        public abstract uint hash();
+        
+        /**
          * equal func helper comparing two clipboard items.
          *
          * TODO:
@@ -109,7 +118,7 @@ namespace Diodon
          */
         public static uint hash_func (IClipboardItem* item)
         {
-            return str_hash(item->get_clipboard_data());
+            return item->hash();
         }
     }    
 }

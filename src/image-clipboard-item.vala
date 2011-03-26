@@ -124,7 +124,7 @@ namespace Diodon
             try {
                 image.delete();
             } catch (Error e) {
-                warning ("removing of image file %s failed", _path);
+                warning ("removing of image file %s failed. Cause: %s", _path, e.message);
             }
         }
         
@@ -141,6 +141,28 @@ namespace Diodon
             }
             
             return equals;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+	    public uint hash()
+        {
+            // build a hash code with the three dimension identifiers
+            // see http://java.sun.com/developer/Books/effectivejava/Chapter3.pdf
+            // for a documentation
+            int prime = 37;
+            int result = 23;
+        
+            int width = _pixbuf.width;
+            int height = _pixbuf.height;
+            int rowstride = _pixbuf.rowstride;
+            
+            result = prime * result + width;
+            result = prime * result + height;
+            result = prime * result + rowstride;
+            
+            return result;
         }
         
         /**

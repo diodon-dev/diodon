@@ -108,5 +108,13 @@ namespace Diodon
             
             return equals;
         }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+	    public uint hash()
+        {
+            return str_hash(_text);
+        }
     }  
 }
