@@ -254,10 +254,22 @@ namespace Diodon
          */
         private void select_item(IClipboardItem item)
         {
-            on_remove_item(item);
+            remove_item(item);
             on_new_item(item);
             on_select_item(item);
             on_copy_selection(item);
+        }
+        
+        /**
+         * Remove given item from view, storage and finally destroy
+         * it gracefully.
+         *
+         * @param item item to be removed
+         */
+        private void remove_item(IClipboardItem item)
+        {
+            on_remove_item(item);
+            item.remove(); // finally cleaning up
         }
        
         /**
@@ -316,12 +328,12 @@ namespace Diodon
                 
                 // remove item from clipboard if it already exists
                 if(clipboard_model.get_items().contains(item)) {
-                    on_remove_item(item);
+                    remove_item(item);
                 }
                 
                 // check if maximum clipboard size has been reached
                 if(configuration_model.clipboard_size == clipboard_model.get_size()) {
-                    on_remove_item(clipboard_model.get_last_item());
+                    remove_item(clipboard_model.get_last_item());
                 }
                 
                 on_new_item(item);
@@ -375,7 +387,7 @@ namespace Diodon
                 int remove = items.size - configuration_model.clipboard_size;
                 for(int i = 0; i < remove; ++i) {
                     IClipboardItem item = items.get(i);
-                    on_remove_item(item);
+                    remove_item(item);
                 }
             }
         }

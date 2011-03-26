@@ -78,5 +78,13 @@ namespace Diodon
             clipboard.set_text(_text, -1);
             clipboard.store();
         }
+        
+                /**
+	     * {@inheritDoc}
+	     */
+	    public void remove()
+        {
+            // no cleaning up needed
+        }
     }  
 }

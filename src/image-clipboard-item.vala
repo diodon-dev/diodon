@@ -94,6 +94,21 @@ namespace Diodon
         }
         
         /**
+	     * {@inheritDoc}
+	     */
+	    public void remove()
+        {
+            debug("Removing image %s from storage", _path);
+            // remove temporarily stored image
+            File image = File.new_for_path(_path);
+            try {
+                image.delete();
+            } catch (Error e) {
+                warning ("removing of image file %s failed", _path);
+            }
+        }
+        
+        /**
          * Store pixbuf to file system and return path to it.
          *
          * @param pixbuf pixbuf to be stored
