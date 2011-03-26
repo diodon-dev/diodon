@@ -254,7 +254,10 @@ namespace Diodon
          */
         private void select_item(IClipboardItem item)
         {
-            remove_item(item);
+            // we do not destroy item here but just doing some rearrangement
+            // therefore calling not calling remove_item
+            on_remove_item(item);
+            
             on_new_item(item);
             on_select_item(item);
             on_copy_selection(item);
