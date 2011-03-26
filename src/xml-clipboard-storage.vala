@@ -112,16 +112,21 @@ namespace Diodon
                         // IClipboardItem item = (IClipboardItem)Object.new(type, ClipboardType.NONE, value);
                         // items.add(item);
                         
-                        IClipboardItem item = null;
-                        if(type_name == typeof(FileClipboardItem).name()) {
-                            item = new FileClipboardItem(ClipboardType.NONE, value);
-                        } else if(type_name == typeof(ImageClipboardItem).name()) {
-                            item = new ImageClipboardItem(ClipboardType.NONE, value);
-                        } else {
-                            item = new TextClipboardItem(ClipboardType.NONE, value);
-                        }
-                        
-                        items.add(item);                        
+                        try {
+                            IClipboardItem item = null;
+                            if(type_name == typeof(FileClipboardItem).name()) {
+                                item = new FileClipboardItem(ClipboardType.NONE, value);
+                            } else if(type_name == typeof(ImageClipboardItem).name()) {
+                                item = new ImageClipboardItem(ClipboardType.NONE, value);
+                            } else {
+                                item = new TextClipboardItem(ClipboardType.NONE, value);
+                            }
+                            
+                            items.add(item);
+                        } catch (Error e) {
+                            warning ("loading of item of type %s with data %s failed",
+                                type_name, value);
+                        }                        
                     }
                 }    
             }
