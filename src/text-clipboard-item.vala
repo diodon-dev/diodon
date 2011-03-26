@@ -87,12 +87,26 @@ namespace Diodon
             clipboard.store();
         }
         
-                /**
+        /**
 	     * {@inheritDoc}
 	     */
 	    public void remove()
         {
             // no cleaning up needed
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+	    public bool equals(IClipboardItem* item)
+        {
+            bool equals = false;
+            
+            if(item is TextClipboardItem) {
+                equals = str_equal(_text, item->get_clipboard_data());
+            }
+            
+            return equals;
         }
     }  
 }

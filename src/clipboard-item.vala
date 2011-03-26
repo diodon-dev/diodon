@@ -69,6 +69,15 @@ namespace Diodon
         public abstract void remove();
         
         /**
+         * Check if given item is equal.
+         *
+         * @return true if equal; otherwise false.
+         *
+         * TODO: see todo equal_func
+         */
+        public abstract bool equals(IClipboardItem *item);
+        
+        /**
          * equal func helper comparing two clipboard items.
          *
          * TODO:
@@ -83,7 +92,7 @@ namespace Diodon
          */
         public static bool equal_func(IClipboardItem* item_a, IClipboardItem* item_b)
         {
-            return str_equal(item_a->get_clipboard_data(), item_b->get_clipboard_data());
+            return item_a->equals(item_b);
         }
         
         /**

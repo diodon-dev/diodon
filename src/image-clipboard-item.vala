@@ -129,6 +129,21 @@ namespace Diodon
         }
         
         /**
+	     * {@inheritDoc}
+	     */
+	    public bool equals(IClipboardItem* item)
+        {
+            bool equals = false;
+            
+            if(item is ImageClipboardItem) {
+                ImageClipboardItem* image_item = (ImageClipboardItem*)item;
+                equals = _pixbuf.equal(image_item->_pixbuf);
+            }
+            
+            return equals;
+        }
+        
+        /**
          * Store pixbuf to file system and return path to it.
          *
          * @param pixbuf pixbuf to be stored

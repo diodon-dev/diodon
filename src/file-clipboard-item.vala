@@ -142,6 +142,20 @@ namespace Diodon
         }
         
         /**
+	     * {@inheritDoc}
+	     */
+	    public bool equals(IClipboardItem* item)
+        {
+            bool equals = false;
+            
+            if(item is FileClipboardItem) {
+                equals = str_equal(_paths, item->get_clipboard_data());
+            }
+            
+            return equals;
+        }
+        
+        /**
          * Callback method called by Gtk.Clipboard to get the clipboard data
          * whereas in this case it is the path as text and the uri for
          * pasting file itself. Static as instance to FileClipboardItem is passed on
