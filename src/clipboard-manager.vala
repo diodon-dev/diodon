@@ -126,32 +126,67 @@ namespace Diodon
          */
         protected void check_clipboard()
         {
-            // checking for text
-            if(_clipboard.wait_is_text_available()) {
+            bool text_available = _clipboard.wait_is_text_available();
+            bool image_available = _clipboard.wait_is_image_available();
+            bool uris_available = _clipboard.wait_is_uris_available();
+        
+            // checking if any content known is available
+            if(text_available || image_available || uris_available) {
+                // text might be needed for all different
+                // type of content
                 string text = request_text();
                 
-                // only valid text should be accepted
-                if(text != null && text != "") {
-                    // check if clipboard content are uris
-                    // or just simple text
-                    if(_clipboard.wait_is_uris_available()) {
-                        on_uris_received(type, text);
-                    } else {
+                // checking for uris
+                if(uris_available) {
+                    on_uris_received(type, text);
+                }
+                // checking for image
+                else if(image_available) {
+                    Gdk.Pixbuf pixbuf = request_image();
+                    on_image_received(type, pixbuf);
+                }
+                // fallback: simple text
+                else {
+                    // still checking if text is valid
+                    if(text != null && text != "") {
                         on_text_received(type, text);
                     }
-                }
-            }
-            // checking for image
-            else if(_clipboard.wait_is_image_available()) {
-                Gdk.Pixbuf? pixbuf = _clipboard.wait_for_image();
-                if(pixbuf != null) {
-                    on_image_received(type, pixbuf);
                 }
             }
             // checking if clipboard might be empty
             else {
                 check_clipboard_emptiness();
             }
+        }
+        
+        /**
+         * Request image from clipboard and return it
+         *
+         * @return returns requested image from clipboard
+         */
+        protected Gdk.Pixbuf request_image()
+        {
+            // TODO: check how memory leak can be fixed
+            Gdk.Pixbuf pixbuf = _clipboard.wait_for_image();
+            return pixbuf;
+        }
+        
+         /**
+         * request uris from clipboard and return it
+         *
+         * @return returns uris available in clipboard
+         */
+        protected string request_uris()
+        {
+            // a workaround for the vapi bug
+            // as wait_for_uris should return a string and
+            // not an unowned string as the returned value
+            // needs to be freed
+            string* uris = _clipboard.wait_for_uris();
+            string result = uris->dup();
+            delete uris;
+            
+            return result;
         }
         
         /**
