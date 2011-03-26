@@ -88,6 +88,14 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public Gtk.Image? get_image()
+        {
+            return null; // no image available for uri
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
         public void to_clipboard(Gtk.Clipboard clipboard)
         {
             // create default uri target and text target

@@ -87,6 +87,25 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public Gtk.Image? get_image()
+        {
+            // get menu icon size
+            Gtk.IconSize size = Gtk.IconSize.MENU;
+            int width, height;
+            if(!Gtk.icon_size_lookup(size, out width, out height)) {
+                // set default when icon lookup fails
+                width = 16;
+                height = 16;
+            }
+            
+            // scale pixbuf to menu icon size
+            Gdk.Pixbuf scaled = _pixbuf.scale_simple(width, height, Gdk.InterpType.BILINEAR);
+            return new Gtk.Image.from_pixbuf(scaled);
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
         public void to_clipboard(Gtk.Clipboard clipboard)
         {
             clipboard.set_image(_pixbuf);

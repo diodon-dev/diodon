@@ -73,6 +73,14 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public Gtk.Image? get_image()
+        {
+            return null; // no image available for text
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
         public void to_clipboard(Gtk.Clipboard clipboard)
         {
             clipboard.set_text(_text, -1);

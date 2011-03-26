@@ -41,6 +41,13 @@ namespace Diodon
         public abstract string get_label();
         
         /**
+         * image of clipboard item used to show in user interface
+         *
+         * @return image of item or null if not available
+         */
+        public abstract Gtk.Image? get_image();
+        
+        /**
          * A string representing all information to rebuild a clipboard
          * item again.
          *

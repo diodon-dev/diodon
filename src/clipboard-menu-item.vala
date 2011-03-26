@@ -23,7 +23,7 @@ namespace Diodon
      * 
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class ClipboardMenuItem : Gtk.MenuItem
+    public class ClipboardMenuItem : Gtk.ImageMenuItem
     {
         private IClipboardItem _item;
         
@@ -36,6 +36,13 @@ namespace Diodon
         {
             _item = item;
             set_label(_item.get_label());
+            
+            // check if image needs to be shown
+            Gtk.Image? image = _item.get_image();
+            if(image != null) {
+                set_image(image);
+                set_always_show_image(true);
+            }
         }
         
         /**
