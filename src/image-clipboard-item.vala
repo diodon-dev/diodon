@@ -23,17 +23,18 @@ namespace Diodon
      * reasons the pixbuf is not hold in the memory but stored to the disc
      * and only loaded when requested.
      * However a scaled pixbuf of the image is still needed for preview reasons.
+     * Stored image will be removed from disc when item is removed from history.
+     * To still be able to identify a picture, a md5 sum is built from the 
+     * original pic.
      *
      * @author Oliver Sauder <os@esite.ch>
      */
     public class ImageClipboardItem : GLib.Object, IClipboardItem
     {
         private ClipboardType _clipboard_type;
-        private Checksum _checksum;
-        private int _width;
-        private int _height;
-        private int _rowstride;
+        private string _checksum; // check sum to identify pic content
         private Gdk.Pixbuf _pixbuf_preview; // scaled pixbuf for preview
+        private string _label;
         
         /**
          * path where pixbuf image has been stored on disc
@@ -91,7 +92,7 @@ namespace Diodon
 	     */
         public string get_label()
         {
-            return "[%dx%d]".printf(_width, _height); 
+            return _label;
         }
         
         /**
@@ -141,26 +142,7 @@ namespace Diodon
             
             if(item is ImageClipboardItem) {
                 ImageClipboardItem* image_item = (ImageClipboardItem*)item;
-                
-                // check dimensions
-                if(_width == image_item->_width && _height == image_item->_height
-                  && _rowstride == image_item->_rowstride) {
-                  
-                  // TODO: do some checksum checking
-                  equals = true;
-                  // check if previews are eqaul
-                  //equals = Utility.compare_pixbufs(_pixbuf, image_item->_pixbuf);
-                  
-                  // if there are equals there is no way around to
-                  // to compare the image files itself
-                  //if(equals) {
-                    //
-                  //}  
-                  
-                }
-                // before pixbufs are loaded to memory
-                // check if it is possible that such are 
-                
+                equals = str_equal(_checksum, image_item->_checksum);
             }
             
             return equals;
@@ -171,29 +153,28 @@ namespace Diodon
 	     */
 	    public uint hash()
         {
-            // build a hash code with the three dimension identifiers
-            // see http://java.sun.com/developer/Books/effectivejava/Chapter3.pdf
-            // for a documentation
-            int prime = 37;
-            int result = 23;
-        
-            result = prime * result + _width;
-            result = prime * result + _height;
-            result = prime * result + _rowstride;
-            
-            return result;
+            // use checksum to create hash code
+            return str_hash(_checksum);
         }
         
         /**
          * Extracts all pixbuf information which are needed to show image
          * in the view without having the pixbuf in the memory.
+         *
+         * @param pixbuf pixbuf to extract info from
          */
         private void extract_pixbuf_info(Gdk.Pixbuf pixbuf)
         {
+            // create md5 sum of picture
+            Checksum checksum = new Checksum(ChecksumType.MD5);
+            checksum.update(pixbuf.get_pixels(), pixbuf.height * pixbuf.rowstride);
+            _checksum = checksum.get_string().dup();
+            
+            debug("Build checksum %s for pic %s", _checksum, _path);
+            
+            // label in format [{width}x{height}]
+            _label ="[%dx%d]".printf(pixbuf.width, pixbuf.height); 
             _pixbuf_preview = create_scaled_pixbuf(pixbuf);
-            _height = pixbuf.get_height();
-            _width = pixbuf.get_width();
-            _rowstride = pixbuf.get_rowstride();
         }
         
         /**
