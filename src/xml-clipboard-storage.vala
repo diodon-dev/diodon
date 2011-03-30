@@ -124,8 +124,8 @@ namespace Diodon
                             
                             items.add(item);
                         } catch (Error e) {
-                            warning ("loading of item of type %s with data %s failed",
-                                type_name, value);
+                            warning ("loading of item of type %s with data %s failed. Cause: %s",
+                                type_name, value, e.message);
                         }                        
                     }
                 }    

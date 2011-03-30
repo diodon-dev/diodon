@@ -332,7 +332,9 @@ namespace Diodon
                 
                 // remove item from clipboard if it already exists
                 if(clipboard_model.get_items().contains(item)) {
-                    remove_item(item);
+                    int index = clipboard_model.get_items().index_of(item);
+                    // remove the on item available in the list
+                    remove_item(clipboard_model.get_items().get(index));
                 }
                 
                 // check if maximum clipboard size has been reached
