@@ -101,7 +101,7 @@ namespace Diodon
             // create default uri target and text target
             Gtk.TargetEntry[] targets = null;
             Gtk.TargetList target_list = new Gtk.TargetList(targets);
-            //target_list.add_text_targets(0);
+            target_list.add_text_targets(0);
             target_list.add_uri_targets(0);
             target_list.add(copy_files, 0, 0); // add special nautilus target
 
@@ -173,25 +173,31 @@ namespace Diodon
         private static void get_clipboard_data_callback(Gtk.Clipboard clipboard, Gtk.SelectionData selection_data,
             uint info, void* user_data)
         {
-            debug("get clipboard file data called");
             FileClipboardItem item = (FileClipboardItem) user_data;
             
-            // set text
-            //selection_data.set_text(item._paths, -1);
+            Gdk.Atom[] targets = new Gdk.Atom[1];
+            targets[0] = selection_data.get_target();
             
-             // convert paths to uris
-            string[] uris = item._paths.split("\n");
-            for(int i = 0; i < uris.length; ++i) {
-                string uri = uris[i];
-                uri = "file://" + uri;
-                uris[i] = uri;
+            debug("get_clipboard_data for file called with atom %s", targets[0].name());
+            
+            // set content according to requested target
+            if(Gtk.targets_include_text(targets)) {
+                debug("get clipboard file data as text");
+                selection_data.set_text(item._paths, -1);    
             }
-            selection_data.set_uris(uris);
-            
-            // set special nautilus target which should copy the files
-            // 8 number of bits in a unit are used
-            string copy_files_data = "copy\n" + join("\n", uris);
-            selection_data.set(copy_files, 8, string_to_uchar_array(copy_files_data));
+            else if(Gtk.targets_include_uri(targets)) {
+                debug("get clipboard file data as uris");
+                string[] uris = convert_to_uris(item._paths);
+                selection_data.set_uris(uris);      
+            }
+            else {
+                debug("get clipboard file data as copied files");
+                string[] uris = convert_to_uris(item._paths);
+                // set special nautilus target which should copy the files
+                // 8 number of bits in a unit are used
+                string copy_files_data = "copy\n" + join("\n", uris);
+                selection_data.set(copy_files, 8, string_to_uchar_array(copy_files_data));
+            }
         }
         
         /**
@@ -235,6 +241,23 @@ namespace Diodon
             }
             
             return result;
+        }
+        
+        /**
+         * Convert given paths to uris
+         *
+         * @param paths paths to be converted
+         */
+        private static string[] convert_to_uris(string paths)
+        {
+            string[] uris = paths.split("\n");
+            for(int i = 0; i < uris.length; ++i) {
+                string uri = uris[i];
+                uri = "file://" + uri;
+                uris[i] = uri;
+            }
+            
+            return uris;
         }
     }  
 }
