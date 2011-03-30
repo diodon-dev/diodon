@@ -150,8 +150,10 @@ namespace Diodon
                 }
                 // checking for image
                 else if(image_available) {
-                    Gdk.Pixbuf pixbuf = request_image();
-                    on_image_received(type, pixbuf);
+                    Gdk.Pixbuf? pixbuf = request_image();
+                    if(pixbuf != null) {
+                        on_image_received(type, pixbuf);
+                    }
                 }
             }
             // checking if clipboard might be empty
@@ -165,15 +167,19 @@ namespace Diodon
          *
          * @return returns requested image from clipboard
          */
-        protected Gdk.Pixbuf request_image()
+        protected Gdk.Pixbuf? request_image()
         {
+            Gdk.Pixbuf? result = null;
+            
             // a workaround for the vapi bug
             // as wait_for_image should not return
             // an unowned pixbuf as the returned value
             // needs to be freed
             Gdk.Pixbuf* pixbuf = _clipboard.wait_for_image();
-            Gdk.Pixbuf result = pixbuf->copy();
-            delete pixbuf;
+            if(pixbuf != null) {
+                result = pixbuf->copy();
+                delete pixbuf;
+            }
             
             return result;
         }
