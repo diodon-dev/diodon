@@ -160,8 +160,6 @@ namespace Diodon
             Gdk.Atom[] targets = new Gdk.Atom[1];
             targets[0] = selection_data.get_target();
             
-            debug("get_clipboard_data for file called with atom %s", targets[0].name());
-            
             // set content according to requested target
             if(Gtk.targets_include_text(targets)) {
                 debug("get clipboard file data as text");
