@@ -137,20 +137,21 @@ namespace Diodon
                 string text = request_text();
                 
                 // checking for uris
-                if(uris_available) {
-                    on_uris_received(type, text);
+                if(text_available) {
+                    // check if text is valid
+                    if(text != null && text != "") {
+                        if(uris_available) {
+                            on_uris_received(type, text);
+                         }
+                         else {
+                            on_text_received(type, text);
+                         }
+                    }
                 }
                 // checking for image
                 else if(image_available) {
                     Gdk.Pixbuf pixbuf = request_image();
                     on_image_received(type, pixbuf);
-                }
-                // fallback: simple text
-                else {
-                    // still checking if text is valid
-                    if(text != null && text != "") {
-                        on_text_received(type, text);
-                    }
                 }
             }
             // checking if clipboard might be empty

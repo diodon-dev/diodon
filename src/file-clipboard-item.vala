@@ -101,6 +101,7 @@ namespace Diodon
             // create default uri target and text target
             Gtk.TargetEntry[] targets = null;
             Gtk.TargetList target_list = new Gtk.TargetList(targets);
+            //target_list.add_text_targets(0);
             target_list.add_uri_targets(0);
             target_list.add(copy_files, 0, 0); // add special nautilus target
 
@@ -174,6 +175,9 @@ namespace Diodon
         {
             debug("get clipboard file data called");
             FileClipboardItem item = (FileClipboardItem) user_data;
+            
+            // set text
+            //selection_data.set_text(item._paths, -1);
             
              // convert paths to uris
             string[] uris = item._paths.split("\n");
