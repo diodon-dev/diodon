@@ -19,20 +19,27 @@
 namespace Diodon
 {
     /**
-     * Represents a image clipboard item holding a byte array of data
+     * Represents a image clipboard item holding. For memory consumption
+     * reasons the pixbuf is not hold in the memory but stored to the disc
+     * and only loaded when requested.
+     * However a scaled pixbuf of the image is still needed for preview reasons.
      *
      * @author Oliver Sauder <os@esite.ch>
      */
     public class ImageClipboardItem : GLib.Object, IClipboardItem
     {
         private ClipboardType _clipboard_type;
-        private Gdk.Pixbuf _pixbuf;
+        private Checksum _checksum;
+        private int _width;
+        private int _height;
+        private int _rowstride;
+        private Gdk.Pixbuf _pixbuf_preview; // scaled pixbuf for preview
         
         /**
-         * path where pixbuf image has been temporarily stored
+         * path where pixbuf image has been stored on disc
          */
         private string _path;
-        
+
         /**
          * Default data constructor needed for reflection.
          * 
@@ -43,7 +50,10 @@ namespace Diodon
         {
             _clipboard_type = clipboard_type;
             _path = data;
-            _pixbuf = new Gdk.Pixbuf.from_file(data);
+            
+            // temporarily load pix buf so needed information can be extracted
+            Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(data);
+            extract_pixbuf_info(pixbuf);
         }
         
         /**
@@ -56,8 +66,8 @@ namespace Diodon
         public ImageClipboardItem.with_image(ClipboardType clipboard_type, Gdk.Pixbuf pixbuf) throws GLib.Error
         {
             _clipboard_type = clipboard_type;
-            _pixbuf = pixbuf;
             _path = save_pixbuf(pixbuf);
+            extract_pixbuf_info(pixbuf);
         }
     
         /**
@@ -81,8 +91,7 @@ namespace Diodon
 	     */
         public string get_label()
         {
-            // label in format [{width}x{height}]            
-            return "[%dx%d]".printf(_pixbuf.get_width(), _pixbuf.get_height());
+            return "[%dx%d]".printf(_width, _height); 
         }
         
         /**
@@ -90,18 +99,7 @@ namespace Diodon
 	     */
         public Gtk.Image? get_image()
         {
-            // get menu icon size
-            Gtk.IconSize size = Gtk.IconSize.MENU;
-            int width, height;
-            if(!Gtk.icon_size_lookup(size, out width, out height)) {
-                // set default when icon size lookup fails
-                width = 16;
-                height = 16;
-            }
-            
-            // scale pixbuf to menu icon size
-            Gdk.Pixbuf scaled = _pixbuf.scale_simple(width, height, Gdk.InterpType.BILINEAR);
-            return new Gtk.Image.from_pixbuf(scaled);
+            return new Gtk.Image.from_pixbuf(_pixbuf_preview);
         }
         
         /**
@@ -109,8 +107,14 @@ namespace Diodon
 	     */
         public void to_clipboard(Gtk.Clipboard clipboard)
         {
-            clipboard.set_image(_pixbuf);
-            clipboard.store();
+            try {
+                 Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(_path);
+                 clipboard.set_image(pixbuf);
+                 clipboard.store();
+            } 
+            catch(Error e) {
+                error("Loading of image %s failed. Cause: %s", _path, e.message);
+            }
         }
         
         /**
@@ -137,7 +141,26 @@ namespace Diodon
             
             if(item is ImageClipboardItem) {
                 ImageClipboardItem* image_item = (ImageClipboardItem*)item;
-                equals = Utility.compare_pixbufs(_pixbuf, image_item->_pixbuf);
+                
+                // check dimensions
+                if(_width == image_item->_width && _height == image_item->_height
+                  && _rowstride == image_item->_rowstride) {
+                  
+                  // TODO: do some checksum checking
+                  equals = true;
+                  // check if previews are eqaul
+                  //equals = Utility.compare_pixbufs(_pixbuf, image_item->_pixbuf);
+                  
+                  // if there are equals there is no way around to
+                  // to compare the image files itself
+                  //if(equals) {
+                    //
+                  //}  
+                  
+                }
+                // before pixbufs are loaded to memory
+                // check if it is possible that such are 
+                
             }
             
             return equals;
@@ -154,15 +177,44 @@ namespace Diodon
             int prime = 37;
             int result = 23;
         
-            int width = _pixbuf.width;
-            int height = _pixbuf.height;
-            int rowstride = _pixbuf.rowstride;
-            
-            result = prime * result + width;
-            result = prime * result + height;
-            result = prime * result + rowstride;
+            result = prime * result + _width;
+            result = prime * result + _height;
+            result = prime * result + _rowstride;
             
             return result;
+        }
+        
+        /**
+         * Extracts all pixbuf information which are needed to show image
+         * in the view without having the pixbuf in the memory.
+         */
+        private void extract_pixbuf_info(Gdk.Pixbuf pixbuf)
+        {
+            _pixbuf_preview = create_scaled_pixbuf(pixbuf);
+            _height = pixbuf.get_height();
+            _width = pixbuf.get_width();
+            _rowstride = pixbuf.get_rowstride();
+        }
+        
+        /**
+         * Create a menu icon size scaled pix buf
+         *
+         * @param pixbuf scaled pixbuf
+         */
+        private static Gdk.Pixbuf create_scaled_pixbuf(Gdk.Pixbuf pixbuf)
+        {
+            // get menu icon size
+            Gtk.IconSize size = Gtk.IconSize.MENU;
+            int width, height;
+            if(!Gtk.icon_size_lookup(size, out width, out height)) {
+                // set default when icon size lookup fails
+                width = 16;
+                height = 16;
+            }
+            
+            // scale pixbuf to menu icon size
+            Gdk.Pixbuf scaled = pixbuf.scale_simple(width, height, Gdk.InterpType.BILINEAR);
+            return scaled;
         }
         
         /**
