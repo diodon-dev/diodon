@@ -177,24 +177,6 @@ namespace Diodon
             return result;
         }
         
-         /**
-         * request uris from clipboard and return it
-         *
-         * @return returns uris available in clipboard
-         */
-        protected string request_uris()
-        {
-            // a workaround for the vapi bug
-            // as wait_for_uris should return a string and
-            // not an unowned string as the returned value
-            // needs to be freed
-            string* uris = _clipboard.wait_for_uris();
-            string result = uris->dup();
-            delete uris;
-            
-            return result;
-        }
-        
         /**
          * request text from clipboard and return it
          *
