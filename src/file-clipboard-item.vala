@@ -104,27 +104,9 @@ namespace Diodon
             target_list.add_text_targets(0);
             target_list.add_uri_targets(0);
             target_list.add(copy_files, 0, 0); // add special nautilus target
-
-            // converting target list to target entries
-            // leaving one target entry for special target (s. below)
-            targets = new Gtk.TargetEntry[target_list.list.length()];
-            // TODO: workaround needed so names will be freed as
-            // TargetEntry.target is a weak reference
-            string[] names = new string[target_list.list.length()];
-            int i = 0;
-            foreach(weak Gtk.TargetPair pair in target_list.list) {
-                // TODO: another workaround as Gdk.Atom name
-                // binding returns a unowned string as it shouldn't
-                // see https://bugzilla.gnome.org/show_bug.cgi?id=645215
-                string* tmp = pair.target.name();
-                names[i] = tmp->dup();
-                targets[i].target = names[i];
-                delete tmp;
-                ++i;
-            }
-
-            // set data callbacks with a empty clear func as
-            // there is nothing to be cleared
+            targets = Utility.convert_target_entries(target_list);
+            
+            // set data callbacks
             clipboard.set_with_owner(targets,
                 (Gtk.ClipboardGetFunc)get_clipboard_data_callback,
                 (Gtk.ClipboardClearFunc)clear_clipboard_data_callback, this);
