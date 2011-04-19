@@ -37,7 +37,7 @@ def configure(conf):
     conf.check_cfg(package='libxml-2.0',       uselib_store='XML',          atleast_version='2.7.6',   mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='appindicator-0.1', uselib_store='APPINDICATOR', atleast_version='0.2.3',   mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gconf-2.0',        uselib_store='GCONF',        atleast_version='2.20.0', mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='x11',              uselib_store='X11',          atleast_version='1.3.3',   mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='x11',              uselib_store='X11',          atleast_version='1.3.2',   mandatory=1, args='--cflags --libs')
 
     conf.define ('PACKAGE_NAME', APPNAME)
     conf.define ('GETTEXT_PACKAGE', APPNAME)
