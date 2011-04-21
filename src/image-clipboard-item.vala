@@ -216,8 +216,21 @@ namespace Diodon
                 // plus a random number in case when multiple images
                 // are copied to a clipboard in one second
                 int id = Random.int_range(1000, 9999);
-                DateTime now = new DateTime.now_local();
-                string name = now.format("%Y%m%d-%H%M%S") + "-%i.png".printf(id);
+                
+                // TODO: use this code for creating date time stamp
+                // when updating to at least version 2.26 of glib
+                //DateTime now = new DateTime.now_local();
+                //string name = now.format("%Y%m%d-%H%M%S") + "-%i.png".printf(id);
+                TimeVal now = TimeVal();
+                now.get_current_time();
+                Date date = Date();
+                date.set_time_val(now);
+                var buffer = new char[64];
+                date.strftime(buffer, "%Y%m%d");
+                string dateformat = (string)buffer;
+                Time time = Time.local((time_t)now.tv_sec);
+                string timeformat = time.format("%H%M%S");
+                string name = dateformat + "-" + timeformat + "-%i.png".printf(id);
                 
                 filename = Path.build_filename(image_data_dir, name);
                 pixbuf.save(filename, "png");
