@@ -58,6 +58,11 @@ namespace Diodon
          * @param event 
          */
         private signal void on_show_menu();
+        
+        /**
+         * Unity lens daemon
+         */
+        private UnityLens.Daemon? lens_daemon = null;
 
         /**
          * indicator view property
@@ -126,6 +131,9 @@ namespace Diodon
             connect_signals();
             attach_signals();
             init();
+            
+            // start the diodon lens as well
+            lens_daemon = new UnityLens.Daemon(clipboard_model);
         }
         
         /**

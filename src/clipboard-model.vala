@@ -61,7 +61,7 @@ namespace Diodon
             IClipboardItem item = null;
             
             if(get_size() > 0) {
-                item = get_items().get(0);
+                item = get_items().first();
             }
             
             return item;

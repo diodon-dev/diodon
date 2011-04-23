@@ -29,6 +29,10 @@ namespace Config
   public const string COPYRIGHT;
   public const string WEBSITE;
   
+  public const string BUSNAME;
+  public const string BUSOBJECTPATH;
+  public const string BUSOBJECTPATHCLIPBOARD;
+  
   public const string LOCALEDIR;
   public const string SHAREDIR;
 }
