@@ -91,12 +91,22 @@ namespace Diodon
         /**
          * key for clipboard history accelerator
          */
-       public string history_accelerator_key { get { return "/keybindings/history"; } }
+        public string history_accelerator_key { get { return "/keybindings/history"; } }
        
-       /**
-        * clipboard history accelerator
-        */
-       public string history_accelerator { get; set; default = "<Ctrl><Alt>V"; }
+        /**
+         * clipboard history accelerator
+         */
+        public string history_accelerator { get; set; default = "<Ctrl><Alt>V"; }
+       
+        /**
+         * key for show indicator flag
+         */
+        public string show_indicator_key { get { return "/show-indicator"; } }
+        
+        /**
+         * flag whether the indicator should be shown
+         */
+        public bool show_indicator { get; set; default = true; }
     }
 }
 

@@ -244,6 +244,19 @@ namespace Diodon
             // history_accelerator
             configuration_manager.add_string_notify(configuration_model.history_accelerator_key,
                 change_history_accelerator, configuration_model.history_accelerator);
+            
+            // show app indicator
+            configuration_manager.add_bool_notify(configuration_model.show_indicator_key,
+                () => {
+                    indicator_view.set_visible(true);
+                    configuration_model.show_indicator = true;
+                },
+                () => {
+                    indicator_view.set_visible(false);
+                    configuration_model.show_indicator = false;
+                },
+                configuration_model.show_indicator // default value
+            );
         }
         
         /**
