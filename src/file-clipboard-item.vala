@@ -113,13 +113,8 @@ namespace Diodon
             string[] names = new string[target_list.list.length()];
             int i = 0;
             foreach(weak Gtk.TargetPair pair in target_list.list) {
-                // TODO: another workaround as Gdk.Atom name
-                // binding returns a unowned string as it shouldn't
-                // see https://bugzilla.gnome.org/show_bug.cgi?id=645215
-                string* tmp = pair.target.name();
-                names[i] = tmp->dup();
+                names[i] = pair.target.name();
                 targets[i].target = names[i];
-                delete tmp;
                 ++i;
             }
 

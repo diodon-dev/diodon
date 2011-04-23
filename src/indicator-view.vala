@@ -79,15 +79,15 @@ namespace Diodon
             Gtk.SeparatorMenuItem sep_item = new Gtk.SeparatorMenuItem();
             menu.append(sep_item);
             
-            Gtk.MenuItem clear_item = new Gtk.ImageMenuItem.from_stock(Gtk.STOCK_CLEAR, null);
+            Gtk.MenuItem clear_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.CLEAR, null);
             clear_item.activate.connect(on_clicked_clear);
             menu.append(clear_item);
             
-            Gtk.MenuItem preferences_item = new Gtk.ImageMenuItem.from_stock(Gtk.STOCK_PREFERENCES, null);
+            Gtk.MenuItem preferences_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.PREFERENCES, null);
             preferences_item.activate.connect(on_clicked_preferences);
             menu.append(preferences_item);
             
-            Gtk.MenuItem quit_item = new Gtk.ImageMenuItem.from_stock(Gtk.STOCK_QUIT, null);
+            Gtk.MenuItem quit_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.QUIT, null);
             quit_item.activate.connect(on_clicked_quit);
             menu.append(quit_item);
             

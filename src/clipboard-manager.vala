@@ -169,18 +169,7 @@ namespace Diodon
          */
         protected Gdk.Pixbuf? request_image()
         {
-            Gdk.Pixbuf? result = null;
-            
-            // a workaround for the vapi bug
-            // as wait_for_image should not return
-            // an unowned pixbuf as the returned value
-            // needs to be freed
-            Gdk.Pixbuf* pixbuf = _clipboard.wait_for_image();
-            if(pixbuf != null) {
-                result = pixbuf->copy();
-                delete pixbuf;
-            }
-            
+            Gdk.Pixbuf? result = _clipboard.wait_for_image();
             return result;
         }
         
@@ -189,16 +178,9 @@ namespace Diodon
          *
          * @return returns text available in clipboard
          */
-        protected string request_text()
+        protected string? request_text()
         {
-            // a workaround for the vapi bug
-            // as wait_for_text should return a string and
-            // not an unowned string as the returned value
-            // needs to be freed
-            string* text = _clipboard.wait_for_text();
-            string result = text->dup();
-            delete text;
-            
+            string? result = _clipboard.wait_for_text();
             return result;
         }
         
@@ -208,7 +190,7 @@ namespace Diodon
         protected void check_clipboard_emptiness()
         {
             Gdk.Atom[] targets = null;
-            if(!_clipboard.wait_for_targets(targets)) {
+            if(!_clipboard.wait_for_targets(out targets)) {
                 on_empty(type);
             }
         }
