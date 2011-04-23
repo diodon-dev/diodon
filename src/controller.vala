@@ -60,11 +60,6 @@ namespace Diodon
         private signal void on_show_menu();
         
         /**
-         * Unity lens daemon
-         */
-        private UnityLens.Daemon? lens_daemon = null;
-
-        /**
          * indicator view property
          */        
         public IndicatorView indicator_view { get; set; default = new IndicatorView(); }

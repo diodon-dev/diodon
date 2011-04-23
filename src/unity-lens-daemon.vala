@@ -225,10 +225,10 @@ namespace Diodon.UnityLens
             results_model.clear();
           
             
-            /*var icon = ContentType.get_icon ("inode/directory");
+            var icon = ContentType.get_icon ("inode/directory");
             results_model.append ("file:///home",
                                 icon.to_string (), // Must be a serialized GIcon
-                                Group.GROUP_ONE,
+                                Group.TEXT,
                                 "inode/directory",
                                 "/home folder",
                                 "Shared user home dir");
@@ -236,10 +236,10 @@ namespace Diodon.UnityLens
             icon = ContentType.get_icon ("image/png");
             results_model.append ("file:///usr/share/icons/hicolor/48x48/apps/evolution-mail.png",
                                 icon.to_string (),
-                                Group.GROUP_TWO,
+                                Group.FILES,
                                 "image/png",
                                 "Evolution icon",
-                                "This is a png with the Evolution icon");*/
+                                "This is a png with the Evolution icon");
         }
         
         /**
