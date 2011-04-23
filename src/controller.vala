@@ -126,9 +126,6 @@ namespace Diodon
             connect_signals();
             attach_signals();
             init();
-            
-            // start the diodon lens as well
-            lens_daemon = new UnityLens.Daemon(clipboard_model);
         }
         
         /**
