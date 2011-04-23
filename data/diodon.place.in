@@ -3,7 +3,7 @@ DBusName=net.launchpad.UnityDiodonLens
 DBusObjectPath=/net/launchpad/unitydiodonlens
 
 [Entry:Clipboard]
-DBusObjectPath=/com/canonical/unity/sampleplace/stuff
+DBusObjectPath=/net/launchpad/unitydiodonlens/clipboard
 Icon=gtk-paste
 _Name=Clipboard Manager
 _Description=Clipboard Manager for GNOME

@@ -12,7 +12,7 @@ WEBSITE = 'https://launchpad.net/diodon'
 COPYRIGHT = 'Copyright \xc2\xa9 2010 Diodon Team'
 BUSNAME = 'net.launchpad.UnityDiodonLens'
 BUSOBJECTPATH = '/net/launchpad/unitydiodonlens'
-BUSOBJECTPATHCLIPBOARD = BUSOBJECTPATH.join('/clipboard')
+BUSOBJECTPATHCLIPBOARD = BUSOBJECTPATH + '/clipboard'
 
 VERSION_MAJOR_MINOR = '.'.join (VERSION.split ('.')[0:2])
 VERSION_MAJOR = '.'.join (VERSION.split ('.')[0:1])

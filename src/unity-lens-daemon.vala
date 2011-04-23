@@ -109,7 +109,7 @@ namespace Diodon.UnityLens
             // Listen for when the place is hidden/shown by the Unity Shell
             place_entry.notify["active"].connect(
                 (obj, pspec) => {
-                    debug (@"Activated: $(place_entry.active)");
+                    debug(@"Activated: $(place_entry.active)");
                 }
             );          
 
@@ -118,7 +118,7 @@ namespace Diodon.UnityLens
             * The 'place' EntryInfo is exported for Unity to show by adding it to
             * the controller. You can add more than one EntryInfo here if you have
             * more than one place entry to export from the same place daemon */
-            controller = new Unity.PlaceController (Config.BUSOBJECTPATH);
+            controller = new Unity.PlaceController(Config.BUSOBJECTPATH);
             controller.add_entry(place_entry);
 
             // Since the Daemon class implements the Unity.PlaceActivation interface
@@ -136,7 +136,7 @@ namespace Diodon.UnityLens
             }
         }
         
-        /**
+        /**	
          * Populate sections of place currently just text, files and images
          * available.
          */
@@ -175,8 +175,8 @@ namespace Diodon.UnityLens
             // TODO: we need to replace this unity icons with
             // some diodon specific ones
             groups.append("UnityDefaultRenderer", _("Text"), UNITY_ICON_PATH + "group-downloads.svg");
-            groups.append ("UnityFileInfoRenderer", _("Files"), UNITY_ICON_PATH + "open-folder.svg");
-            groups.append ("UnityDefaultRenderer", _("Images"), UNITY_ICON_PATH + "group-mostused.svg");
+            groups.append("UnityFileInfoRenderer", _("Files"), UNITY_ICON_PATH + "open-folder.svg");
+            groups.append("UnityDefaultRenderer", _("Images"), UNITY_ICON_PATH + "group-mostused.svg");
         }
         
         /**
