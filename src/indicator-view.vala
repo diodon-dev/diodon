@@ -67,7 +67,7 @@ namespace Diodon
             // Setup indicator
             indicator = new AppIndicator.Indicator("diodon", "gtk-paste",
                 AppIndicator.IndicatorCategory.APPLICATION_STATUS);
-            indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
+            set_visible(true);
             
             // Setup application menu
             menu = new Gtk.Menu();
@@ -102,6 +102,14 @@ namespace Diodon
         {
             empty_item.destroy();
             menu.destroy();
+        }
+        
+        public void set_visible(bool visible)
+        {
+            if (visible)
+                indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
+            else
+                indicator.set_status(AppIndicator.IndicatorStatus.PASSIVE);
         }
         
         /**
