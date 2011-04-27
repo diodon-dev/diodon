@@ -109,11 +109,7 @@ namespace Diodon
 	     */
         public Icon get_icon()
         {
-            // use icon of image itself
-            Gtk.Image image = get_image();
-            Icon icon = null;
-            image.get_gicon(out icon, Gtk.IconSize.MENU);
-            return icon;
+            return _pixbuf_preview;
         }
         
         /**
@@ -160,6 +156,23 @@ namespace Diodon
             } catch (Error e) {
                 warning ("removing of image file %s failed. Cause: %s", _path, e.message);
             }
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+        public bool matches(string search, ClipboardSection section)
+        {
+            bool matches = false;
+            
+            if(section == ClipboardSection.ALL_CLIPBOARD
+                || section == ClipboardSection.IMAGES) {
+                // we do not have any search to be matched
+                // therefore only an empty search string matches
+                matches = search.length == 0; 
+            }
+            
+            return matches;
         }
         
         /**

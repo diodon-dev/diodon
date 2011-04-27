@@ -218,15 +218,16 @@ namespace Diodon.UnityLens
             // more important
             for(int i = items.size -1; i >=0; --i) {
                 IClipboardItem item = items.get(i);
-
-                results_model.append(
-                    "file:///home",
-                    item.get_icon().to_string(),
-                    item.get_group(),
-                    item.get_mime_type(),
-                    item.get_label(),
-                    _("Copy to clipboard")
-                );
+                if(item.matches(search, section)) {
+                    results_model.append(
+                        "file:///home",
+                        item.get_icon().to_string(),
+                        item.get_group(),
+                        item.get_mime_type(),
+                        item.get_label(),
+                        _("Copy to clipboard")
+                    );
+                }
             }
         }
         

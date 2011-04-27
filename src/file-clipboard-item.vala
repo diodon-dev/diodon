@@ -176,6 +176,21 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public bool matches(string search, ClipboardSection section)
+        {
+            bool matches = false;
+            
+            if(section == ClipboardSection.ALL_CLIPBOARD
+                || section == ClipboardSection.FILES) {
+                matches = _paths.contains(search);
+            }
+            
+            return matches;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
 	    public bool equals(IClipboardItem* item)
         {
             bool equals = false;

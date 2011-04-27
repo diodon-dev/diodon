@@ -90,6 +90,15 @@ namespace Diodon
         public abstract void remove();
         
         /**
+         * Determine if given item matches search string and section
+         *
+         * @param search search string
+         * @param section clipboard section
+         * @return true when match; otherwise false.
+         */
+        public abstract bool matches(string search, ClipboardSection section);
+        
+        /**
          * Check if given item is equal.
          *
          * @return true if equal; otherwise false.
