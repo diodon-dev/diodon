@@ -96,7 +96,7 @@ namespace Diodon
             string[] uris = convert_to_uris(_paths);
             File file = File.new_for_uri(uris[0]);
             try {
-                FileInfo file_info = file.query_info("standard::content-type", 0, null);
+                FileInfo file_info = file.query_info(FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE, 0, null);
                 mime_type = file_info.get_content_type();
             } catch(GLib.Error e) {
                 error("Could not determine mime type of file %s", uris[0]);
