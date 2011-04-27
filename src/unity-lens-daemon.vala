@@ -193,8 +193,8 @@ namespace Diodon.UnityLens
                         
             Dee.Model results_model = place_entry.entry_renderer_info.results_model;
             Dee.Model groups_model = place_entry.entry_renderer_info.groups_model;
-            Unity.PlaceSearch search = place_entry.active_search;
-            Section section = (Section)place_entry.active_section;          
+            Unity.PlaceSearch? search = place_entry.active_search;
+            ClipboardSection section = (ClipboardSection)place_entry.active_section;          
 
             update_results_model(results_model, groups_model, search, section);
         }
@@ -208,9 +208,9 @@ namespace Diodon.UnityLens
         {
             Dee.Model results_model = place_entry.global_renderer_info.results_model;
             Dee.Model groups_model = place_entry.global_renderer_info.groups_model;
-            Unity.PlaceSearch search = place_entry.active_global_search;
+            Unity.PlaceSearch? search = place_entry.active_global_search;
             // we have no active section in global mode
-            Section section = Section.ALL_CLIPBOARD; 
+            ClipboardSection section = ClipboardSection.ALL_CLIPBOARD; 
 
             update_results_model(results_model, groups_model, search, section);
         }
@@ -219,27 +219,22 @@ namespace Diodon.UnityLens
          * Generic method to update a results model.
          */
         private void update_results_model(Dee.Model results_model, Dee.Model groups_model,
-                                          Unity.PlaceSearch search, Section section)
+                                          Unity.PlaceSearch? search, ClipboardSection section)
         {
             debug ("Rebuilding results model");
             results_model.clear();
-          
             
-            var icon = ContentType.get_icon ("inode/directory");
-            results_model.append ("file:///home",
-                                icon.to_string (), // Must be a serialized GIcon
-                                Group.TEXT,
-                                "inode/directory",
-                                "/home folder",
-                                "Shared user home dir");
-          
-            icon = ContentType.get_icon ("image/png");
-            results_model.append ("file:///usr/share/icons/hicolor/48x48/apps/evolution-mail.png",
-                                icon.to_string (),
-                                Group.FILES,
-                                "image/png",
-                                "Evolution icon",
-                                "This is a png with the Evolution icon");
+            Gee.List<IClipboardItem> items = clipboard_model.get_items();
+            foreach(IClipboardItem item in items) {
+                results_model.append(
+                    "file:///home",
+                    null, // icon is determined by mime type
+                    item.get_group(),
+                    item.get_mime_type(),
+                    item.get_label(),
+                    _("Copy to clipboard")
+                );
+            }
         }
         
         /**

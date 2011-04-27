@@ -78,16 +78,17 @@ namespace Diodon
         }
         
         /**
-         * Get all items of given type
+         * Get all items of given group
          * 
-         * @return list of clipboard items of given type
+         * @param group clipboard group
+         * @return list of clipboard items of given group
          */
-        public Gee.List<IClipboardItem> get_items_by_type(Type type)
+        public Gee.List<IClipboardItem> get_items_by_group(ClipboardGroup group)
         {
             Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>(
                 (GLib.EqualFunc?)IClipboardItem.equal_func);
             foreach(IClipboardItem item in get_items()) {
-                if(item.get_type() == type) {
+                if(item.get_group() == group) {
                     items.add(item);
                 }
             }

@@ -69,7 +69,23 @@ namespace Diodon
             
             return label;
         }
+
+        /**
+	     * {@inheritDoc}
+	     */
+        public string get_mime_type()
+        {
+            return "text/plain";
+        }
         
+        /**
+	     * {@inheritDoc}
+	     */
+        public ClipboardGroup get_group()
+        {
+            return ClipboardGroup.TEXT;
+        }
+      
         /**
 	     * {@inheritDoc}
 	     */

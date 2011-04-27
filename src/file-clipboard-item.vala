@@ -88,6 +88,34 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public string get_mime_type()
+        {
+            // mime type of first file is used
+            // if retrieving of content type fails, use text/plain as fallback
+            string mime_type = "text/plain";
+            string[] uris = convert_to_uris(_paths);
+            File file = File.new_for_uri(uris[0]);
+            try {
+                FileInfo file_info = file.query_info("standard::content-type", 0, null);
+                mime_type = file_info.get_content_type();
+            } catch(GLib.Error e) {
+                error("Could not determine mime type of file %s", uris[0]);
+            }
+            
+            return mime_type;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+        public ClipboardGroup get_group()
+        {
+            return ClipboardGroup.FILES;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
         public Gtk.Image? get_image()
         {
             return null; // no image available for uri

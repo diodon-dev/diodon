@@ -41,6 +41,20 @@ namespace Diodon
         public abstract string get_label();
         
         /**
+         * get mime type of given clipboard item
+         *
+         * @return mime type of item
+         */
+        public abstract string get_mime_type();
+        
+        /**
+         * get group clipboard item is beloging to
+         *
+         * @return clipboard group
+         */
+        public abstract ClipboardGroup get_group();
+        
+        /**
          * image of clipboard item used to show in user interface
          *
          * @return image of item or null if not available

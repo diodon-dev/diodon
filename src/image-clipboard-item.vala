@@ -98,6 +98,22 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public string get_mime_type()
+        {
+            return "image/png";
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+        public ClipboardGroup get_group()
+        {
+            return ClipboardGroup.IMAGES;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
         public Gtk.Image? get_image()
         {
             return new Gtk.Image.from_pixbuf(_pixbuf_preview);

@@ -35,31 +35,12 @@ namespace Diodon.UnityLens
         DISPLAY_NAME = 0,
     }
 
-    /* Place specific set of sections. The enum value maps to the row index
-    * in the sections model */
-    public enum Section
-    {
-        ALL_CLIPBOARD = 0,
-        TEXT,
-        FILES,
-        IMAGES
-    }
-
     /* Canonical schema for the groups model shared with the Unity shell */
     public enum GroupsColumn
     {
         RENDERER = 0,
         DISPLAY_NAME,
         ICON_HINT
-    }
-
-    /* Place specific set of groups. The enum value maps to the row index in
-    * the groups model */
-    public enum Group
-    {
-        TEXT,
-        FILES,
-        IMAGES
     }
 }
 

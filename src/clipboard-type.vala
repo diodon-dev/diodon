@@ -20,11 +20,6 @@ using Gee;
 
 namespace Diodon
 {
-    /**
-     * This enum is a list of different clipboard types.
-     *
-     * @author Oliver Sauder <os@esite.ch>
-     */
     public enum ClipboardType
     {
         /**
@@ -41,6 +36,21 @@ namespace Diodon
          * primary selection clipboard
          */
         PRIMARY;
+    }
+    
+    public enum ClipboardGroup
+    {
+        TEXT,
+        FILES,
+        IMAGES
+    }
+    
+    public enum ClipboardSection
+    {
+        ALL_CLIPBOARD = 0,
+        TEXT,
+        FILES,
+        IMAGES
     }
 }
 
