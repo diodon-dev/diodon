@@ -78,6 +78,24 @@ namespace Diodon
         }
         
         /**
+         * Get all items of given type
+         * 
+         * @return list of clipboard items of given type
+         */
+        public Gee.List<IClipboardItem> get_items_by_type(Type type)
+        {
+            Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>(
+                (GLib.EqualFunc?)IClipboardItem.equal_func);
+            foreach(IClipboardItem item in get_items()) {
+                if(item.get_type() == type) {
+                    items.add(item);
+                }
+            }
+            
+            return items;
+        }
+        
+        /**
          * Get number of items available
          *
          * @return number of items
