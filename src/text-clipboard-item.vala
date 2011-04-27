@@ -91,9 +91,17 @@ namespace Diodon
 	     */
         public Gtk.Image? get_image()
         {
-            return null; // no image available for text
+            return null; // no image available for text content
         }
-        
+
+        /**
+	     * {@inheritDoc}
+	     */
+        public Icon get_icon()
+        {
+            return ContentType.get_icon(get_mime_type());
+        }
+                        
         /**
 	     * {@inheritDoc}
 	     */

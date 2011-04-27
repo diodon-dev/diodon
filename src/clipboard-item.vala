@@ -55,11 +55,18 @@ namespace Diodon
         public abstract ClipboardGroup get_group();
         
         /**
-         * image of clipboard item used to show in user interface
+         * image to represent content of clipboard item
          *
          * @return image of item or null if not available
          */
         public abstract Gtk.Image? get_image();
+        
+        /**
+         * icon to represent type of clipboard item
+         *
+         * @return icon of clipboard type
+         */
+        public abstract Icon get_icon();
         
         /**
          * A string representing all information to rebuild a clipboard

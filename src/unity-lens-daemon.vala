@@ -66,7 +66,7 @@ namespace Diodon.UnityLens
             groups_model.set_schema("s", "s", "s");
 
             Dee.SharedModel global_groups_model = new Dee.SharedModel(
-                Config.BUSNAME + ".GlobalGroupsModel");
+                 Config.BUSNAME + ".GlobalGroupsModel");
             global_groups_model.set_schema("s", "s", "s");
       
             Dee.SharedModel results_model = new Dee.SharedModel(
@@ -144,13 +144,7 @@ namespace Diodon.UnityLens
         {
             Dee.Model sections = place_entry.sections_model;
 
-            if(sections.get_n_rows() != 0)
-            {
-              critical("The sections model should be empty before initial population");
-              sections.clear();
-            }
-
-            // The row offsets should match those from the Section enum
+            // The row offsets should match those from the ClipboardSection enum
             sections.append(_("All Clipboard"), "");
             sections.append(_("Text"), "");
             sections.append(_("Files"), "");
@@ -165,13 +159,7 @@ namespace Diodon.UnityLens
         {
             Dee.Model groups = place_entry.entry_renderer_info.groups_model;
 
-            if(groups.get_n_rows() != 0)
-            {
-              critical("The groups model should be empty before initial population");
-              groups.clear();
-            }
-
-            // The row offsets should match those from the Group enum
+            // The row offsets should match those from the ClipboardGroup enum
             // TODO: we need to replace this unity icons with
             // some diodon specific ones
             groups.append("UnityDefaultRenderer", _("Text"), UNITY_ICON_PATH + "group-downloads.svg");
@@ -193,7 +181,7 @@ namespace Diodon.UnityLens
                         
             Dee.Model results_model = place_entry.entry_renderer_info.results_model;
             Dee.Model groups_model = place_entry.entry_renderer_info.groups_model;
-            Unity.PlaceSearch? search = place_entry.active_search;
+            string search = place_entry.active_search.get_search_string();
             ClipboardSection section = (ClipboardSection)place_entry.active_section;          
 
             update_results_model(results_model, groups_model, search, section);
@@ -208,7 +196,7 @@ namespace Diodon.UnityLens
         {
             Dee.Model results_model = place_entry.global_renderer_info.results_model;
             Dee.Model groups_model = place_entry.global_renderer_info.groups_model;
-            Unity.PlaceSearch? search = place_entry.active_global_search;
+            string search = place_entry.active_global_search.get_search_string();
             // we have no active section in global mode
             ClipboardSection section = ClipboardSection.ALL_CLIPBOARD; 
 
@@ -219,16 +207,21 @@ namespace Diodon.UnityLens
          * Generic method to update a results model.
          */
         private void update_results_model(Dee.Model results_model, Dee.Model groups_model,
-                                          Unity.PlaceSearch? search, ClipboardSection section)
+                                          string search, ClipboardSection section)
         {
-            debug ("Rebuilding results model");
+            debug("Rebuilding results model");
             results_model.clear();
             
             Gee.List<IClipboardItem> items = clipboard_model.get_items();
-            foreach(IClipboardItem item in items) {
+            
+            // add items in reverse order as last added items are
+            // more important
+            for(int i = items.size -1; i >=0; --i) {
+                IClipboardItem item = items.get(i);
+
                 results_model.append(
                     "file:///home",
-                    null, // icon is determined by mime type
+                    item.get_icon().to_string(),
                     item.get_group(),
                     item.get_mime_type(),
                     item.get_label(),

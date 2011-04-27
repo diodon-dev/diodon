@@ -124,6 +124,14 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public Icon get_icon()
+        {
+            return ContentType.get_icon(get_mime_type());
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
         public void to_clipboard(Gtk.Clipboard clipboard)
         {
             // create default uri target and text target

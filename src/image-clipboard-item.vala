@@ -100,7 +100,20 @@ namespace Diodon
 	     */
         public string get_mime_type()
         {
+            // images are always converted to png
             return "image/png";
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+        public Icon get_icon()
+        {
+            // use icon of image itself
+            Gtk.Image image = get_image();
+            Icon icon = null;
+            image.get_gicon(out icon, Gtk.IconSize.MENU);
+            return icon;
         }
         
         /**
