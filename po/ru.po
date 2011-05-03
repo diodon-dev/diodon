@@ -1,0 +1,106 @@
+# Russian translation for diodon
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the diodon package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: diodon\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-02-11 18:48+0100\n"
+"PO-Revision-Date: 2011-04-30 12:25+0000\n"
+"Last-Translator: Alexander Semyonov <Unknown>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-05-01 05:31+0000\n"
+"X-Generator: Launchpad (build 12758)\n"
+
+#: ../data/diodon.desktop.in.h:1
+msgid "Clipboard Manager"
+msgstr "Менеджер буфера обмена"
+
+#: ../data/diodon.desktop.in.h:2
+msgid "Clipboard Manager for GNOME"
+msgstr "Менеджер буфера обмена для GNOME"
+
+#: ../data/preferences.ui.h:1
+msgid ""
+"Adds the primary selection (an area of the screen which is selected with the "
+"mouse) to the clipboard history."
+msgstr "Добавляет в историю буфера обмена выделенные мышью области экрана."
+
+#: ../data/preferences.ui.h:2
+msgid ""
+"Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
+"clipboard history."
+msgstr ""
+"Добавляет в историю буфера обмена скопированный текст (например, с помощью "
+"Ctrl+C)."
+
+#: ../data/preferences.ui.h:3
+msgid "Clipboard"
+msgstr "Буфер обмена"
+
+#: ../data/preferences.ui.h:4
+msgid "Clipboard size"
+msgstr "Размер буфера обмена"
+
+#: ../data/preferences.ui.h:5
+msgid "Diodon Preferences"
+msgstr "Настройка Diodon"
+
+#: ../data/preferences.ui.h:6
+msgid "History key"
+msgstr "Вызов буфера обмена"
+
+#: ../data/preferences.ui.h:7
+msgid "Hotkey to quickly allow you to access the clipboard history."
+msgstr "Комбинация клавиш для быстрого доступа к истории буфера обмена."
+
+#: ../data/preferences.ui.h:8
+msgid "Hotkeys"
+msgstr "Комбинации клавиш"
+
+#: ../data/preferences.ui.h:9
+msgid "Number of items in the clipboard history."
+msgstr "Количество элементов в истории буфера обмена."
+
+#: ../data/preferences.ui.h:10
+msgid ""
+"Prevents an empty clipboard. For instance when an application exits, the "
+"clipboard would usually be emptied."
+msgstr ""
+"Предотвращает очистку буфера обмена. Обычно, когда приложение закрывается, "
+"оно очищает за собой буфер обмена."
+
+#: ../data/preferences.ui.h:11
+msgid "S_ynchronize clipboards"
+msgstr "_Синхронизировать буферы обмена"
+
+#: ../data/preferences.ui.h:12
+msgid ""
+"Synchronizes the selection (an area of the screen which is selected with the "
+"mouse) and the clipboard so that anything in the selection is immediately "
+"available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
+"the middle mouse button."
+msgstr ""
+"Синхронизирует буфер выделения и буфер обмена, так что любой выделенный "
+"текст становится доступным для вставки через Ctrl+V и наоборот."
+
+#: ../data/preferences.ui.h:13
+msgid "Use _primary selection"
+msgstr "Использовать выделение _мышкой"
+
+#: ../data/preferences.ui.h:14
+msgid "_Keep clipboard content"
+msgstr "_Хранить содержимое буфера обмена"
+
+#: ../data/preferences.ui.h:15
+msgid "_Use clipboard (Ctrl+C)"
+msgstr "Использовать _буфер обмена (Ctrl+C)"
+
+#: ../src/indicator-view.vala:75
+msgid "<Empty>"
+msgstr "<Пусто>"
