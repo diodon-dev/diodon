@@ -1,4 +1,4 @@
-# Spanish translation for diodon
+# Ukrainian translation for diodon
 # Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the diodon package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
@@ -8,50 +8,50 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-02-11 18:48+0100\n"
-"PO-Revision-Date: 2011-05-09 02:15+0000\n"
-"Last-Translator: Hector A. Mantellini <Unknown>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"PO-Revision-Date: 2011-04-30 18:02+0000\n"
+"Last-Translator: Eugene Babiy <eugene.babiy@gmail.com>\n"
+"Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-10 06:38+0000\n"
-"X-Generator: Launchpad (build 12959)\n"
+"X-Launchpad-Export-Date: 2011-05-01 05:31+0000\n"
+"X-Generator: Launchpad (build 12758)\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
-msgstr "Administrador del portapapeles"
+msgstr "Менеджер Буферу Обміну"
 
 #: ../data/diodon.desktop.in.h:2
 msgid "Clipboard Manager for GNOME"
-msgstr "Administrador del portapapeles para GNOME"
+msgstr "Менеджер Буферу Обміну для GNOME"
 
 #: ../data/preferences.ui.h:1
 msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
 "mouse) to the clipboard history."
 msgstr ""
-"Agrega la selección principal (un área de la pantalla que se selecciona con "
-"el ratón) al historial del portapapeles."
+"Додає першочерговий вибір (частина екрану яку вибрано мишкою) до історії "
+"буферу обміну."
 
 #: ../data/preferences.ui.h:2
 msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
-"Agregar texto para copiar en el portapapeles por ejemplo, con Ctrl + C para "
-"historial del portapapeles."
+"Додає текст який зкопійовано до буферу, напр. з допомогою комбінації \"Ctrl "
+"+ C\", до історії буферу обміну."
 
 #: ../data/preferences.ui.h:3
 msgid "Clipboard"
-msgstr "Portapapeles"
+msgstr "Буфер Обміну"
 
 #: ../data/preferences.ui.h:4
 msgid "Clipboard size"
-msgstr "Tamaño del portapapeles"
+msgstr "Розмір буферу"
 
 #: ../data/preferences.ui.h:5
 msgid "Diodon Preferences"
-msgstr "Preferencias de Diodon"
+msgstr "Налашування Diodon"
 
 #: ../data/preferences.ui.h:6
 msgid "History key"
@@ -59,28 +59,25 @@ msgstr ""
 
 #: ../data/preferences.ui.h:7
 msgid "Hotkey to quickly allow you to access the clipboard history."
-msgstr ""
-"Atajos de teclado para acceder rápidamente al historial del portapapeles."
+msgstr "Гаряча клавіша для швидкого доступу до історії буферу обміну."
 
 #: ../data/preferences.ui.h:8
 msgid "Hotkeys"
-msgstr "Atajos de teclado"
+msgstr "Гарячі клавіші"
 
 #: ../data/preferences.ui.h:9
 msgid "Number of items in the clipboard history."
-msgstr "Número de elementos en el historial del portapapeles."
+msgstr "Кількість записів в історії буферу обміну."
 
 #: ../data/preferences.ui.h:10
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
 msgstr ""
-"Evita un portapapeles vacío. Por ejemplo, cuando una aplicación se cierra, "
-"por lo general en el portapapeles  puede quedar vacío."
 
 #: ../data/preferences.ui.h:11
 msgid "S_ynchronize clipboards"
-msgstr ""
+msgstr "С_инхронізація буферів"
 
 #: ../data/preferences.ui.h:12
 msgid ""
@@ -89,23 +86,19 @@ msgid ""
 "available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
 "the middle mouse button."
 msgstr ""
-"Sincroniza la selección (un área de la pantalla que es seleccionada con el "
-"ratón) y el portapapeles de forma que nada en la selección ya está "
-"disponible en el portapapeles y viceversa, por ejemplo, para pegar con Ctrl "
-"+ V y el botón central del ratón."
 
 #: ../data/preferences.ui.h:13
 msgid "Use _primary selection"
-msgstr ""
+msgstr "Використовувати _основний вибір"
 
 #: ../data/preferences.ui.h:14
 msgid "_Keep clipboard content"
-msgstr ""
+msgstr "_Зберігати вмістиме буферу"
 
 #: ../data/preferences.ui.h:15
 msgid "_Use clipboard (Ctrl+C)"
-msgstr ""
+msgstr "_Використати буфер (Ctrl+C)"
 
 #: ../src/indicator-view.vala:75
 msgid "<Empty>"
-msgstr "<Vacío>"
+msgstr "<Порожньо>"

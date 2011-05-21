@@ -8,43 +8,47 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-02-11 18:48+0100\n"
-"PO-Revision-Date: 2011-01-05 12:54+0000\n"
-"Last-Translator: Oliver Sauder <os@esite.ch>\n"
+"PO-Revision-Date: 2011-05-19 09:31+0000\n"
+"Last-Translator: SckyzO <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-12 05:37+0000\n"
-"X-Generator: Launchpad (build 12351)\n"
+"X-Launchpad-Export-Date: 2011-05-20 05:14+0000\n"
+"X-Generator: Launchpad (build 12959)\n"
 "Language: fr\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
-msgstr "Gestionnaire de presse-papiers"
+msgstr "Gestionnaire de presse-papier"
 
 #: ../data/diodon.desktop.in.h:2
 msgid "Clipboard Manager for GNOME"
-msgstr "Gestionnaire de presse-papiers pour GNOME"
+msgstr "Gestionnaire de presse-papier pour GNOME"
 
 #: ../data/preferences.ui.h:1
 msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
 "mouse) to the clipboard history."
 msgstr ""
+"Ajouter la première sélection (une zone de l'écran qui est sélectionné avec "
+"la souris) vers l'historique du presse-papier"
 
 #: ../data/preferences.ui.h:2
 msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
+"Ajouter le texte qui est copié vers le presse-papier avec Ctrl + C vers "
+"l'historique du presse-papier"
 
 #: ../data/preferences.ui.h:3
 msgid "Clipboard"
-msgstr "Presse-papiers"
+msgstr "Presse-papier"
 
 #: ../data/preferences.ui.h:4
 msgid "Clipboard size"
-msgstr "Taille du presse-papiers"
+msgstr "Taille du presse-papier"
 
 #: ../data/preferences.ui.h:5
 msgid "Diodon Preferences"
@@ -57,6 +61,7 @@ msgstr "Raccourci clavier pour l'historique"
 #: ../data/preferences.ui.h:7
 msgid "Hotkey to quickly allow you to access the clipboard history."
 msgstr ""
+"Raccourci clavier pour accéder rapidement à l'historique du presse-papier"
 
 #: ../data/preferences.ui.h:8
 msgid "Hotkeys"
@@ -64,17 +69,19 @@ msgstr "Raccourcis clavier"
 
 #: ../data/preferences.ui.h:9
 msgid "Number of items in the clipboard history."
-msgstr ""
+msgstr "Nombre d'éléments dans l'historique du presse-papier"
 
 #: ../data/preferences.ui.h:10
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
 msgstr ""
+"Empêcher le presse-papier d'être vidé. Par exemple, lorsqu'une application "
+"se ferme, elle vide automatiquement le presse-papier"
 
 #: ../data/preferences.ui.h:11
 msgid "S_ynchronize clipboards"
-msgstr ""
+msgstr "Synchroniser les presse-papiers"
 
 #: ../data/preferences.ui.h:12
 msgid ""
@@ -83,18 +90,22 @@ msgid ""
 "available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
 "the middle mouse button."
 msgstr ""
+"Synchroniser la sélection (une zone de l'écran qui est sélectionné avec la "
+"souris) et le presse-papiers de sorte que rien dans la sélection ne soit "
+"disponible immédiatement dans le presse-papiers, et vice versa, par exemple "
+"pour coller avec Ctrl + V et le bouton du milieu."
 
 #: ../data/preferences.ui.h:13
 msgid "Use _primary selection"
-msgstr ""
+msgstr "Utiliser la première sélection"
 
 #: ../data/preferences.ui.h:14
 msgid "_Keep clipboard content"
-msgstr ""
+msgstr "Garder le contenu du presse-papier"
 
 #: ../data/preferences.ui.h:15
 msgid "_Use clipboard (Ctrl+C)"
-msgstr ""
+msgstr "Utiliser le presse-papier (Ctrl+C)"
 
 #: ../src/indicator-view.vala:75
 msgid "<Empty>"
