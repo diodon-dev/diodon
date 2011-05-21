@@ -18,6 +18,9 @@
 
 namespace Diodon.UnityLens
 {
+
+#if(UNITY_LENS)
+
     /**
      * TODO: needs to be replaced with a diodon specific path
      * Absolute path to custom unity icons.
@@ -257,5 +260,8 @@ namespace Diodon.UnityLens
             return Unity.ActivationStatus.ACTIVATED_HIDE_DASH;
         }
     }
+
+#endif
+
 }
 

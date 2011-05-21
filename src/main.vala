@@ -18,11 +18,16 @@
 
 namespace Diodon
 {
+
+#if(UNITY_LENS)
+
     /**
      * Unity lens daemon
      */
     private UnityLens.Daemon? lens_daemon = null;
     
+#endif
+
     /**
      * main clipboard controller
      */
@@ -55,7 +60,7 @@ namespace Diodon
             Intl.setlocale(LocaleCategory.ALL, "");
             
             // diodon should only show up in gnome
-            DesktopAppInfo.set_desktop_env("GNOME");
+            //DesktopAppInfo.set_desktop_env("GNOME");
             
             // init option context
             OptionContext opt_context = new OptionContext("- Clipboard Manager for GNOME");
@@ -110,12 +115,14 @@ namespace Diodon
     {
         debug("Connected to session bus - checking for existing instances...");
         
+#if(UNITY_LENS)
         /* We need to set up our DBus objects *before* we know if we've acquired
          * the name. This is a bit unfortunate because it means we might do work
          * for no reason if another daemon is already running. See
          * https://bugzilla.gnome.org/show_bug.cgi?id=640714 */
         lens_daemon = new UnityLens.Daemon(controller.clipboard_model);
         controller.lens_daemon = lens_daemon;
+#endif
     }
 
     /**

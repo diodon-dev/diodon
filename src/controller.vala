@@ -79,6 +79,8 @@ namespace Diodon
          */
         public KeybindingManager keybinding_manager { get; set; default = new KeybindingManager(); }
         
+#if(UNITY_LENS)
+
         /**
          * unity lens daemon
          */
@@ -88,6 +90,8 @@ namespace Diodon
                 value.on_activate_uri.connect(activate_uri);
             }
         }
+
+#endif
         
          /**
          * clipboard managers. Per default a primary and clipboard manager
