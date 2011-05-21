@@ -17,3 +17,7 @@ ShowGlobal=false
 [Desktop Entry]
 X-Ubuntu-Gettext-Domain=diodon
 
+[Activation]
+URIPattern=clipboard://.*
+MimetypePattern=.*
+
