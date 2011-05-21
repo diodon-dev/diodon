@@ -190,7 +190,9 @@ namespace Diodon
             
             if(section == ClipboardSection.ALL_CLIPBOARD
                 || section == ClipboardSection.FILES) {
-                matches = _paths.contains(search);
+                
+                // ignore case
+                matches = _paths.down().contains(search.down());
             }
             
             return matches;

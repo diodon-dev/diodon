@@ -136,7 +136,9 @@ namespace Diodon
             
             if(section == ClipboardSection.ALL_CLIPBOARD
                 || section == ClipboardSection.TEXT) {
-                matches = _text.contains(search);
+                
+                // ignore case
+                matches = _text.down().contains(search.down());
             }
             
             return matches;
