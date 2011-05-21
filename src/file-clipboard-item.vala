@@ -132,6 +132,14 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public string get_checksum()
+        {
+            return Checksum.compute_for_string(ChecksumType.MD5, _paths);
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
         public void to_clipboard(Gtk.Clipboard clipboard)
         {
             // create default uri target and text target

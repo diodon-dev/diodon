@@ -13,6 +13,7 @@ COPYRIGHT = 'Copyright \xc2\xa9 2010 Diodon Team'
 BUSNAME = 'net.launchpad.UnityDiodonLens'
 BUSOBJECTPATH = '/net/launchpad/unitydiodonlens'
 BUSOBJECTPATHCLIPBOARD = BUSOBJECTPATH + '/clipboard'
+CLIPBOARD_URI = 'clipboard://'
 
 VERSION_MAJOR_MINOR = '.'.join (VERSION.split ('.')[0:2])
 VERSION_MAJOR = '.'.join (VERSION.split ('.')[0:1])
@@ -54,7 +55,8 @@ def configure(conf):
     conf.define('BUSNAME', BUSNAME)
     conf.define('BUSOBJECTPATH', BUSOBJECTPATH)
     conf.define('BUSOBJECTPATHCLIPBOARD', BUSOBJECTPATHCLIPBOARD)
-    conf.define('SHAREDIR', os.path.join(conf.env['DATADIR'], APPNAME));
+    conf.define('SHAREDIR', os.path.join(conf.env['DATADIR'], APPNAME))
+    conf.define('CLIPBOARD_URI', CLIPBOARD_URI)
     
     # set 'default' variant
     conf.define ('DEBUG', 0)

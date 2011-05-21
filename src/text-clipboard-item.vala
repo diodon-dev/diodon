@@ -101,6 +101,14 @@ namespace Diodon
         {
             return ContentType.get_icon(get_mime_type());
         }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+        public string get_checksum()
+        {
+            return Checksum.compute_for_string(ChecksumType.MD5, _text);
+        }
                         
         /**
 	     * {@inheritDoc}

@@ -15,5 +15,5 @@ ShowGlobal=false
 # Make translation work with Ubuntu's special handling of keyfiles
 #
 [Desktop Entry]
-X-Ubuntu-Gettext-Domain=unity-place-sample
+X-Ubuntu-Gettext-Domain=diodon
 

@@ -79,6 +79,16 @@ namespace Diodon
          */
         public KeybindingManager keybinding_manager { get; set; default = new KeybindingManager(); }
         
+        /**
+         * unity lens daemon
+         */
+        public UnityLens.Daemon lens_daemon
+        {
+            set {
+                value.on_activate_uri.connect(activate_uri);
+            }
+        }
+        
          /**
          * clipboard managers. Per default a primary and clipboard manager
          * are initialized in the default constructor.
@@ -373,6 +383,22 @@ namespace Diodon
                 // item is not used in history
                 // therefore we need to clean up
                 item.remove();
+            }
+        }
+        
+        /**
+         * Activate given uri by finding corresponding item in clipboard
+         * and select it.
+         *
+         * @param uri clipboard uri
+         */
+        private void activate_uri(string uri)
+        {
+            // check if uri is a clipboard uri
+            if(str_equal(uri.substring(0, Config.CLIPBOARD_URI.length + 1), Config.CLIPBOARD_URI)) {
+                string checksum = uri.substring(Config.CLIPBOARD_URI.length);
+                IClipboardItem item = clipboard_model.get_item_by_checksum(checksum);
+                select_item(item);
             }
         }
         

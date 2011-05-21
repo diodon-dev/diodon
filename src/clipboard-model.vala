@@ -97,6 +97,23 @@ namespace Diodon
         }
         
         /**
+         * Get clipboard item by given checksum.
+         *
+         * @param checksum clipboad item checksum
+         * @return clipboard item or null if not available
+         */
+        public IClipboardItem? get_item_by_checksum(string checksum)
+        {
+            foreach(IClipboardItem item in get_items()) {
+                if(str_equal(item.get_checksum(), checksum)) {
+                    return item;
+                }
+            }
+            
+            return null;
+        }
+        
+        /**
          * Get number of items available
          *
          * @return number of items

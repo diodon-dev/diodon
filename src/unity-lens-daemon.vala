@@ -45,6 +45,11 @@ namespace Diodon.UnityLens
         private ClipboardModel clipboard_model;
         
         /**
+         * called when a uri needs to be activated
+         */
+        public signal void on_activate_uri(string uri);
+        
+        /**
          * Setup all models, the place_entry and controller
          * needed by the unity shell
          *
@@ -220,7 +225,8 @@ namespace Diodon.UnityLens
                 IClipboardItem item = items.get(i);
                 if(item.matches(search, section)) {
                     results_model.append(
-                        "file:///home",
+                        // FIXME: item itself should implement a sensable uri
+                        Config.CLIPBOARD_URI + item.get_checksum(),
                         item.get_icon().to_string(),
                         item.get_group(),
                         item.get_mime_type(),
@@ -247,7 +253,8 @@ namespace Diodon.UnityLens
         public async uint32 activate (string uri)
         {
             debug("Requested activation of: %s", uri);
-            return Unity.ActivationStatus.NOT_ACTIVATED;
+            on_activate_uri(uri);
+            return Unity.ActivationStatus.ACTIVATED_HIDE_DASH;
         }
     }
 }

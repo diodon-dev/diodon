@@ -127,6 +127,14 @@ namespace Diodon
         {
             return new Gtk.Image.from_pixbuf(_pixbuf_preview);
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        public string get_checksum()
+        {
+            return _checksum;
+        }
         
         /**
 	     * {@inheritDoc}

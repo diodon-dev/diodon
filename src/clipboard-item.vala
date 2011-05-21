@@ -77,6 +77,11 @@ namespace Diodon
         public abstract string get_clipboard_data();
         
         /**
+         * Get unique checksum for clipboard content.
+         */
+        public abstract string get_checksum();
+        
+        /**
          * Select the current item in the given gtk clipboard
          *
          * @param clipboard gtk clipboard
