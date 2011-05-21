@@ -395,11 +395,16 @@ namespace Diodon
         private void activate_uri(string uri)
         {
             // check if uri is a clipboard uri
-            if(str_equal(uri.substring(0, Config.CLIPBOARD_URI.length + 1), Config.CLIPBOARD_URI)) {
+            if(str_equal(uri.substring(0, Config.CLIPBOARD_URI.length), Config.CLIPBOARD_URI)) {
                 string checksum = uri.substring(Config.CLIPBOARD_URI.length);
                 IClipboardItem item = clipboard_model.get_item_by_checksum(checksum);
-                select_item(item);
+                if(item != null) {
+                    select_item(item);
+                    return;
+                }
             }
+            
+            warning("Could not activate uri %s", uri);
         }
         
         /**

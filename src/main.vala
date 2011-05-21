@@ -115,6 +115,7 @@ namespace Diodon
          * for no reason if another daemon is already running. See
          * https://bugzilla.gnome.org/show_bug.cgi?id=640714 */
         lens_daemon = new UnityLens.Daemon(controller.clipboard_model);
+        controller.lens_daemon = lens_daemon;
     }
 
     /**
