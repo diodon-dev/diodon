@@ -186,7 +186,7 @@ namespace Diodon.UnityLens
                         
             Dee.Model results_model = place_entry.entry_renderer_info.results_model;
             Dee.Model groups_model = place_entry.entry_renderer_info.groups_model;
-            string search = place_entry.active_search.get_search_string();
+            string search = place_entry.active_search.get_search_string() ?? "";
             ClipboardSection section = (ClipboardSection)place_entry.active_section;          
 
             update_results_model(results_model, groups_model, search, section);
@@ -201,7 +201,7 @@ namespace Diodon.UnityLens
         {
             Dee.Model results_model = place_entry.global_renderer_info.results_model;
             Dee.Model groups_model = place_entry.global_renderer_info.groups_model;
-            string search = place_entry.active_global_search.get_search_string();
+            string search = place_entry.active_global_search.get_search_string() ?? "";
             // we have no active section in global mode
             ClipboardSection section = ClipboardSection.ALL_CLIPBOARD; 
 
