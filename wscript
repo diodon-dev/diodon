@@ -69,6 +69,7 @@ def configure(conf):
     conf.write_config_header ('config.h', remove=False)
     
     # set 'debug' variant
+    # FIXME: debug enviroment needs to be fixed
     if Options.options.debug:
         conf.setenv('debug', env=conf.env.derive())
         conf.define ('DEBUG', 1)
