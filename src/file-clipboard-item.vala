@@ -81,8 +81,7 @@ namespace Diodon
                 label = label.substring(0, 50) + "...";
             }
             
-            // assign a file like unicode character in front
-            return "▤ ".concat(label);
+            return label;
         }
         
         /**
@@ -118,7 +117,8 @@ namespace Diodon
 	     */
         public Gtk.Image? get_image()
         {
-            return null; // no image available for uri
+            Gtk.Image image = new Gtk.Image.from_gicon(get_icon(), Gtk.IconSize.MENU);
+            return image;
         }
         
         /**
