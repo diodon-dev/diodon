@@ -118,6 +118,7 @@ namespace Diodon.UnityLens
             place_entry.notify["active"].connect(
                 (obj, pspec) => {
                     debug(@"Activated: $(place_entry.active)");
+                    update_entry_results_model();
                 }
             );          
 
