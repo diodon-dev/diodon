@@ -33,6 +33,7 @@ namespace Diodon.UnityLens
     public enum SectionsColumn
     {
         DISPLAY_NAME = 0,
+        ICON_HINT
     }
 
     /* Canonical schema for the groups model shared with the Unity shell */

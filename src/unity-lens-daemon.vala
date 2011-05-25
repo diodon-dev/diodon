@@ -67,7 +67,7 @@ namespace Diodon.UnityLens
             // unity-lens-schemas.vala
             Dee.SharedModel sections_model = new Dee.SharedModel(
                 Config.BUSNAME + ".SectionsModel");
-            sections_model.set_schema("s");
+            sections_model.set_schema("s", "s");
             
             Dee.SharedModel groups_model = new Dee.SharedModel(
                 Config.BUSNAME + ".GroupsModel");
