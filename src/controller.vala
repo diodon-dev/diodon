@@ -58,7 +58,7 @@ namespace Diodon
          * @param event 
          */
         private signal void on_show_menu();
-
+        
         /**
          * indicator view property
          */        
@@ -78,6 +78,20 @@ namespace Diodon
          * keybinding manager property
          */
         public KeybindingManager keybinding_manager { get; set; default = new KeybindingManager(); }
+        
+#if(UNITY_LENS)
+
+        /**
+         * unity lens daemon
+         */
+        public UnityLens.Daemon lens_daemon
+        {
+            set {
+                value.on_activate_uri.connect(activate_uri);
+            }
+        }
+
+#endif
         
          /**
          * clipboard managers. Per default a primary and clipboard manager
@@ -374,6 +388,27 @@ namespace Diodon
                 // therefore we need to clean up
                 item.remove();
             }
+        }
+        
+        /**
+         * Activate given uri by finding corresponding item in clipboard
+         * and select it.
+         *
+         * @param uri clipboard uri
+         */
+        private void activate_uri(string uri)
+        {
+            // check if uri is a clipboard uri
+            if(str_equal(uri.substring(0, Config.CLIPBOARD_URI.length), Config.CLIPBOARD_URI)) {
+                string checksum = uri.substring(Config.CLIPBOARD_URI.length);
+                IClipboardItem item = clipboard_model.get_item_by_checksum(checksum);
+                if(item != null) {
+                    select_item(item);
+                    return;
+                }
+            }
+            
+            warning("Could not activate uri %s", uri);
         }
         
         /**

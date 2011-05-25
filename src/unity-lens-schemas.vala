@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2010 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2011 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -15,42 +15,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
-using Gee;
 
-namespace Diodon
+namespace Diodon.UnityLens
 {
-    public enum ClipboardType
+    /* Canonical schema for the results model shared with the Unity shell */
+    public enum ResultsColumn
     {
-        /**
-         * e.g when item is coming from storage
-         */
-        NONE,
-        
-        /**
-         * normal clipboard
-         */
-        CLIPBOARD,
-        
-        /**
-         * primary selection clipboard
-         */
-        PRIMARY;
+        URI = 0,
+        ICON_HINT,
+        GROUP_ID,
+        MIMETYPE,
+        DISPLAY_NAME,
+        COMMENT
     }
-    
-    public enum ClipboardGroup
+
+    /* Canonical schema for the sections model shared with the Unity shell */
+    public enum SectionsColumn
     {
-        TEXT,
-        FILES,
-        IMAGES
+        DISPLAY_NAME = 0,
+        ICON_HINT
     }
-    
-    public enum ClipboardSection
+
+    /* Canonical schema for the groups model shared with the Unity shell */
+    public enum GroupsColumn
     {
-        ALL_CLIPBOARD = 0,
-        TEXT,
-        FILES,
-        IMAGES
+        RENDERER = 0,
+        DISPLAY_NAME,
+        ICON_HINT
     }
 }
 

@@ -61,7 +61,7 @@ namespace Diodon
             IClipboardItem item = null;
             
             if(get_size() > 0) {
-                item = get_items().get(0);
+                item = get_items().first();
             }
             
             return item;
@@ -75,6 +75,42 @@ namespace Diodon
         public Gee.ArrayList<IClipboardItem> get_items()
         {
             return storage.get_items();
+        }
+        
+        /**
+         * Get all items of given group
+         * 
+         * @param group clipboard group
+         * @return list of clipboard items of given group
+         */
+        public Gee.List<IClipboardItem> get_items_by_group(ClipboardGroup group)
+        {
+            Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>(
+                (GLib.EqualFunc?)IClipboardItem.equal_func);
+            foreach(IClipboardItem item in get_items()) {
+                if(item.get_group() == group) {
+                    items.add(item);
+                }
+            }
+            
+            return items;
+        }
+        
+        /**
+         * Get clipboard item by given checksum.
+         *
+         * @param checksum clipboad item checksum
+         * @return clipboard item or null if not available
+         */
+        public IClipboardItem? get_item_by_checksum(string checksum)
+        {
+            foreach(IClipboardItem item in get_items()) {
+                if(str_equal(item.get_checksum(), checksum)) {
+                    return item;
+                }
+            }
+            
+            return null;
         }
         
         /**

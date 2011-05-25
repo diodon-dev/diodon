@@ -41,11 +41,32 @@ namespace Diodon
         public abstract string get_label();
         
         /**
-         * image of clipboard item used to show in user interface
+         * get mime type of given clipboard item
+         *
+         * @return mime type of item
+         */
+        public abstract string get_mime_type();
+        
+        /**
+         * get group clipboard item is beloging to
+         *
+         * @return clipboard group
+         */
+        public abstract ClipboardGroup get_group();
+        
+        /**
+         * image to represent content of clipboard item
          *
          * @return image of item or null if not available
          */
         public abstract Gtk.Image? get_image();
+        
+        /**
+         * icon to represent type of clipboard item
+         *
+         * @return icon of clipboard type
+         */
+        public abstract Icon get_icon();
         
         /**
          * A string representing all information to rebuild a clipboard
@@ -54,6 +75,11 @@ namespace Diodon
          * @return data
          */
         public abstract string get_clipboard_data();
+        
+        /**
+         * Get unique checksum for clipboard content.
+         */
+        public abstract string get_checksum();
         
         /**
          * Select the current item in the given gtk clipboard
@@ -67,6 +93,15 @@ namespace Diodon
          * Can be used for cleaning up functionality.
          */
         public abstract void remove();
+        
+        /**
+         * Determine if given item matches search string and section
+         *
+         * @param search search string
+         * @param section clipboard section
+         * @return true when match; otherwise false.
+         */
+        public abstract bool matches(string search, ClipboardSection section);
         
         /**
          * Check if given item is equal.

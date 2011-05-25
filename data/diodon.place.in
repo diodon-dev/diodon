@@ -1,0 +1,23 @@
+[Place]
+DBusName=net.launchpad.UnityDiodonLens
+DBusObjectPath=/net/launchpad/unitydiodonlens
+
+[Entry:Clipboard]
+DBusObjectPath=/net/launchpad/unitydiodonlens/clipboard
+Icon=gtk-paste
+_Name=Clipboard Manager
+_Description=Clipboard Manager for GNOME
+Shortcut=v
+_SearchHint=Search clipboard
+ShowGlobal=false
+
+#
+# Make translation work with Ubuntu's special handling of keyfiles
+#
+[Desktop Entry]
+X-Ubuntu-Gettext-Domain=diodon
+
+[Activation]
+URIPattern=clipboard://.*
+MimetypePattern=.*
+

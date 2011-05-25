@@ -98,9 +98,43 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public string get_mime_type()
+        {
+            // images are always converted to png
+            return "image/png";
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+        public Icon get_icon()
+        {
+            FileIcon icon = new FileIcon(File.new_for_path(_path));
+            return icon;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+        public ClipboardGroup get_group()
+        {
+            return ClipboardGroup.IMAGES;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
         public Gtk.Image? get_image()
         {
             return new Gtk.Image.from_pixbuf(_pixbuf_preview);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public string get_checksum()
+        {
+            return _checksum;
         }
         
         /**
@@ -131,6 +165,23 @@ namespace Diodon
             } catch (Error e) {
                 warning ("removing of image file %s failed. Cause: %s", _path, e.message);
             }
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+        public bool matches(string search, ClipboardSection section)
+        {
+            bool matches = false;
+            
+            if(section == ClipboardSection.ALL_CLIPBOARD
+                || section == ClipboardSection.IMAGES) {
+                // we do not have any search to be matched
+                // therefore only an empty search string matches
+                matches = search.length == 0; 
+            }
+            
+            return matches;
         }
         
         /**

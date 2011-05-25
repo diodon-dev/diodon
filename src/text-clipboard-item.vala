@@ -69,15 +69,47 @@ namespace Diodon
             
             return label;
         }
+
+        /**
+	     * {@inheritDoc}
+	     */
+        public string get_mime_type()
+        {
+            return "text/plain";
+        }
         
+        /**
+	     * {@inheritDoc}
+	     */
+        public ClipboardGroup get_group()
+        {
+            return ClipboardGroup.TEXT;
+        }
+      
         /**
 	     * {@inheritDoc}
 	     */
         public Gtk.Image? get_image()
         {
-            return null; // no image available for text
+            return null; // no image available for text content
+        }
+
+        /**
+	     * {@inheritDoc}
+	     */
+        public Icon get_icon()
+        {
+            return ContentType.get_icon(get_mime_type());
         }
         
+        /**
+	     * {@inheritDoc}
+	     */
+        public string get_checksum()
+        {
+            return Checksum.compute_for_string(ChecksumType.MD5, _text);
+        }
+                        
         /**
 	     * {@inheritDoc}
 	     */
@@ -93,6 +125,23 @@ namespace Diodon
 	    public void remove()
         {
             // no cleaning up needed
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+        public bool matches(string search, ClipboardSection section)
+        {
+            bool matches = false;
+            
+            if(section == ClipboardSection.ALL_CLIPBOARD
+                || section == ClipboardSection.TEXT) {
+                
+                // ignore case
+                matches = _text.down().contains(search.down());
+            }
+            
+            return matches;
         }
         
         /**
