@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Diodon 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-11 18:48+0100\n"
+"POT-Creation-Date: 2011-05-25 18:03+0200\n"
 "PO-Revision-Date: 2011-02-07 19:36+0000\n"
 "Last-Translator: Oliver Sauder <os@esite.ch>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-02-12 05:37+0000\n"
 "X-Generator: Launchpad (build 12351)\n"
-"Language: \n"
 "X-Poedit-Language: German\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -95,6 +95,32 @@ msgstr ""
 #: ../src/indicator-view.vala:75
 msgid "<Empty>"
 msgstr "<Leer>"
+
+#. The row offsets should match those from the ClipboardSection enum
+#: ../src/unity-lens-daemon.vala:157
+#, fuzzy
+msgid "All Clipboard"
+msgstr "Zwischenablage"
+
+#. The row offsets should match those from the ClipboardGroup enum
+#. TODO: we need to replace this unity icons with
+#. some diodon specific ones
+#: ../src/unity-lens-daemon.vala:158 ../src/unity-lens-daemon.vala:174
+msgid "Text"
+msgstr ""
+
+#: ../src/unity-lens-daemon.vala:159 ../src/unity-lens-daemon.vala:175
+msgid "Files"
+msgstr ""
+
+#: ../src/unity-lens-daemon.vala:160 ../src/unity-lens-daemon.vala:176
+msgid "Images"
+msgstr ""
+
+#: ../src/unity-lens-daemon.vala:238
+#, fuzzy
+msgid "Copy to clipboard"
+msgstr "Zwischenablage"
 
 #~ msgid "Clear"
 #~ msgstr "Leeren"

@@ -5,3 +5,4 @@ data/diodon.desktop.in
 data/diodon.place.in
 [type: gettext/glade]data/preferences.ui
 src/indicator-view.vala
+src/unity-lens-daemon.vala

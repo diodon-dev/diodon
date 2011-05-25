@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-11 18:48+0100\n"
+"POT-Creation-Date: 2011-05-25 18:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,4 +97,28 @@ msgstr ""
 
 #: ../src/indicator-view.vala:75
 msgid "<Empty>"
+msgstr ""
+
+#. The row offsets should match those from the ClipboardSection enum
+#: ../src/unity-lens-daemon.vala:157
+msgid "All Clipboard"
+msgstr ""
+
+#. The row offsets should match those from the ClipboardGroup enum
+#. TODO: we need to replace this unity icons with
+#. some diodon specific ones
+#: ../src/unity-lens-daemon.vala:158 ../src/unity-lens-daemon.vala:174
+msgid "Text"
+msgstr ""
+
+#: ../src/unity-lens-daemon.vala:159 ../src/unity-lens-daemon.vala:175
+msgid "Files"
+msgstr ""
+
+#: ../src/unity-lens-daemon.vala:160 ../src/unity-lens-daemon.vala:176
+msgid "Images"
+msgstr ""
+
+#: ../src/unity-lens-daemon.vala:238
+msgid "Copy to clipboard"
 msgstr ""
