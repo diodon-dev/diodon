@@ -109,7 +109,8 @@ namespace Diodon
 	     */
         public Icon get_icon()
         {
-            return _pixbuf_preview;
+            FileIcon icon = new FileIcon(File.new_for_path(_path));
+            return icon;
         }
         
         /**
