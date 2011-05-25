@@ -60,7 +60,7 @@ namespace Diodon
             Intl.setlocale(LocaleCategory.ALL, "");
             
             // diodon should only show up in gnome
-            //DesktopAppInfo.set_desktop_env("GNOME");
+            DesktopAppInfo.set_desktop_env("GNOME");
             
             // init option context
             OptionContext opt_context = new OptionContext("- Clipboard Manager for GNOME");
