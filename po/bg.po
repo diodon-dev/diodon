@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-25 18:03+0200\n"
-"PO-Revision-Date: 2011-04-24 17:38+0000\n"
+"PO-Revision-Date: 2011-05-26 05:14+0000\n"
 "Last-Translator: Svetoslav Stefanov <svetlisashkov@yahoo.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
-"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-25 05:26+0000\n"
-"X-Generator: Launchpad (build 12758)\n"
+"X-Launchpad-Export-Date: 2011-05-26 05:15+0000\n"
+"X-Generator: Launchpad (build 12959)\n"
+"Language: bg\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -109,26 +109,24 @@ msgstr "<Празно>"
 
 #. The row offsets should match those from the ClipboardSection enum
 #: ../src/unity-lens-daemon.vala:157
-#, fuzzy
 msgid "All Clipboard"
-msgstr "Системен буфер"
+msgstr "Целият буфер"
 
 #. The row offsets should match those from the ClipboardGroup enum
 #. TODO: we need to replace this unity icons with
 #. some diodon specific ones
 #: ../src/unity-lens-daemon.vala:158 ../src/unity-lens-daemon.vala:174
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: ../src/unity-lens-daemon.vala:159 ../src/unity-lens-daemon.vala:175
 msgid "Files"
-msgstr ""
+msgstr "Файлове"
 
 #: ../src/unity-lens-daemon.vala:160 ../src/unity-lens-daemon.vala:176
 msgid "Images"
-msgstr ""
+msgstr "Изображения"
 
 #: ../src/unity-lens-daemon.vala:238
-#, fuzzy
 msgid "Copy to clipboard"
-msgstr "Системен буфер"
+msgstr "Копиране в системния буфер"
