@@ -148,7 +148,7 @@ namespace Diodon
                  clipboard.store();
             } 
             catch(Error e) {
-                error("Loading of image %s failed. Cause: %s", _path, e.message);
+                warning("Loading of image %s failed. Cause: %s", _path, e.message);
             }
         }
         

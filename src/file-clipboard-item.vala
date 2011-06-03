@@ -98,7 +98,7 @@ namespace Diodon
                 FileInfo file_info = file.query_info(FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE, 0, null);
                 mime_type = file_info.get_content_type();
             } catch(GLib.Error e) {
-                error("Could not determine mime type of file %s", uris[0]);
+                warning("Could not determine mime type of file %s", uris[0]);
             }
             
             return mime_type;

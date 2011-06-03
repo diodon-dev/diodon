@@ -37,7 +37,7 @@ namespace Diodon
         public signal void on_change_clipboard_size(int size);
         public signal void on_change_history_accelerator(string accelerator);
         public signal void on_close();
-        
+
         /**
          * Show preferences view
          *
@@ -105,7 +105,7 @@ namespace Diodon
                     preferences.show_all();
                 }
                 catch(Error e) {
-                    error("Could not initialize preferences dialog. Error: " + e.message);
+                    warning("Could not initialize preferences dialog. Error: " + e.message);
                 }
             }
         }
