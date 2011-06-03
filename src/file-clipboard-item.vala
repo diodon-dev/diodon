@@ -42,10 +42,19 @@ namespace Diodon
          * @param type clipboard type item is coming from
          * @param data paths separated with \n
          */ 
-        public FileClipboardItem(ClipboardType clipboard_type, string data)
+        public FileClipboardItem(ClipboardType clipboard_type, string data) throws FileError
         {
             _clipboard_type = clipboard_type;
             _paths = data;
+            
+            // check if all paths are available
+            string[] paths = convert_to_paths(_paths);
+            foreach(string path in paths) {
+                File file = File.new_for_path(path);
+                if(!file.query_exists()) {
+                    throw new FileError.NOENT("No such file or directory " + path);
+                }
+            }
         }
     
         /**
@@ -304,7 +313,7 @@ namespace Diodon
          */
         private static string[] convert_to_uris(string paths)
         {
-            string[] uris = paths.split("\n");
+            string[] uris = convert_to_paths(paths);
             for(int i = 0; i < uris.length; ++i) {
                 string uri = uris[i];
                 uri = "file://" + uri;
@@ -312,6 +321,17 @@ namespace Diodon
             }
             
             return uris;
+        }
+        
+        /**
+         * Helper method to convert paths string to a path array
+         *
+         * @param path string with new line separator per path
+         */
+        private static string[] convert_to_paths(string paths)
+        {
+            string[] result = paths.split("\n");
+            return result;
         }
     }  
 }

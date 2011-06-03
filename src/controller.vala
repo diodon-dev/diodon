@@ -322,8 +322,12 @@ namespace Diodon
          */
         private void uris_received(ClipboardType type, string paths)
         {
-            IClipboardItem item = new FileClipboardItem(type, paths);
-            item_received(item);
+            try {
+                IClipboardItem item = new FileClipboardItem(type, paths);
+                item_received(item);
+            } catch(FileError e) {
+                warning("Adding file(s) to history failed: " + e.message);
+            }
         }
         
         /**
