@@ -33,6 +33,11 @@ namespace Diodon
         private Gee.List<Keybinding> bindings = new Gee.ArrayList<Keybinding>();
         
         /**
+         * reference to x11 display
+         */
+        //private unowned X.Display display;
+        
+        /**
          * locked modifiers used to grab all keys whatever lock key
          * is pressed.
          */
@@ -84,6 +89,8 @@ namespace Diodon
             if(rootwin != null) {
                 rootwin.add_filter(event_filter);
             }
+            
+            //display = Gdk.x11_drawable_get_xdisplay(rootwin);
         }
         
         /**
@@ -102,7 +109,7 @@ namespace Diodon
             Gtk.accelerator_parse(accelerator, out keysym, out modifiers);
 
             Gdk.Window rootwin = Gdk.get_default_root_window();     
-            X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
+            unowned X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
             X.ID xid = Gdk.x11_drawable_get_xid(rootwin);
             int keycode = display.keysym_to_keycode(keysym);            
                      
@@ -139,7 +146,7 @@ namespace Diodon
             debug("Unbinding key " + accelerator);
             
             Gdk.Window rootwin = Gdk.get_default_root_window();     
-            X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
+            unowned X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
             X.ID xid = Gdk.x11_drawable_get_xid(rootwin);
             
             // unbind all keys with given accelerator
@@ -158,9 +165,93 @@ namespace Diodon
         }
         
         /**
+         * Press given accelerator on current display on the window which
+         * has focus at the time given.
+         *
+         * @param accelerator accelerator parsable by Gtk.accelerator_parse
+         */
+        public void press(string accelerator)
+        {
+            X.KeyEvent key_event = X.KeyEvent();
+            if(create_key_event(accelerator, X.EventType.KeyPress, out key_event)) {
+                X.Event event = (X.Event)key_event;
+                key_event.display.send_event(key_event.window, false,
+                    X.EventMask.KeyPressMask, ref event);
+                
+                debug("Successfully pressed key " + accelerator);
+            }
+        }
+        
+        /**
+         * Release given accelerator on current display on the window which
+         * has focus at the time given.
+         *
+         * @param accelerator accelerator parsable by Gtk.accelerator_parse
+         */
+        public void release(string accelerator)
+        {
+            X.KeyEvent key_event = X.KeyEvent();
+            if(create_key_event(accelerator, X.EventType.KeyRelease, out key_event)) {
+                X.Event event = (X.Event)key_event;
+                key_event.display.send_event(key_event.window, false,
+                    X.EventMask.KeyReleaseMask, ref event);
+                
+                debug("Successfully released key " + accelerator);
+            }
+        }
+        
+        /**
+         * Helper method create key event for pressing and releasing a
+         * key on current x display and window which has currently
+         * the focus
+         *
+         * @param accelerator accelerator parsable by Gtk.accelerator_parse
+         * @param event_type an event type of enum EventType
+         * @param key_event out param for created key event
+         * @return true if creation was successful; otherwise false.
+         */
+        private bool create_key_event(string accelerator, int event_type, out X.KeyEvent key_event)
+        {
+            // convert accelerator
+            uint keysym;
+            Gdk.ModifierType modifiers;
+            Gtk.accelerator_parse(accelerator, out keysym, out modifiers);
+            Gdk.Window rootwin = Gdk.get_default_root_window();
+            unowned X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
+            
+            int keycode = display.keysym_to_keycode(keysym);
+            
+            if(keycode != 0) {
+                X.Window root_window = Gdk.x11_get_default_root_xwindow();
+                
+                // get window with focus
+                X.Window focus;
+                int revert_to_return;
+                display.get_input_focus(out focus, out revert_to_return);
+                
+                key_event.display = display;
+                key_event.root = root_window;
+                key_event.window = focus;
+                key_event.subwindow = X.None;
+                key_event.time = X.CURRENT_TIME;
+                key_event.keycode = keycode;
+                key_event.state = modifiers;
+                key_event.type = event_type;
+                key_event.x = 1;
+                key_event.y = 1;
+                key_event.x_root = 1;
+                key_event.y_root = 1;
+                
+                return true;
+            }
+            
+            return false;
+        }
+        
+        /**
          * Event filter method needed to fetch X.Events
          */
-        public Gdk.FilterReturn event_filter(Gdk.XEvent gdk_xevent, Gdk.Event gdk_event)
+        private Gdk.FilterReturn event_filter(Gdk.XEvent gdk_xevent, Gdk.Event gdk_event)
         {
             Gdk.FilterReturn filter_return = Gdk.FilterReturn.CONTINUE;
                        
