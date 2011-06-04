@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2010 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2010-2011 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -31,11 +31,6 @@ namespace Diodon
          * list of binded keybindings
          */
         private Gee.List<Keybinding> bindings = new Gee.ArrayList<Keybinding>();
-        
-        /**
-         * reference to x11 display
-         */
-        //private unowned X.Display display;
         
         /**
          * locked modifiers used to grab all keys whatever lock key
@@ -89,8 +84,6 @@ namespace Diodon
             if(rootwin != null) {
                 rootwin.add_filter(event_filter);
             }
-            
-            //display = Gdk.x11_drawable_get_xdisplay(rootwin);
         }
         
         /**
