@@ -39,10 +39,16 @@ namespace Diodon
     private static bool debug_enabled = false;
     
     /**
+     * determine whether version information should be printed
+     */
+    private static bool show_version = false;
+    
+    /**
      * list of available command line options
      */
     private static const OptionEntry[] options = {
         { "debug", 'd', 0, OptionArg.NONE, ref debug_enabled, "Enable debug mode", null },
+        { "version", 'v', 0, OptionArg.NONE, ref show_version, "Print version information", null },
         { null }
     };
 
@@ -67,6 +73,11 @@ namespace Diodon
             opt_context.set_help_enabled(true);
             opt_context.add_main_entries(options, null);
             opt_context.parse(ref args);
+            
+            if(show_version) {
+                stdout.printf("Diodon %s\n", Config.VERSION);
+                return 0; // bail out
+            }
             
             // mute debug log if not enabled
             if(!debug_enabled) {
