@@ -70,7 +70,9 @@ namespace Diodon
             Gdk.Window rootwin = Gdk.get_default_root_window();
             Gdk.Display display = rootwin.get_display();
             Gdk.ModifierType modifier = 0;
-            display.get_pointer(null, null, null, out modifier);
+            
+            Gdk.Device device = display.get_device_manager().get_client_pointer();
+            device.get_state(rootwin, null, out modifier);
             
             // only accepted when left mouse button and shift button
             // are not pressed

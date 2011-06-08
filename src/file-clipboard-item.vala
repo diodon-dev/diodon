@@ -157,20 +157,8 @@ namespace Diodon
             target_list.add_text_targets(0);
             target_list.add_uri_targets(0);
             target_list.add(copy_files, 0, 0); // add special nautilus target
-
-            // converting target list to target entries
-            // leaving one target entry for special target (s. below)
-            targets = new Gtk.TargetEntry[target_list.list.length()];
-            // TODO: workaround needed so names will be freed as
-            // TargetEntry.target is a weak reference
-            string[] names = new string[target_list.list.length()];
-            int i = 0;
-            foreach(weak Gtk.TargetPair pair in target_list.list) {
-                names[i] = pair.target.name();
-                targets[i].target = names[i];
-                ++i;
-            }
-
+            targets = Gtk.target_table_new_from_list(target_list);
+            
             // set data callbacks with a empty clear func as
             // there is nothing to be cleared
             clipboard.set_with_owner(targets,
