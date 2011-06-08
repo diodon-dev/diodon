@@ -101,7 +101,7 @@ namespace Diodon
         /**
          * key for show indicator flag
          */
-        public string show_indicator_key { get { return "/show-indicator"; } }
+        public string show_indicator_key { get { return "/show_indicator"; } }
         
         /**
          * flag whether the indicator should be shown
