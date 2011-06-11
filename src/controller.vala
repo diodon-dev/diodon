@@ -288,6 +288,10 @@ namespace Diodon
             on_new_item(item);
             on_select_item(item);
             on_copy_selection(item);
+            
+            // paste it instantly
+            keybinding_manager.press("<Ctrl>V");
+            keybinding_manager.release("<Ctrl>V");
         }
         
         /**
