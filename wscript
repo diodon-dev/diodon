@@ -70,9 +70,10 @@ def configure(conf):
     conf.write_config_header ('config.h', remove=False)
     
     # set 'debug' variant
-    # FIXME: debug enviroment needs to be fixed
     if Options.options.debug:
-        conf.setenv('debug', env=conf.env.derive())
+    	dbg = conf.env.copy()
+    	dbg.set_variant('debug')
+    	conf.set_env_name('debug', dbg)
         conf.define ('DEBUG', 1)
         conf.env['CFLAGS'] = ['-O0', '-g3']
         conf.env['VALAFLAGS'] = ['-g', '-v', '--enable-checking']

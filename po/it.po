@@ -1,0 +1,136 @@
+# Italian translation for diodon
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the diodon package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: diodon\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-05-25 18:03+0200\n"
+"PO-Revision-Date: 2011-06-09 09:54+0000\n"
+"Last-Translator: faber <Unknown>\n"
+"Language-Team: Italian <it@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-06-10 05:12+0000\n"
+"X-Generator: Launchpad (build 13168)\n"
+
+#: ../data/diodon.desktop.in.h:1
+msgid "Clipboard Manager"
+msgstr "Gestore degli appunti"
+
+#: ../data/diodon.desktop.in.h:2
+msgid "Clipboard Manager for GNOME"
+msgstr "Gestore degli appunti per GNOME"
+
+#: ../data/preferences.ui.h:1
+msgid ""
+"Adds the primary selection (an area of the screen which is selected with the "
+"mouse) to the clipboard history."
+msgstr ""
+"Aggiunge la selezione primaria (la zona dello schermo evidenziata con il "
+"mouse) alla cronologia degli appunti."
+
+#: ../data/preferences.ui.h:2
+msgid ""
+"Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
+"clipboard history."
+msgstr ""
+"Aggiunge il testo copiato negli appunti con ad esempio Ctrl + C alla "
+"cronologia degli appunti."
+
+#: ../data/preferences.ui.h:3
+msgid "Clipboard"
+msgstr "Appunti"
+
+#: ../data/preferences.ui.h:4
+msgid "Clipboard size"
+msgstr "Dimensione appunti"
+
+#: ../data/preferences.ui.h:5
+msgid "Diodon Preferences"
+msgstr "Preferenze di Diodon"
+
+#: ../data/preferences.ui.h:6
+msgid "History key"
+msgstr "Tasto Cronologia"
+
+#: ../data/preferences.ui.h:7
+msgid "Hotkey to quickly allow you to access the clipboard history."
+msgstr ""
+"Tasti di scelta rapida per accedere rapidamente alla cronologia degli "
+"appunti."
+
+#: ../data/preferences.ui.h:8
+msgid "Hotkeys"
+msgstr "Tasti di scelta rapida"
+
+#: ../data/preferences.ui.h:9
+msgid "Number of items in the clipboard history."
+msgstr "Numero di voci nella cronologia degli appunti"
+
+#: ../data/preferences.ui.h:10
+msgid ""
+"Prevents an empty clipboard. For instance when an application exits, the "
+"clipboard would usually be emptied."
+msgstr ""
+"Impedisce la cancellazione degli appunti. Per esempio quando un applicazione "
+"viene chiusa, gli appunti di solito vengono eliminati."
+
+#: ../data/preferences.ui.h:11
+msgid "S_ynchronize clipboards"
+msgstr "_Sincronizza appunti"
+
+#: ../data/preferences.ui.h:12
+msgid ""
+"Synchronizes the selection (an area of the screen which is selected with the "
+"mouse) and the clipboard so that anything in the selection is immediately "
+"available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
+"the middle mouse button."
+msgstr ""
+"Sincronizza la selezione (la zona dello schermo evidenziata con il mouse) e "
+"gli appunti in modo che qualsiasi cosa nella selezione è immediatamente "
+"disponibile negli appunti e viceversa, ad esempio, per incollare con Ctrl + "
+"V e il tasto centrale del mouse."
+
+#: ../data/preferences.ui.h:13
+msgid "Use _primary selection"
+msgstr "Usa la selezione _primaria"
+
+#: ../data/preferences.ui.h:14
+msgid "_Keep clipboard content"
+msgstr "_Mantieni il contenuto degli appunti"
+
+#: ../data/preferences.ui.h:15
+msgid "_Use clipboard (Ctrl+C)"
+msgstr "_Copia gli appunti (Ctrl+C)"
+
+#: ../src/indicator-view.vala:75
+msgid "<Empty>"
+msgstr "<Vuoto>"
+
+#. The row offsets should match those from the ClipboardSection enum
+#: ../src/unity-lens-daemon.vala:157
+msgid "All Clipboard"
+msgstr "Tutti gli appunti"
+
+#. The row offsets should match those from the ClipboardGroup enum
+#. TODO: we need to replace this unity icons with
+#. some diodon specific ones
+#: ../src/unity-lens-daemon.vala:158 ../src/unity-lens-daemon.vala:174
+msgid "Text"
+msgstr "Testo"
+
+#: ../src/unity-lens-daemon.vala:159 ../src/unity-lens-daemon.vala:175
+msgid "Files"
+msgstr "Documenti"
+
+#: ../src/unity-lens-daemon.vala:160 ../src/unity-lens-daemon.vala:176
+msgid "Images"
+msgstr "Immagini"
+
+#: ../src/unity-lens-daemon.vala:238
+msgid "Copy to clipboard"
+msgstr "Copia negli appunti"
