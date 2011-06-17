@@ -17,7 +17,4 @@ if bld.env['HAVE_UNITY'] and bld.env['HAVE_DEE']:
     prog.env.append_value ('VALAFLAGS', '--define=UNITY_LENS')
     prog.uselib += ' DEE UNITY'
     prog.packages += ' dee-1.0 unity'
-  
-if Options.options.debug:
-    prog.env = bld.env_of_name ('debug').copy ()
-  
+   
