@@ -63,8 +63,8 @@ namespace Diodon
         {
             // label should not be longer than 50 letters
             string label = _text.replace("\n", " ");
-            if (label.length > 50) {
-                label = label.substring(0, 50) + "...";
+            if (label.char_count() > 50) {
+                label = Utility.substring(label, 50) + "...";
             }
             
             return label;

@@ -98,6 +98,24 @@ namespace Diodon
             
             return true;
         }
+        
+        /**
+         * This method is a workaround for string.substring which
+         * produces invalid utf-8 in some cases.
+         * See https://bugzilla.gnome.org/show_bug.cgi?id=653088
+         */
+        public static string substring(string str, int length)
+        {
+            string result = "";
+            for(int i=0; i < length; ++i) {
+                unichar c = str.get_char(i);
+                if(c.validate()) {
+                  result = result.concat(c.to_string());
+                }
+            }
+            
+            return result;
+        }
     }
 }
 
