@@ -100,9 +100,9 @@ namespace Diodon
                         type_name = typeof(TextClipboardItem).name();
                     }
                     
-                    // get value and check if available
+                    // get value and check if it is valid
                     string value = reader.read_string();
-                    if(value != null) {
+                    if(value != null && value.validate()) {
                         debug("Add item of type " + type_name + " with value \"" + 
                               value + "\" to clipboard.");
                         
