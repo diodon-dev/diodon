@@ -289,9 +289,30 @@ namespace Diodon
             on_select_item(item);
             on_copy_selection(item);
             
-            // paste it instantly
-            keybinding_manager.press("<Ctrl>V");
-            keybinding_manager.release("<Ctrl>V");
+            execute_paste(item);
+        }
+
+        /**
+         * Execute paste instantly according to set preferences.
+         */
+        private void execute_paste(IClipboardItem item)
+        {
+            string key = null;
+            if(configuration_model.use_clipboard) {
+                key = "<Ctrl>V";
+            }
+            
+            // prefer primary selection paste as such works
+            // in more cases (e.g. terminal)
+            // however it does not work with files and images
+            if(configuration_model.use_primary && item is TextClipboardItem) {
+                key = "<Shift>Insert";
+            }
+            
+            if(key != null) {
+                keybinding_manager.press(key);
+                keybinding_manager.release(key);
+            }
         }
         
         /**
