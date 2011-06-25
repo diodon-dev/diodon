@@ -158,6 +158,7 @@ namespace Diodon
             preferences_view.on_change_use_primary.connect(change_use_primary_configuration);
             preferences_view.on_change_synchronize_clipboards.connect(change_synchronize_clipboards_configuration);
             preferences_view.on_change_keep_cliboard_content.connect(change_keep_clipboard_content_configuration);
+            preferences_view.on_change_instant_paste.connect(change_instant_paste_configuration);
             preferences_view.on_change_clipboard_size.connect(change_clipboard_size_configuration);
             preferences_view.on_change_history_accelerator.connect(change_history_accelerator_configuration);
             preferences_view.on_close.connect(hide_preferences);
@@ -251,6 +252,13 @@ namespace Diodon
                 configuration_model.keep_clipboard_content  // default value
             );
             
+            // instant paste
+            configuration_manager.add_bool_notify(configuration_model.instant_paste_key,
+                () => { configuration_model.instant_paste = true; },
+                () => { configuration_model.instant_paste = false; },
+                configuration_model.instant_paste  // default value
+            );
+            
             // clipboard size
             configuration_manager.add_int_notify(configuration_model.clipboard_size_key,
                 change_clipboard_size, configuration_model.clipboard_size);
@@ -289,11 +297,15 @@ namespace Diodon
             on_select_item(item);
             on_copy_selection(item);
             
-            execute_paste(item);
+            if(configuration_model.instant_paste) {
+                execute_paste(item);
+            }
         }
 
         /**
          * Execute paste instantly according to set preferences.
+         * 
+         * @param item item to be pasted
          */
         private void execute_paste(IClipboardItem item)
         {
@@ -612,7 +624,7 @@ namespace Diodon
                 !configuration_model.synchronize_clipboards);
         }
         
-         /**
+        /**
          * Change setting of keep_clipboard_content in configuration manager
          */  
         private void change_keep_clipboard_content_configuration()
@@ -620,6 +632,16 @@ namespace Diodon
             configuration_manager.set_bool_value(
                 configuration_model.keep_clipboard_content_key,
                 !configuration_model.keep_clipboard_content);
+        }
+        
+        /**
+         * Change setting of instant_paste in configuration manager
+         */  
+        private void change_instant_paste_configuration()
+        {
+            configuration_manager.set_bool_value(
+                configuration_model.instant_paste_key,
+                !configuration_model.instant_paste);
         }
         
         /**

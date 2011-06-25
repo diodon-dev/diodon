@@ -58,14 +58,24 @@ namespace Diodon
         public bool synchronize_clipboards { get; set; default = false; }
         
         /**
-         * flag whether clipboard content should be restored when lost.
-         */
-        public bool keep_clipboard_content { get; set; default = true; }
-        
-        /**
          * key for keep clipboard content key
          */
         public string keep_clipboard_content_key { get { return "/clipboard/keep_clipboard_content"; } }
+        
+        /**
+         * flag whether clipboard content should be restored when lost.
+         */
+        public bool keep_clipboard_content { get; set; default = true; }
+
+        /**
+         * key where option whether content should be pasted instantly is stored
+         */
+        public string instant_paste_key { get { return "/clipboard/instant_paste"; } }
+                
+        /**
+         * flag whether clipboard content should be automatically pasted
+         */
+        public bool instant_paste { get; set; default = true; }
         
         /**
          * key of clipboard history size
