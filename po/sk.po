@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-25 18:03+0200\n"
+"POT-Creation-Date: 2011-06-25 11:12+0200\n"
 "PO-Revision-Date: 2011-02-16 09:58+0000\n"
 "Last-Translator: DAG Software <Unknown>\n"
 "Language-Team: Slovak <sk@li.org>\n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-05-26 05:15+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
-"Language: sk\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -41,34 +41,40 @@ msgstr ""
 "histórie schránky."
 
 #: ../data/preferences.ui.h:3
+msgid ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
+msgstr ""
+
+#: ../data/preferences.ui.h:4
 msgid "Clipboard"
 msgstr "Schránka"
 
-#: ../data/preferences.ui.h:4
+#: ../data/preferences.ui.h:5
 msgid "Clipboard size"
 msgstr "Veľkosť schránky"
 
-#: ../data/preferences.ui.h:5
+#: ../data/preferences.ui.h:6
 msgid "Diodon Preferences"
 msgstr "Diodon nastavenia"
 
-#: ../data/preferences.ui.h:6
+#: ../data/preferences.ui.h:7
 msgid "History key"
 msgstr "Kľúč k histórii"
 
-#: ../data/preferences.ui.h:7
+#: ../data/preferences.ui.h:8
 msgid "Hotkey to quickly allow you to access the clipboard history."
 msgstr "Klávesová skratka pre rýchly prístup k histórii schránky."
 
-#: ../data/preferences.ui.h:8
+#: ../data/preferences.ui.h:9
 msgid "Hotkeys"
 msgstr "Klávesové skratky"
 
-#: ../data/preferences.ui.h:9
+#: ../data/preferences.ui.h:10
 msgid "Number of items in the clipboard history."
 msgstr "Počet položek uchovaných v historii schránky."
 
-#: ../data/preferences.ui.h:10
+#: ../data/preferences.ui.h:11
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
@@ -76,11 +82,11 @@ msgstr ""
 "Zabráni vyprázdneniu schránky. Napríklad pri keď sa aplikácia ukončí, "
 "schránka sa obvykle vyprázdni."
 
-#: ../data/preferences.ui.h:11
+#: ../data/preferences.ui.h:12
 msgid "S_ynchronize clipboards"
 msgstr "S_ynchronizovať schránky"
 
-#: ../data/preferences.ui.h:12
+#: ../data/preferences.ui.h:13
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
 "mouse) and the clipboard so that anything in the selection is immediately "
@@ -91,15 +97,19 @@ msgstr ""
 "takže všetko, čo vyberiete myšou je okamžite prístupné v schránke pre "
 "vloženie pomocou Ctrl+V a stredným tlačidlom myši."
 
-#: ../data/preferences.ui.h:13
+#: ../data/preferences.ui.h:14
 msgid "Use _primary selection"
 msgstr "Použiť _primárny výber"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:15
+msgid "_Automatically paste selected item"
+msgstr ""
+
+#: ../data/preferences.ui.h:16
 msgid "_Keep clipboard content"
 msgstr "Ponechať obsah schrán_ky"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:17
 msgid "_Use clipboard (Ctrl+C)"
 msgstr "Po_užiť schránku (Ctrl+C)"
 
@@ -108,26 +118,26 @@ msgid "<Empty>"
 msgstr "<Prázdne>"
 
 #. The row offsets should match those from the ClipboardSection enum
-#: ../src/unity-lens-daemon.vala:157
+#: ../src/unity-lens-daemon.vala:163
 msgid "All Clipboard"
 msgstr ""
 
 #. The row offsets should match those from the ClipboardGroup enum
 #. TODO: we need to replace this unity icons with
 #. some diodon specific ones
-#: ../src/unity-lens-daemon.vala:158 ../src/unity-lens-daemon.vala:174
+#: ../src/unity-lens-daemon.vala:164 ../src/unity-lens-daemon.vala:186
 msgid "Text"
 msgstr ""
 
-#: ../src/unity-lens-daemon.vala:159 ../src/unity-lens-daemon.vala:175
+#: ../src/unity-lens-daemon.vala:165 ../src/unity-lens-daemon.vala:187
 msgid "Files"
 msgstr ""
 
-#: ../src/unity-lens-daemon.vala:160 ../src/unity-lens-daemon.vala:176
+#: ../src/unity-lens-daemon.vala:166 ../src/unity-lens-daemon.vala:188
 msgid "Images"
 msgstr ""
 
-#: ../src/unity-lens-daemon.vala:238
+#: ../src/unity-lens-daemon.vala:250
 msgid "Copy to clipboard"
 msgstr ""
 

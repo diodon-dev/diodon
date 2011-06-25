@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-25 18:03+0200\n"
+"POT-Creation-Date: 2011-06-25 11:12+0200\n"
 "PO-Revision-Date: 2011-05-26 05:14+0000\n"
 "Last-Translator: Svetoslav Stefanov <svetlisashkov@yahoo.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-05-27 05:22+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
-"Language: bg\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -41,34 +41,40 @@ msgid ""
 msgstr "Добавя копирания в буфера текст, например с Ctrl + C към историята."
 
 #: ../data/preferences.ui.h:3
+msgid ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
+msgstr ""
+
+#: ../data/preferences.ui.h:4
 msgid "Clipboard"
 msgstr "Системен буфер"
 
-#: ../data/preferences.ui.h:4
+#: ../data/preferences.ui.h:5
 msgid "Clipboard size"
 msgstr "Размер на буфера"
 
-#: ../data/preferences.ui.h:5
+#: ../data/preferences.ui.h:6
 msgid "Diodon Preferences"
 msgstr "Настройки на Diodon"
 
-#: ../data/preferences.ui.h:6
+#: ../data/preferences.ui.h:7
 msgid "History key"
 msgstr "Клавиш за История"
 
-#: ../data/preferences.ui.h:7
+#: ../data/preferences.ui.h:8
 msgid "Hotkey to quickly allow you to access the clipboard history."
 msgstr "Бърз клавиш за достъп до историята на буфера"
 
-#: ../data/preferences.ui.h:8
+#: ../data/preferences.ui.h:9
 msgid "Hotkeys"
 msgstr "Бързи клавиши"
 
-#: ../data/preferences.ui.h:9
+#: ../data/preferences.ui.h:10
 msgid "Number of items in the clipboard history."
 msgstr "Брой елементи в историята"
 
-#: ../data/preferences.ui.h:10
+#: ../data/preferences.ui.h:11
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
@@ -76,11 +82,11 @@ msgstr ""
 "Предотвратява празен буфер. Например при изход от приложение обикновено "
 "буферът се изпразва."
 
-#: ../data/preferences.ui.h:11
+#: ../data/preferences.ui.h:12
 msgid "S_ynchronize clipboards"
 msgstr "_Синхронизиране на буферите"
 
-#: ../data/preferences.ui.h:12
+#: ../data/preferences.ui.h:13
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
 "mouse) and the clipboard so that anything in the selection is immediately "
@@ -91,15 +97,19 @@ msgstr ""
 "че всичко в нея е моментално налично в буфера и обратно, например за "
 "поставяне с Ctrl + V и със средния бутон на мишката."
 
-#: ../data/preferences.ui.h:13
+#: ../data/preferences.ui.h:14
 msgid "Use _primary selection"
 msgstr "Използване на _първичната селекция"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:15
+msgid "_Automatically paste selected item"
+msgstr ""
+
+#: ../data/preferences.ui.h:16
 msgid "_Keep clipboard content"
 msgstr "_Запазване съдържанието на буфера"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:17
 msgid "_Use clipboard (Ctrl+C)"
 msgstr "_Използване на буфера (Ctrl+C)"
 
@@ -108,25 +118,25 @@ msgid "<Empty>"
 msgstr "<Празно>"
 
 #. The row offsets should match those from the ClipboardSection enum
-#: ../src/unity-lens-daemon.vala:157
+#: ../src/unity-lens-daemon.vala:163
 msgid "All Clipboard"
 msgstr "Целият буфер"
 
 #. The row offsets should match those from the ClipboardGroup enum
 #. TODO: we need to replace this unity icons with
 #. some diodon specific ones
-#: ../src/unity-lens-daemon.vala:158 ../src/unity-lens-daemon.vala:174
+#: ../src/unity-lens-daemon.vala:164 ../src/unity-lens-daemon.vala:186
 msgid "Text"
 msgstr "Текст"
 
-#: ../src/unity-lens-daemon.vala:159 ../src/unity-lens-daemon.vala:175
+#: ../src/unity-lens-daemon.vala:165 ../src/unity-lens-daemon.vala:187
 msgid "Files"
 msgstr "Файлове"
 
-#: ../src/unity-lens-daemon.vala:160 ../src/unity-lens-daemon.vala:176
+#: ../src/unity-lens-daemon.vala:166 ../src/unity-lens-daemon.vala:188
 msgid "Images"
 msgstr "Изображения"
 
-#: ../src/unity-lens-daemon.vala:238
+#: ../src/unity-lens-daemon.vala:250
 msgid "Copy to clipboard"
 msgstr "Копиране в системния буфер"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-25 18:03+0200\n"
+"POT-Creation-Date: 2011-06-25 11:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,44 +38,50 @@ msgid ""
 msgstr ""
 
 #: ../data/preferences.ui.h:3
-msgid "Clipboard"
+msgid ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
 msgstr ""
 
 #: ../data/preferences.ui.h:4
-msgid "Clipboard size"
+msgid "Clipboard"
 msgstr ""
 
 #: ../data/preferences.ui.h:5
-msgid "Diodon Preferences"
+msgid "Clipboard size"
 msgstr ""
 
 #: ../data/preferences.ui.h:6
-msgid "History key"
+msgid "Diodon Preferences"
 msgstr ""
 
 #: ../data/preferences.ui.h:7
-msgid "Hotkey to quickly allow you to access the clipboard history."
+msgid "History key"
 msgstr ""
 
 #: ../data/preferences.ui.h:8
-msgid "Hotkeys"
+msgid "Hotkey to quickly allow you to access the clipboard history."
 msgstr ""
 
 #: ../data/preferences.ui.h:9
-msgid "Number of items in the clipboard history."
+msgid "Hotkeys"
 msgstr ""
 
 #: ../data/preferences.ui.h:10
+msgid "Number of items in the clipboard history."
+msgstr ""
+
+#: ../data/preferences.ui.h:11
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
 msgstr ""
 
-#: ../data/preferences.ui.h:11
+#: ../data/preferences.ui.h:12
 msgid "S_ynchronize clipboards"
 msgstr ""
 
-#: ../data/preferences.ui.h:12
+#: ../data/preferences.ui.h:13
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
 "mouse) and the clipboard so that anything in the selection is immediately "
@@ -83,15 +89,19 @@ msgid ""
 "the middle mouse button."
 msgstr ""
 
-#: ../data/preferences.ui.h:13
+#: ../data/preferences.ui.h:14
 msgid "Use _primary selection"
 msgstr ""
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:15
+msgid "_Automatically paste selected item"
+msgstr ""
+
+#: ../data/preferences.ui.h:16
 msgid "_Keep clipboard content"
 msgstr ""
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:17
 msgid "_Use clipboard (Ctrl+C)"
 msgstr ""
 
@@ -100,25 +110,25 @@ msgid "<Empty>"
 msgstr ""
 
 #. The row offsets should match those from the ClipboardSection enum
-#: ../src/unity-lens-daemon.vala:157
+#: ../src/unity-lens-daemon.vala:163
 msgid "All Clipboard"
 msgstr ""
 
 #. The row offsets should match those from the ClipboardGroup enum
 #. TODO: we need to replace this unity icons with
 #. some diodon specific ones
-#: ../src/unity-lens-daemon.vala:158 ../src/unity-lens-daemon.vala:174
+#: ../src/unity-lens-daemon.vala:164 ../src/unity-lens-daemon.vala:186
 msgid "Text"
 msgstr ""
 
-#: ../src/unity-lens-daemon.vala:159 ../src/unity-lens-daemon.vala:175
+#: ../src/unity-lens-daemon.vala:165 ../src/unity-lens-daemon.vala:187
 msgid "Files"
 msgstr ""
 
-#: ../src/unity-lens-daemon.vala:160 ../src/unity-lens-daemon.vala:176
+#: ../src/unity-lens-daemon.vala:166 ../src/unity-lens-daemon.vala:188
 msgid "Images"
 msgstr ""
 
-#: ../src/unity-lens-daemon.vala:238
+#: ../src/unity-lens-daemon.vala:250
 msgid "Copy to clipboard"
 msgstr ""

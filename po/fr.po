@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-25 18:03+0200\n"
+"POT-Creation-Date: 2011-06-25 11:12+0200\n"
 "PO-Revision-Date: 2011-05-19 09:31+0000\n"
 "Last-Translator: SckyzO <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-05-26 05:15+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
-"Language: fr\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -43,35 +43,41 @@ msgstr ""
 "l'historique du presse-papier"
 
 #: ../data/preferences.ui.h:3
+msgid ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
+msgstr ""
+
+#: ../data/preferences.ui.h:4
 msgid "Clipboard"
 msgstr "Presse-papier"
 
-#: ../data/preferences.ui.h:4
+#: ../data/preferences.ui.h:5
 msgid "Clipboard size"
 msgstr "Taille du presse-papier"
 
-#: ../data/preferences.ui.h:5
+#: ../data/preferences.ui.h:6
 msgid "Diodon Preferences"
 msgstr "Préférences de Diodon"
 
-#: ../data/preferences.ui.h:6
+#: ../data/preferences.ui.h:7
 msgid "History key"
 msgstr "Raccourci clavier pour l'historique"
 
-#: ../data/preferences.ui.h:7
+#: ../data/preferences.ui.h:8
 msgid "Hotkey to quickly allow you to access the clipboard history."
 msgstr ""
 "Raccourci clavier pour accéder rapidement à l'historique du presse-papier"
 
-#: ../data/preferences.ui.h:8
+#: ../data/preferences.ui.h:9
 msgid "Hotkeys"
 msgstr "Raccourcis clavier"
 
-#: ../data/preferences.ui.h:9
+#: ../data/preferences.ui.h:10
 msgid "Number of items in the clipboard history."
 msgstr "Nombre d'éléments dans l'historique du presse-papier"
 
-#: ../data/preferences.ui.h:10
+#: ../data/preferences.ui.h:11
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
@@ -79,11 +85,11 @@ msgstr ""
 "Empêcher le presse-papier d'être vidé. Par exemple, lorsqu'une application "
 "se ferme, elle vide automatiquement le presse-papier"
 
-#: ../data/preferences.ui.h:11
+#: ../data/preferences.ui.h:12
 msgid "S_ynchronize clipboards"
 msgstr "Synchroniser les presse-papiers"
 
-#: ../data/preferences.ui.h:12
+#: ../data/preferences.ui.h:13
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
 "mouse) and the clipboard so that anything in the selection is immediately "
@@ -95,15 +101,19 @@ msgstr ""
 "disponible immédiatement dans le presse-papiers, et vice versa, par exemple "
 "pour coller avec Ctrl + V et le bouton du milieu."
 
-#: ../data/preferences.ui.h:13
+#: ../data/preferences.ui.h:14
 msgid "Use _primary selection"
 msgstr "Utiliser la première sélection"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:15
+msgid "_Automatically paste selected item"
+msgstr ""
+
+#: ../data/preferences.ui.h:16
 msgid "_Keep clipboard content"
 msgstr "Garder le contenu du presse-papier"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:17
 msgid "_Use clipboard (Ctrl+C)"
 msgstr "Utiliser le presse-papier (Ctrl+C)"
 
@@ -112,26 +122,26 @@ msgid "<Empty>"
 msgstr "<Vide>"
 
 #. The row offsets should match those from the ClipboardSection enum
-#: ../src/unity-lens-daemon.vala:157
+#: ../src/unity-lens-daemon.vala:163
 msgid "All Clipboard"
 msgstr ""
 
 #. The row offsets should match those from the ClipboardGroup enum
 #. TODO: we need to replace this unity icons with
 #. some diodon specific ones
-#: ../src/unity-lens-daemon.vala:158 ../src/unity-lens-daemon.vala:174
+#: ../src/unity-lens-daemon.vala:164 ../src/unity-lens-daemon.vala:186
 msgid "Text"
 msgstr ""
 
-#: ../src/unity-lens-daemon.vala:159 ../src/unity-lens-daemon.vala:175
+#: ../src/unity-lens-daemon.vala:165 ../src/unity-lens-daemon.vala:187
 msgid "Files"
 msgstr ""
 
-#: ../src/unity-lens-daemon.vala:160 ../src/unity-lens-daemon.vala:176
+#: ../src/unity-lens-daemon.vala:166 ../src/unity-lens-daemon.vala:188
 msgid "Images"
 msgstr ""
 
-#: ../src/unity-lens-daemon.vala:238
+#: ../src/unity-lens-daemon.vala:250
 msgid "Copy to clipboard"
 msgstr ""
 
