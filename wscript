@@ -6,7 +6,7 @@ import subprocess, os, traceback
 import Options, Logs
 
 NAME = 'Diodon'
-VERSION = '0.4.0'
+VERSION = '0.5.0'
 APPNAME = 'diodon'
 WEBSITE = 'https://launchpad.net/diodon'
 COPYRIGHT = 'Copyright \xc2\xa9 2010 Diodon Team'
@@ -62,8 +62,8 @@ def configure(conf):
     conf.define('BUSOBJECTPATHCLIPBOARD', BUSOBJECTPATHCLIPBOARD)
     conf.define('SHAREDIR', os.path.join(conf.env['DATADIR'], APPNAME))
     conf.define('CLIPBOARD_URI', CLIPBOARD_URI)
-    
-    # set 'default' variant
+      
+      # set 'default' variant
     conf.define ('DEBUG', 0)
     conf.env['CFLAGS']=['-O2']
     conf.env['VALAFLAGS'] = ['--disable-assert']
