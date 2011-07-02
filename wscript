@@ -25,12 +25,13 @@ def options(opt):
     opt.tool_options('vala')
     opt.tool_options('gnu_dirs')
     opt.tool_options('intltool')
+    opt.tool_options('glib2')
     opt.add_option('--update-po',         action='store_true', default=False, dest='update_po', help='Update localization files')
     opt.add_option('--debug',             action='store_true', default=False, dest='debug',     help='Debug mode')
     opt.add_option('--enable-unity-lens', action='store_true', default=False, dest='unity_lens', help='Enable unity lens support')
 
 def configure(conf):
-    conf.load('compiler_c intltool gnu_dirs')
+    conf.load('compiler_c intltool gnu_dirs glib2')
     
     conf.load('vala', funs='')
     conf.check_vala(min_version=(0,12,0))
@@ -53,6 +54,7 @@ def configure(conf):
 
     conf.define('PACKAGE_NAME', APPNAME)
     conf.define('GETTEXT_PACKAGE', APPNAME)
+    conf.env['GETTEXT_PACKAGE'] = APPNAME
     conf.define('VERSION', VERSION)
     conf.define('COPYRIGHT', COPYRIGHT)
     conf.define('WEBSITE', WEBSITE)
@@ -63,7 +65,7 @@ def configure(conf):
     conf.define('SHAREDIR', os.path.join(conf.env['DATADIR'], APPNAME))
     conf.define('CLIPBOARD_URI', CLIPBOARD_URI)
       
-      # set 'default' variant
+    # set 'default' variant
     conf.define ('DEBUG', 0)
     conf.env['CFLAGS']=['-O2']
     conf.env['VALAFLAGS'] = ['--disable-assert']
@@ -77,7 +79,7 @@ def configure(conf):
     conf.write_config_header ('config.h', remove=False)
    
 def build(bld):
-    bld.add_subdirs('po src data')
+    bld.add_subdirs('po data src')
 
 def dist(ctx):
     # set the compression type to gzip (default is bz2)

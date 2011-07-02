@@ -2,6 +2,23 @@
 # encoding: utf-8
 
 bld.new_task_gen (
+    features = "subst",
+    source= "net.launchpad.Diodon.gschema.xml.in.in",
+    target= "net.launchpad.Diodon.gschema.xml.in",
+    GETTEXT_PACKAGE = bld.env['GETTEXT_PACKAGE'])
+  
+#bld.new_task_gen (
+#  features = 'intltool_in',
+#  podir = '../po',
+#  source = 'net.launchpad.Diodon.gschema.xml.in',
+#  target = 'net.launchpad.Diodon.gschema.xml',
+#  flags = ["-x", "-q", "-u", "-c"])
+
+#task = bld.new_task_gen (
+#    features = 'glib2')    
+#task.add_settings_schemas ('net.launchpad.Diodon.gschema.xml')
+
+bld.new_task_gen (
   features = 'intltool_in',
   podir = '../po',
   source = 'diodon.desktop.in',
