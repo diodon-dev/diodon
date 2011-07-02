@@ -27,6 +27,10 @@ namespace Diodon
      */
     public class Controller : GLib.Object
     {
+        private Settings settings;
+        private Settings settings_clipboard;
+        private Settings settings_keybindings;
+        
         /**
          * Called when a item needs to be copied to a clipboard selection.
          */
@@ -68,11 +72,6 @@ namespace Diodon
          * preferences dialog view property
          */
         public PreferencesView preferences_view { get; set; default = new PreferencesView(); }
-        
-        /**
-         * configuration manager property
-         */
-        public ConfigurationManager configuration_manager { get; set; default = new ConfigurationManager(); }
         
         /**
          * keybinding manager property
@@ -128,6 +127,10 @@ namespace Diodon
             clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
             clipboard_managers.set(ClipboardType.CLIPBOARD, new ClipboardManager(ClipboardType.CLIPBOARD));
             clipboard_managers.set(ClipboardType.PRIMARY, new PrimaryClipboardManager());
+            
+            settings = new Settings("net.launchpad.Diodon");
+            settings_clipboard = new Settings("net.launchpad.Diodon.clipboard");
+            settings_keybindings = new Settings("net.launchpad.Diodon.keybindings");
         }
         
         /**
@@ -212,72 +215,61 @@ namespace Diodon
          */
         private void init_configuration()
         {
-             // use clipboard configuration
-            configuration_manager.add_bool_notify(configuration_model.use_clipboard_key,
-                () => {
-                    enable_clipboard_manager(ClipboardType.CLIPBOARD);
-                    configuration_model.use_clipboard = true;                        
-                },
-                () => {
-                    disable_clipboard_manager(ClipboardType.CLIPBOARD);
-                    configuration_model.use_clipboard = false;
-                },
-                configuration_model.use_clipboard // default value
+            settings_clipboard.bind("use-clipboard", configuration_model,
+                "use_clipboard", SettingsBindFlags.DEFAULT);
+            settings_clipboard.changed["use-clipboard"].connect(
+                (key) => {
+                    enable_clipboard_manager(ClipboardType.CLIPBOARD,
+                        configuration_model.use_clipboard);
+                }
+            );
+                
+            settings_clipboard.bind("use-primary", configuration_model,
+                "use_primary", SettingsBindFlags.DEFAULT);
+            settings_clipboard.changed["use-primary"].connect(
+                (key) => {
+                    enable_clipboard_manager(ClipboardType.PRIMARY,
+                        configuration_model.use_primary);
+                }
             );
             
-            // use primary configuration
-            configuration_manager.add_bool_notify(configuration_model.use_primary_key,
-                () => {
-                    enable_clipboard_manager(ClipboardType.PRIMARY);
-                    configuration_model.use_primary = true;
-                },
-                () => {
-                    disable_clipboard_manager(ClipboardType.PRIMARY);
-                    configuration_model.use_primary = false;
-                },
-                configuration_model.use_primary // default value
+            settings_clipboard.bind("synchronize-clipboards", configuration_model,
+                "synchronize_clipboards", SettingsBindFlags.DEFAULT);
+
+            settings_clipboard.bind("keep-clipboard-content", configuration_model,
+                "keep_clipboard_content", SettingsBindFlags.DEFAULT);
+            settings_clipboard.changed["keep-clipboard-content"].connect(
+                (key) => {
+                    enable_keep_clipboard_content(
+                        configuration_model.keep_clipboard_content);
+                }
             );
             
-            // synchronize clipboards
-            configuration_manager.add_bool_notify(configuration_model.synchronize_clipboards_key,
-                () => { configuration_model.synchronize_clipboards = true; },
-                () => { configuration_model.synchronize_clipboards = false; },
-                configuration_model.synchronize_clipboards // default value
+            settings_clipboard.bind("instant-paste", configuration_model,
+                "instant_paste", SettingsBindFlags.DEFAULT);
+                
+            settings_clipboard.bind("clipboard-size", configuration_model,
+                "clipboard_size", SettingsBindFlags.DEFAULT);
+            settings_clipboard.changed["clipboard-size"].connect(
+                (key) => {
+                    change_clipboard_size(configuration_model.clipboard_size);
+                }
             );
-            
-            // keep clipboard content
-            configuration_manager.add_bool_notify(configuration_model.keep_clipboard_content_key,
-                enable_keep_clipboard_content,
-                disable_keep_clipboard_content,
-                configuration_model.keep_clipboard_content  // default value
+                
+            settings_keybindings.bind("history-accelerator", configuration_model,
+                "history_accelerator", SettingsBindFlags.DEFAULT);
+            settings_keybindings.changed["history-accelerator"].connect(
+                (key) => {
+                    change_history_accelerator(configuration_model.history_accelerator);
+                }
             );
-            
-            // instant paste
-            configuration_manager.add_bool_notify(configuration_model.instant_paste_key,
-                () => { configuration_model.instant_paste = true; },
-                () => { configuration_model.instant_paste = false; },
-                configuration_model.instant_paste  // default value
-            );
-            
-            // clipboard size
-            configuration_manager.add_int_notify(configuration_model.clipboard_size_key,
-                change_clipboard_size, configuration_model.clipboard_size);
-            
-            // history_accelerator
-            configuration_manager.add_string_notify(configuration_model.history_accelerator_key,
-                change_history_accelerator, configuration_model.history_accelerator);
-            
-            // show app indicator
-            configuration_manager.add_bool_notify(configuration_model.show_indicator_key,
-                () => {
-                    indicator_view.set_visible(true);
-                    configuration_model.show_indicator = true;
-                },
-                () => {
-                    indicator_view.set_visible(false);
-                    configuration_model.show_indicator = false;
-                },
-                configuration_model.show_indicator // default value
+                
+            settings.bind("show-indicator", configuration_model,
+                "show_indicator", SettingsBindFlags.DEFAULT);
+            settings.changed["show-indicator"].connect(
+                (key) => {
+                    indicator_view.set_visible(configuration_model.show_indicator);
+                }
             );
         }
         
@@ -493,14 +485,13 @@ namespace Diodon
         }
         
          /**
-         * Change setting of clipboard_size in configuration manager
+         * Change setting of clipboard_size in configuration model
          *
          * @param size clipboard size
          */        
         private void change_clipboard_size_configuration(int size)
         {
-            configuration_manager.set_int_value(
-                configuration_model.clipboard_size_key, size);
+            configuration_model.clipboard_size = size;
         }
 
         /**
@@ -516,14 +507,13 @@ namespace Diodon
         }
         
         /**
-         * Change setting of history_accelerator in configuration manager
+         * Change setting of history_accelerator in configuration model
          *
          * @param accelerator accelerator parseable by Gtk.accelerator_parse
          */        
         private void change_history_accelerator_configuration(string accelerator)
         {
-            configuration_manager.set_string_value(
-                configuration_model.history_accelerator_key, accelerator);
+            configuration_model.history_accelerator = accelerator;
         }
 
         /**
@@ -540,108 +530,87 @@ namespace Diodon
         }
 
         /**
-         * connect and attach to signals of given clipboard type to enable it.
+         * connect/disconnect and attach/disattach to signals of given clipboard
+         * type to enable/disable it.
          *
          * @param type type of clipboard
+         * @param enable true for enabling; false for disabling
          */
-        private void enable_clipboard_manager(ClipboardType type)
+        private void enable_clipboard_manager(ClipboardType type, bool enable)
         {
             ClipboardManager manager = clipboard_managers.get(type);
-            manager.on_text_received.connect(text_received);
-            manager.on_uris_received.connect(uris_received);
-            manager.on_image_received.connect(image_received);
-            on_copy_selection.connect(manager.select_item);
-            on_clear.connect(manager.clear);
+            
+            if(enable) {
+                manager.on_text_received.connect(text_received);
+                manager.on_uris_received.connect(uris_received);
+                manager.on_image_received.connect(image_received);
+                on_copy_selection.connect(manager.select_item);
+                on_clear.connect(manager.clear);
+            }
+            else {
+                manager.on_text_received.disconnect(text_received);
+                manager.on_uris_received.disconnect(uris_received);
+                on_copy_selection.disconnect(manager.select_item);
+                on_clear.disconnect(manager.clear);    
+            }
+        }
+                
+        /**
+         * connect/disconnect to signals of all clipboard manager to
+         * enable/disable keep clipboard content support
+         * 
+         * @param enable true for enabling; false for disabling
+         */
+        private void enable_keep_clipboard_content(bool enable)
+        {
+            foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
+                if(enable) {
+                    clipboard_manager.on_empty.connect(clipboard_empty);
+                }
+                else {
+                    clipboard_manager.on_empty.disconnect(clipboard_empty);    
+                }
+            }
         }
 
         /**
-         * disconnect and dis-attach to signals of given manager to disable it.
-         *
-         * @param type type of clipboard
-         */
-        private void disable_clipboard_manager(ClipboardType type)
-        {
-            ClipboardManager manager = clipboard_managers.get(type);
-            manager.on_text_received.disconnect(text_received);
-            manager.on_uris_received.disconnect(uris_received);
-            on_copy_selection.disconnect(manager.select_item);
-            on_clear.disconnect(manager.clear);
-        }
-        
-        /**
-         * connect to signals of all clipboard manager to enable
-         * keep clipboard content support
-         */
-        private void enable_keep_clipboard_content()
-        {
-            foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
-                clipboard_manager.on_empty.connect(clipboard_empty);
-            }
-            
-            configuration_model.keep_clipboard_content = true;
-        }
-        
-        /**
-         * disconnect to signals of all clipboard manager to disable
-         * keep clipboard content support
-         */
-        private void disable_keep_clipboard_content()
-        {
-            foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
-                clipboard_manager.on_empty.disconnect(clipboard_empty);
-            }
-            
-            configuration_model.keep_clipboard_content = false;
-        }
-
-        /**
-         * Change setting of use_clipboard in configuration manager
+         * Change setting of use_clipboard in configuration model
          */        
         private void change_use_clipboard_configuration()
         {
-            configuration_manager.set_bool_value(
-                configuration_model.use_clipboard_key,
-                !configuration_model.use_clipboard);
+            configuration_model.use_clipboard = !configuration_model.use_clipboard;
         }
         
         /**
-         * Change setting of use_primary in configuration manager
+         * Change setting of use_primary in configuration model
          */        
         private void change_use_primary_configuration()
         {
-            configuration_manager.set_bool_value(
-                configuration_model.use_primary_key,
-                !configuration_model.use_primary);
+            configuration_model.use_primary = !configuration_model.use_primary;
         }
         
         /**
-         * Change setting of synchronize_clipboards in configuration manager
+         * Change setting of synchronize_clipboards in configuration model
          */        
         private void change_synchronize_clipboards_configuration()
         {
-            configuration_manager.set_bool_value(
-                configuration_model.synchronize_clipboards_key,
-                !configuration_model.synchronize_clipboards);
+            configuration_model.synchronize_clipboards = !configuration_model.synchronize_clipboards;
         }
         
         /**
-         * Change setting of keep_clipboard_content in configuration manager
+         * Change setting of keep_clipboard_content in configuration model
          */  
         private void change_keep_clipboard_content_configuration()
         {
-            configuration_manager.set_bool_value(
-                configuration_model.keep_clipboard_content_key,
-                !configuration_model.keep_clipboard_content);
+            configuration_model.keep_clipboard_content = !configuration_model.keep_clipboard_content;
         }
         
         /**
-         * Change setting of instant_paste in configuration manager
+         * Change setting of instant_paste in configuration model
          */  
         private void change_instant_paste_configuration()
         {
-            configuration_manager.set_bool_value(
-                configuration_model.instant_paste_key,
-                !configuration_model.instant_paste);
+            configuration_model.instant_paste = !configuration_model.instant_paste;
         }
         
         /**
@@ -686,4 +655,4 @@ namespace Diodon
         }
     }  
 }
- 
+
