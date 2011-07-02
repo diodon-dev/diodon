@@ -11,6 +11,7 @@ bld.new_task_gen (
   features = 'intltool_in',
   podir = '.', # no translations should get added to gschema file
   source = 'net.launchpad.Diodon.gschema.xml.in',
+  install_path = '',  # do not install it
   flags = ["-x", "-q", "-u", "-c"])
   
 task = bld.new_task_gen (
