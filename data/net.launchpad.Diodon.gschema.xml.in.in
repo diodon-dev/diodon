@@ -1,0 +1,50 @@
+<schemalist>
+  <schema gettext-domain="@GETTEXT_PACKAGE@" id="net.launchpad.Diodon" path="/net/launchpad/diodon/">
+    <key name="show-indicator" type="b">
+      <default>true</default>
+      <_summary>Show indicator</_summary>
+      <_description>Whether indicator should be shown.</_description>
+    </key>
+    <child name="clipboard" schema="net.launchpad.Diodon.clipboard"/>
+    <child name="keybindings" schema="net.launchpad.Diodon.keybindings"/>
+  </schema>
+  <schema gettext-domain="@GETTEXT_PACKAGE@" id="net.launchpad.Diodon.clipboard" path="/net/launchpad/diodon/clipboard/">
+    <key name="use-clipboard" type="b">
+      <default>true</default>
+      <_summary>Use clipboard (Ctrl+C)</_summary>
+      <_description>Adds the text which is copied to the clipboard with e.g. Ctrl + C to the clipboard history.</_description>
+    </key>
+    <key name="use-primary" type="b">
+      <default>true</default>
+      <_summary>Use primary selection</_summary>
+      <_description>Adds the primary selection (an area of the screen which is selected with the mouse) to the clipboard history.</_description>
+    </key>
+    <key name="synchronize-clipboards" type="b">
+      <default>false</default>
+      <_summary>Synchronize clipboards</_summary>
+      <_description>Synchronizes the selection (an area of the screen which is selected with the mouse) and the clipboard so that anything in the selection is immediately available in the clipboard and vice versa e.g. for pasting with Ctrl + V and the middle mouse button.</_description>
+    </key>
+    <key name="keep-cliboard-content" type="b">
+      <default>true</default>
+      <_summary>Keep clipboard content</_summary>
+      <_description>Prevents an empty clipboard. For instance when an application exits, the clipboard would usually be emptied.</_description>
+    </key>
+    <key name="instant-paste" type="b">
+      <default>true</default>
+      <_summary>Automatically paste selected item</_summary>
+      <_description>Automatically paste selected item instead of just copying it to the clipboard.</_description>
+    </key>
+    <key name="clipboard-size" type="u">
+      <default>25</default>
+      <_summary>Clipboard size</_summary>
+      <_description>Number of items in the clipboard history.</_description>
+    </key>
+  </schema>
+  <schema gettext-domain="@GETTEXT_PACKAGE@" id="net.launchpad.Diodon.clipboard" path="/net/launchpad/diodon/clipboard/">
+    <key name="history-accelerator" type="s">
+      <default>&lt;Ctrl&gt;&lt;Alt&gt;V</default>
+      <_summary>History key</_summary>
+      <_description>Hotkey to quickly allow you to access the clipboard history.</_description>
+    </key>
+  </schema>
+</schemalist>
