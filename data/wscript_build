@@ -9,8 +9,7 @@ bld.new_task_gen (
 
 bld.new_task_gen (
   features = 'intltool_in',
-  podir = '../po',
-  intlcache = '',
+  podir = '.', # no translations should get added to gschema file
   source = 'net.launchpad.Diodon.gschema.xml.in',
   flags = ["-x", "-q", "-u", "-c"])
   
