@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-25 11:12+0200\n"
+"POT-Creation-Date: 2011-07-03 00:41+0200\n"
 "PO-Revision-Date: 2011-05-26 05:14+0000\n"
 "Last-Translator: Svetoslav Stefanov <svetlisashkov@yahoo.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-06-26 04:49+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
-"Language: bg\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -26,6 +26,7 @@ msgstr "Мениджър на системния буфер"
 msgid "Clipboard Manager for GNOME"
 msgstr "Мениджър на системния буфер за ГНОМ"
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 #: ../data/preferences.ui.h:1
 msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
@@ -34,46 +35,50 @@ msgstr ""
 "Добавя първичната селекция (област от екрана, избрана с мишката) към "
 "историята на буфера."
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:2
 msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr "Добавя копирания в буфера текст, например с Ctrl + C към историята."
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
+msgid "Automatically paste selected item"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
 #: ../data/preferences.ui.h:3
 msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
 msgstr ""
 
-#: ../data/preferences.ui.h:4
-msgid "Clipboard"
-msgstr "Системен буфер"
-
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 #: ../data/preferences.ui.h:5
 msgid "Clipboard size"
 msgstr "Размер на буфера"
 
-#: ../data/preferences.ui.h:6
-msgid "Diodon Preferences"
-msgstr "Настройки на Diodon"
-
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
 msgid "History key"
 msgstr "Клавиш за История"
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 #: ../data/preferences.ui.h:8
 msgid "Hotkey to quickly allow you to access the clipboard history."
 msgstr "Бърз клавиш за достъп до историята на буфера"
 
-#: ../data/preferences.ui.h:9
-msgid "Hotkeys"
-msgstr "Бързи клавиши"
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#, fuzzy
+msgid "Keep clipboard content"
+msgstr "_Запазване съдържанието на буфера"
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 #: ../data/preferences.ui.h:10
 msgid "Number of items in the clipboard history."
 msgstr "Брой елементи в историята"
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 #: ../data/preferences.ui.h:11
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
@@ -82,10 +87,16 @@ msgstr ""
 "Предотвратява празен буфер. Например при изход от приложение обикновено "
 "буферът се изпразва."
 
-#: ../data/preferences.ui.h:12
-msgid "S_ynchronize clipboards"
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+msgid "Show indicator"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#, fuzzy
+msgid "Synchronize clipboards"
 msgstr "_Синхронизиране на буферите"
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 #: ../data/preferences.ui.h:13
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
@@ -96,6 +107,36 @@ msgstr ""
 "Синхронизира селекцията (област от екрана, избрана с мишката) и буфера, така "
 "че всичко в нея е моментално налично в буфера и обратно, например за "
 "поставяне с Ctrl + V и със средния бутон на мишката."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
+#, fuzzy
+msgid "Use clipboard (Ctrl+C)"
+msgstr "_Използване на буфера (Ctrl+C)"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+#, fuzzy
+msgid "Use primary selection"
+msgstr "Използване на _първичната селекция"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+msgid "Whether indicator should be shown."
+msgstr ""
+
+#: ../data/preferences.ui.h:4
+msgid "Clipboard"
+msgstr "Системен буфер"
+
+#: ../data/preferences.ui.h:6
+msgid "Diodon Preferences"
+msgstr "Настройки на Diodon"
+
+#: ../data/preferences.ui.h:9
+msgid "Hotkeys"
+msgstr "Бързи клавиши"
+
+#: ../data/preferences.ui.h:12
+msgid "S_ynchronize clipboards"
+msgstr "_Синхронизиране на буферите"
 
 #: ../data/preferences.ui.h:14
 msgid "Use _primary selection"
