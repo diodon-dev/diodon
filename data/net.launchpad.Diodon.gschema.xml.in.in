@@ -24,7 +24,7 @@
       <_summary>Synchronize clipboards</_summary>
       <_description>Synchronizes the selection (an area of the screen which is selected with the mouse) and the clipboard so that anything in the selection is immediately available in the clipboard and vice versa e.g. for pasting with Ctrl + V and the middle mouse button.</_description>
     </key>
-    <key name="keep-cliboard-content" type="b">
+    <key name="keep-clipboard-content" type="b">
       <default>true</default>
       <_summary>Keep clipboard content</_summary>
       <_description>Prevents an empty clipboard. For instance when an application exits, the clipboard would usually be emptied.</_description>
