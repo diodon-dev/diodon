@@ -110,7 +110,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="checkbutton_keep_cliboard_content">
+                  <object class="GtkCheckButton" id="checkbutton_keep_clipboard_content">
                     <property name="label" translatable="yes">_Keep clipboard content</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>

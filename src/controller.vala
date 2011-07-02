@@ -160,7 +160,7 @@ namespace Diodon
             preferences_view.on_change_use_clipboard.connect(change_use_clipboard_configuration);
             preferences_view.on_change_use_primary.connect(change_use_primary_configuration);
             preferences_view.on_change_synchronize_clipboards.connect(change_synchronize_clipboards_configuration);
-            preferences_view.on_change_keep_cliboard_content.connect(change_keep_clipboard_content_configuration);
+            preferences_view.on_change_keep_clipboard_content.connect(change_keep_clipboard_content_configuration);
             preferences_view.on_change_instant_paste.connect(change_instant_paste_configuration);
             preferences_view.on_change_clipboard_size.connect(change_clipboard_size_configuration);
             preferences_view.on_change_history_accelerator.connect(change_history_accelerator_configuration);
