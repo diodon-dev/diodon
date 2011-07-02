@@ -37,7 +37,6 @@ def configure(conf):
     conf.check_vala(min_version=(0,12,0))
     
     conf.check_cfg(package='appindicator-0.1', uselib_store='APPINDICATOR', atleast_version='0.3.0',  mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='gconf-2.0',        uselib_store='GCONF',        atleast_version='2.20.0', mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gdk-x11-2.0',      uselib_store='GDKX',         atleast_version='2.20.0', mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gee-1.0',          uselib_store='GEE',          atleast_version='0.5.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gio-2.0',          uselib_store='GIO',          atleast_version='2.26.0', mandatory=1, args='--cflags --libs')
