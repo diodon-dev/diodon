@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-25 11:12+0200\n"
-"PO-Revision-Date: 2011-04-30 12:25+0000\n"
+"PO-Revision-Date: 2011-07-02 14:57+0000\n"
 "Last-Translator: Alexander Semyonov <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-26 04:49+0000\n"
+"X-Launchpad-Export-Date: 2011-07-03 04:59+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
 "Language: ru\n"
 
@@ -45,6 +45,8 @@ msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
 msgstr ""
+"Автоматически вставлять выделенный пункт меню вместо копирования в буфер "
+"обмена."
 
 #: ../data/preferences.ui.h:4
 msgid "Clipboard"
@@ -102,7 +104,7 @@ msgstr "Использовать выделение _мышкой"
 
 #: ../data/preferences.ui.h:15
 msgid "_Automatically paste selected item"
-msgstr ""
+msgstr "_Автоматически вставлять выделенный пункт"
 
 #: ../data/preferences.ui.h:16
 msgid "_Keep clipboard content"
@@ -119,23 +121,23 @@ msgstr "<Пусто>"
 #. The row offsets should match those from the ClipboardSection enum
 #: ../src/unity-lens-daemon.vala:163
 msgid "All Clipboard"
-msgstr ""
+msgstr "Все буферы обмена"
 
 #. The row offsets should match those from the ClipboardGroup enum
 #. TODO: we need to replace this unity icons with
 #. some diodon specific ones
 #: ../src/unity-lens-daemon.vala:164 ../src/unity-lens-daemon.vala:186
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: ../src/unity-lens-daemon.vala:165 ../src/unity-lens-daemon.vala:187
 msgid "Files"
-msgstr ""
+msgstr "Файлы"
 
 #: ../src/unity-lens-daemon.vala:166 ../src/unity-lens-daemon.vala:188
 msgid "Images"
-msgstr ""
+msgstr "Изображения"
 
 #: ../src/unity-lens-daemon.vala:250
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Скопировать в буфер обмена"
