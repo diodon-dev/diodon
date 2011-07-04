@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-25 11:12+0200\n"
-"PO-Revision-Date: 2011-02-15 23:09+0000\n"
-"Last-Translator: Jan Vlnas <Unknown>\n"
+"PO-Revision-Date: 2011-07-03 14:46+0000\n"
+"Last-Translator: Martin Lukeš <martin.meridius@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-26 04:49+0000\n"
+"X-Launchpad-Export-Date: 2011-07-04 05:03+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
 "Language: cs\n"
 
@@ -44,6 +44,7 @@ msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
 msgstr ""
+"Po kliknutí na položku v historii ji automaticky vloží na místo s kurzorem."
 
 #: ../data/preferences.ui.h:4
 msgid "Clipboard"
@@ -102,7 +103,7 @@ msgstr "_Použít primární výběr"
 
 #: ../data/preferences.ui.h:15
 msgid "_Automatically paste selected item"
-msgstr ""
+msgstr "_Automaticky vložit vybranou položku"
 
 #: ../data/preferences.ui.h:16
 msgid "_Keep clipboard content"
@@ -126,16 +127,16 @@ msgstr ""
 #. some diodon specific ones
 #: ../src/unity-lens-daemon.vala:164 ../src/unity-lens-daemon.vala:186
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: ../src/unity-lens-daemon.vala:165 ../src/unity-lens-daemon.vala:187
 msgid "Files"
-msgstr ""
+msgstr "Soubory"
 
 #: ../src/unity-lens-daemon.vala:166 ../src/unity-lens-daemon.vala:188
 msgid "Images"
-msgstr ""
+msgstr "Obrázky"
 
 #: ../src/unity-lens-daemon.vala:250
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Zkopírovat do schránky"
