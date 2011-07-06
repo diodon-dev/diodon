@@ -212,65 +212,77 @@ namespace Diodon
         
         /**
          * Initialize configuration values
+         * 
+         * TODO: remove duplicated code of change event and init call
          */
         private void init_configuration()
         {
             settings_clipboard.bind("use-clipboard", configuration_model,
-                "use_clipboard", SettingsBindFlags.DEFAULT);
+                "use-clipboard", SettingsBindFlags.DEFAULT);
             settings_clipboard.changed["use-clipboard"].connect(
                 (key) => {
+                    debug ("Changed use clipboard");
                     enable_clipboard_manager(ClipboardType.CLIPBOARD,
                         configuration_model.use_clipboard);
                 }
             );
+            enable_clipboard_manager(ClipboardType.CLIPBOARD,
+                configuration_model.use_clipboard);
                 
             settings_clipboard.bind("use-primary", configuration_model,
-                "use_primary", SettingsBindFlags.DEFAULT);
+                "use-primary", SettingsBindFlags.DEFAULT);
             settings_clipboard.changed["use-primary"].connect(
                 (key) => {
                     enable_clipboard_manager(ClipboardType.PRIMARY,
                         configuration_model.use_primary);
                 }
             );
+            enable_clipboard_manager(ClipboardType.PRIMARY,
+                configuration_model.use_primary);
             
             settings_clipboard.bind("synchronize-clipboards", configuration_model,
-                "synchronize_clipboards", SettingsBindFlags.DEFAULT);
+                "synchronize-clipboards", SettingsBindFlags.DEFAULT);
 
             settings_clipboard.bind("keep-clipboard-content", configuration_model,
-                "keep_clipboard_content", SettingsBindFlags.DEFAULT);
+                "keep-clipboard-content", SettingsBindFlags.DEFAULT);
             settings_clipboard.changed["keep-clipboard-content"].connect(
                 (key) => {
                     enable_keep_clipboard_content(
                         configuration_model.keep_clipboard_content);
                 }
             );
+            enable_keep_clipboard_content(
+                configuration_model.keep_clipboard_content);
             
             settings_clipboard.bind("instant-paste", configuration_model,
-                "instant_paste", SettingsBindFlags.DEFAULT);
+                "instant-paste", SettingsBindFlags.DEFAULT);
                 
             settings_clipboard.bind("clipboard-size", configuration_model,
-                "clipboard_size", SettingsBindFlags.DEFAULT);
+                "clipboard-size", SettingsBindFlags.DEFAULT);
             settings_clipboard.changed["clipboard-size"].connect(
                 (key) => {
                     change_clipboard_size(configuration_model.clipboard_size);
                 }
             );
+            change_clipboard_size(configuration_model.clipboard_size);
                 
             settings_keybindings.bind("history-accelerator", configuration_model,
-                "history_accelerator", SettingsBindFlags.DEFAULT);
+                "history-accelerator", SettingsBindFlags.DEFAULT);
             settings_keybindings.changed["history-accelerator"].connect(
                 (key) => {
                     change_history_accelerator(configuration_model.history_accelerator);
                 }
             );
+            change_history_accelerator(configuration_model.history_accelerator);
                 
             settings.bind("show-indicator", configuration_model,
-                "show_indicator", SettingsBindFlags.DEFAULT);
+                "show-indicator", SettingsBindFlags.DEFAULT);
             settings.changed["show-indicator"].connect(
                 (key) => {
                     indicator_view.set_visible(configuration_model.show_indicator);
                 }
             );
+            indicator_view.set_visible(configuration_model.show_indicator);
         }
         
         /**
@@ -468,8 +480,6 @@ namespace Diodon
          */
         private void change_clipboard_size(int size)
         {
-            configuration_model.clipboard_size = size;
-
             if(configuration_model.clipboard_size < clipboard_model.get_size()) {
                 // create copy of items as otherwise
                 // removing in a loop does not work
