@@ -266,14 +266,16 @@ namespace Diodon
             );
             change_clipboard_size(configuration_model.clipboard_size);
                 
-            settings_keybindings.bind("history-accelerator", configuration_model,
-                "history-accelerator", SettingsBindFlags.DEFAULT);
+            // we cannot bind this property as we need the previous value
+            configuration_model.history_accelerator =
+                settings_keybindings.get_string("history-accelerator");
             settings_keybindings.changed["history-accelerator"].connect(
                 (key) => {
-                    change_history_accelerator(configuration_model.history_accelerator);
-                }
+                    change_history_accelerator(
+                        settings_keybindings.get_string("history-accelerator"));
+                }   
             );
-            change_history_accelerator(configuration_model.history_accelerator);
+            keybinding_manager.bind(configuration_model.history_accelerator, open_history);
                 
             settings.bind("show-indicator", configuration_model,
                 "show-indicator", SettingsBindFlags.DEFAULT);
@@ -517,13 +519,13 @@ namespace Diodon
         }
         
         /**
-         * Change setting of history_accelerator in configuration model
+         * Change setting of history_accelerator in GSettings itself
          *
          * @param accelerator accelerator parseable by Gtk.accelerator_parse
          */        
         private void change_history_accelerator_configuration(string accelerator)
         {
-            configuration_model.history_accelerator = accelerator;
+            settings_keybindings.set_string("history-accelerator", accelerator);
         }
 
         /**
