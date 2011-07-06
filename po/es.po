@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-25 11:12+0200\n"
+"POT-Creation-Date: 2011-07-03 00:41+0200\n"
 "PO-Revision-Date: 2011-05-09 02:15+0000\n"
 "Last-Translator: Hector A. Mantellini <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-06-26 04:49+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
-"Language: es\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -26,6 +26,7 @@ msgstr "Administrador del portapapeles"
 msgid "Clipboard Manager for GNOME"
 msgstr "Administrador del portapapeles para GNOME"
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 #: ../data/preferences.ui.h:1
 msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
@@ -34,6 +35,7 @@ msgstr ""
 "Agrega la selección principal (un área de la pantalla que se selecciona con "
 "el ratón) al historial del portapapeles."
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:2
 msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
@@ -42,41 +44,43 @@ msgstr ""
 "Agregar texto para copiar en el portapapeles por ejemplo, con Ctrl + C para "
 "historial del portapapeles."
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
+msgid "Automatically paste selected item"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
 #: ../data/preferences.ui.h:3
 msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
 msgstr ""
 
-#: ../data/preferences.ui.h:4
-msgid "Clipboard"
-msgstr "Portapapeles"
-
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 #: ../data/preferences.ui.h:5
 msgid "Clipboard size"
 msgstr "Tamaño del portapapeles"
 
-#: ../data/preferences.ui.h:6
-msgid "Diodon Preferences"
-msgstr "Preferencias de Diodon"
-
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
 msgid "History key"
 msgstr ""
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 #: ../data/preferences.ui.h:8
 msgid "Hotkey to quickly allow you to access the clipboard history."
 msgstr ""
 "Atajos de teclado para acceder rápidamente al historial del portapapeles."
 
-#: ../data/preferences.ui.h:9
-msgid "Hotkeys"
-msgstr "Atajos de teclado"
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+msgid "Keep clipboard content"
+msgstr ""
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 #: ../data/preferences.ui.h:10
 msgid "Number of items in the clipboard history."
 msgstr "Número de elementos en el historial del portapapeles."
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 #: ../data/preferences.ui.h:11
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
@@ -85,10 +89,15 @@ msgstr ""
 "Evita un portapapeles vacío. Por ejemplo, cuando una aplicación se cierra, "
 "por lo general en el portapapeles  puede quedar vacío."
 
-#: ../data/preferences.ui.h:12
-msgid "S_ynchronize clipboards"
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+msgid "Show indicator"
 msgstr ""
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+msgid "Synchronize clipboards"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 #: ../data/preferences.ui.h:13
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
@@ -100,6 +109,34 @@ msgstr ""
 "ratón) y el portapapeles de forma que nada en la selección ya está "
 "disponible en el portapapeles y viceversa, por ejemplo, para pegar con Ctrl "
 "+ V y el botón central del ratón."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
+msgid "Use clipboard (Ctrl+C)"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+msgid "Use primary selection"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+msgid "Whether indicator should be shown."
+msgstr ""
+
+#: ../data/preferences.ui.h:4
+msgid "Clipboard"
+msgstr "Portapapeles"
+
+#: ../data/preferences.ui.h:6
+msgid "Diodon Preferences"
+msgstr "Preferencias de Diodon"
+
+#: ../data/preferences.ui.h:9
+msgid "Hotkeys"
+msgstr "Atajos de teclado"
+
+#: ../data/preferences.ui.h:12
+msgid "S_ynchronize clipboards"
+msgstr ""
 
 #: ../data/preferences.ui.h:14
 msgid "Use _primary selection"

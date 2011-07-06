@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-25 11:12+0200\n"
+"POT-Creation-Date: 2011-07-03 00:41+0200\n"
 "PO-Revision-Date: 2011-06-09 09:54+0000\n"
 "Last-Translator: faber <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-06-26 04:49+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
-"Language: it\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -26,6 +26,7 @@ msgstr "Gestore degli appunti"
 msgid "Clipboard Manager for GNOME"
 msgstr "Gestore degli appunti per GNOME"
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 #: ../data/preferences.ui.h:1
 msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
@@ -34,6 +35,7 @@ msgstr ""
 "Aggiunge la selezione primaria (la zona dello schermo evidenziata con il "
 "mouse) alla cronologia degli appunti."
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:2
 msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
@@ -42,42 +44,45 @@ msgstr ""
 "Aggiunge il testo copiato negli appunti con ad esempio Ctrl + C alla "
 "cronologia degli appunti."
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
+msgid "Automatically paste selected item"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
 #: ../data/preferences.ui.h:3
 msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
 msgstr ""
 
-#: ../data/preferences.ui.h:4
-msgid "Clipboard"
-msgstr "Appunti"
-
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 #: ../data/preferences.ui.h:5
 msgid "Clipboard size"
 msgstr "Dimensione appunti"
 
-#: ../data/preferences.ui.h:6
-msgid "Diodon Preferences"
-msgstr "Preferenze di Diodon"
-
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
 msgid "History key"
 msgstr "Tasto Cronologia"
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 #: ../data/preferences.ui.h:8
 msgid "Hotkey to quickly allow you to access the clipboard history."
 msgstr ""
 "Tasti di scelta rapida per accedere rapidamente alla cronologia degli "
 "appunti."
 
-#: ../data/preferences.ui.h:9
-msgid "Hotkeys"
-msgstr "Tasti di scelta rapida"
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#, fuzzy
+msgid "Keep clipboard content"
+msgstr "_Mantieni il contenuto degli appunti"
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 #: ../data/preferences.ui.h:10
 msgid "Number of items in the clipboard history."
 msgstr "Numero di voci nella cronologia degli appunti"
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 #: ../data/preferences.ui.h:11
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
@@ -86,10 +91,16 @@ msgstr ""
 "Impedisce la cancellazione degli appunti. Per esempio quando un applicazione "
 "viene chiusa, gli appunti di solito vengono eliminati."
 
-#: ../data/preferences.ui.h:12
-msgid "S_ynchronize clipboards"
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+msgid "Show indicator"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#, fuzzy
+msgid "Synchronize clipboards"
 msgstr "_Sincronizza appunti"
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 #: ../data/preferences.ui.h:13
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
@@ -101,6 +112,36 @@ msgstr ""
 "gli appunti in modo che qualsiasi cosa nella selezione è immediatamente "
 "disponibile negli appunti e viceversa, ad esempio, per incollare con Ctrl + "
 "V e il tasto centrale del mouse."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
+#, fuzzy
+msgid "Use clipboard (Ctrl+C)"
+msgstr "_Copia gli appunti (Ctrl+C)"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+#, fuzzy
+msgid "Use primary selection"
+msgstr "Usa la selezione _primaria"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+msgid "Whether indicator should be shown."
+msgstr ""
+
+#: ../data/preferences.ui.h:4
+msgid "Clipboard"
+msgstr "Appunti"
+
+#: ../data/preferences.ui.h:6
+msgid "Diodon Preferences"
+msgstr "Preferenze di Diodon"
+
+#: ../data/preferences.ui.h:9
+msgid "Hotkeys"
+msgstr "Tasti di scelta rapida"
+
+#: ../data/preferences.ui.h:12
+msgid "S_ynchronize clipboards"
+msgstr "_Sincronizza appunti"
 
 #: ../data/preferences.ui.h:14
 msgid "Use _primary selection"
