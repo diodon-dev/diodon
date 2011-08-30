@@ -33,7 +33,8 @@ namespace Diodon
         public signal void on_change_use_clipboard();
         public signal void on_change_use_primary();
         public signal void on_change_synchronize_clipboards();
-        public signal void on_change_keep_cliboard_content();
+        public signal void on_change_keep_clipboard_content();
+        public signal void on_change_instant_paste();
         public signal void on_change_clipboard_size(int size);
         public signal void on_change_history_accelerator(string accelerator);
         public signal void on_close();
@@ -72,9 +73,15 @@ namespace Diodon
                     
                     // keep clipboard content
                     Gtk.ToggleButton keep_clipboard_content =
-                        builder.get_object("checkbutton_keep_cliboard_content") as Gtk.ToggleButton;
+                        builder.get_object("checkbutton_keep_clipboard_content") as Gtk.ToggleButton;
                     keep_clipboard_content.active = model.keep_clipboard_content;
-                    keep_clipboard_content.toggled.connect(() => { on_change_keep_cliboard_content(); } );
+                    keep_clipboard_content.toggled.connect(() => { on_change_keep_clipboard_content(); } );
+                    
+                    // instant paste
+                    Gtk.ToggleButton instant_paste =
+                        builder.get_object("checkbutton_instant_paste") as Gtk.ToggleButton;
+                    instant_paste.active = model.instant_paste;
+                    instant_paste.toggled.connect(() => { on_change_instant_paste(); } );
                     
                     // clipboard_size
                     Gtk.SpinButton clipboard_size = 

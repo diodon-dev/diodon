@@ -152,6 +152,12 @@ namespace Diodon.UnityLens
         private void populate_sections()
         {
             Dee.Model sections = place_entry.sections_model;
+            
+            if (sections.get_n_rows() != 0)
+            {
+                critical("The sections model should be empty before initial population");
+                sections.clear();
+            }
 
             // The row offsets should match those from the ClipboardSection enum
             sections.append(_("All Clipboard"), "");
@@ -167,6 +173,12 @@ namespace Diodon.UnityLens
         private void populate_groups()
         {
             Dee.Model groups = place_entry.entry_renderer_info.groups_model;
+            
+            if (groups.get_n_rows() != 0)
+            {
+                critical ("The groups model should be empty before initial population");
+                groups.clear();
+            }
 
             // The row offsets should match those from the ClipboardGroup enum
             // TODO: we need to replace this unity icons with

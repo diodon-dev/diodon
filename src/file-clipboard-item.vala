@@ -86,8 +86,9 @@ namespace Diodon
             // replacing home dir with common known tilde
             label = label.replace(home, "~");
             
-            if (label.length > 50) {
-                label = label.substring(0, 50) + "...";
+            if (label.char_count() > 50) {
+                long index_char = label.index_of_nth_char(50);
+                label = label.substring(0, index_char) + "...";
             }
             
             return label;

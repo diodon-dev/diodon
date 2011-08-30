@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Diodon 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-25 18:03+0200\n"
-"PO-Revision-Date: 2011-06-05 16:33+0000\n"
-"Last-Translator: fatlp <Unknown>\n"
+"POT-Creation-Date: 2011-07-03 00:41+0200\n"
+"PO-Revision-Date: 2011-07-27 20:21+0000\n"
+"Last-Translator: Oliver Sauder <os@esite.ch>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-06 05:37+0000\n"
-"X-Generator: Launchpad (build 12959)\n"
+"X-Launchpad-Export-Date: 2011-07-28 04:45+0000\n"
+"X-Generator: Launchpad (build 13405)\n"
 "Language: \n"
 "X-Poedit-Language: German\n"
 
@@ -22,6 +22,7 @@ msgstr "Zwischenablage-Manager"
 msgid "Clipboard Manager for GNOME"
 msgstr "Zwischenablage-Manager für Gnome"
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 #: ../data/preferences.ui.h:1
 msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
@@ -30,6 +31,7 @@ msgstr ""
 "Fügt eine Auswahl (einen mit der Maus ausgewählten Bereich des Screens) zum "
 "Zwischenablage-Verlauf hinzu."
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:2
 msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
@@ -38,36 +40,46 @@ msgstr ""
 "Fügt den Text welcher in die Zwischenablage kopiert wurde z.B Ctrl + C zum "
 "Zwischenablage-Verlauf hinzu."
 
-#: ../data/preferences.ui.h:3
-msgid "Clipboard"
-msgstr "Zwischenablage"
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
+msgid "Automatically paste selected item"
+msgstr "Automatisches einfügen des ausgewählten Items"
 
-#: ../data/preferences.ui.h:4
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
+#: ../data/preferences.ui.h:3
+msgid ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
+msgstr ""
+"Automatisches einfügen des ausgewählten Items anstatt dies in die "
+"Zwischenablage zu kopieren."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
+#: ../data/preferences.ui.h:5
 msgid "Clipboard size"
 msgstr "Grösse der Zwischenablage"
 
-#: ../data/preferences.ui.h:5
-msgid "Diodon Preferences"
-msgstr "Diodon Einstellungen"
-
-#: ../data/preferences.ui.h:6
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
+#: ../data/preferences.ui.h:7
 msgid "History key"
 msgstr "Verlauf-Tastenkombination"
 
-#: ../data/preferences.ui.h:7
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
+#: ../data/preferences.ui.h:8
 msgid "Hotkey to quickly allow you to access the clipboard history."
 msgstr ""
 "Tastenkombination zum schnellen Zugriff auf den Zwischenablage-Verlauf"
 
-#: ../data/preferences.ui.h:8
-msgid "Hotkeys"
-msgstr "Tastenkombinationen"
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+msgid "Keep clipboard content"
+msgstr "Leere Zwischenablage verhindern"
 
-#: ../data/preferences.ui.h:9
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
+#: ../data/preferences.ui.h:10
 msgid "Number of items in the clipboard history."
 msgstr "Anzahl der Einträge im Zwischenablage-Verlauf"
 
-#: ../data/preferences.ui.h:10
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
+#: ../data/preferences.ui.h:11
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
@@ -75,11 +87,16 @@ msgstr ""
 "Verhindert eine leere Zwischenablage. Beim Schließen eines Programms wird "
 "der Inhalt der Zwischenablage gewöhnlich gelöscht."
 
-#: ../data/preferences.ui.h:11
-msgid "S_ynchronize clipboards"
-msgstr "Synchonisiere die Zwischenablagen"
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+msgid "Show indicator"
+msgstr "Indikator anzeigen"
 
-#: ../data/preferences.ui.h:12
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+msgid "Synchronize clipboards"
+msgstr "Zwischenablagen synchronisieren"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
+#: ../data/preferences.ui.h:13
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
 "mouse) and the clipboard so that anything in the selection is immediately "
@@ -91,15 +108,47 @@ msgstr ""
 "Zwischenablage verfügbar ist und andersherum z.B. zum Einfügen mit Ctrl + V "
 "oder mit der mittleren Maustaste."
 
-#: ../data/preferences.ui.h:13
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
+msgid "Use clipboard (Ctrl+C)"
+msgstr "Benutze Zwischenablage (Ctrl+C)"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+msgid "Use primary selection"
+msgstr "Auswahl Zwischenablage benutzen"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+msgid "Whether indicator should be shown."
+msgstr "Definiert ob Indikator gezeigt werden soll."
+
+#: ../data/preferences.ui.h:4
+msgid "Clipboard"
+msgstr "Zwischenablage"
+
+#: ../data/preferences.ui.h:6
+msgid "Diodon Preferences"
+msgstr "Diodon Einstellungen"
+
+#: ../data/preferences.ui.h:9
+msgid "Hotkeys"
+msgstr "Tastenkombinationen"
+
+#: ../data/preferences.ui.h:12
+msgid "S_ynchronize clipboards"
+msgstr "Synchonisiere die Zwischenablagen"
+
+#: ../data/preferences.ui.h:14
 msgid "Use _primary selection"
 msgstr "Nutze die Auswahl Zwischenablage"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:15
+msgid "_Automatically paste selected item"
+msgstr "Automatisches einfügen des ausgewählten Items"
+
+#: ../data/preferences.ui.h:16
 msgid "_Keep clipboard content"
 msgstr "Sichere den Inhalt der Zwischenablage"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:17
 msgid "_Use clipboard (Ctrl+C)"
 msgstr "Nutze die Zwischenablage (Ctrl+C)"
 
@@ -108,26 +157,26 @@ msgid "<Empty>"
 msgstr "<Leer>"
 
 #. The row offsets should match those from the ClipboardSection enum
-#: ../src/unity-lens-daemon.vala:157
+#: ../src/unity-lens-daemon.vala:163
 msgid "All Clipboard"
 msgstr "Ganze Zwischenablage"
 
 #. The row offsets should match those from the ClipboardGroup enum
 #. TODO: we need to replace this unity icons with
 #. some diodon specific ones
-#: ../src/unity-lens-daemon.vala:158 ../src/unity-lens-daemon.vala:174
+#: ../src/unity-lens-daemon.vala:164 ../src/unity-lens-daemon.vala:186
 msgid "Text"
 msgstr "Text"
 
-#: ../src/unity-lens-daemon.vala:159 ../src/unity-lens-daemon.vala:175
+#: ../src/unity-lens-daemon.vala:165 ../src/unity-lens-daemon.vala:187
 msgid "Files"
 msgstr "Dateien"
 
-#: ../src/unity-lens-daemon.vala:160 ../src/unity-lens-daemon.vala:176
+#: ../src/unity-lens-daemon.vala:166 ../src/unity-lens-daemon.vala:188
 msgid "Images"
 msgstr "Bilder"
 
-#: ../src/unity-lens-daemon.vala:238
+#: ../src/unity-lens-daemon.vala:250
 msgid "Copy to clipboard"
 msgstr "Kopiert in die Zwischenablage."
 
@@ -137,20 +186,11 @@ msgstr "Kopiert in die Zwischenablage."
 #~ msgid "Quit"
 #~ msgstr "Beenden"
 
-#~ msgid "Use primary selection"
-#~ msgstr "Auswahl Zwischenablage benutzen"
-
 #~ msgid "Diodon"
 #~ msgstr "Diodon"
 
 #~ msgid "Use clipboard (Ctrl+V)"
 #~ msgstr "Kopieren benutzen (Ctrl+V)"
 
-#~ msgid "Synchronize clipboards"
-#~ msgstr "Zwischenablagen synchronisieren"
-
 #~ msgid "Preferences"
 #~ msgstr "Einstellungen"
-
-#~ msgid "Keep clipboard content"
-#~ msgstr "Leere Zwischenablage verhindern"
