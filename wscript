@@ -34,7 +34,7 @@ def configure(conf):
     conf.load('compiler_c intltool gnu_dirs glib2')
     
     conf.load('vala', funs='')
-    conf.check_vala(min_version=(0,12,0))
+    conf.check_vala(min_version=(0,13,0))
     
     conf.check_cfg(package='appindicator3-0.1', uselib_store='APPINDICATOR', atleast_version='0.3.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gdk-x11-3.0',       uselib_store='GDKX',         atleast_version='3.0.8',  mandatory=1, args='--cflags --libs')
