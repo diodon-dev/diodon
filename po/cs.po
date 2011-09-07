@@ -7,24 +7,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-03 00:41+0200\n"
+"POT-Creation-Date: 2011-09-07 18:42+0200\n"
 "PO-Revision-Date: 2011-08-18 07:51+0000\n"
 "Last-Translator: Petr Šimáček <petr.simacek@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-08-19 04:50+0000\n"
 "X-Generator: Launchpad (build 13697)\n"
-"Language: cs\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
 msgstr "Správce schránky"
 
 #: ../data/diodon.desktop.in.h:2
-msgid "Clipboard Manager for GNOME"
-msgstr "Správce schránky pro GNOME"
+#, fuzzy
+msgid "GTK+ Clipboard Manager"
+msgstr "Správce schránky"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 #: ../data/preferences.ui.h:1
@@ -150,30 +151,39 @@ msgstr "_Uchovat obsah schránky"
 msgid "_Use clipboard (Ctrl+C)"
 msgstr "Po_užít schránku (Ctrl+C)"
 
-#: ../src/indicator-view.vala:75
+#. menu.key_press_event.connect(on_key_pressed);
+#. menu.key_release_event.connect(on_key_released);
+#: ../src/indicator-view.vala:77
 msgid "<Empty>"
 msgstr "<Prázdná>"
 
-#. The row offsets should match those from the ClipboardSection enum
-#: ../src/unity-lens-daemon.vala:163
-msgid "All Clipboard"
-msgstr "Všechny schránky"
+#: ../src/unity-lens-daemon.vala:65
+#, fuzzy
+msgid "Search Clipboard"
+msgstr "Schránka"
 
-#. The row offsets should match those from the ClipboardGroup enum
-#. TODO: we need to replace this unity icons with
-#. some diodon specific ones
-#: ../src/unity-lens-daemon.vala:164 ../src/unity-lens-daemon.vala:186
+#: ../src/unity-lens-daemon.vala:111 ../src/unity-lens-daemon.vala:134
 msgid "Text"
 msgstr "Text"
 
-#: ../src/unity-lens-daemon.vala:165 ../src/unity-lens-daemon.vala:187
+#: ../src/unity-lens-daemon.vala:115 ../src/unity-lens-daemon.vala:135
 msgid "Files"
 msgstr "Soubory"
 
-#: ../src/unity-lens-daemon.vala:166 ../src/unity-lens-daemon.vala:188
+#: ../src/unity-lens-daemon.vala:119 ../src/unity-lens-daemon.vala:136
 msgid "Images"
 msgstr "Obrázky"
 
-#: ../src/unity-lens-daemon.vala:250
+#: ../src/unity-lens-daemon.vala:132
+msgid "Type"
+msgstr ""
+
+#: ../src/unity-lens-daemon.vala:227
 msgid "Copy to clipboard"
 msgstr "Zkopírovat do schránky"
+
+#~ msgid "Clipboard Manager for GNOME"
+#~ msgstr "Správce schránky pro GNOME"
+
+#~ msgid "All Clipboard"
+#~ msgstr "Všechny schránky"
