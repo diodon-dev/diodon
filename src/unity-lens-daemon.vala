@@ -196,7 +196,7 @@ namespace Diodon.UnityLens
                         // FIXME: item itself should implement a sensable uri
                         Config.CLIPBOARD_URI + item.get_checksum(),
                         item.get_icon().to_string(),
-                        item.get_item_type(),
+                        item.get_category(),
                         item.get_mime_type(),
                         item.get_label(),
                         _("Copy to clipboard")

@@ -48,11 +48,11 @@ namespace Diodon
         public abstract string get_mime_type();
         
         /**
-         * get clipboard item type it is beloging to
+         * get clipboard category item belongs to
          *
-         * @return clipboard item type
+         * @return clipboard category
          */
-        public abstract ClipboardItemType get_item_type();
+        public abstract ClipboardCategory get_category();
         
         /**
          * image to represent content of clipboard item

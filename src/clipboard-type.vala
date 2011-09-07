@@ -81,5 +81,12 @@ namespace Diodon
             }
         }
     }
+    
+    public enum ClipboardCategory
+    {
+        TEXT,
+        FILES,
+        IMAGES
+    }
 }
 

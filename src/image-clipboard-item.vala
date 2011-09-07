@@ -116,9 +116,9 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public ClipboardItemType get_item_type()
+        public ClipboardCategory get_category()
         {
-            return ClipboardItemType.IMAGES;
+            return ClipboardCategory.IMAGES;
         }
         
         /**

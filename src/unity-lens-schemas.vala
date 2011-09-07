@@ -34,12 +34,5 @@ namespace Diodon.UnityLens
         DISPLAY_NAME,
         ICON_HINT
     }
-  
-    public enum Categories
-    {
-        TEXT,
-        FILES,
-        IMAGES
-    }
 }
 
