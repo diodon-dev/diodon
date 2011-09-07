@@ -72,7 +72,7 @@ namespace Diodon
             Gdk.ModifierType modifier = 0;
             
             Gdk.Device device = display.get_device_manager().get_client_pointer();
-            device.get_state(rootwin, null, out modifier);
+            device.get_state(rootwin, (double[])null, out modifier);
             
             // only accepted when left mouse button and shift button
             // are not pressed

@@ -116,9 +116,9 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public ClipboardGroup get_group()
+        public ClipboardItemType get_item_type()
         {
-            return ClipboardGroup.IMAGES;
+            return ClipboardItemType.IMAGES;
         }
         
         /**
@@ -170,12 +170,12 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public bool matches(string search, ClipboardSection section)
+        public bool matches(string search, ClipboardItemType type)
         {
             bool matches = false;
             
-            if(section == ClipboardSection.ALL_CLIPBOARD
-                || section == ClipboardSection.IMAGES) {
+            if(type == ClipboardItemType.ALL
+                || type == ClipboardItemType.IMAGES) {
                 // we do not have any search to be matched
                 // therefore only an empty search string matches
                 matches = search.length == 0; 

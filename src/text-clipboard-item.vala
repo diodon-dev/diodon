@@ -82,9 +82,9 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public ClipboardGroup get_group()
+        public ClipboardItemType get_item_type()
         {
-            return ClipboardGroup.TEXT;
+            return ClipboardItemType.TEXT;
         }
       
         /**
@@ -131,12 +131,12 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public bool matches(string search, ClipboardSection section)
+        public bool matches(string search, ClipboardItemType type)
         {
             bool matches = false;
             
-            if(section == ClipboardSection.ALL_CLIPBOARD
-                || section == ClipboardSection.TEXT) {
+            if(type == ClipboardItemType.ALL
+                || type == ClipboardItemType.TEXT) {
                 
                 // ignore case
                 matches = _text.down().contains(search.down());

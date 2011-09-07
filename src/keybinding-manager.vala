@@ -64,7 +64,7 @@ namespace Diodon
             public string accelerator { get; set; }
             public int keycode { get; set; }
             public Gdk.ModifierType modifiers { get; set; }
-            public KeybindingHandlerFunc handler { get; set; }
+            public unowned KeybindingHandlerFunc handler { get; set; }
         }
         
         /**
@@ -164,7 +164,7 @@ namespace Diodon
          */
         public void press(string accelerator)
         {
-            X.KeyEvent key_event = X.KeyEvent();
+            X.KeyEvent key_event;
             if(create_key_event(accelerator, X.EventType.KeyPress, out key_event)) {
                 X.Event event = (X.Event)key_event;
                 key_event.display.send_event(key_event.window, false,
@@ -182,7 +182,7 @@ namespace Diodon
          */
         public void release(string accelerator)
         {
-            X.KeyEvent key_event = X.KeyEvent();
+            X.KeyEvent key_event;
             if(create_key_event(accelerator, X.EventType.KeyRelease, out key_event)) {
                 X.Event event = (X.Event)key_event;
                 key_event.display.send_event(key_event.window, false,
@@ -209,6 +209,7 @@ namespace Diodon
             Gdk.ModifierType modifiers;
             Gtk.accelerator_parse(accelerator, out keysym, out modifiers);
             unowned X.Display display = Gdk.x11_get_default_xdisplay();
+            key_event = X.KeyEvent();
             
             int keycode = display.keysym_to_keycode(keysym);
             

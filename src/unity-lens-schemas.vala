@@ -18,7 +18,6 @@
 
 namespace Diodon.UnityLens
 {
-    /* Canonical schema for the results model shared with the Unity shell */
     public enum ResultsColumn
     {
         URI = 0,
@@ -29,19 +28,18 @@ namespace Diodon.UnityLens
         COMMENT
     }
 
-    /* Canonical schema for the sections model shared with the Unity shell */
-    public enum SectionsColumn
-    {
-        DISPLAY_NAME = 0,
-        ICON_HINT
-    }
-
-    /* Canonical schema for the groups model shared with the Unity shell */
-    public enum GroupsColumn
+    public enum CategoriesColumn
     {
         RENDERER = 0,
         DISPLAY_NAME,
         ICON_HINT
+    }
+  
+    public enum Categories
+    {
+        TEXT,
+        FILES,
+        IMAGES
     }
 }
 
