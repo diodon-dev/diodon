@@ -69,7 +69,7 @@ namespace Diodon
             DesktopAppInfo.set_desktop_env("GNOME");
             
             // init option context
-            OptionContext opt_context = new OptionContext("- Clipboard Manager for GNOME");
+            OptionContext opt_context = new OptionContext("- GTK+ Clipboard Manager");
             opt_context.set_help_enabled(true);
             opt_context.add_main_entries(options, null);
             opt_context.parse(ref args);
