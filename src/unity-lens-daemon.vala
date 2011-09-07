@@ -81,7 +81,7 @@ namespace Diodon.UnityLens
             // Listen for changes to the lens entry search
             scope.notify["active-search"].connect(
                 (obj, pspec) => {
-                    var search = scope.active_search;
+                    Unity.LensSearch search = scope.active_search;
                     update_search_async.begin(search);  
                 }
             );
@@ -89,8 +89,8 @@ namespace Diodon.UnityLens
             // Listen for changes to the global search
             scope.notify["active-global-search"].connect(
                 (obj, pspec) => {
-                    //var search = scope.active_search;
-                    //update_search_async.begin(search);  
+                    Unity.LensSearch search = scope.active_search;
+                    update_global_search_async.begin(search);  
                 }
             );
             
@@ -151,10 +151,35 @@ namespace Diodon.UnityLens
             scope.freeze_notify();
             
             string search_string = search.search_string ?? "";
-            ClipboardItemType clipboard_type = get_current_type();
+            ClipboardItemType item_type = get_current_type();
             
             update_results_model(results_model, search_string,
-                clipboard_type);
+                item_type);
+                
+            // Allow new searches once we enter an idle again.
+            // We don't do it directly from here as that could mean we start
+            // changing the model even before we had flushed out current changes
+            Idle.add (() => {
+                scope.thaw_notify ();
+                return false;
+            });
+            
+            search.finished();
+        }
+        
+        private async void update_global_search_async(Unity.LensSearch search)
+        {
+            Dee.SharedModel results_model = scope.global_results_model;
+            
+            // Prevent concurrent searches and concurrent updates of our models,
+            // by preventing any notify signals from propagating to us.
+            // Important: Remeber to thaw the notifys again!
+            scope.freeze_notify();
+            
+            string search_string = search.search_string ?? "";
+            
+            update_results_model(results_model, search_string,
+                ClipboardItemType.ALL);
                 
             // Allow new searches once we enter an idle again.
             // We don't do it directly from here as that could mean we start
