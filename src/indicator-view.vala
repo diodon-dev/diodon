@@ -71,6 +71,8 @@ namespace Diodon
             
             // Setup application menu
             menu = new Gtk.Menu();
+            //menu.key_press_event.connect(on_key_pressed);
+            //menu.key_release_event.connect(on_key_released);
             
             empty_item = new Gtk.MenuItem.with_label(_("<Empty>"));
             empty_item.set_sensitive(false);
@@ -168,7 +170,6 @@ namespace Diodon
          */
         public void show_menu()
         {
-            menu.select_first(false);
             menu.popup(null, null, null, 0, Gtk.get_current_event_time());
         }
         
@@ -187,6 +188,42 @@ namespace Diodon
         {
             empty_item.set_visible(false);
         }
+        
+        /**
+         * Not completed code for bug 792812
+         */
+        /*private bool on_key_pressed(Gdk.EventKey event)
+        {
+            // TODO: check for the configured hot key
+            if(event.keyval == 118 && event.state == 12) {
+            
+                if(menu.get_selected_item() == null) {
+                    menu.select_first(false);
+                }
+                else {
+                    menu.move_selected(1);
+                }
+                
+                return true;
+            }
+            
+            return false;
+        }
+
+        private bool on_key_released(Gdk.EventKey event)
+        {
+            // TODO: check for the configured hotkey
+            // FIXME: the item gets always activated when
+            // Ctrl+Alt is released and not just the first time
+            if(event.state == 12 && event.keyval != 118) {
+                if(menu.get_selected_item() != null) {
+                    menu.activate_item(menu.get_selected_item(), false);
+                    return true;
+                }
+            }
+                
+            return false;
+        }*/
         
         /**
          * User event: clicked menu item clear

@@ -34,17 +34,17 @@ def configure(conf):
     conf.load('compiler_c intltool gnu_dirs glib2')
     
     conf.load('vala', funs='')
-    conf.check_vala(min_version=(0,12,0))
+    conf.check_vala(min_version=(0,13,0), branch=(0,14))
     
-    conf.check_cfg(package='appindicator-0.1', uselib_store='APPINDICATOR', atleast_version='0.3.0',  mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='gdk-x11-2.0',      uselib_store='GDKX',         atleast_version='2.20.0', mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='gee-1.0',          uselib_store='GEE',          atleast_version='0.5.0',  mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='gio-2.0',          uselib_store='GIO',          atleast_version='2.26.0', mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='gio-unix-2.0',     uselib_store='GIOUNIX',      atleast_version='2.26.0', mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='glib-2.0',         uselib_store='GLIB',         atleast_version='2.26.0', mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='gtk+-2.0',         uselib_store='GTK',          atleast_version='2.20.0', mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='libxml-2.0',       uselib_store='XML',          atleast_version='2.7.6',  mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='x11',              uselib_store='X11',          atleast_version='1.3.2',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='appindicator3-0.1', uselib_store='APPINDICATOR', atleast_version='0.3.0',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='gdk-x11-3.0',       uselib_store='GDKX',         atleast_version='3.0.8',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='gee-1.0',           uselib_store='GEE',          atleast_version='0.5.0',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='gio-2.0',           uselib_store='GIO',          atleast_version='2.26.0', mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='gio-unix-2.0',      uselib_store='GIOUNIX',      atleast_version='2.26.0', mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='glib-2.0',          uselib_store='GLIB',         atleast_version='2.26.0', mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='gtk+-3.0',          uselib_store='GTK',          atleast_version='3.0.8',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='libxml-2.0',        uselib_store='XML',          atleast_version='2.7.6',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='x11',               uselib_store='X11',          atleast_version='1.3.2',  mandatory=1, args='--cflags --libs')
     
     # check if unity lens should be built
     if Options.options.unity_lens:

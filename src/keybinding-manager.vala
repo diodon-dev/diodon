@@ -101,12 +101,12 @@ namespace Diodon
             Gdk.ModifierType modifiers;
             Gtk.accelerator_parse(accelerator, out keysym, out modifiers);
 
-            Gdk.Window rootwin = Gdk.get_default_root_window();     
-            unowned X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
-            X.ID xid = Gdk.x11_drawable_get_xid(rootwin);
+            unowned X.Display display = Gdk.x11_get_default_xdisplay();
             int keycode = display.keysym_to_keycode(keysym);            
                      
             if(keycode != 0) {
+                X.Window root_window = Gdk.x11_get_default_root_xwindow();
+                
                 // trap XErrors to avoid closing of application
                 // even when grabing of key fails
                 Gdk.error_trap_push();
@@ -114,7 +114,7 @@ namespace Diodon
                 // grab key finally
                 // also grab all keys which are combined with a lock key such NumLock
                 foreach(uint lock_modifier in lock_modifiers) {     
-                    display.grab_key(keycode, modifiers|lock_modifier, xid, false,
+                    display.grab_key(keycode, modifiers|lock_modifier, root_window, false,
                         X.GrabMode.Async, X.GrabMode.Async);
                 }
                 
@@ -138,16 +138,15 @@ namespace Diodon
         {
             debug("Unbinding key " + accelerator);
             
-            Gdk.Window rootwin = Gdk.get_default_root_window();     
-            unowned X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
-            X.ID xid = Gdk.x11_drawable_get_xid(rootwin);
+            unowned X.Display display = Gdk.x11_get_default_xdisplay();
+            X.Window root_window = Gdk.x11_get_default_root_xwindow();
             
             // unbind all keys with given accelerator
             Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
             foreach(Keybinding binding in bindings) {
                 if(str_equal(accelerator, binding.accelerator)) {
                     foreach(uint lock_modifier in lock_modifiers) {
-                        display.ungrab_key(binding.keycode, binding.modifiers, xid);
+                        display.ungrab_key(binding.keycode, binding.modifiers, root_window);
                     }
                     remove_bindings.add(binding);                    
                 }
@@ -209,8 +208,7 @@ namespace Diodon
             uint keysym;
             Gdk.ModifierType modifiers;
             Gtk.accelerator_parse(accelerator, out keysym, out modifiers);
-            Gdk.Window rootwin = Gdk.get_default_root_window();
-            unowned X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
+            unowned X.Display display = Gdk.x11_get_default_xdisplay();
             
             int keycode = display.keysym_to_keycode(keysym);
             
