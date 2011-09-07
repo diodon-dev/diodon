@@ -97,10 +97,10 @@ namespace Diodon
             controller.clipboard_model = model;
             controller.start();
             
-            // Export the place daemon on the session bus - as everywhere else
+            // Export the lens daemon on the session bus - as everywhere else
             // these values should match those definedd in the .place file 
-            Bus.own_name(BusType.SESSION, Config.BUSNAME, BusNameOwnerFlags.NONE,
-                         on_bus_acquired, on_name_acquired, on_name_lost);
+            Bus.own_name(BusType.SESSION, Config.BUSNAME + ".Unity.Lens.Diodon",
+                BusNameOwnerFlags.NONE, on_bus_acquired, on_name_acquired, on_name_lost);
             
             Gtk.main();
             

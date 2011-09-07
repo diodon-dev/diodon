@@ -1,6 +1,6 @@
 [Lens]
-DBusName=@BUSNAME@.Unity.Lens.Clipboard
-DBusPath=@BUSOBJECTPATH@/unity/lens/clipboard
+DBusName=@BUSNAME@.Unity.Lens.Diodon
+DBusPath=@BUSOBJECTPATH@/unity/lens/diodon
 Icon=gtk-paste
 _Name=Clipboard Manager
 _Description=GTK+ Clipboard Manager
