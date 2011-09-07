@@ -10,7 +10,7 @@ VERSION = '0.5.0'
 APPNAME = 'diodon'
 WEBSITE = 'https://launchpad.net/diodon'
 COPYRIGHT = 'Copyright \xc2\xa9 2010 Diodon Team'
-BUSNAME = 'net.launchpad.UnityDiodonLens'
+BUSNAME = 'net.launchpad.Diodon'
 BUSOBJECTPATH = '/net/launchpad/diodon'
 CLIPBOARD_URI = 'clipboard://'
 
@@ -58,7 +58,9 @@ def configure(conf):
     conf.define('WEBSITE', WEBSITE)
     conf.define('APPNAME', NAME)
     conf.define('BUSNAME', BUSNAME)
+    conf.env['BUSNAME'] = BUSNAME
     conf.define('BUSOBJECTPATH', BUSOBJECTPATH)
+    conf.env['BUSOBJECTPATH'] = BUSOBJECTPATH
     conf.define('SHAREDIR', os.path.join(conf.env['DATADIR'], APPNAME))
     conf.define('CLIPBOARD_URI', CLIPBOARD_URI)
       

@@ -27,12 +27,21 @@ bld.new_task_gen (
 
 if bld.env['HAVE_UNITY'] and bld.env['HAVE_DEE']:
     bld.new_task_gen (
+        features = "subst",
+        source= "diodon.lens.in.in",
+        target= "diodon.lens.in",
+        GETTEXT_PACKAGE = bld.env['GETTEXT_PACKAGE'],
+        BUSNAME = bld.env['BUSNAME'],
+        BUSOBJECTPATH = bld.env['BUSOBJECTPATH'])
+        
+    bld.new_task_gen (
       features = 'intltool_in',
       podir = '../po',
-      source = 'diodon.place.in',
+      source = 'diodon.lens.in',
       flags = ["-d", "-q", "-u", "-c"],
-      install_path = "${DATADIR}/unity/places")
+      install_path = "${DATADIR}/unity/lenses/diodon")
 
 bld.install_files('${SYSCONFDIR}/xdg/autostart', 'diodon.desktop')
 bld.install_files('${DATADIR}/diodon', 'preferences.ui')
 bld.install_files('${MANDIR}/man1', 'diodon.1.gz')
+

@@ -56,11 +56,11 @@ namespace Diodon.UnityLens
         {
             this.clipboard_model = clipboard_model;  
             
-            scope = new Unity.Scope(Config.BUSOBJECTPATH + "/scope/clipboard");
+            scope = new Unity.Scope(Config.BUSOBJECTPATH + "/unity/scope/clipboard");
             scope.search_in_global = false;
             scope.activate_uri.connect(activate);
             
-            lens = new Unity.Lens(Config.BUSOBJECTPATH + "/lens/clipboard", "clipboard");
+            lens = new Unity.Lens(Config.BUSOBJECTPATH + "/unity/lens/clipboard", "clipboard");
             lens.search_in_global = true;
             lens.search_hint = _("Search Clipboard");
             lens.visible = true;
