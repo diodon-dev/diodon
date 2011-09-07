@@ -71,8 +71,8 @@ namespace Diodon
             
             // Setup application menu
             menu = new Gtk.Menu();
-            menu.key_press_event.connect(on_key_pressed);
-            menu.key_release_event.connect(on_key_released);
+            //menu.key_press_event.connect(on_key_pressed);
+            //menu.key_release_event.connect(on_key_released);
             
             empty_item = new Gtk.MenuItem.with_label(_("<Empty>"));
             empty_item.set_sensitive(false);
@@ -190,9 +190,9 @@ namespace Diodon
         }
         
         /**
-         * 
+         * Not completed code for bug 792812
          */
-        private bool on_key_pressed(Gdk.EventKey event)
+        /*private bool on_key_pressed(Gdk.EventKey event)
         {
             // TODO: check for the configured hot key
             if(event.keyval == 118 && event.state == 12) {
@@ -223,7 +223,7 @@ namespace Diodon
             }
                 
             return false;
-        }
+        }*/
         
         /**
          * User event: clicked menu item clear
