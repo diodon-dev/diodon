@@ -11,21 +11,20 @@ msgstr ""
 "PO-Revision-Date: 2011-07-15 06:13+0000\n"
 "Last-Translator: Svetoslav Stefanov <svetlisashkov@yahoo.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
-"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-07-16 05:39+0000\n"
-"X-Generator: Launchpad (build 13405)\n"
+"X-Launchpad-Export-Date: 2011-09-08 04:48+0000\n"
+"X-Generator: Launchpad (build 13891)\n"
+"Language: bg\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
 msgstr "Мениджър на системния буфер"
 
 #: ../data/diodon.desktop.in.h:2
-#, fuzzy
 msgid "GTK+ Clipboard Manager"
-msgstr "Мениджър на системния буфер"
+msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 #: ../data/preferences.ui.h:1
@@ -159,9 +158,8 @@ msgid "<Empty>"
 msgstr "<Празно>"
 
 #: ../src/unity-lens-daemon.vala:65
-#, fuzzy
 msgid "Search Clipboard"
-msgstr "Системен буфер"
+msgstr ""
 
 #: ../src/unity-lens-daemon.vala:111 ../src/unity-lens-daemon.vala:134
 msgid "Text"
@@ -182,9 +180,3 @@ msgstr ""
 #: ../src/unity-lens-daemon.vala:227
 msgid "Copy to clipboard"
 msgstr "Копиране в системния буфер"
-
-#~ msgid "Clipboard Manager for GNOME"
-#~ msgstr "Мениджър на системния буфер за ГНОМ"
-
-#~ msgid "All Clipboard"
-#~ msgstr "Целият буфер"
