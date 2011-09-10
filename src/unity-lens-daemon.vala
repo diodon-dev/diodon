@@ -106,36 +106,38 @@ namespace Diodon.UnityLens
         
         private void populate_categories()
         {
-            Unity.Category[] categories = {};
+            List<Unity.Category> categories = new List<Unity.Category>();
+            File icon_dir = File.new_for_path(UNITY_ICON_PATH);
             
-            var cat = new Unity.Category(_("Text"),
-                UNITY_ICON_PATH + "group-downloads.svg");
-            categories += cat;
+            Unity.Category cat = new Unity.Category(_("Text"),
+                new FileIcon (icon_dir.get_child ("group-downloads.svg")));
+            categories.append(cat);
             
             cat = new Unity.Category(_("Files"),
-                UNITY_ICON_PATH + "open-folder.svg");
-            categories += cat;
+                new FileIcon (icon_dir.get_child ("open-folder.svg")));
+            categories.append(cat);
         
             cat = new Unity.Category(_("Images"),
-                UNITY_ICON_PATH + "group-mostused.svg");
-            categories += cat;
+                new FileIcon (icon_dir.get_child ("group-mostused.svg")));
+            categories.append(cat);
             
             lens.categories = categories;
         }
         
         private void populate_filters()
         {
-            Unity.Filter[] filters = {};
+            List<Unity.Filter> filters = new List<Unity.Filter>();
             
             /* Type filter */
             {
-                var filter = new Unity.RadioOptionFilter("type", _("Type"));
+                Unity.RadioOptionFilter filter = new Unity.RadioOptionFilter(
+                    "type", _("Type"));
                 
                 filter.add_option("text", _("Text"));
                 filter.add_option("files", _("Files"));
                 filter.add_option("images", _("Images"));
                 
-                filters += filter;
+                filters.append(filter);
             }
             
             lens.filters = filters;
