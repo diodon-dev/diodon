@@ -98,7 +98,6 @@ namespace Diodon
             engine.add_search_path(plugins_dir, plugins_dir);
             // engine.enable_loader("python")
             // TODO: add usr/share search path
-            PeasGtk.PluginManager manager = new PeasGtk.PluginManager();
 
             // setup controller            
             controller = new Controller();

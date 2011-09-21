@@ -102,6 +102,12 @@ namespace Diodon
                         on_change_history_accelerator(history_accelerator.get_text());
                     });
                     
+                    // plugins
+                    PeasGtk.PluginManager manager = new PeasGtk.PluginManager(
+                        Peas.Engine.get_default());
+                    Gtk.Box plugins_box = builder.get_object("plugins_box") as Gtk.Box;
+                    plugins_box.pack_start(manager);
+                    
                     // close
                     Gtk.Button close = builder.get_object("button_close") as Gtk.Button;
                     close.clicked.connect(() => { on_close(); } );
