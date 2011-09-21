@@ -122,7 +122,7 @@ namespace Diodon
          */ 
         public void hide()
         {
-            preferences.hide_all();
+            preferences.hide();
             preferences.destroy();
         }
         

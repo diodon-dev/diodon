@@ -69,7 +69,7 @@ namespace Diodon
             DesktopAppInfo.set_desktop_env("GNOME");
             
             // init option context
-            OptionContext opt_context = new OptionContext("- Clipboard Manager for GNOME");
+            OptionContext opt_context = new OptionContext("- GTK+ Clipboard Manager");
             opt_context.set_help_enabled(true);
             opt_context.add_main_entries(options, null);
             opt_context.parse(ref args);
@@ -105,10 +105,10 @@ namespace Diodon
             controller.clipboard_model = model;
             controller.start();
             
-            // Export the place daemon on the session bus - as everywhere else
+            // Export the lens daemon on the session bus - as everywhere else
             // these values should match those definedd in the .place file 
-            Bus.own_name(BusType.SESSION, Config.BUSNAME, BusNameOwnerFlags.NONE,
-                         on_bus_acquired, on_name_acquired, on_name_lost);
+            Bus.own_name(BusType.SESSION, Config.BUSNAME + ".Unity.Lens.Diodon",
+                BusNameOwnerFlags.NONE, on_bus_acquired, on_name_acquired, on_name_lost);
             
             Gtk.main();
             

@@ -48,11 +48,11 @@ namespace Diodon
         public abstract string get_mime_type();
         
         /**
-         * get group clipboard item is beloging to
+         * get clipboard category item belongs to
          *
-         * @return clipboard group
+         * @return clipboard category
          */
-        public abstract ClipboardGroup get_group();
+        public abstract ClipboardCategory get_category();
         
         /**
          * image to represent content of clipboard item
@@ -98,10 +98,10 @@ namespace Diodon
          * Determine if given item matches search string and section
          *
          * @param search search string
-         * @param section clipboard section
+         * @param type clipboard item type to filter by
          * @return true when match; otherwise false.
          */
-        public abstract bool matches(string search, ClipboardSection section);
+        public abstract bool matches(string search, ClipboardItemType type);
         
         /**
          * Check if given item is equal.

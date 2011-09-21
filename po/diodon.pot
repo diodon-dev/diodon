@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-03 00:41+0200\n"
+"POT-Creation-Date: 2011-09-07 18:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgid "Clipboard Manager"
 msgstr ""
 
 #: ../data/diodon.desktop.in.h:2
-msgid "Clipboard Manager for GNOME"
+msgid "GTK+ Clipboard Manager"
 msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
@@ -142,30 +142,32 @@ msgstr ""
 msgid "_Use clipboard (Ctrl+C)"
 msgstr ""
 
-#: ../src/indicator-view.vala:75
+#. menu.key_press_event.connect(on_key_pressed);
+#. menu.key_release_event.connect(on_key_released);
+#: ../src/indicator-view.vala:77
 msgid "<Empty>"
 msgstr ""
 
-#. The row offsets should match those from the ClipboardSection enum
-#: ../src/unity-lens-daemon.vala:163
-msgid "All Clipboard"
+#: ../src/unity-lens-daemon.vala:65
+msgid "Search Clipboard"
 msgstr ""
 
-#. The row offsets should match those from the ClipboardGroup enum
-#. TODO: we need to replace this unity icons with
-#. some diodon specific ones
-#: ../src/unity-lens-daemon.vala:164 ../src/unity-lens-daemon.vala:186
+#: ../src/unity-lens-daemon.vala:111 ../src/unity-lens-daemon.vala:134
 msgid "Text"
 msgstr ""
 
-#: ../src/unity-lens-daemon.vala:165 ../src/unity-lens-daemon.vala:187
+#: ../src/unity-lens-daemon.vala:115 ../src/unity-lens-daemon.vala:135
 msgid "Files"
 msgstr ""
 
-#: ../src/unity-lens-daemon.vala:166 ../src/unity-lens-daemon.vala:188
+#: ../src/unity-lens-daemon.vala:119 ../src/unity-lens-daemon.vala:136
 msgid "Images"
 msgstr ""
 
-#: ../src/unity-lens-daemon.vala:250
+#: ../src/unity-lens-daemon.vala:132
+msgid "Type"
+msgstr ""
+
+#: ../src/unity-lens-daemon.vala:227
 msgid "Copy to clipboard"
 msgstr ""

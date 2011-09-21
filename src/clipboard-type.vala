@@ -38,16 +38,52 @@ namespace Diodon
         PRIMARY;
     }
     
-    public enum ClipboardGroup
+    public enum ClipboardItemType
     {
+        ALL = 0,
         TEXT,
         FILES,
-        IMAGES
+        IMAGES;
+        
+        public string to_string()
+        {
+            switch (this) {
+                case ALL:
+                    return "all";
+
+                case TEXT:
+                    return "text";
+
+                case FILES:
+                    return "files";
+
+                case IMAGES:
+                    return "images";
+
+                default:
+                    assert_not_reached();
+            }
+        }
+        
+        public static ClipboardItemType from_string(string type)
+        {
+            switch(type) {
+                case "all":
+                    return ALL;
+                case "text":
+                    return TEXT;
+                case "files":
+                    return FILES;
+                case "images":
+                     return IMAGES;
+                default:
+                    assert_not_reached();
+            }
+        }
     }
     
-    public enum ClipboardSection
+    public enum ClipboardCategory
     {
-        ALL_CLIPBOARD = 0,
         TEXT,
         FILES,
         IMAGES
