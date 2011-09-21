@@ -40,6 +40,7 @@ def configure(conf):
     conf.check_cfg(package='gdk-x11-2.0',      uselib_store='GDKX',         atleast_version='2.20.0', mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gee-1.0',          uselib_store='GEE',          atleast_version='0.5.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='libpeas-1.0',      uselib_store='PEAS',         atleast_version='0.7.3',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='libpeas-gtk-1.0',  uselib_store='PEASGTK',      atleast_version='0.7.3',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gio-2.0',          uselib_store='GIO',          atleast_version='2.26.0', mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gio-unix-2.0',     uselib_store='GIOUNIX',      atleast_version='2.26.0', mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='glib-2.0',         uselib_store='GLIB',         atleast_version='2.26.0', mandatory=1, args='--cflags --libs')
