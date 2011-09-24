@@ -25,7 +25,7 @@ namespace Diodon
      * 
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class PrimaryClipboardManager : ClipboardManager
+    class PrimaryClipboardManager : ClipboardManager
     {
         /**
          * Type is alwawys ClipboardType.PRIMARY for this specific primary

@@ -25,7 +25,7 @@ namespace Diodon
      * 
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class XmlClipboardStorage : GLib.Object, IClipboardStorage
+    class XmlClipboardStorage : GLib.Object, IClipboardStorage
     {
         private Gee.ArrayList<IClipboardItem> items;
         private string xml_file;

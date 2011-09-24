@@ -26,7 +26,7 @@ namespace Diodon
      *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class PreferencesView : GLib.Object
+    class PreferencesView : GLib.Object
     {
         private Gtk.Dialog preferences;
         

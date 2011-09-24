@@ -25,7 +25,7 @@ namespace Diodon
      *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public interface IClipboardStorage : GLib.Object
+    interface IClipboardStorage : GLib.Object
     {
         /**
          * Get all available clipboard items.

@@ -25,7 +25,7 @@ namespace Diodon
      * 
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class ClipboardManager : GLib.Object
+    class ClipboardManager : GLib.Object
     {
         protected ClipboardType type;
         protected Gtk.Clipboard _clipboard = null;

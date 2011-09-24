@@ -23,7 +23,7 @@ namespace Diodon
      *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class ConfigurationModel : GLib.Object
+    class ConfigurationModel : GLib.Object
     {
         private int _clipboard_size = 25;
     

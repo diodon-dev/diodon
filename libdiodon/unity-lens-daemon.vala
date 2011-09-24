@@ -36,25 +36,16 @@ namespace Diodon.UnityLens
     {
         private Unity.Lens lens;
         private Unity.Scope scope;
-        
-        /**
-         * TODO: this is only a workaround and breaks the softwware design
-         * the controller should actually expose all needed operations
-         * from the clipboard model and the daemon should access the controller
-         * directly. However should do for now as we only read.
-         *
-         * access to the clipboard model.
-         */
-        private ClipboardModel clipboard_model;
+        private Controller controller;
         
         /**
          * called when a uri needs to be activated
          */
         public signal void on_activate_uri(string uri);
         
-        public Daemon(ClipboardModel clipboard_model)
+        public Daemon(Controller controller)
         {
-            this.clipboard_model = clipboard_model;  
+            this.controller = controller;
             
             scope = new Unity.Scope(Config.BUSOBJECTPATH + "/unity/scope/diodon");
             scope.search_in_global = false;
@@ -212,7 +203,7 @@ namespace Diodon.UnityLens
             debug("Rebuilding results model");
             results_model.clear();
             
-            Gee.List<IClipboardItem> items = clipboard_model.get_items();
+            Gee.List<IClipboardItem> items = controller.get_items();
             
             // add items in reverse order as last added items are
             // more important

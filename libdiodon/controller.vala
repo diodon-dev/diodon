@@ -34,6 +34,8 @@ namespace Diodon
         private ClipboardModel clipboard_model;
         private ConfigurationModel configuration_model;
         private IndicatorView indicator_view;
+        private PreferencesView preferences_view;
+        private KeybindingManager keybinding_manager;
         
         /**
          * Called when a item has been selected.
@@ -55,16 +57,6 @@ namespace Diodon
          */
         public signal void on_clear();
         
-        /**
-         * preferences dialog view property
-         */
-        public PreferencesView preferences_view { get; set; default = new PreferencesView(); }
-        
-        /**
-         * keybinding manager property
-         */
-        public KeybindingManager keybinding_manager { get; set; default = new KeybindingManager(); }
-        
 #if(UNITY_LENS)
 
         /**
@@ -85,6 +77,8 @@ namespace Diodon
             clipboard_managers.set(ClipboardType.CLIPBOARD, new ClipboardManager(ClipboardType.CLIPBOARD));
             clipboard_managers.set(ClipboardType.PRIMARY, new PrimaryClipboardManager());
             
+            keybinding_manager = new KeybindingManager();
+            
             settings = new Settings("net.launchpad.Diodon");
             settings_clipboard = new Settings("net.launchpad.Diodon.clipboard");
             settings_keybindings = new Settings("net.launchpad.Diodon.keybindings");
@@ -96,7 +90,8 @@ namespace Diodon
             
             configuration_model = new ConfigurationModel();   
             
-            indicator_view = new IndicatorView(this);                      
+            indicator_view = new IndicatorView(this);    
+            preferences_view = new PreferencesView();                  
         }
         
         /**
