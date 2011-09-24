@@ -7,6 +7,7 @@ import Options
 lib = bld.shlib (
   features = 'c cshlib',
   target = 'diodon',
+  name = 'libdiodon',
   vnum = bld.env['VERSION'],
   vapi_dirs = '../vapi',
   uselib = 'GTK GEE APPINDICATOR XML X11 GDKX GIO GIOUNIX PEAS PEASGTK',
