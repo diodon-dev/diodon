@@ -36,6 +36,8 @@ namespace Diodon
         private IndicatorView indicator_view;
         private PreferencesView preferences_view;
         private KeybindingManager keybinding_manager;
+        private Peas.ExtensionSet extension_set;
+        private Peas.Engine peas_engine;
         
         /**
          * Called when a item has been selected.
@@ -85,10 +87,10 @@ namespace Diodon
             settings_clipboard = new Settings("net.launchpad.Diodon.clipboard");
             settings_keybindings = new Settings("net.launchpad.Diodon.keybindings");
             
-            Peas.Engine engine = Peas.Engine.get_default();
+            peas_engine = Peas.Engine.get_default();
             string plugins_dir = Path.build_filename(diodon_dir, "plugins");
-            engine.add_search_path(plugins_dir, plugins_dir);
-            engine.enable_loader("python");
+            peas_engine.add_search_path(plugins_dir, plugins_dir);
+            peas_engine.enable_loader("python");
             // TODO: add usr/share search path
             
             IClipboardStorage storage = new XmlClipboardStorage(diodon_dir,
@@ -109,8 +111,33 @@ namespace Diodon
             connect_signals();
             init();
             
+            Parameter parameter = Parameter();
+            parameter.name = "controller";
+            parameter.value = this;
+            
+            Parameter[] parameters = new Parameter[1];
+            parameters[0] = parameter;
+            
+            extension_set = Peas.ExtensionSet.newv(peas_engine,
+                typeof(Peas.Activatable), parameters);
+                
+            //extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_added, null);
+            
+            extension_set.extension_added.connect((info, exten) => {
+                ((Peas.Activatable)exten).activate();
+            });
+            extension_set.extension_removed.connect((info, exten) => {
+                ((Peas.Activatable)exten).deactivate();
+            });
+            
             indicator_view.activate();
         }
+        
+//        private void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
+//            Peas.Extension exten, void* data)
+//        {
+//            ((Peas.Activatable)exten).activate();
+//        }
         
         /**
          * connects controller to all signals of injected managers and views
