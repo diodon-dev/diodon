@@ -80,7 +80,7 @@ def configure(conf):
     conf.write_config_header ('config.h', remove=False)
    
 def build(bld):
-    bld.add_subdirs('po data src')
+    bld.add_subdirs('po data libdiodon diodon')
 
 def dist(ctx):
     # set the compression type to gzip (default is bz2)

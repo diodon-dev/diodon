@@ -7,14 +7,14 @@ import Options
 prog = bld.new_task_gen (
   features = 'c cprogram',
   target = 'diodon',
-  vapi_dirs = '../vapi',
+  vapi_dirs = '../vapi ../libdiodon',
   uselib = 'GTK GEE APPINDICATOR XML X11 GDKX GIO GIOUNIX PEAS PEASGTK',
+  use = 'diodon',
   cflags = ['-include', 'config.h'],
   packages = 'gtk+-3.0 gee-1.0 gio-2.0 gio-unix-2.0 appindicator3-0.1 libxml-2.0 x11 gdk-x11-3.0 libpeas-1.0 libpeas-gtk-1.0 config',
-  source = bld.path.ant_glob (incl='**/*.vala'))
+  source = 'main.vala')
 
 if bld.env['HAVE_UNITY'] and bld.env['HAVE_DEE']:
     prog.env.append_value ('VALAFLAGS', '--define=UNITY_LENS')
     prog.uselib += ' DEE UNITY'
     prog.packages += ' dee-1.0 unity'
-   
