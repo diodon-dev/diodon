@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
-using Gee;
- 
 namespace Diodon
 {
     /**
@@ -31,39 +29,17 @@ namespace Diodon
         private AppIndicator.Indicator indicator;
         private Gtk.Menu menu;
         private Gtk.MenuItem empty_item;
+        private Controller controller;
         
         /**
          * HashMap of all available clipboard items
          */
-        private HashMap<IClipboardItem, ClipboardMenuItem> clipboard_menu_items;
+        private Gee.Map<IClipboardItem, ClipboardMenuItem> clipboard_menu_items;
         
-        /**
-         * called when application exits
-         */
-        public signal void on_quit();
-        
-        /**
-         * called when all items need to be cleared
-         */
-        public signal void on_clear();
-        
-        /**
-         * called when preferences dialog needs to be shown
-         */
-        public signal void on_show_preferences();
-        
-        /**
-         * called when a item has been selected in the menu
-         * 
-         * @param item item to be selected
-         */
-        public signal void on_select_item(IClipboardItem item);
-        
-        /**
-         * Default constructor.
-         */ 
-        public IndicatorView()
+        public IndicatorView(Controller controller)
         {
+            this.controller = controller;
+            
             // Setup indicator
             indicator = new AppIndicator.Indicator("diodon", "gtk-paste",
                 AppIndicator.IndicatorCategory.APPLICATION_STATUS);
@@ -96,7 +72,7 @@ namespace Diodon
             menu.show_all();
             indicator.set_menu(menu);
             
-            clipboard_menu_items = new HashMap<IClipboardItem, ClipboardMenuItem>(
+            clipboard_menu_items = new Gee.HashMap<IClipboardItem, ClipboardMenuItem>(
                 (GLib.HashFunc?)IClipboardItem.hash_func, (GLib.EqualFunc?)IClipboardItem.equal_func);
         }
         
@@ -106,12 +82,27 @@ namespace Diodon
             menu.destroy();
         }
         
+        public void activate()
+        {
+            controller.on_select_item.connect(select_item);
+            controller.on_add_item.connect(prepend_item);
+            controller.on_remove_item.connect(remove_item);
+            controller.on_clear.connect(clear);
+            
+             // add all available items from storage to indicator
+            foreach(IClipboardItem item in controller.get_items()) {
+                prepend_item(item);
+            }
+        }
+        
         public void set_visible(bool visible)
         {
-            if (visible)
+            if (visible) {
                 indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
-            else
+            }
+            else {
                 indicator.set_status(AppIndicator.IndicatorStatus.PASSIVE);
+            }
         }
         
         /**
@@ -121,6 +112,9 @@ namespace Diodon
          */
         public void select_item(IClipboardItem item)
         {
+            remove_item(item);
+            prepend_item(item);
+        
             ClipboardMenuItem menu_item = clipboard_menu_items.get(item);
             menu_item.highlight_item();
         }
@@ -137,6 +131,8 @@ namespace Diodon
             menu_item.show();
             clipboard_menu_items.set(item, menu_item);
             menu.prepend(menu_item);
+            
+            hide_empty_item(); // just in case
         }
         
         /**
@@ -163,6 +159,7 @@ namespace Diodon
             }
             
             clipboard_menu_items.clear();
+            show_empty_item();
         }
         
         /**
@@ -230,7 +227,7 @@ namespace Diodon
          */
         private void on_clicked_clear()
         {
-            on_clear();
+            controller.clear();
         }
         
         /**
@@ -238,7 +235,7 @@ namespace Diodon
          */
         private void on_clicked_preferences()
         {
-            on_show_preferences();
+            controller.show_preferences();
         }
         
         /**
@@ -246,7 +243,7 @@ namespace Diodon
          */
         private void on_clicked_quit()
         {
-            on_quit();
+            controller.quit();
         }
         
         /**
@@ -257,7 +254,7 @@ namespace Diodon
         private void on_clicked_item(Gtk.MenuItem menu_item)
         {
             ClipboardMenuItem clipboard_menu_item = (ClipboardMenuItem)menu_item;
-            on_select_item(clipboard_menu_item.get_clipboard_item());
+            controller.select_item(clipboard_menu_item.get_clipboard_item());
         }
     }  
 }

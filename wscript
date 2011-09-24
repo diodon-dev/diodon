@@ -56,6 +56,7 @@ def configure(conf):
     conf.define('GETTEXT_PACKAGE', APPNAME)
     conf.env['GETTEXT_PACKAGE'] = APPNAME
     conf.define('VERSION', VERSION)
+    conf.env['VERSION'] = VERSION
     conf.define('COPYRIGHT', COPYRIGHT)
     conf.define('WEBSITE', WEBSITE)
     conf.define('APPNAME', NAME)
@@ -79,8 +80,13 @@ def configure(conf):
 
     conf.write_config_header ('config.h', remove=False)
    
-def build(bld):
-    bld.add_subdirs('po data libdiodon diodon')
+def build(ctx):
+    ctx.add_subdirs('po data libdiodon diodon')
+    ctx.add_post_fun(post)
+    
+def post(ctx):
+    if ctx.cmd == 'install':
+        ctx.exec_command('/sbin/ldconfig')
 
 def dist(ctx):
     # set the compression type to gzip (default is bz2)

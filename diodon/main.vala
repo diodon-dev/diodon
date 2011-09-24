@@ -87,12 +87,8 @@ namespace Diodon
             // setup gtk
             Gtk.init(ref args);
             
-            // setup storage    
-            string diodon_dir = Utility.get_user_data_dir();
-            IClipboardStorage storage = new XmlClipboardStorage(diodon_dir, "storage.xml");
-            ClipboardModel model = new ClipboardModel(storage);
-            
             // setup plugin engine
+            string diodon_dir = Utility.get_user_data_dir();
             Peas.Engine engine = Peas.Engine.get_default();
             string plugins_dir = Path.build_filename(diodon_dir, "plugins");
             engine.add_search_path(plugins_dir, plugins_dir);
@@ -101,8 +97,7 @@ namespace Diodon
 
             // setup controller            
             controller = new Controller();
-            controller.clipboard_model = model;
-            controller.start();
+            controller.activate();
             
             // Export the lens daemon on the session bus - as everywhere else
             // these values should match those definedd in the .place file 
