@@ -131,7 +131,6 @@ namespace Diodon
          */
         private void init()
         {
-            indicator_view.activate();
             init_configuration();
             
              // start clipboard managers

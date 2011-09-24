@@ -144,6 +144,7 @@ namespace Diodon
         public void add_item(IClipboardItem item)
         {
             storage.add_item(item);
+            current_items.set(item.get_clipboard_type(), item);
         }
         
         /**

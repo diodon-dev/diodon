@@ -112,6 +112,7 @@ namespace Diodon
          */
         public void select_item(IClipboardItem item)
         {
+            // re-arranging
             remove_item(item);
             prepend_item(item);
         
