@@ -73,7 +73,9 @@ namespace Diodon
         
         public Controller()
         {            
+            string diodon_dir = Utility.get_user_data_dir();
             clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
+            
             clipboard_managers.set(ClipboardType.CLIPBOARD, new ClipboardManager(ClipboardType.CLIPBOARD));
             clipboard_managers.set(ClipboardType.PRIMARY, new PrimaryClipboardManager());
             
@@ -83,7 +85,12 @@ namespace Diodon
             settings_clipboard = new Settings("net.launchpad.Diodon.clipboard");
             settings_keybindings = new Settings("net.launchpad.Diodon.keybindings");
             
-            string diodon_dir = Utility.get_user_data_dir();
+            Peas.Engine engine = Peas.Engine.get_default();
+            string plugins_dir = Path.build_filename(diodon_dir, "plugins");
+            engine.add_search_path(plugins_dir, plugins_dir);
+            engine.enable_loader("python");
+            // TODO: add usr/share search path
+            
             IClipboardStorage storage = new XmlClipboardStorage(diodon_dir,
                 "storage.xml");
             clipboard_model = new ClipboardModel(storage);

@@ -86,14 +86,6 @@ namespace Diodon
             
             // setup gtk
             Gtk.init(ref args);
-            
-            // setup plugin engine
-            string diodon_dir = Utility.get_user_data_dir();
-            Peas.Engine engine = Peas.Engine.get_default();
-            string plugins_dir = Path.build_filename(diodon_dir, "plugins");
-            engine.add_search_path(plugins_dir, plugins_dir);
-            // engine.enable_loader("python")
-            // TODO: add usr/share search path
 
             // setup controller            
             controller = new Controller();
