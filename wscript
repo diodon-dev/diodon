@@ -52,6 +52,7 @@ def configure(conf):
         conf.check_cfg(package='unity',   uselib_store='UNITY', atleast_version='4.0.2',  mandatory=1, args='--cflags --libs')
         conf.check_cfg(package='dee-1.0', uselib_store='DEE',   atleast_version='0.5.18', mandatory=1, args='--cflags --libs')
 
+    # FIXME: conf.env and conf.define should not both be needed?
     conf.define('PACKAGE_NAME', APPNAME)
     conf.define('GETTEXT_PACKAGE', APPNAME)
     conf.env['GETTEXT_PACKAGE'] = APPNAME
@@ -67,6 +68,7 @@ def configure(conf):
     conf.define('SHAREDIR', os.path.join(conf.env['DATADIR'], APPNAME))
     conf.define('LIBDIR', os.path.join(conf.env['LIBDIR'], APPNAME))
     conf.define('PLUGINS_DIR', os.path.join(conf.env['LIBDIR'], APPNAME, 'plugins'))
+    conf.env['PLUGINS_DIR'] = os.path.join(conf.env['LIBDIR'], APPNAME, 'plugins')
     conf.define('PLUGINS_DATA_DIR', os.path.join(conf.env['DATADIR'], APPNAME, 'plugins'))
     conf.define('CLIPBOARD_URI', CLIPBOARD_URI)
       

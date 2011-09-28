@@ -1,0 +1,7 @@
+[Plugin]
+Module=indicator
+Name=Vala also says Hello
+Description=Inserts a box containing "Hello World" in every window.
+Authors=Oliver Sauder <os@esite.ch>
+Copyright=Copyright © 2011 Diodon Team
+
