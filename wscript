@@ -66,6 +66,8 @@ def configure(conf):
     conf.env['BUSOBJECTPATH'] = BUSOBJECTPATH
     conf.define('SHAREDIR', os.path.join(conf.env['DATADIR'], APPNAME))
     conf.define('LIBDIR', os.path.join(conf.env['LIBDIR'], APPNAME))
+    conf.define('PLUGINS_DIR', os.path.join(conf.env['LIBDIR'], APPNAME, 'plugins'))
+    conf.define('PLUGINS_DATA_DIR', os.path.join(conf.env['DATADIR'], APPNAME, 'plugins'))
     conf.define('CLIPBOARD_URI', CLIPBOARD_URI)
       
     # set 'default' variant
@@ -82,7 +84,7 @@ def configure(conf):
     conf.write_config_header ('config.h', remove=False)
    
 def build(ctx):
-    ctx.add_subdirs('po data libdiodon diodon')
+    ctx.add_subdirs('po data libdiodon plugins diodon')
     ctx.add_post_fun(post)
     
 def post(ctx):
