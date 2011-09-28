@@ -65,6 +65,7 @@ def configure(conf):
     conf.define('BUSOBJECTPATH', BUSOBJECTPATH)
     conf.env['BUSOBJECTPATH'] = BUSOBJECTPATH
     conf.define('SHAREDIR', os.path.join(conf.env['DATADIR'], APPNAME))
+    conf.define('LIBDIR', os.path.join(conf.env['LIBDIR'], APPNAME))
     conf.define('CLIPBOARD_URI', CLIPBOARD_URI)
       
     # set 'default' variant

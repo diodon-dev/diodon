@@ -88,7 +88,7 @@ namespace Diodon
             settings_keybindings = new Settings("net.launchpad.Diodon.keybindings");
             
             peas_engine = Peas.Engine.get_default();
-            string plugins_dir = Path.build_filename(Config.SHAREDIR, "plugins");
+            string plugins_dir = Path.build_filename(Config.LIBDIR, "plugins");
             peas_engine.add_search_path(plugins_dir, plugins_dir);
             string user_plugins_dir = Path.build_filename(diodon_dir, "plugins");
             peas_engine.add_search_path(user_plugins_dir, user_plugins_dir);
