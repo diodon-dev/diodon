@@ -88,10 +88,11 @@ namespace Diodon
             settings_keybindings = new Settings("net.launchpad.Diodon.keybindings");
             
             peas_engine = Peas.Engine.get_default();
-            string plugins_dir = Path.build_filename(diodon_dir, "plugins");
+            string plugins_dir = Path.build_filename(Config.SHAREDIR, "plugins");
             peas_engine.add_search_path(plugins_dir, plugins_dir);
+            string user_plugins_dir = Path.build_filename(diodon_dir, "plugins");
+            peas_engine.add_search_path(user_plugins_dir, user_plugins_dir);
             peas_engine.enable_loader("python");
-            // TODO: add usr/share search path
             
             IClipboardStorage storage = new XmlClipboardStorage(diodon_dir,
                 "storage.xml");
@@ -111,17 +112,9 @@ namespace Diodon
             connect_signals();
             init();
             
-            Parameter parameter = Parameter();
-            parameter.name = "controller";
-            parameter.value = this;
-            
-            Parameter[] parameters = new Parameter[1];
-            parameters[0] = parameter;
-            
-            extension_set = Peas.ExtensionSet.newv(peas_engine,
-                typeof(Peas.Activatable), parameters);
-                
-            //extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_added, null);
+            extension_set = new Peas.ExtensionSet(peas_engine, typeof(Peas.Activatable),
+                "object", this);
+            extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_added, null);
             
             extension_set.extension_added.connect((info, exten) => {
                 ((Peas.Activatable)exten).activate();
@@ -133,11 +126,11 @@ namespace Diodon
             indicator_view.activate();
         }
         
-//        private void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
-//            Peas.Extension exten, void* data)
-//        {
-//            ((Peas.Activatable)exten).activate();
-//        }
+        private void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
+            Peas.Extension exten, void* data)
+        {
+            ((Peas.Activatable)exten).activate();
+        }
         
         /**
          * connects controller to all signals of injected managers and views
