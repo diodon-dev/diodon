@@ -15,7 +15,7 @@ BUSOBJECTPATH = '/net/launchpad/diodon'
 
 VERSION_MAJOR_MINOR = '.'.join (VERSION.split ('.')[0:2])
 VERSION_MAJOR = '.'.join (VERSION.split ('.')[0:1])
-top = '/home/sao/src/bzr/launchpad/projects/diodon/plugin-support'
+top = '.'
 out = '_build_'
 
 def options(opt):
