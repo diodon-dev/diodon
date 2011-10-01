@@ -42,10 +42,6 @@ namespace Diodon
         { null }
     };
 
-    /**
-     * starter method responsible for creating all needed views, controllers
-     * and models and starting the GUI application and the unity lens daemon
-     */
     public static int main(string[] args)
     {
         try {
