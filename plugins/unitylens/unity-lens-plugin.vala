@@ -150,7 +150,7 @@ namespace Diodon.Plugins.UnityLens
          */
         private void on_name_lost(DBusConnection conn, string name)
         {
-            debug("Another daemon is running.\nBailing out.");
+            debug("Another daemon is running. Bailing out.");
         }
         
         private void populate_categories()
