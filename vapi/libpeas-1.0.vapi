@@ -98,6 +98,8 @@ namespace Peas {
 		public abstract void activate ();
 		public abstract void deactivate ();
 		public abstract void update_state ();
+        //[NoAccessorMethod]
+        //public abstract GLib.Object object { owned get; construct; }
 	}
 	[CCode (cheader_filename = "libpeas/peas.h", cprefix = "PEAS_PLUGIN_INFO_ERROR_")]
 	public errordomain PluginInfoError {
