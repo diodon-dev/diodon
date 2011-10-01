@@ -44,6 +44,7 @@ namespace Diodon.Plugins.UnityLens
         
         public UnityLensPlugin()
         {
+            debug("Create unitylens");
             Object();
             
             dbus_id = 0;
@@ -140,7 +141,7 @@ namespace Diodon.Plugins.UnityLens
          */
         private void on_name_acquired(DBusConnection conn, string name)
         {
-            debug ("Acquired name %s. We're the main instance.\nAll system are go.",
+            debug("Acquired name %s. We're the main instance.\nAll system are go.",
                    name);
         }
 
@@ -149,7 +150,7 @@ namespace Diodon.Plugins.UnityLens
          */
         private void on_name_lost(DBusConnection conn, string name)
         {
-            debug ("Another daemon is running.\nBailing out.");
+            debug("Another daemon is running.\nBailing out.");
         }
         
         private void populate_categories()

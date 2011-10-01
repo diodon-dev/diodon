@@ -59,20 +59,6 @@ namespace Diodon
          */
         public signal void on_clear();
         
-#if(UNITY_LENS)
-
-        /**
-         * unity lens daemon
-         */
-        public UnityLens.Daemon lens_daemon
-        {
-            set {
-                value.on_activate_uri.connect(activate_uri);
-            }
-        }
-
-#endif
-        
         public Controller()
         {            
             string diodon_dir = Utility.get_user_data_dir();
