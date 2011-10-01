@@ -65,11 +65,10 @@ namespace Diodon.Plugins.UnityLens
         public void deactivate()
         {
             debug("deactivate unitylens plugin");
-            
             if(dbus_id != 0) {
                 Bus.unown_name(dbus_id);
                 dbus_id = 0;
-                lens.dispose();
+                lens = null;
             }
         }
 
