@@ -32,7 +32,7 @@ namespace Diodon
          * 
          * @return get all clipboard entries in right order
          */
-        public abstract Gee.ArrayList<IClipboardItem> get_items();
+        public abstract Gee.List<IClipboardItem> get_items();
         
         /**
          * Add given item to storage

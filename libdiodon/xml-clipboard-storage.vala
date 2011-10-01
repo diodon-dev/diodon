@@ -58,7 +58,7 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public Gee.ArrayList<IClipboardItem> get_items()
+        public Gee.List<IClipboardItem> get_items()
         {
             return items;
         }
