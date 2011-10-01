@@ -16,40 +16,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Diodon.UnityLens
+namespace Diodon.Plugins.UnityLens
 {
-
-#if(UNITY_LENS)
-
     /**
      * TODO: needs to be replaced with a diodon specific path
      * Absolute path to custom unity icons.
      */
     const string UNITY_ICON_PATH = "/usr/share/icons/unity-icon-theme/places/svg/";
+    
+    /**
+     * clipboard uri 
+     */
+    const string CLIPBOARD_URI = "clipboard://";
 
     /**
-     * A daemon for the unity lens
+     * Providing access to clipboard history through a unity lens
      *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class Daemon : GLib.Object
+    public class UnityLensPlugin : Peas.ExtensionBase, Peas.Activatable
     {
         private Unity.Lens lens;
         private Unity.Scope scope;
-        private Controller controller;
         
-        /**
-         * called when a uri needs to be activated
-         */
-        public signal void on_activate_uri(string uri);
+        public Object object { owned get; construct; }
         
-        public Daemon(Controller controller)
+        public UnityLensPlugin()
         {
-            this.controller = controller;
-            
+            Object();
+        }
+        
+        public void activate()
+        {
             scope = new Unity.Scope(Config.BUSOBJECTPATH + "/unity/scope/diodon");
             scope.search_in_global = false;
-            scope.activate_uri.connect(activate);
+            scope.activate_uri.connect(activate_uri);
             
             lens = new Unity.Lens(Config.BUSOBJECTPATH + "/unity/lens/diodon", "diodon");
             lens.search_in_global = true;
@@ -93,6 +94,15 @@ namespace Diodon.UnityLens
                 critical("Failed to export DBus service for '%s': %s",
                     lens.dbus_path, error.message);
             }
+        }
+
+        public void deactivate()
+        {
+            lens.dispose();
+        }
+
+        public void update_state ()
+        {
         }
         
         private void populate_categories()
@@ -200,6 +210,7 @@ namespace Diodon.UnityLens
 
         private void update_results_model(Dee.Model results_model, string search, ClipboardItemType type)
         {
+            Controller controller = object as Controller;
             debug("Rebuilding results model");
             results_model.clear();
             
@@ -211,8 +222,7 @@ namespace Diodon.UnityLens
                 IClipboardItem item = items.get(i);
                 if(item.matches(search, type)) {
                     results_model.append(
-                        // FIXME: item itself should implement a sensable uri
-                        Config.CLIPBOARD_URI + item.get_checksum(),
+                        CLIPBOARD_URI + item.get_checksum(),
                         item.get_icon().to_string(),
                         item.get_category(),
                         item.get_mime_type(),
@@ -223,16 +233,32 @@ namespace Diodon.UnityLens
             }
         }
         
-        public Unity.ActivationResponse activate(string uri)
+        private Unity.ActivationResponse activate_uri(string uri)
         {
+            Controller controller = object as Controller;
             debug("Requested activation of: %s", uri);
-            on_activate_uri(uri);
-            return new Unity.ActivationResponse(
-                Unity.HandledType.HIDE_DASH);
+            
+            // check if uri is a clipboard uri
+            if(str_equal(uri.substring(0, CLIPBOARD_URI.length), CLIPBOARD_URI)) {
+                string checksum = uri.substring(CLIPBOARD_URI.length);
+                IClipboardItem item = controller.get_item_by_checksum(checksum);
+                if(item != null) {
+                    controller.select_item(item);
+                    return new Unity.ActivationResponse(
+                        Unity.HandledType.HIDE_DASH);
+                }
+            }
+            
+            warning("Could not activate uri %s", uri);
+            return new Unity.ActivationResponse(Unity.HandledType.NOT_HANDLED);
         }
     }
-
-#endif
-
 }
 
+[ModuleInit]
+public void peas_register_types (GLib.TypeModule module)
+{
+  Peas.ObjectModule objmodule = module as Peas.ObjectModule;
+  objmodule.register_extension_type (typeof (Peas.Activatable),
+                                     typeof (Diodon.Plugins.UnityLens.UnityLensPlugin));
+}

@@ -2,5 +2,5 @@
 # encoding: utf-8
 # Oliver Sauder, 2010
 
-bld.add_subdirs('indicator')
+bld.add_subdirs('indicator unitylens')
 

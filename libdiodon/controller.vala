@@ -394,24 +394,25 @@ namespace Diodon
         }
         
         /**
-         * Activate given uri by finding corresponding item in clipboard
-         * and select it.
-         *
-         * @param uri clipboard uri
+         * Get all items of given category
+         * 
+         * @param category category to get items 
+         * @return list of clipboard items of given category
          */
-        private void activate_uri(string uri)
+        public Gee.List<IClipboardItem> get_items_by_cateogry(ClipboardCategory category)
         {
-            // check if uri is a clipboard uri
-            if(str_equal(uri.substring(0, Config.CLIPBOARD_URI.length), Config.CLIPBOARD_URI)) {
-                string checksum = uri.substring(Config.CLIPBOARD_URI.length);
-                IClipboardItem item = clipboard_model.get_item_by_checksum(checksum);
-                if(item != null) {
-                    select_item(item);
-                    return;
-                }
-            }
-            
-            warning("Could not activate uri %s", uri);
+            return clipboard_model.get_items_by_cateogry(category);
+        }
+        
+        /**
+         * Get clipboard item by given checksum.
+         *
+         * @param checksum clipboad item checksum
+         * @return clipboard item or null if not available
+         */
+        public IClipboardItem? get_item_by_checksum(string checksum)
+        {
+            return clipboard_model.get_item_by_checksum(checksum);
         }
         
         /**

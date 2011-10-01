@@ -12,11 +12,10 @@ WEBSITE = 'https://launchpad.net/diodon'
 COPYRIGHT = 'Copyright \xc2\xa9 2010 Diodon Team'
 BUSNAME = 'net.launchpad.Diodon'
 BUSOBJECTPATH = '/net/launchpad/diodon'
-CLIPBOARD_URI = 'clipboard://'
 
 VERSION_MAJOR_MINOR = '.'.join (VERSION.split ('.')[0:2])
 VERSION_MAJOR = '.'.join (VERSION.split ('.')[0:1])
-top = '.'
+top = '/home/sao/src/bzr/launchpad/projects/diodon/plugin-support'
 out = '_build_'
 
 def options(opt):
@@ -70,7 +69,6 @@ def configure(conf):
     conf.define('PLUGINS_DIR', os.path.join(conf.env['LIBDIR'], APPNAME, 'plugins'))
     conf.env['PLUGINS_DIR'] = os.path.join(conf.env['LIBDIR'], APPNAME, 'plugins')
     conf.define('PLUGINS_DATA_DIR', os.path.join(conf.env['DATADIR'], APPNAME, 'plugins'))
-    conf.define('CLIPBOARD_URI', CLIPBOARD_URI)
       
     # set 'default' variant
     conf.define ('DEBUG', 0)

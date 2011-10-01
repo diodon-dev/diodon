@@ -1,0 +1,18 @@
+#! /usr/bin/env python
+# encoding: utf-8
+# Oliver Sauder, 2010
+
+import os
+
+lib = bld.shlib (
+  features = 'c cshlib',
+  target = 'unitylens',
+  vapi_dirs = '../../vapi ../../libdiodon',
+  uselib = 'GTK PEAS UNITY DEE',
+  use = 'libdiodon',
+  cflags = ['-include', 'config.h'],
+  packages = 'gtk+-3.0 libpeas-1.0 dee-1.0 unity config',
+  source = bld.path.ant_glob (incl='**/*.vala'))
+
+lib.install_path = os.path.join(bld.env['PLUGINS_DIR'], lib.target)
+bld.install_files (lib.install_path, 'unitylens.plugin')
