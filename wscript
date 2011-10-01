@@ -24,9 +24,9 @@ def options(opt):
     opt.tool_options('gnu_dirs')
     opt.tool_options('intltool')
     opt.tool_options('glib2')
-    opt.add_option('--update-po',         action='store_true', default=False, dest='update_po', help='Update localization files')
-    opt.add_option('--debug',             action='store_true', default=False, dest='debug',     help='Debug mode')
-    opt.add_option('--enable-unity-lens', action='store_true', default=False, dest='unity_lens', help='Enable unity lens support')
+    opt.add_option('--update-po',               action='store_true', default=False, dest='update_po', help='Update localization files')
+    opt.add_option('--debug',                   action='store_true', default=False, dest='debug',     help='Debug mode')
+    opt.add_option('--enable-unitylens-plugin', action='store_true', default=False, dest='unitylens', help='Enable build of unity lens plugin')
 
 def configure(conf):
     conf.load('compiler_c intltool gnu_dirs glib2')
@@ -46,8 +46,8 @@ def configure(conf):
     conf.check_cfg(package='libxml-2.0',        uselib_store='XML',          atleast_version='2.7.6',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='x11',               uselib_store='X11',          atleast_version='1.3.2',  mandatory=1, args='--cflags --libs')
     
-    # check if unity lens should be built
-    if Options.options.unity_lens:
+    # check if unity lens plugin should be built
+    if Options.options.unitylens:
         conf.check_cfg(package='unity',   uselib_store='UNITY', atleast_version='4.0.2',  mandatory=1, args='--cflags --libs')
         conf.check_cfg(package='dee-1.0', uselib_store='DEE',   atleast_version='0.5.18', mandatory=1, args='--cflags --libs')
 

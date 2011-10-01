@@ -2,5 +2,10 @@
 # encoding: utf-8
 # Oliver Sauder, 2010
 
-bld.add_subdirs('indicator unitylens')
+import Options
+
+if Options.options.unitylens:
+    bld.add_subdirs('unitylens')
+    
+bld.add_subdirs('indicator')
 
