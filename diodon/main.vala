@@ -18,21 +18,6 @@
  
 namespace Diodon
 {
-
-#if(UNITY_LENS)
-
-    /**
-     * Unity lens daemon
-     */
-    private UnityLens.Daemon? lens_daemon = null;
-    
-#endif
-
-    /**
-     * main clipboard controller
-     */
-    private Controller? controller = null;
-    
     /**
      * determine if debug mode is enabled
      */
@@ -42,6 +27,11 @@ namespace Diodon
      * determine whether version information should be printed
      */
     private static bool show_version = false;
+    
+    /**
+     * main clipboard controller
+     */
+    private Controller? controller = null;
     
     /**
      * list of available command line options
@@ -91,11 +81,6 @@ namespace Diodon
             controller = new Controller();
             controller.activate();
             
-            // Export the lens daemon on the session bus - as everywhere else
-            // these values should match those definedd in the .place file 
-            Bus.own_name(BusType.SESSION, Config.BUSNAME + ".Unity.Lens.Diodon",
-                BusNameOwnerFlags.NONE, on_bus_acquired, on_name_acquired, on_name_lost);
-            
             Gtk.main();
             
             return 0;
@@ -111,41 +96,6 @@ namespace Diodon
     private static void mute_log_handler(string? log_domain,
         LogLevelFlags log_levels, string message)
     {
-    }
-    
-    /**
-     * Called when bus has been acquired
-     */
-    private static void on_bus_acquired (DBusConnection conn, string name)
-    {
-        debug("Connected to session bus - checking for existing instances...");
-        
-#if(UNITY_LENS)
-        /* We need to set up our DBus objects *before* we know if we've acquired
-         * the name. This is a bit unfortunate because it means we might do work
-         * for no reason if another daemon is already running. See
-         * https://bugzilla.gnome.org/show_bug.cgi?id=640714 */
-        lens_daemon = new UnityLens.Daemon(controller.clipboard_model);
-        controller.lens_daemon = lens_daemon;
-#endif
-    }
-
-    /**
-     * Called when dbus connection name has been accired.
-     */
-    private static void on_name_acquired (DBusConnection conn, string name)
-    {
-        debug ("Acquired name %s. We're the main instance.\nAll system are go.",
-               name);
-    }
-
-    /**
-     * Called when dbus connection has been lost
-     */
-    private static void on_name_lost (DBusConnection conn, string name)
-    {
-        debug ("Another daemon is running.\nBailing out.");
-        Gtk.main_quit();
     }
 }
 

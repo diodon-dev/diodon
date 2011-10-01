@@ -36,6 +36,7 @@ namespace Diodon.Plugins.UnityLens
      */
     public class UnityLensPlugin : Peas.ExtensionBase, Peas.Activatable
     {
+        private uint dbus_id;
         private Unity.Lens lens;
         private Unity.Scope scope;
         
@@ -44,10 +45,48 @@ namespace Diodon.Plugins.UnityLens
         public UnityLensPlugin()
         {
             Object();
+            
+            dbus_id = 0;
         }
         
         public void activate()
         {
+            debug("activate unitylens plugin");
+            
+            if(dbus_id == 0) {
+                // Export the lens on the session bus - as everywhere else
+                // these values should match those definedd in the .place file 
+                dbus_id = Bus.own_name(BusType.SESSION, Config.BUSNAME + ".Unity.Lens.Diodon",
+                    BusNameOwnerFlags.NONE, on_bus_acquired, on_name_acquired, on_name_lost);
+             }
+        }
+
+        public void deactivate()
+        {
+            debug("deactivate unitylens plugin");
+            
+            if(dbus_id != 0) {
+                Bus.unown_name(dbus_id);
+                dbus_id = 0;
+                lens.dispose();
+            }
+        }
+
+        public void update_state ()
+        {
+        }
+        
+         /**
+         * Called when bus has been acquired
+         */
+        private void on_bus_acquired (DBusConnection conn, string name)
+        {
+            debug("Connected to session bus - checking for existing instances...");
+            
+            /* We need to set up our DBus objects *before* we know if we've acquired
+             * the name. This is a bit unfortunate because it means we might do work
+             * for no reason if another daemon is already running. See
+             * https://bugzilla.gnome.org/show_bug.cgi?id=640714 */
             scope = new Unity.Scope(Config.BUSOBJECTPATH + "/unity/scope/diodon");
             scope.search_in_global = false;
             scope.activate_uri.connect(activate_uri);
@@ -96,13 +135,21 @@ namespace Diodon.Plugins.UnityLens
             }
         }
 
-        public void deactivate()
+        /**
+         * Called when dbus connection name has been accired.
+         */
+        private void on_name_acquired(DBusConnection conn, string name)
         {
-            lens.dispose();
+            debug ("Acquired name %s. We're the main instance.\nAll system are go.",
+                   name);
         }
 
-        public void update_state ()
+        /**
+         * Called when dbus connection has been lost
+         */
+        private void on_name_lost(DBusConnection conn, string name)
         {
+            debug ("Another daemon is running.\nBailing out.");
         }
         
         private void populate_categories()
