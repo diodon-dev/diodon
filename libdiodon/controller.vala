@@ -80,8 +80,6 @@ namespace Diodon
             string user_plugins_dir = Path.build_filename(diodon_dir, "plugins");
             peas_engine.add_search_path(user_plugins_dir, user_plugins_dir);
             peas_engine.enable_loader("python");
-            settings_plugins.bind("active-plugins", peas_engine, "loaded-plugins",
-                SettingsBindFlags.DEFAULT);
             
             IClipboardStorage storage = new XmlClipboardStorage(diodon_dir,
                 "storage.xml");
@@ -111,6 +109,9 @@ namespace Diodon
             extension_set.extension_removed.connect((info, exten) => {
                 ((Peas.Activatable)exten).deactivate();
             });
+            
+            settings_plugins.bind("active-plugins", peas_engine, "loaded-plugins",
+                SettingsBindFlags.DEFAULT);
             
             indicator_view.activate();
         }
