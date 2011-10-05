@@ -5,7 +5,8 @@ bld.new_task_gen (
     features = "subst",
     source= "net.launchpad.Diodon.gschema.xml.in.in",
     target= "net.launchpad.Diodon.gschema.xml.in",
-    GETTEXT_PACKAGE = bld.env['GETTEXT_PACKAGE'])
+    GETTEXT_PACKAGE = bld.env['GETTEXT_PACKAGE'],
+    ACTIVE_PLUGINS = bld.env['ACTIVE_PLUGINS'])
 
 bld.new_task_gen (
   features = 'intltool_in',

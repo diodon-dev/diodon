@@ -26,6 +26,7 @@ def options(opt):
     opt.tool_options('glib2')
     opt.add_option('--update-po',               action='store_true', default=False, dest='update_po', help='Update localization files')
     opt.add_option('--debug',                   action='store_true', default=False, dest='debug',     help='Debug mode')
+    opt.add_option('--enable-indicator-plugin', action='store_true', default=False, dest='indicator', help='Enable build of indicator plugin')
     opt.add_option('--enable-unitylens-plugin', action='store_true', default=False, dest='unitylens', help='Enable build of unity lens plugin')
 
 def configure(conf):
@@ -46,6 +47,12 @@ def configure(conf):
     conf.check_cfg(package='libxml-2.0',        uselib_store='XML',          atleast_version='2.7.6',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='x11',               uselib_store='X11',          atleast_version='1.3.2',  mandatory=1, args='--cflags --libs')
     
+    ACTIVE_PLUGINS = ' '
+    # check if indicator plugin should be built
+    if Options.options.indicator:
+        conf.env['INDICATOR'] = '1'
+        ACTIVE_PLUGINS += 'indicator'
+        
     # check if unity lens plugin should be built
     if Options.options.unitylens:
         conf.check_cfg(package='unity',   uselib_store='UNITY', atleast_version='4.0.2',  mandatory=1, args='--cflags --libs')
@@ -54,6 +61,8 @@ def configure(conf):
 
     # FIXME: conf.env and conf.define should not both be needed?
     conf.define('PACKAGE_NAME', APPNAME)
+    conf.define('ACTIVE_PLUGINS', ACTIVE_PLUGINS)
+    conf.env['ACTIVE_PLUGINS'] = ACTIVE_PLUGINS
     conf.define('GETTEXT_PACKAGE', APPNAME)
     conf.env['GETTEXT_PACKAGE'] = APPNAME
     conf.define('VERSION', VERSION)

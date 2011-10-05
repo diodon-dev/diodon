@@ -7,5 +7,6 @@ import Options
 if bld.env['UNITYLENS']:
     bld.add_subdirs('unitylens')
     
-bld.add_subdirs('indicator')
+if bld.env['INDICATOR']:
+    bld.add_subdirs('indicator')
 

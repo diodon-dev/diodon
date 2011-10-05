@@ -30,6 +30,7 @@ namespace Diodon
         private Settings settings;
         private Settings settings_clipboard;
         private Settings settings_keybindings;
+        private Settings settings_plugins;
         private Gee.HashMap<ClipboardType, ClipboardManager> clipboard_managers;
         private ClipboardModel clipboard_model;
         private ConfigurationModel configuration_model;
@@ -72,12 +73,15 @@ namespace Diodon
             settings = new Settings("net.launchpad.Diodon");
             settings_clipboard = new Settings("net.launchpad.Diodon.clipboard");
             settings_keybindings = new Settings("net.launchpad.Diodon.keybindings");
+            settings_plugins = new Settings("net.launchpad.Diodon.plugins");
             
             peas_engine = Peas.Engine.get_default();
             peas_engine.add_search_path(Config.PLUGINS_DIR, Config.PLUGINS_DATA_DIR);
             string user_plugins_dir = Path.build_filename(diodon_dir, "plugins");
             peas_engine.add_search_path(user_plugins_dir, user_plugins_dir);
             peas_engine.enable_loader("python");
+            settings_plugins.bind("active-plugins", peas_engine, "loaded-plugins",
+                SettingsBindFlags.DEFAULT);
             
             IClipboardStorage storage = new XmlClipboardStorage(diodon_dir,
                 "storage.xml");

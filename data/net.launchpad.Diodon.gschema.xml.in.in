@@ -47,5 +47,12 @@
       <_description>Hotkey to quickly allow you to access the clipboard history.</_description>
     </key>
   </schema>
+  <schema gettext-domain="@GETTEXT_PACKAGE@" id="net.launchpad.Diodon.plugins" path="/net/launchpad/diodon/plugins/">
+    <key name="active-plugins" type="as">
+      <default>[@ACTIVE_PLUGINS@]</default>
+      <_summary>Active plugins</_summary>
+      <_description>List of active plugins.</_description>
+    </key>
+  </schema>
 </schemalist>
 
