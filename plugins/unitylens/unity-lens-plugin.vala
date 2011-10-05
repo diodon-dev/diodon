@@ -40,7 +40,7 @@ namespace Diodon.Plugins.UnityLens
         private Unity.Lens lens;
         private Unity.Scope scope;
         
-        public Object object { owned get; construct; }
+        public Object object { get; construct; }
         
         public UnityLensPlugin()
         {
