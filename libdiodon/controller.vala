@@ -27,14 +27,13 @@ namespace Diodon
      */
     public class Controller : GLib.Object
     {
-        private Settings settings;
         private Settings settings_clipboard;
         private Settings settings_keybindings;
         private Settings settings_plugins;
         private Gee.HashMap<ClipboardType, ClipboardManager> clipboard_managers;
         private ClipboardModel clipboard_model;
         private ConfigurationModel configuration_model;
-        private IndicatorView indicator_view;
+        private ClipboardMenu menu;
         private PreferencesView preferences_view;
         private KeybindingManager keybinding_manager;
         private Peas.ExtensionSet extension_set;
@@ -70,7 +69,6 @@ namespace Diodon
             
             keybinding_manager = new KeybindingManager();
             
-            settings = new Settings("net.launchpad.Diodon");
             settings_clipboard = new Settings("net.launchpad.Diodon.clipboard");
             settings_keybindings = new Settings("net.launchpad.Diodon.keybindings");
             settings_plugins = new Settings("net.launchpad.Diodon.plugins");
@@ -87,7 +85,7 @@ namespace Diodon
             
             configuration_model = new ConfigurationModel();   
             
-            indicator_view = new IndicatorView(this);    
+            menu = new ClipboardMenu(this);
             preferences_view = new PreferencesView();                  
         }
         
@@ -113,7 +111,7 @@ namespace Diodon
             settings_plugins.bind("active-plugins", peas_engine, "loaded-plugins",
                 SettingsBindFlags.DEFAULT);
             
-            indicator_view.activate();
+            menu.init();
         }
         
         private void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
@@ -219,15 +217,6 @@ namespace Diodon
                 }   
             );
             keybinding_manager.bind(configuration_model.history_accelerator, open_history);
-                
-            settings.bind("show-indicator", configuration_model,
-                "show-indicator", SettingsBindFlags.DEFAULT);
-            settings.changed["show-indicator"].connect(
-                (key) => {
-                    indicator_view.set_visible(configuration_model.show_indicator);
-                }
-            );
-            indicator_view.set_visible(configuration_model.show_indicator);
         }
         
         /**
@@ -477,14 +466,14 @@ namespace Diodon
         }
 
         /**
-         * Open indicator to view history
+         * Open menu to view history
          */        
         private void open_history()
         {
             // execute show_menu in main loop
             // to avoid dead lock
             Timeout.add(100, () => {
-                indicator_view.show_menu();
+                menu.show_menu();
                 return false; // stop timer
             });
         }

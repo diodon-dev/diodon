@@ -72,11 +72,6 @@ namespace Diodon
          * clipboard history accelerator
          */
         public string history_accelerator { get; set; default = "<Ctrl><Alt>V"; }
-        
-        /**
-         * flag whether the indicator should be shown
-         */
-        public bool show_indicator { get; set; default = true; }
     }
 }
 
