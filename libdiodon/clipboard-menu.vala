@@ -77,18 +77,17 @@ namespace Diodon
         }
         
         /**
-         * Select item by noving it to the top of the menu
+         * Select item by moving it to the top of the menu
          * 
          * @param item item to be selected
          */
         public void select_clipboard_item(IClipboardItem item)
         {
-            // re-arranging
-            remove_clipboard_item(item);
-            prepend_clipboard_item(item);
-        
             ClipboardMenuItem menu_item = clipboard_menu_items.get(item);
             menu_item.highlight_item();
+            
+            // re-arranging
+            reorder_child(menu_item, 0);
         }
         
         /**
