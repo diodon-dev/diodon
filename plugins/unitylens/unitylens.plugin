@@ -1,6 +1,6 @@
 [Plugin]
 Module=unitylens
-Name=Diodon Unity Lens
+Name=Unity Lens
 Description=Access diodon's clipboard history with the unity dash.
 Authors=Oliver Sauder <os@esite.ch>
 Copyright=Copyright © 2011 Diodon Team

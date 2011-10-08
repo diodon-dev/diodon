@@ -44,9 +44,7 @@ namespace Diodon.Plugins.UnityLens
         
         public UnityLensPlugin()
         {
-            debug("Create unitylens");
             Object();
-            
             dbus_id = 0;
         }
         
@@ -309,3 +307,4 @@ public void peas_register_types (GLib.TypeModule module)
   objmodule.register_extension_type (typeof (Peas.Activatable),
                                      typeof (Diodon.Plugins.UnityLens.UnityLensPlugin));
 }
+

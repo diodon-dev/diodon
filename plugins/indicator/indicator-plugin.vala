@@ -26,7 +26,8 @@ namespace Diodon.Plugins.Indicator
      */
     public class IndicatorPlugin : Peas.ExtensionBase, Peas.Activatable
     {
-        public Object object { owned get; construct; }
+        private AppIndicator.Indicator indicator;
+        public Object object { get; construct; }
 
         public IndicatorPlugin()
         {
@@ -35,15 +36,26 @@ namespace Diodon.Plugins.Indicator
 
         public void activate()
         {
-            debug("activated indicator plugin");                    
+            Controller controller = object as Controller;
+           
+            if(indicator == null) {
+                indicator = new AppIndicator.Indicator("diodon", "gtk-paste",
+                    AppIndicator.IndicatorCategory.APPLICATION_STATUS);
+            
+                indicator.set_menu(controller.get_menu());
+            }
+            
+            indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
         }
 
         public void deactivate()
         {
-          debug("deactivated indicator plugin");
+            if(indicator != null) {
+                indicator.set_status(AppIndicator.IndicatorStatus.PASSIVE);
+            }
         }
 
-        public void update_state ()
+        public void update_state()
         {
         }
     }
@@ -54,6 +66,6 @@ public void peas_register_types (GLib.TypeModule module)
 {
   Peas.ObjectModule objmodule = module as Peas.ObjectModule;
   objmodule.register_extension_type (typeof (Peas.Activatable),
-                                     typeof (Diodon.Plugins.IndicatorPlugin));
+                                     typeof (Diodon.Plugins.Indicator.IndicatorPlugin));
 }
 

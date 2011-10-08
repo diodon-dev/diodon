@@ -588,6 +588,14 @@ namespace Diodon
         }
         
         /**
+         * Get clipboard history menu.
+         */
+        public Gtk.Menu get_menu()
+        {
+            return menu;
+        }
+        
+        /**
          * Quit diodon
          */
         public void quit()

@@ -1,7 +1,7 @@
 [Plugin]
 Module=indicator
-Name=Vala also says Hello
-Description=Inserts a box containing "Hello World" in every window.
+Name=Application Indicator
+Description=Access diodon's clipboard history with an application indicator.
 Authors=Oliver Sauder <os@esite.ch>
 Copyright=Copyright © 2011 Diodon Team
 

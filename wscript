@@ -24,10 +24,10 @@ def options(opt):
     opt.tool_options('gnu_dirs')
     opt.tool_options('intltool')
     opt.tool_options('glib2')
-    opt.add_option('--update-po',               action='store_true', default=False, dest='update_po', help='Update localization files')
-    opt.add_option('--debug',                   action='store_true', default=False, dest='debug',     help='Debug mode')
-    opt.add_option('--enable-indicator-plugin', action='store_true', default=False, dest='indicator', help='Enable build of indicator plugin')
-    opt.add_option('--enable-unitylens-plugin', action='store_true', default=False, dest='unitylens', help='Enable build of unity lens plugin')
+    opt.add_option('--update-po',                action='store_true', default=False, dest='update_po', help='Update localization files')
+    opt.add_option('--debug',                    action='store_true', default=False, dest='debug',     help='Debug mode')
+    opt.add_option('--disable-indicator-plugin', action='store_true', default=False, dest='disable_indicator', help='Disable build of indicator plugin')
+    opt.add_option('--enable-unitylens-plugin',  action='store_true', default=False, dest='enable_unitylens', help='Enable build of unity lens plugin')
 
 def configure(conf):
     conf.load('compiler_c intltool gnu_dirs glib2')
@@ -35,7 +35,6 @@ def configure(conf):
     conf.load('vala', funs='')
     conf.check_vala(min_version=(0,13,0))
     
-    conf.check_cfg(package='appindicator3-0.1', uselib_store='APPINDICATOR', atleast_version='0.3.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gdk-x11-3.0',       uselib_store='GDKX',         atleast_version='3.0.8',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gee-1.0',           uselib_store='GEE',          atleast_version='0.5.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='libpeas-1.0',       uselib_store='PEAS',         atleast_version='1.1.0',  mandatory=1, args='--cflags --libs')
@@ -47,17 +46,21 @@ def configure(conf):
     conf.check_cfg(package='libxml-2.0',        uselib_store='XML',          atleast_version='2.7.6',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='x11',               uselib_store='X11',          atleast_version='1.3.2',  mandatory=1, args='--cflags --libs')
     
+    # FIXME: waf throws up when assigning an empty string
+    # we need a better way of configuring plugins which are enabled
+    # by default anyway
     ACTIVE_PLUGINS = ' '
     # check if indicator plugin should be built
-    if Options.options.indicator:
-        conf.env['INDICATOR'] = '1'
-        ACTIVE_PLUGINS += 'indicator'
+    conf.env['INDICATOR'] = not(Options.options.disable_indicator)
+    if not(Options.options.disable_indicator):
+        conf.check_cfg(package='appindicator3-0.1', uselib_store='APPINDICATOR', atleast_version='0.3.0',  mandatory=1, args='--cflags --libs')
+        ACTIVE_PLUGINS = "'indicator'"
         
     # check if unity lens plugin should be built
-    if Options.options.unitylens:
+    conf.env['UNITYLENS'] = Options.options.enable_unitylens
+    if Options.options.enable_unitylens:
         conf.check_cfg(package='unity',   uselib_store='UNITY', atleast_version='4.0.2',  mandatory=1, args='--cflags --libs')
         conf.check_cfg(package='dee-1.0', uselib_store='DEE',   atleast_version='0.5.18', mandatory=1, args='--cflags --libs')
-        conf.env['UNITYLENS'] = '1'
 
     # FIXME: conf.env and conf.define should not both be needed?
     conf.define('PACKAGE_NAME', APPNAME)

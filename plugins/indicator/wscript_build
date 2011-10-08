@@ -7,10 +7,11 @@ import os
 lib = bld.shlib (
   features = 'c cshlib',
   target = 'indicator',
-  vapi_dirs = '../../vapi',
-  uselib = 'GTK GEE APPINDICATOR XML X11 GDKX GIO GIOUNIX PEAS PEASGTK',
+  vapi_dirs = '../../vapi ../../libdiodon',
+  uselib = 'APPINDICATOR',
+  use = 'libdiodon',
   cflags = ['-include', 'config.h'],
-  packages = 'gtk+-3.0 gee-1.0 gio-2.0 gio-unix-2.0 appindicator3-0.1 libxml-2.0 x11 gdk-x11-3.0 libpeas-1.0 libpeas-gtk-1.0 config',
+  packages = 'appindicator3-0.1',
   source = bld.path.ant_glob (incl='**/*.vala'))
 
 lib.install_path = os.path.join(bld.env['PLUGINS_DIR'], lib.target)
