@@ -89,13 +89,27 @@ namespace Diodon
             preferences_view = new PreferencesView(this);                  
         }
         
+        private void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
+            Peas.Extension exten, void* data)
+        {
+            ((Peas.Activatable)exten).activate();
+        }
+        
         /**
-         * Initializes clipboard and activates installed plugins
+         * Initializes views, models and managers.
          */
-        public void activate()
-        {               
-            init();
+        public void init()
+        {
+            init_configuration();
             
+             // start clipboard managers
+            foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
+                clipboard_manager.start();
+            }
+            
+            keybinding_manager.init();
+            
+            // init peas plugin system
             extension_set = new Peas.ExtensionSet(peas_engine, typeof(Peas.Activatable),
                 "object", this);
             extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_added, null);
@@ -110,28 +124,8 @@ namespace Diodon
             settings_plugins.bind("active-plugins", peas_engine, "loaded-plugins",
                 SettingsBindFlags.DEFAULT);
             
+            // and finally the menu
             menu.init();
-        }
-        
-        private void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
-            Peas.Extension exten, void* data)
-        {
-            ((Peas.Activatable)exten).activate();
-        }
-        
-        /**
-         * Initializes views, models and managers.
-         */
-        private void init()
-        {
-            init_configuration();
-            
-             // start clipboard managers
-            foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
-                clipboard_manager.start();
-            }
-            
-            keybinding_manager.init();
         }
         
         /**
@@ -432,13 +426,13 @@ namespace Diodon
             }
             
             // let's bind new one
-            keybinding_manager.bind(accelerator, open_history);
+            keybinding_manager.bind(accelerator, show_history);
         }
 
         /**
          * Open menu to view history
          */        
-        private void open_history()
+        public void show_history()
         {
             // execute show_menu in main loop
             // to avoid dead lock
