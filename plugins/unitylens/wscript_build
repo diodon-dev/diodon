@@ -30,7 +30,13 @@ bld.new_task_gen (
   source = 'diodon.lens.in',
   flags = ["-d", "-q", "-u", "-c"],
   install_path = "${DATADIR}/unity/lenses/diodon")
-  
-bld.install_files (lib.install_path, 'unitylens.plugin')
+ 
+bld.new_task_gen (
+  features = 'intltool_in',
+  podir = '../../po',
+  source = 'unitylens.plugin.in',
+  flags = ["-d", "-q", "-u", "-c"],
+  install_path = lib.install_path)
+
 
 

@@ -15,4 +15,10 @@ lib = bld.shlib (
   source = bld.path.ant_glob (incl='**/*.vala'))
 
 lib.install_path = os.path.join(bld.env['PLUGINS_DIR'], lib.target)
-bld.install_files (lib.install_path, 'indicator.plugin')
+
+bld.new_task_gen (
+  features = 'intltool_in',
+  podir = '../../po',
+  source = 'indicator.plugin.in',
+  flags = ["-d", "-q", "-u", "-c"],
+  install_path = lib.install_path)
