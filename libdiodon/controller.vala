@@ -86,7 +86,7 @@ namespace Diodon
             configuration_model = new ConfigurationModel();   
             
             menu = new ClipboardMenu(this);
-            preferences_view = new PreferencesView();                  
+            preferences_view = new PreferencesView(this);                  
         }
         
         /**
@@ -94,7 +94,6 @@ namespace Diodon
          */
         public void activate()
         {               
-            connect_signals();
             init();
             
             extension_set = new Peas.ExtensionSet(peas_engine, typeof(Peas.Activatable),
@@ -121,22 +120,6 @@ namespace Diodon
         }
         
         /**
-         * connects controller to all signals of injected managers and views
-         */
-        private void connect_signals()
-        {
-            // preferences
-            preferences_view.on_change_use_clipboard.connect(change_use_clipboard_configuration);
-            preferences_view.on_change_use_primary.connect(change_use_primary_configuration);
-            preferences_view.on_change_synchronize_clipboards.connect(change_synchronize_clipboards_configuration);
-            preferences_view.on_change_keep_clipboard_content.connect(change_keep_clipboard_content_configuration);
-            preferences_view.on_change_instant_paste.connect(change_instant_paste_configuration);
-            preferences_view.on_change_clipboard_size.connect(change_clipboard_size_configuration);
-            preferences_view.on_change_history_accelerator.connect(change_history_accelerator_configuration);
-            preferences_view.on_close.connect(hide_preferences);
-        }
-        
-        /**
          * Initializes views, models and managers.
          */
         private void init()
@@ -153,8 +136,6 @@ namespace Diodon
         
         /**
          * Initialize configuration values
-         * 
-         * TODO: remove duplicated code of change event and init call
          */
         private void init_configuration()
         {
@@ -162,7 +143,6 @@ namespace Diodon
                 "use-clipboard", SettingsBindFlags.DEFAULT);
             settings_clipboard.changed["use-clipboard"].connect(
                 (key) => {
-                    debug ("Changed use clipboard");
                     enable_clipboard_manager(ClipboardType.CLIPBOARD,
                         configuration_model.use_clipboard);
                 }
@@ -207,16 +187,14 @@ namespace Diodon
             );
             change_clipboard_size(configuration_model.clipboard_size);
                 
-            // we cannot bind this property as we need the previous value
-            configuration_model.history_accelerator =
-                settings_keybindings.get_string("history-accelerator");
+            settings_keybindings.bind("history-accelerator", configuration_model,
+                "history-accelerator", SettingsBindFlags.DEFAULT);
             settings_keybindings.changed["history-accelerator"].connect(
                 (key) => {
-                    change_history_accelerator(
-                        settings_keybindings.get_string("history-accelerator"));
-                }   
+                    change_history_accelerator(configuration_model.history_accelerator);
+                }
             );
-            keybinding_manager.bind(configuration_model.history_accelerator, open_history);
+            change_history_accelerator(configuration_model.history_accelerator);
         }
         
         /**
@@ -396,6 +374,14 @@ namespace Diodon
         }
         
         /**
+         * access to current configuration settings
+         */
+        public ConfigurationModel get_configuration()
+        {
+            return configuration_model;
+        }
+        
+        /**
          * Called when clipboard is empty and data might be needed to restored
          * 
          * @param type clipboard type
@@ -432,16 +418,6 @@ namespace Diodon
                 }
             }
         }
-        
-         /**
-         * Change setting of clipboard_size in configuration model
-         *
-         * @param size clipboard size
-         */        
-        private void change_clipboard_size_configuration(int size)
-        {
-            configuration_model.clipboard_size = size;
-        }
 
         /**
          * change history accelerator key and bind new key to open_history.
@@ -450,19 +426,13 @@ namespace Diodon
          */        
         private void change_history_accelerator(string accelerator)
         {
-            keybinding_manager.unbind(configuration_model.history_accelerator);
-            configuration_model.history_accelerator = accelerator;
+            // check if there is a previos accelerator to unbind
+            if(configuration_model.previous_history_accelerator != null) {
+                keybinding_manager.unbind(configuration_model.previous_history_accelerator);
+            }
+            
+            // let's bind new one
             keybinding_manager.bind(accelerator, open_history);
-        }
-        
-        /**
-         * Change setting of history_accelerator in GSettings itself
-         *
-         * @param accelerator accelerator parseable by Gtk.accelerator_parse
-         */        
-        private void change_history_accelerator_configuration(string accelerator)
-        {
-            settings_keybindings.set_string("history-accelerator", accelerator);
         }
 
         /**
@@ -521,46 +491,6 @@ namespace Diodon
                 }
             }
         }
-
-        /**
-         * Change setting of use_clipboard in configuration model
-         */        
-        private void change_use_clipboard_configuration()
-        {
-            configuration_model.use_clipboard = !configuration_model.use_clipboard;
-        }
-        
-        /**
-         * Change setting of use_primary in configuration model
-         */        
-        private void change_use_primary_configuration()
-        {
-            configuration_model.use_primary = !configuration_model.use_primary;
-        }
-        
-        /**
-         * Change setting of synchronize_clipboards in configuration model
-         */        
-        private void change_synchronize_clipboards_configuration()
-        {
-            configuration_model.synchronize_clipboards = !configuration_model.synchronize_clipboards;
-        }
-        
-        /**
-         * Change setting of keep_clipboard_content in configuration model
-         */  
-        private void change_keep_clipboard_content_configuration()
-        {
-            configuration_model.keep_clipboard_content = !configuration_model.keep_clipboard_content;
-        }
-        
-        /**
-         * Change setting of instant_paste in configuration model
-         */  
-        private void change_instant_paste_configuration()
-        {
-            configuration_model.instant_paste = !configuration_model.instant_paste;
-        }
         
         /**
          * Show preferences dialog
@@ -568,14 +498,6 @@ namespace Diodon
         public void show_preferences()
         {
             preferences_view.show(configuration_model);
-        }
-        
-        /**
-         * Hide preferences dialog
-         */
-        private void hide_preferences()
-        {
-            preferences_view.hide();
         }
         
         /**
