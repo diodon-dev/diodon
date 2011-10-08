@@ -70,12 +70,34 @@ namespace Diodon
                 Log.set_handler(null, LogLevelFlags.LEVEL_DEBUG, mute_log_handler);
             }
             
-            // setup gtk
             Gtk.init(ref args);
+            Unique.App app = new Unique.App(Config.BUSNAME, null);
+            
+            // when diodon is already running activate it
+            if(app.is_running) {
+                if(app.send_message(Unique.Command.ACTIVATE, null) == Unique.Response.OK) {
+                    return 0;
+                }
+                else {
+                    critical("Diodon is already running but could not be actiaved.");
+                    return 1;
+                }
+            }
 
             // setup controller            
             controller = new Controller();
-            controller.activate();
+            controller.init();
+            
+            // register app activate will open controller history
+            app.message_received.connect((command, message_data, time_) => {
+                switch(command) {
+                    case Unique.Command.ACTIVATE:
+                        controller.show_history();
+                        return Unique.Response.OK;
+                     default:
+                        return Unique.Response.INVALID;
+                }
+            });
             
             Gtk.main();
             
