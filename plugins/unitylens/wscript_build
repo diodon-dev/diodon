@@ -15,4 +15,22 @@ lib = bld.shlib (
   source = bld.path.ant_glob (incl='**/*.vala'))
 
 lib.install_path = os.path.join(bld.env['PLUGINS_DIR'], lib.target)
+
+bld.new_task_gen (
+  features = "subst",
+  source= "diodon.lens.in.in",
+  target= "diodon.lens.in",
+  GETTEXT_PACKAGE = bld.env['GETTEXT_PACKAGE'],
+  BUSNAME = bld.env['BUSNAME'],
+  BUSOBJECTPATH = bld.env['BUSOBJECTPATH'])
+    
+bld.new_task_gen (
+  features = 'intltool_in',
+  podir = '../../po',
+  source = 'diodon.lens.in',
+  flags = ["-d", "-q", "-u", "-c"],
+  install_path = "${DATADIR}/unity/lenses/diodon")
+  
 bld.install_files (lib.install_path, 'unitylens.plugin')
+
+
