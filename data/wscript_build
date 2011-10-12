@@ -9,22 +9,24 @@ bld.new_task_gen (
     ACTIVE_PLUGINS = bld.env['ACTIVE_PLUGINS'])
 
 bld.new_task_gen (
-  features = 'intltool_in',
-  podir = '.', # no translations should get added to gschema file
-  source = 'net.launchpad.Diodon.gschema.xml.in',
-  install_path = '',  # do not install it
-  flags = ["-x", "-q", "-u", "-c"])
+    features = 'intltool_in',
+    podir = '.', # no translations should get added to gschema file
+    source = 'net.launchpad.Diodon.gschema.xml.in',
+    install_path = '',  # do not install it
+    flags = ["-x", "-q", "-u", "-c"])
   
 task = bld.new_task_gen (
     features = 'glib2')    
 task.add_settings_schemas ('net.launchpad.Diodon.gschema.xml')
 
 bld.new_task_gen (
-  features = 'intltool_in',
-  podir = '../po',
-  source = 'diodon.desktop.in',
-  flags = ["-d", "-q", "-u", "-c"],
-  install_path = "${DATADIR}/applications")
+    features = 'intltool_in',
+    podir = '../po',
+    source = 'diodon.desktop.in',
+    flags = ["-d", "-q", "-u", "-c"],
+    install_path = "${DATADIR}/applications")
+  
+bld.new_task_gen (source='diodon.pc.in')
 
 bld.install_files('${SYSCONFDIR}/xdg/autostart', 'diodon.desktop')
 bld.install_files('${DATADIR}/diodon', 'preferences.ui')
