@@ -6,7 +6,7 @@ import subprocess, os, traceback
 import Options, Logs
 
 NAME = 'Diodon'
-VERSION = '0.5.0'
+VERSION = '0.6.0'
 APPNAME = 'diodon'
 WEBSITE = 'https://launchpad.net/diodon'
 COPYRIGHT = 'Copyright \xc2\xa9 2010 Diodon Team'
