@@ -59,45 +59,6 @@ namespace Diodon
             
             return result;
         }
-        
-        /**
-         * Compara pixbufs pixel by pixel
-         *
-         * @param pixbufa pix buf to be compared
-         * @param pixbufb pix buf to be compared
-         * @return true if pixbufs are equal; otherwise false.
-         */
-        public static bool compare_pixbufs(Gdk.Pixbuf pixbufa, Gdk.Pixbuf pixbufb)
-        {
-            // check for dimensions
-            if(pixbufa.width != pixbufb.width || 
-                pixbufa.rowstride != pixbufb.rowstride || pixbufa.height != pixbufb.height) {
-                
-                return false; // images have different size
-            }
-            
-            uchar* pixelsa = (uchar*)pixbufa.pixels;
-            uchar* pixelsb = (uchar*)pixbufb.pixels;
-            int height = pixbufa.height;
-            int rowstride = pixbufa.rowstride;
-            int width = pixbufa.width;
-            
-            for(int i = 0; i < height; ++i) {
-                uchar* rowa = pixelsa + (i * rowstride);
-                uchar* rowb = pixelsb + (i * rowstride);
-                
-                for(int j = 0; j < width; ++j) {
-                    if(*rowa != *rowb) {
-                        return false; // one pixels differs
-                    }
-                    
-                    rowa++;
-                    rowb++;
-                }
-            }
-            
-            return true;
-        }
     }
 }
 

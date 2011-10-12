@@ -34,7 +34,8 @@ namespace Config
   
   public const string LOCALEDIR;
   public const string SHAREDIR;
-  
-  public const string CLIPBOARD_URI;
+  public const string LIBDIR;
+  public const string PLUGINS_DIR;
+  public const string PLUGINS_DATA_DIR;
 }
 

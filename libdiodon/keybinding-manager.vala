@@ -25,7 +25,7 @@ namespace Diodon
      * 
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class KeybindingManager : GLib.Object
+    class KeybindingManager : GLib.Object
     {
         /**
          * list of binded keybindings

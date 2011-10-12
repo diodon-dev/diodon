@@ -1,0 +1,19 @@
+#! /usr/bin/env python
+# encoding: utf-8
+# Oliver Sauder, 2010
+
+import Options
+
+lib = bld.shlib (
+  features = 'c cshlib',
+  target = 'diodon',
+  name = 'libdiodon',
+  vapi_dirs = '../vapi',
+  uselib = 'GTK GEE XML X11 GDKX PEAS PEASGTK',
+  cflags = ['-include', 'config.h'],
+  header_path = '${INCLUDEDIR}/diodon',
+  packages = 'gtk+-3.0 gee-1.0',
+  packages_private = 'libxml-2.0 x11 gdk-x11-3.0 libpeas-gtk-1.0 libpeas-1.0 config',
+  source = bld.path.ant_glob (incl='**/*.vala'))
+
+   

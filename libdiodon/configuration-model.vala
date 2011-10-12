@@ -26,6 +26,7 @@ namespace Diodon
     public class ConfigurationModel : GLib.Object
     {
         private int _clipboard_size = 25;
+        private string _history_accelerator = "<Ctrl><Alt>V";
     
         /**
          * flag whether primary selection is enabled
@@ -67,16 +68,25 @@ namespace Diodon
                 }
             }
         }
-       
+        
+        /**
+         * previous clipboard history accelerator
+         */
+        public string previous_history_accelerator { get; set; }
+        
         /**
          * clipboard history accelerator
          */
-        public string history_accelerator { get; set; default = "<Ctrl><Alt>V"; }
-        
-        /**
-         * flag whether the indicator should be shown
-         */
-        public bool show_indicator { get; set; default = true; }
+        public string history_accelerator
+        {
+            get {
+                return _history_accelerator;
+            }
+            set {
+                previous_history_accelerator = _history_accelerator;
+                _history_accelerator = value;
+            }
+        }
     }
 }
 

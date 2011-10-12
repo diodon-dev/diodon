@@ -15,24 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+ 
 namespace Diodon
 {
-
-#if(UNITY_LENS)
-
-    /**
-     * Unity lens daemon
-     */
-    private UnityLens.Daemon? lens_daemon = null;
-    
-#endif
-
-    /**
-     * main clipboard controller
-     */
-    private Controller? controller = null;
-    
     /**
      * determine if debug mode is enabled
      */
@@ -44,6 +29,11 @@ namespace Diodon
     private static bool show_version = false;
     
     /**
+     * main clipboard controller
+     */
+    private Controller? controller = null;
+    
+    /**
      * list of available command line options
      */
     private static const OptionEntry[] options = {
@@ -52,10 +42,6 @@ namespace Diodon
         { null }
     };
 
-    /**
-     * starter method responsible for creating all needed views, controllers
-     * and models and starting the GUI application and the unity lens daemon
-     */
     public static int main(string[] args)
     {
         try {
@@ -84,23 +70,34 @@ namespace Diodon
                 Log.set_handler(null, LogLevelFlags.LEVEL_DEBUG, mute_log_handler);
             }
             
-            // setup gtk
             Gtk.init(ref args);
+            Unique.App app = new Unique.App(Config.BUSNAME, null);
             
-            // setup storage    
-            string diodon_dir = Utility.get_user_data_dir();
-            IClipboardStorage storage = new XmlClipboardStorage(diodon_dir, "storage.xml");
-            ClipboardModel model = new ClipboardModel(storage);
+            // when diodon is already running activate it
+            if(app.is_running) {
+                if(app.send_message(Unique.Command.ACTIVATE, null) == Unique.Response.OK) {
+                    return 0;
+                }
+                else {
+                    critical("Diodon is already running but could not be actiaved.");
+                    return 1;
+                }
+            }
 
             // setup controller            
             controller = new Controller();
-            controller.clipboard_model = model;
-            controller.start();
+            controller.init();
             
-            // Export the lens daemon on the session bus - as everywhere else
-            // these values should match those definedd in the .place file 
-            Bus.own_name(BusType.SESSION, Config.BUSNAME + ".Unity.Lens.Diodon",
-                BusNameOwnerFlags.NONE, on_bus_acquired, on_name_acquired, on_name_lost);
+            // register app activate will open controller history
+            app.message_received.connect((command, message_data, time_) => {
+                switch(command) {
+                    case Unique.Command.ACTIVATE:
+                        controller.show_history();
+                        return Unique.Response.OK;
+                     default:
+                        return Unique.Response.INVALID;
+                }
+            });
             
             Gtk.main();
             
@@ -117,41 +114,6 @@ namespace Diodon
     private static void mute_log_handler(string? log_domain,
         LogLevelFlags log_levels, string message)
     {
-    }
-    
-    /**
-     * Called when bus has been acquired
-     */
-    private static void on_bus_acquired (DBusConnection conn, string name)
-    {
-        debug("Connected to session bus - checking for existing instances...");
-        
-#if(UNITY_LENS)
-        /* We need to set up our DBus objects *before* we know if we've acquired
-         * the name. This is a bit unfortunate because it means we might do work
-         * for no reason if another daemon is already running. See
-         * https://bugzilla.gnome.org/show_bug.cgi?id=640714 */
-        lens_daemon = new UnityLens.Daemon(controller.clipboard_model);
-        controller.lens_daemon = lens_daemon;
-#endif
-    }
-
-    /**
-     * Called when dbus connection name has been accired.
-     */
-    private static void on_name_acquired (DBusConnection conn, string name)
-    {
-        debug ("Acquired name %s. We're the main instance.\nAll system are go.",
-               name);
-    }
-
-    /**
-     * Called when dbus connection has been lost
-     */
-    private static void on_name_lost (DBusConnection conn, string name)
-    {
-        debug ("Another daemon is running.\nBailing out.");
-        Gtk.main_quit();
     }
 }
 

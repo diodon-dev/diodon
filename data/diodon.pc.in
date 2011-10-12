@@ -1,0 +1,14 @@
+prefix=@PREFIX@
+exec_prefix=@EXEC_PREFIX@
+libdir=@LIBDIR@
+includedir=@INCLUDEDIR@
+datarootdir=@DATAROOTDIR@
+datadir=@DATADIR@
+
+Name: diodon
+Description: Diodon GTK+ Clipboard Manager
+Version: @VERSION@
+Requires: gtk+-3.0 gee-1.0
+Libs: -L${libdir} -ldiodon
+Cflags: -I${includedir}/diodon
+

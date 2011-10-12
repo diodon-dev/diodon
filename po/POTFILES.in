@@ -2,8 +2,10 @@
 # Please keep this file sorted alphabetically.
 
 data/diodon.desktop.in
-data/diodon.lens.in.in
 data/net.launchpad.Diodon.gschema.xml.in.in
 [type: gettext/glade]data/preferences.ui
-src/indicator-view.vala
-src/unity-lens-daemon.vala
+libdiodon/clipboard-menu.vala
+plugins/indicator/indicator.plugin.in
+plugins/unitylens/diodon.lens.in.in
+plugins/unitylens/unity-lens-plugin.vala
+plugins/unitylens/unitylens.plugin.in

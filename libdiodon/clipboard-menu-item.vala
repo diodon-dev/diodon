@@ -23,7 +23,7 @@ namespace Diodon
      * 
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class ClipboardMenuItem : Gtk.ImageMenuItem
+    class ClipboardMenuItem : Gtk.ImageMenuItem
     {
         private IClipboardItem _item;
         

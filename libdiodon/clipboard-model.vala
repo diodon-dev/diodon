@@ -24,7 +24,7 @@ namespace Diodon
      *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class ClipboardModel : GLib.Object
+    class ClipboardModel : GLib.Object
     {
         private IClipboardStorage storage;
         private Gee.HashMap<ClipboardType, IClipboardItem> current_items;
@@ -72,7 +72,7 @@ namespace Diodon
          * 
          * @return list of clipboard items
          */
-        public Gee.ArrayList<IClipboardItem> get_items()
+        public Gee.List<IClipboardItem> get_items()
         {
             return storage.get_items();
         }
@@ -128,6 +128,10 @@ namespace Diodon
          */
         public void clear()
         {
+            foreach(IClipboardItem item in get_items()) {
+                item.remove();
+            }
+            
             storage.clear();
             current_items.clear();
         }
@@ -140,6 +144,7 @@ namespace Diodon
         public void add_item(IClipboardItem item)
         {
             storage.add_item(item);
+            current_items.set(item.get_clipboard_type(), item);
         }
         
         /**
@@ -149,6 +154,10 @@ namespace Diodon
          */         
         public void select_item(IClipboardItem item)
         {  
+            // selected item is always at the end of history
+            storage.remove_item(item);
+            storage.add_item(item);
+            
             current_items.set(item.get_clipboard_type(), item);
         }
         
@@ -160,6 +169,7 @@ namespace Diodon
         public void remove_item(IClipboardItem item)
         {
             storage.remove_item(item);
+            item.remove(); // finally cleaning up
         }
     }  
 }

@@ -16,49 +16,78 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Diodon.UnityLens
+namespace Diodon.Plugins.UnityLens
 {
-
-#if(UNITY_LENS)
-
     /**
      * TODO: needs to be replaced with a diodon specific path
      * Absolute path to custom unity icons.
      */
     const string UNITY_ICON_PATH = "/usr/share/icons/unity-icon-theme/places/svg/";
+    
+    /**
+     * clipboard uri 
+     */
+    const string CLIPBOARD_URI = "clipboard://";
 
     /**
-     * A daemon for the unity lens
+     * Providing access to clipboard history through a unity lens
      *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public class Daemon : GLib.Object
+    public class UnityLensPlugin : Peas.ExtensionBase, Peas.Activatable
     {
+        private uint dbus_id;
         private Unity.Lens lens;
         private Unity.Scope scope;
         
-        /**
-         * TODO: this is only a workaround and breaks the softwware design
-         * the controller should actually expose all needed operations
-         * from the clipboard model and the daemon should access the controller
-         * directly. However should do for now as we only read.
-         *
-         * access to the clipboard model.
-         */
-        private ClipboardModel clipboard_model;
+        public Object object { get; construct; }
         
-        /**
-         * called when a uri needs to be activated
-         */
-        public signal void on_activate_uri(string uri);
-        
-        public Daemon(ClipboardModel clipboard_model)
+        public UnityLensPlugin()
         {
-            this.clipboard_model = clipboard_model;  
+            Object();
+            dbus_id = 0;
+        }
+        
+        public void activate()
+        {
+            debug("activate unitylens plugin");
             
+            if(dbus_id == 0) {
+                // Export the lens on the session bus - as everywhere else
+                // these values should match those definedd in the .place file 
+                dbus_id = Bus.own_name(BusType.SESSION, Config.BUSNAME + ".Unity.Lens.Diodon",
+                    BusNameOwnerFlags.NONE, on_bus_acquired, on_name_acquired, on_name_lost);
+             }
+        }
+
+        public void deactivate()
+        {
+            debug("deactivate unitylens plugin");
+            if(dbus_id != 0) {
+                Bus.unown_name(dbus_id);
+                dbus_id = 0;
+                lens = null;
+            }
+        }
+
+        public void update_state ()
+        {
+        }
+        
+         /**
+         * Called when bus has been acquired
+         */
+        private void on_bus_acquired (DBusConnection conn, string name)
+        {
+            debug("Connected to session bus - checking for existing instances...");
+            
+            /* We need to set up our DBus objects *before* we know if we've acquired
+             * the name. This is a bit unfortunate because it means we might do work
+             * for no reason if another daemon is already running. See
+             * https://bugzilla.gnome.org/show_bug.cgi?id=640714 */
             scope = new Unity.Scope(Config.BUSOBJECTPATH + "/unity/scope/diodon");
             scope.search_in_global = false;
-            scope.activate_uri.connect(activate);
+            scope.activate_uri.connect(activate_uri);
             
             lens = new Unity.Lens(Config.BUSOBJECTPATH + "/unity/lens/diodon", "diodon");
             lens.search_in_global = true;
@@ -102,6 +131,23 @@ namespace Diodon.UnityLens
                 critical("Failed to export DBus service for '%s': %s",
                     lens.dbus_path, error.message);
             }
+        }
+
+        /**
+         * Called when dbus connection name has been accired.
+         */
+        private void on_name_acquired(DBusConnection conn, string name)
+        {
+            debug("Acquired name %s. We're the main instance.\nAll system are go.",
+                   name);
+        }
+
+        /**
+         * Called when dbus connection has been lost
+         */
+        private void on_name_lost(DBusConnection conn, string name)
+        {
+            debug("Another daemon is running. Bailing out.");
         }
         
         private void populate_categories()
@@ -209,10 +255,11 @@ namespace Diodon.UnityLens
 
         private void update_results_model(Dee.Model results_model, string search, ClipboardItemType type)
         {
+            Controller controller = object as Controller;
             debug("Rebuilding results model");
             results_model.clear();
             
-            Gee.List<IClipboardItem> items = clipboard_model.get_items();
+            Gee.List<IClipboardItem> items = controller.get_items();
             
             // add items in reverse order as last added items are
             // more important
@@ -220,8 +267,7 @@ namespace Diodon.UnityLens
                 IClipboardItem item = items.get(i);
                 if(item.matches(search, type)) {
                     results_model.append(
-                        // FIXME: item itself should implement a sensable uri
-                        Config.CLIPBOARD_URI + item.get_checksum(),
+                        CLIPBOARD_URI + item.get_checksum(),
                         item.get_icon().to_string(),
                         item.get_category(),
                         item.get_mime_type(),
@@ -232,16 +278,33 @@ namespace Diodon.UnityLens
             }
         }
         
-        public Unity.ActivationResponse activate(string uri)
+        private Unity.ActivationResponse activate_uri(string uri)
         {
+            Controller controller = object as Controller;
             debug("Requested activation of: %s", uri);
-            on_activate_uri(uri);
-            return new Unity.ActivationResponse(
-                Unity.HandledType.HIDE_DASH);
+            
+            // check if uri is a clipboard uri
+            if(str_equal(uri.substring(0, CLIPBOARD_URI.length), CLIPBOARD_URI)) {
+                string checksum = uri.substring(CLIPBOARD_URI.length);
+                IClipboardItem item = controller.get_item_by_checksum(checksum);
+                if(item != null) {
+                    controller.select_item(item);
+                    return new Unity.ActivationResponse(
+                        Unity.HandledType.HIDE_DASH);
+                }
+            }
+            
+            warning("Could not activate uri %s", uri);
+            return new Unity.ActivationResponse(Unity.HandledType.NOT_HANDLED);
         }
     }
+}
 
-#endif
-
+[ModuleInit]
+public void peas_register_types (GLib.TypeModule module)
+{
+  Peas.ObjectModule objmodule = module as Peas.ObjectModule;
+  objmodule.register_extension_type (typeof (Peas.Activatable),
+                                     typeof (Diodon.Plugins.UnityLens.UnityLensPlugin));
 }
 

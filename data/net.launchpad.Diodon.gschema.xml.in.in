@@ -1,13 +1,4 @@
 <schemalist>
-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="net.launchpad.Diodon" path="/net/launchpad/diodon/">
-    <key name="show-indicator" type="b">
-      <default>true</default>
-      <_summary>Show indicator</_summary>
-      <_description>Whether indicator should be shown.</_description>
-    </key>
-    <child name="clipboard" schema="net.launchpad.Diodon.clipboard"/>
-    <child name="keybindings" schema="net.launchpad.Diodon.keybindings"/>
-  </schema>
   <schema gettext-domain="@GETTEXT_PACKAGE@" id="net.launchpad.Diodon.clipboard" path="/net/launchpad/diodon/clipboard/">
     <key name="use-clipboard" type="b">
       <default>true</default>
@@ -45,6 +36,13 @@
       <default>'&lt;Ctrl&gt;&lt;Alt&gt;V'</default>
       <_summary>History key</_summary>
       <_description>Hotkey to quickly allow you to access the clipboard history.</_description>
+    </key>
+  </schema>
+  <schema gettext-domain="@GETTEXT_PACKAGE@" id="net.launchpad.Diodon.plugins" path="/net/launchpad/diodon/plugins/">
+    <key name="active-plugins" type="as">
+      <default>[@ACTIVE_PLUGINS@]</default>
+      <_summary>Active plugins</_summary>
+      <_description>List of active plugins.</_description>
     </key>
   </schema>
 </schemalist>

@@ -27,179 +27,79 @@ namespace Diodon
      */
     public class Controller : GLib.Object
     {
-        private Settings settings;
         private Settings settings_clipboard;
         private Settings settings_keybindings;
-        
-        /**
-         * Called when a item needs to be copied to a clipboard selection.
-         */
-        private signal void on_copy_selection(IClipboardItem item);
+        private Settings settings_plugins;
+        private Gee.HashMap<ClipboardType, ClipboardManager> clipboard_managers;
+        private ClipboardModel clipboard_model;
+        private ConfigurationModel configuration_model;
+        private ClipboardMenu menu;
+        private PreferencesView preferences_view;
+        private KeybindingManager keybinding_manager;
+        private Peas.ExtensionSet extension_set;
+        private Peas.Engine peas_engine;
         
         /**
          * Called when a item has been selected.
          */
-        private signal void on_select_item(IClipboardItem item);
+        public signal void on_select_item(IClipboardItem item);
         
         /**
-         * Called when a new item has been available
+         * Called when a new item is added
          */
-        private signal void on_new_item(IClipboardItem item);
+        public signal void on_add_item(IClipboardItem item);
         
         /**
          * Called when a item needs to be removed
          */
-        private signal void on_remove_item(IClipboardItem item);
+        public signal void on_remove_item(IClipboardItem item);
         
         /**
          * Called when all items need to be cleared
          */
-        private signal void on_clear();
+        public signal void on_clear();
         
-        /**
-         * Called when the menu needs to be shown
-         *
-         * @param event 
-         */
-        private signal void on_show_menu();
-        
-        /**
-         * indicator view property
-         */        
-        public IndicatorView indicator_view { get; set; default = new IndicatorView(); }
-        
-        /**
-         * preferences dialog view property
-         */
-        public PreferencesView preferences_view { get; set; default = new PreferencesView(); }
-        
-        /**
-         * keybinding manager property
-         */
-        public KeybindingManager keybinding_manager { get; set; default = new KeybindingManager(); }
-        
-#if(UNITY_LENS)
-
-        /**
-         * unity lens daemon
-         */
-        public UnityLens.Daemon lens_daemon
-        {
-            set {
-                value.on_activate_uri.connect(activate_uri);
-            }
-        }
-
-#endif
-        
-         /**
-         * clipboard managers. Per default a primary and clipboard manager
-         * are initialized in the default constructor.
-         */
-        public Gee.HashMap<ClipboardType, ClipboardManager> clipboard_managers
-        {
-            get;
-            set;
-        }
-        
-        /**
-         * clipboard model property default set to a memory storage.
-         */
-        public ClipboardModel clipboard_model
-        {
-            get;
-            set;
-            // currently default for storage not needed
-            //default = new ClipboardModel(new MemoryClipboardStorage());
-         }
-        
-        /**
-         * configuration model property
-         */
-        public ConfigurationModel configuration_model { get; set; default = new ConfigurationModel(); }
-        
-        /**
-         * Default constructor
-         */
         public Controller()
         {            
-            // initialize needed clipboard managers
+            string diodon_dir = Utility.get_user_data_dir();
             clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
+            
             clipboard_managers.set(ClipboardType.CLIPBOARD, new ClipboardManager(ClipboardType.CLIPBOARD));
             clipboard_managers.set(ClipboardType.PRIMARY, new PrimaryClipboardManager());
             
-            settings = new Settings("net.launchpad.Diodon");
+            keybinding_manager = new KeybindingManager();
+            
             settings_clipboard = new Settings("net.launchpad.Diodon.clipboard");
             settings_keybindings = new Settings("net.launchpad.Diodon.keybindings");
+            settings_plugins = new Settings("net.launchpad.Diodon.plugins");
+            
+            peas_engine = Peas.Engine.get_default();
+            peas_engine.add_search_path(Config.PLUGINS_DIR, Config.PLUGINS_DATA_DIR);
+            string user_plugins_dir = Path.build_filename(diodon_dir, "plugins");
+            peas_engine.add_search_path(user_plugins_dir, user_plugins_dir);
+            peas_engine.enable_loader("python");
+            
+            IClipboardStorage storage = new XmlClipboardStorage(diodon_dir,
+                "storage.xml");
+            clipboard_model = new ClipboardModel(storage);
+            
+            configuration_model = new ConfigurationModel();   
+            
+            menu = new ClipboardMenu(this);
+            preferences_view = new PreferencesView(this);                  
         }
         
-        /**
-         * Connects to all necessary processes and attaches
-         * such to the controller signals as well. Finally the views
-         * and the models will be initialized.
-         */
-        public void start()
-        {               
-            connect_signals();
-            attach_signals();
-            init();
-        }
-        
-        /**
-         * connects controller to all signals of injected managers and views
-         */
-        private void connect_signals()
+        private void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
+            Peas.Extension exten, void* data)
         {
-            // indicator
-            indicator_view.on_quit.connect(quit);
-            indicator_view.on_clear.connect(clear);
-            indicator_view.on_show_preferences.connect(show_preferences);
-            indicator_view.on_select_item.connect(select_item);
-            
-            // preferences
-            preferences_view.on_change_use_clipboard.connect(change_use_clipboard_configuration);
-            preferences_view.on_change_use_primary.connect(change_use_primary_configuration);
-            preferences_view.on_change_synchronize_clipboards.connect(change_synchronize_clipboards_configuration);
-            preferences_view.on_change_keep_clipboard_content.connect(change_keep_clipboard_content_configuration);
-            preferences_view.on_change_instant_paste.connect(change_instant_paste_configuration);
-            preferences_view.on_change_clipboard_size.connect(change_clipboard_size_configuration);
-            preferences_view.on_change_history_accelerator.connect(change_history_accelerator_configuration);
-            preferences_view.on_close.connect(hide_preferences);
-        }
-        
-        /**
-         * attaches managers and views to signals of the controller
-         */
-        private void attach_signals()
-        {
-            on_select_item.connect(clipboard_model.select_item);
-            on_select_item.connect(indicator_view.select_item);
-
-            on_new_item.connect(clipboard_model.add_item);
-            on_new_item.connect(indicator_view.prepend_item);
-            on_new_item.connect(indicator_view.hide_empty_item);
-
-            on_remove_item.connect(clipboard_model.remove_item);
-            on_remove_item.connect(indicator_view.remove_item);
-            
-            on_clear.connect(clipboard_model.clear);
-            on_clear.connect(indicator_view.clear);
-            on_clear.connect(indicator_view.show_empty_item);
-            
-            on_show_menu.connect(indicator_view.show_menu);
+            ((Peas.Activatable)exten).activate();
         }
         
         /**
          * Initializes views, models and managers.
          */
-        private void init()
+        public void init()
         {
-             // add all available items from storage to indicator
-            foreach(IClipboardItem item in clipboard_model.get_items()) {
-                indicator_view.hide_empty_item();
-                indicator_view.prepend_item(item);
-            }
-            
             init_configuration();
             
              // start clipboard managers
@@ -208,12 +108,28 @@ namespace Diodon
             }
             
             keybinding_manager.init();
+            
+            // init peas plugin system
+            extension_set = new Peas.ExtensionSet(peas_engine, typeof(Peas.Activatable),
+                "object", this);
+            extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_added, null);
+            
+            extension_set.extension_added.connect((info, exten) => {
+                ((Peas.Activatable)exten).activate();
+            });
+            extension_set.extension_removed.connect((info, exten) => {
+                ((Peas.Activatable)exten).deactivate();
+            });
+            
+            settings_plugins.bind("active-plugins", peas_engine, "loaded-plugins",
+                SettingsBindFlags.DEFAULT);
+            
+            // and finally the menu
+            menu.init();
         }
         
         /**
          * Initialize configuration values
-         * 
-         * TODO: remove duplicated code of change event and init call
          */
         private void init_configuration()
         {
@@ -221,7 +137,6 @@ namespace Diodon
                 "use-clipboard", SettingsBindFlags.DEFAULT);
             settings_clipboard.changed["use-clipboard"].connect(
                 (key) => {
-                    debug ("Changed use clipboard");
                     enable_clipboard_manager(ClipboardType.CLIPBOARD,
                         configuration_model.use_clipboard);
                 }
@@ -266,42 +181,26 @@ namespace Diodon
             );
             change_clipboard_size(configuration_model.clipboard_size);
                 
-            // we cannot bind this property as we need the previous value
-            configuration_model.history_accelerator =
-                settings_keybindings.get_string("history-accelerator");
+            settings_keybindings.bind("history-accelerator", configuration_model,
+                "history-accelerator", SettingsBindFlags.DEFAULT);
             settings_keybindings.changed["history-accelerator"].connect(
                 (key) => {
-                    change_history_accelerator(
-                        settings_keybindings.get_string("history-accelerator"));
-                }   
-            );
-            keybinding_manager.bind(configuration_model.history_accelerator, open_history);
-                
-            settings.bind("show-indicator", configuration_model,
-                "show-indicator", SettingsBindFlags.DEFAULT);
-            settings.changed["show-indicator"].connect(
-                (key) => {
-                    indicator_view.set_visible(configuration_model.show_indicator);
+                    change_history_accelerator(configuration_model.history_accelerator);
                 }
             );
-            indicator_view.set_visible(configuration_model.show_indicator);
+            change_history_accelerator(configuration_model.history_accelerator);
         }
         
         /**
-         * Select item by moving it onto the top of the menu
-         * respectively data storage and then copying it to the clipboard
+         * Select clipboard item
          *
          * @param item item to be selected
          */
-        private void select_item(IClipboardItem item)
-        {
-            // we do not destroy item here but just doing some rearrangement
-            // therefore not calling remove_item
-            on_remove_item(item);
+        public void select_item(IClipboardItem item)
+        {   
+            clipboard_model.select_item(item);
             
-            on_new_item(item);
             on_select_item(item);
-            on_copy_selection(item);
             
             if(configuration_model.instant_paste) {
                 execute_paste(item);
@@ -313,7 +212,7 @@ namespace Diodon
          * 
          * @param item item to be pasted
          */
-        private void execute_paste(IClipboardItem item)
+        public void execute_paste(IClipboardItem item)
         {
             string key = null;
             if(configuration_model.use_clipboard) {
@@ -339,22 +238,21 @@ namespace Diodon
          *
          * @param item item to be removed
          */
-        private void remove_item(IClipboardItem item)
+        public void remove_item(IClipboardItem item)
         {
+            clipboard_model.remove_item(item);
             on_remove_item(item);
-            item.remove(); // finally cleaning up
         }
        
         /**
-         * Handling text retrieved from clipboard by adding it to the storage
-         * and appending it to the menu of the indicator
+         * Add given text as text item to current clipboard history
          * 
-         * @param text text received
+         * @param text text to be added
          */
-        private void text_received(ClipboardType type, string text)
+        public void add_as_text_item(ClipboardType type, string text)
         {
             IClipboardItem item = new TextClipboardItem(type, text);
-            item_received(item);
+            add_item(item);
         }
         
         /**
@@ -367,7 +265,7 @@ namespace Diodon
         {
             try {
                 IClipboardItem item = new FileClipboardItem(type, paths);
-                item_received(item);
+                add_item(item);
             } catch(FileError e) {
                 warning("Adding file(s) to history failed: " + e.message);
             }
@@ -381,7 +279,7 @@ namespace Diodon
         {
             try {
                 IClipboardItem item = new ImageClipboardItem.with_image(type, pixbuf);
-                item_received(item);
+                add_item(item);
             } catch(GLib.Error e) {
                 warning("Adding image to history failed: " + e.message);
             }
@@ -389,11 +287,11 @@ namespace Diodon
         
         /**
          * Handling given item by checking if item is equal last added item
-         * and if not so, adding it to history and indicator.
+         * and if not so, adding it to history
          *
          * @param item item received
          */
-        private void item_received(IClipboardItem item)
+        public void add_item(IClipboardItem item)
         {
             ClipboardType type = item.get_clipboard_type();
             string label = item.get_label();
@@ -416,8 +314,8 @@ namespace Diodon
                     remove_item(clipboard_model.get_last_item());
                 }
                 
-                on_new_item(item);
-                on_select_item(item);
+                clipboard_model.add_item(item);
+                on_add_item(item);
 
                 // when synchronization is enabled                
                 // set text on all other clipboards then current type
@@ -436,26 +334,45 @@ namespace Diodon
                 item.remove();
             }
         }
+       
+        /**
+         * Get all clipboard items
+         * 
+         * @return list of clipboard items
+         */ 
+        public Gee.List<IClipboardItem> get_items()
+        {
+            return clipboard_model.get_items();
+        }
         
         /**
-         * Activate given uri by finding corresponding item in clipboard
-         * and select it.
-         *
-         * @param uri clipboard uri
+         * Get all items of given category
+         * 
+         * @param category category to get items 
+         * @return list of clipboard items of given category
          */
-        private void activate_uri(string uri)
+        public Gee.List<IClipboardItem> get_items_by_cateogry(ClipboardCategory category)
         {
-            // check if uri is a clipboard uri
-            if(str_equal(uri.substring(0, Config.CLIPBOARD_URI.length), Config.CLIPBOARD_URI)) {
-                string checksum = uri.substring(Config.CLIPBOARD_URI.length);
-                IClipboardItem item = clipboard_model.get_item_by_checksum(checksum);
-                if(item != null) {
-                    select_item(item);
-                    return;
-                }
-            }
-            
-            warning("Could not activate uri %s", uri);
+            return clipboard_model.get_items_by_cateogry(category);
+        }
+        
+        /**
+         * Get clipboard item by given checksum.
+         *
+         * @param checksum clipboad item checksum
+         * @return clipboard item or null if not available
+         */
+        public IClipboardItem? get_item_by_checksum(string checksum)
+        {
+            return clipboard_model.get_item_by_checksum(checksum);
+        }
+        
+        /**
+         * access to current configuration settings
+         */
+        public ConfigurationModel get_configuration()
+        {
+            return configuration_model;
         }
         
         /**
@@ -495,16 +412,6 @@ namespace Diodon
                 }
             }
         }
-        
-         /**
-         * Change setting of clipboard_size in configuration model
-         *
-         * @param size clipboard size
-         */        
-        private void change_clipboard_size_configuration(int size)
-        {
-            configuration_model.clipboard_size = size;
-        }
 
         /**
          * change history accelerator key and bind new key to open_history.
@@ -513,30 +420,24 @@ namespace Diodon
          */        
         private void change_history_accelerator(string accelerator)
         {
-            keybinding_manager.unbind(configuration_model.history_accelerator);
-            configuration_model.history_accelerator = accelerator;
-            keybinding_manager.bind(accelerator, open_history);
-        }
-        
-        /**
-         * Change setting of history_accelerator in GSettings itself
-         *
-         * @param accelerator accelerator parseable by Gtk.accelerator_parse
-         */        
-        private void change_history_accelerator_configuration(string accelerator)
-        {
-            settings_keybindings.set_string("history-accelerator", accelerator);
+            // check if there is a previos accelerator to unbind
+            if(configuration_model.previous_history_accelerator != null) {
+                keybinding_manager.unbind(configuration_model.previous_history_accelerator);
+            }
+            
+            // let's bind new one
+            keybinding_manager.bind(accelerator, show_history);
         }
 
         /**
-         * Open indicator to view history
+         * Open menu to view history
          */        
-        private void open_history()
+        public void show_history()
         {
             // execute show_menu in main loop
-            // do avoid dead lock
+            // to avoid dead lock
             Timeout.add(100, () => {
-                on_show_menu();
+                menu.show_menu();
                 return false; // stop timer
             });
         }
@@ -553,16 +454,16 @@ namespace Diodon
             ClipboardManager manager = clipboard_managers.get(type);
             
             if(enable) {
-                manager.on_text_received.connect(text_received);
+                manager.on_text_received.connect(add_as_text_item);
                 manager.on_uris_received.connect(uris_received);
                 manager.on_image_received.connect(image_received);
-                on_copy_selection.connect(manager.select_item);
+                on_select_item.connect(manager.select_item);
                 on_clear.connect(manager.clear);
             }
             else {
-                manager.on_text_received.disconnect(text_received);
+                manager.on_text_received.disconnect(add_as_text_item);
                 manager.on_uris_received.disconnect(uris_received);
-                on_copy_selection.disconnect(manager.select_item);
+                on_select_item.disconnect(manager.select_item);
                 on_clear.disconnect(manager.clear);    
             }
         }
@@ -584,84 +485,36 @@ namespace Diodon
                 }
             }
         }
-
-        /**
-         * Change setting of use_clipboard in configuration model
-         */        
-        private void change_use_clipboard_configuration()
-        {
-            configuration_model.use_clipboard = !configuration_model.use_clipboard;
-        }
-        
-        /**
-         * Change setting of use_primary in configuration model
-         */        
-        private void change_use_primary_configuration()
-        {
-            configuration_model.use_primary = !configuration_model.use_primary;
-        }
-        
-        /**
-         * Change setting of synchronize_clipboards in configuration model
-         */        
-        private void change_synchronize_clipboards_configuration()
-        {
-            configuration_model.synchronize_clipboards = !configuration_model.synchronize_clipboards;
-        }
-        
-        /**
-         * Change setting of keep_clipboard_content in configuration model
-         */  
-        private void change_keep_clipboard_content_configuration()
-        {
-            configuration_model.keep_clipboard_content = !configuration_model.keep_clipboard_content;
-        }
-        
-        /**
-         * Change setting of instant_paste in configuration model
-         */  
-        private void change_instant_paste_configuration()
-        {
-            configuration_model.instant_paste = !configuration_model.instant_paste;
-        }
         
         /**
          * Show preferences dialog
          */
-        private void show_preferences()
+        public void show_preferences()
         {
             preferences_view.show(configuration_model);
         }
         
         /**
-         * Hide preferences dialog
+         * Clear all clipboard items from history
          */
-        private void hide_preferences()
+        public void clear()
         {
-            preferences_view.hide();
+            clipboard_model.clear();
+            on_clear();
         }
         
         /**
-         * Clear all items from the clipboard and reset selected items
+         * Get clipboard history menu.
          */
-        private void clear()
+        public Gtk.Menu get_menu()
         {
-            // get list of items for cleaning it up later
-            Gee.ArrayList<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
-                items.add_all(clipboard_model.get_items());
-                
-            on_clear();
-            
-            // finally cleaning up items
-            foreach(IClipboardItem item in items) {
-                item.remove();
-            }
+            return menu;
         }
         
         /**
          * Quit diodon
          */
-        private void quit()
+        public void quit()
         {
             Gtk.main_quit();
         }

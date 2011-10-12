@@ -25,14 +25,14 @@ namespace Diodon
      *
      * @author Oliver Sauder <os@esite.ch>
      */
-    public interface IClipboardStorage : GLib.Object
+    interface IClipboardStorage : GLib.Object
     {
         /**
          * Get all available clipboard items.
          * 
          * @return get all clipboard entries in right order
          */
-        public abstract Gee.ArrayList<IClipboardItem> get_items();
+        public abstract Gee.List<IClipboardItem> get_items();
         
         /**
          * Add given item to storage
