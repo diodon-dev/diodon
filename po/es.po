@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-08 13:45+0200\n"
-"PO-Revision-Date: 2011-09-10 18:30+0000\n"
-"Last-Translator: Hector A. Mantellini <Unknown>\n"
+"POT-Creation-Date: 2011-10-12 16:36+0200\n"
+"PO-Revision-Date: 2011-09-21 22:05+0000\n"
+"Last-Translator: Fitoschido <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
-"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-09-11 04:59+0000\n"
-"X-Generator: Launchpad (build 13900)\n"
+"X-Launchpad-Export-Date: 2011-10-13 04:48+0000\n"
+"X-Generator: Launchpad (build 14124)\n"
+"Language: es\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -24,7 +24,7 @@ msgstr "Gestor del portapapeles"
 
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
-msgstr ""
+msgstr "Gestor del portapapeles GTK+"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Active plugins"
@@ -36,7 +36,7 @@ msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
 "mouse) to the clipboard history."
 msgstr ""
-"Agrega la selección principal (un área de la pantalla que se selecciona con "
+"Añade la selección principal (un área de la pantalla que se selecciona con "
 "el ratón) al historial del portapapeles."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
@@ -45,7 +45,7 @@ msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
-"Añadir texto para copiar en el portapapeles por ejemplo, con Ctrl + C para "
+"Añade el texto para copiar en el portapapeles, por ejemplo, con Ctrl+C al "
 "historial del portapapeles."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
@@ -58,6 +58,8 @@ msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
 msgstr ""
+"Pegar automáticamente el elemento seleccionado en lugar de copiarlo al "
+"portapapeles."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:5
@@ -67,7 +69,7 @@ msgstr "Tamaño del portapapeles"
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 #: ../data/preferences.ui.h:7
 msgid "History key"
-msgstr ""
+msgstr "Tecla de historial"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
 #: ../data/preferences.ui.h:8
@@ -94,8 +96,8 @@ msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
 msgstr ""
-"Evita un portapapeles vacío. Por ejemplo, cuando una aplicación se cierra, "
-"por lo general en el portapapeles  puede quedar vacío."
+"Evita que el portapapeles quede vacío. Por ejemplo, cuando una aplicación se "
+"cierra, por lo general el portapapeles puede vaciarse."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Synchronize clipboards"
@@ -116,11 +118,11 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Use clipboard (Ctrl+C)"
-msgstr "Usar Portapapeles (Ctrl+C)"
+msgstr "Usar portapapeles (Ctrl+C)"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid "Use primary selection"
-msgstr ""
+msgstr "Usar selección primaria"
 
 #: ../data/preferences.ui.h:4
 msgid "Clipboard"
@@ -140,19 +142,19 @@ msgstr ""
 
 #: ../data/preferences.ui.h:13
 msgid "S_ynchronize clipboards"
-msgstr ""
+msgstr "Si_ncronizar portapapeles"
 
 #: ../data/preferences.ui.h:15
 msgid "Use _primary selection"
-msgstr ""
+msgstr "Usa_r selección primaria"
 
 #: ../data/preferences.ui.h:16
 msgid "_Automatically paste selected item"
-msgstr ""
+msgstr "Pegar _automáticamente el elemento seleccionado"
 
 #: ../data/preferences.ui.h:17
 msgid "_Keep clipboard content"
-msgstr ""
+msgstr "_Mantener el contenido del portapapeles"
 
 #: ../data/preferences.ui.h:18
 msgid "_Use clipboard (Ctrl+C)"
@@ -164,7 +166,7 @@ msgstr "<Vacío>"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:94
 msgid "Search Clipboard"
-msgstr "Buscar Portapapeles"
+msgstr "Buscar en el portapapeles"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:158
 #: ../plugins/unitylens/unity-lens-plugin.vala:182
@@ -188,9 +190,3 @@ msgstr "Tipo"
 #: ../plugins/unitylens/unity-lens-plugin.vala:275
 msgid "Copy to clipboard"
 msgstr "Copiar al portapapeles"
-
-#~ msgid "Show indicator"
-#~ msgstr "Mostrar el indicador"
-
-#~ msgid "Whether indicator should be shown."
-#~ msgstr "El indicador debe ser mostrado"
