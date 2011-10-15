@@ -18,4 +18,11 @@ lib = bld.shlib (
   packages_private = 'libxml-2.0 x11 gdk-x11-3.0 libpeas-gtk-1.0 libpeas-1.0 config',
   source = bld.path.ant_glob (incl='**/*.vala'))
 
-   
+lib_typelib = bld.new_task_gen(
+  name = 'libdiodon_typelib',
+  after = 'libdiodon',
+  source = 'Diodon-1.0.gir',
+  target = 'Diodon-1.0.typelib',
+  install_path = '${LIBDIR}/girepository-1.0',
+  rule='g-ir-compiler ${SRC} -o ${TGT}')
+
