@@ -8,7 +8,13 @@ Diodon uses the WAF build system. To build and install Diodon use these commands
     sudo ./waf install
 
 The unity lens needs to be explicitly enabled during configure if desired
-    ./waf configure --enable-unity-lens
+
+    ./waf configure --enable-unitylens-plugin
+
+On distributions which do not provide packages for application-indicator
+building of the indicator can be disabled with following command:
+
+    ./waf configure --disable-indicator-plugin
 
 For uninstalling type this:
 
