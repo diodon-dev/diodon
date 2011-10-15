@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Diodon.Plugins.UnityLens
+namespace Diodon.Plugins
 {
     public enum ResultsColumn
     {

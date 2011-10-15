@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Diodon.Plugins.UnityLens
+namespace Diodon.Plugins
 {
     /**
      * TODO: needs to be replaced with a diodon specific path
@@ -305,6 +305,6 @@ public void peas_register_types (GLib.TypeModule module)
 {
   Peas.ObjectModule objmodule = module as Peas.ObjectModule;
   objmodule.register_extension_type (typeof (Peas.Activatable),
-                                     typeof (Diodon.Plugins.UnityLens.UnityLensPlugin));
+                                     typeof (Diodon.Plugins.UnityLensPlugin));
 }
 

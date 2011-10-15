@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Diodon.Plugins.Indicator
+namespace Diodon.Plugins
 {
     /**
      * Providing access to clipboard history through an application
@@ -66,6 +66,6 @@ public void peas_register_types (GLib.TypeModule module)
 {
   Peas.ObjectModule objmodule = module as Peas.ObjectModule;
   objmodule.register_extension_type (typeof (Peas.Activatable),
-                                     typeof (Diodon.Plugins.Indicator.IndicatorPlugin));
+                                     typeof (Diodon.Plugins.IndicatorPlugin));
 }
 
