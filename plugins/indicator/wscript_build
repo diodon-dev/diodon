@@ -12,7 +12,6 @@ lib = bld.shlib (
   use = 'libdiodon',
   cflags = ['-include', 'config.h'],
   packages = 'appindicator3-0.1 libpeas-1.0',
-  install_binding = False,
   source = bld.path.ant_glob (incl='**/*.vala'))
 
 lib.install_path = os.path.join(bld.env['PLUGINS_DIR'], lib.target)
