@@ -5,7 +5,7 @@
 import os
 
 lib = bld.shlib (
-  features = 'c cshlib',
+  features = 'c cshlib disable_binding',
   target = 'unitylens',
   vapi_dirs = '../../vapi ../../libdiodon',
   uselib = 'GTK PEAS UNITY DEE',
@@ -37,6 +37,4 @@ bld.new_task_gen (
   source = 'unitylens.plugin.in',
   flags = ["-d", "-q", "-u", "-c"],
   install_path = lib.install_path)
-
-
 

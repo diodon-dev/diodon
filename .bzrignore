@@ -1,6 +1,3 @@
-.waf*
 _build_
-.lock-wafbuild
-.valencia
-.intlcache
+.*
 configure.in

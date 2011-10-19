@@ -2,7 +2,7 @@
 # encoding: utf-8
 # Oliver Sauder, 2010
 
-import subprocess, os, traceback
+import subprocess, os, traceback, waflib
 import Options, Logs
 
 NAME = 'Diodon'
@@ -132,4 +132,14 @@ def shutdown(self):
             Logs.error("Failed to generate po template.")
             Logs.errors("Make sure intltool is installed.")
         os.chdir ('..')
-        
+
+@waflib.TaskGen.feature('disable_binding')
+@waflib.TaskGen.after_method('process_source')
+def disable_the_gir_install(self):
+    try:
+        self.install_vheader.hasrun = waflib.Task.SKIP_ME
+        self.install_gir.hasrun = waflib.Task.SKIP_ME
+        self.install_vapi.hasrun = waflib.Task.SKIP_ME
+    except Exception:
+        pass
+
