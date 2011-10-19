@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-12 16:36+0200\n"
-"PO-Revision-Date: 2011-08-16 00:39+0000\n"
+"PO-Revision-Date: 2011-10-19 01:43+0000\n"
 "Last-Translator: Alex Vikalyuk <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-10-13 04:48+0000\n"
-"X-Generator: Launchpad (build 14124)\n"
+"X-Launchpad-Export-Date: 2011-10-19 06:07+0000\n"
+"X-Generator: Launchpad (build 14157)\n"
 "Language: uk\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -24,11 +24,11 @@ msgstr "Менеджер буферу обміну"
 
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
-msgstr ""
+msgstr "GTK+ Менеджер буферу обміну"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Active plugins"
-msgstr ""
+msgstr "Активні додатки"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:1
@@ -82,7 +82,7 @@ msgstr "Зберігати вміст буферу обміну"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 msgid "List of active plugins."
-msgstr ""
+msgstr "Список активних додатків"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 #: ../data/preferences.ui.h:10
@@ -136,7 +136,7 @@ msgstr "Гарячі клавіші"
 
 #: ../data/preferences.ui.h:11
 msgid "Plugins"
-msgstr ""
+msgstr "Додатки"
 
 #: ../data/preferences.ui.h:13
 msgid "S_ynchronize clipboards"
@@ -164,7 +164,7 @@ msgstr "<Порожньо>"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:94
 msgid "Search Clipboard"
-msgstr ""
+msgstr "Шукати у буфері обміну"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:158
 #: ../plugins/unitylens/unity-lens-plugin.vala:182
@@ -183,7 +183,7 @@ msgstr "Зображення"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:180
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:275
 msgid "Copy to clipboard"
