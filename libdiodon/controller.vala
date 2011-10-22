@@ -317,15 +317,8 @@ namespace Diodon
                 clipboard_model.add_item(item);
                 on_add_item(item);
 
-                // when synchronization is enabled                
-                // set text on all other clipboards then current type
-                // only text can be synchronized
-                if(item is TextClipboardItem && configuration_model.synchronize_clipboards) {
-                    foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
-                        if(type != clipboard_manager.clipboard_type) {
-                            clipboard_manager.select_item(item);
-                        }
-                    }
+                if(configuration_model.synchronize_clipboards) {
+                    synchronize(item);
                 }
             }
             else {
@@ -373,6 +366,28 @@ namespace Diodon
         public ConfigurationModel get_configuration()
         {
             return configuration_model;
+        }
+        
+        /**
+         * Set text on all other clipboards then current type
+         */
+        private void synchronize(IClipboardItem item)
+        {
+            // only text clipboard item can be synced
+            if(item is TextClipboardItem) {
+                ClipboardType type = item.get_clipboard_type();
+                foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
+                    if(type != clipboard_manager.clipboard_type) {
+                        // check if item is already active in clipboard
+                        // which will be synced to
+                        IClipboardItem current_item = clipboard_model.get_current_item(
+                            clipboard_manager.clipboard_type);
+                        if(current_item == null || !IClipboardItem.equal_func(current_item, item)) {
+                            clipboard_manager.select_item(item);
+                        }
+                    }
+                }
+            }
         }
         
         /**

@@ -40,7 +40,7 @@ namespace Diodon
     
     public enum ClipboardItemType
     {
-        ALL = 0,
+        ALL = 0,    
         TEXT,
         FILES,
         IMAGES;
