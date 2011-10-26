@@ -102,7 +102,7 @@ namespace Diodon
             Gtk.accelerator_parse(accelerator, out keysym, out modifiers);
 
             unowned X.Display display = Gdk.x11_get_default_xdisplay();
-            int keycode = display.keysym_to_keycode(keysym);            
+            int keycode = display.keysym_to_keycode(keysym);
                      
             if(keycode != 0) {
                 X.Window root_window = Gdk.x11_get_default_root_xwindow();
@@ -164,12 +164,7 @@ namespace Diodon
          */
         public void press(string accelerator)
         {
-            X.KeyEvent key_event;
-            if(create_key_event(accelerator, X.EventType.KeyPress, out key_event)) {
-                X.Event event = (X.Event)key_event;
-                key_event.display.send_event(key_event.window, false,
-                    X.EventMask.KeyPressMask, ref event);
-                
+            if(perform_key_event(accelerator, true)) {
                 debug("Successfully pressed key " + accelerator);
             }
         }
@@ -182,57 +177,51 @@ namespace Diodon
          */
         public void release(string accelerator)
         {
-            X.KeyEvent key_event;
-            if(create_key_event(accelerator, X.EventType.KeyRelease, out key_event)) {
-                X.Event event = (X.Event)key_event;
-                key_event.display.send_event(key_event.window, false,
-                    X.EventMask.KeyReleaseMask, ref event);
-                
+            if(perform_key_event(accelerator, false)) {
                 debug("Successfully released key " + accelerator);
             }
         }
         
         /**
-         * Helper method create key event for pressing and releasing a
-         * key on current x display and window which has currently
-         * the focus
+         * Helper method performing given accelerator on current active
+         * window.
          *
          * @param accelerator accelerator parsable by Gtk.accelerator_parse
-         * @param event_type an event type of enum EventType
-         * @param key_event out param for created key event
+         * @param press true for press key; false for releasing
          * @return true if creation was successful; otherwise false.
          */
-        private bool create_key_event(string accelerator, int event_type, out X.KeyEvent key_event)
+        private bool perform_key_event(string accelerator, bool press)
         {
             // convert accelerator
             uint keysym;
             Gdk.ModifierType modifiers;
             Gtk.accelerator_parse(accelerator, out keysym, out modifiers);
             unowned X.Display display = Gdk.x11_get_default_xdisplay();
-            key_event = X.KeyEvent();
-            
             int keycode = display.keysym_to_keycode(keysym);
             
+            // FIXME: there must be an easier way
+            int modifierykey = 0;
+            switch(modifiers) {
+                case Gdk.ModifierType.CONTROL_MASK:
+                    // currently missing in the gdk binding
+                    //modifierykey = Gdk.Key.Control_L;
+                    modifierykey = 0xffe3;
+                    break;
+                case Gdk.ModifierType.SHIFT_MASK:
+                    // currently missing in the gdk binding
+                    //modifierykey = Gdk.Key.Shift_L;
+                    modifierykey = 0xffe1;
+                    break;
+            }
+            int modifiercode = display.keysym_to_keycode(modifierykey);
+            
             if(keycode != 0) {
-                X.Window root_window = Gdk.x11_get_default_root_xwindow();
                 
-                // get window with focus
-                X.Window focus;
-                int revert_to_return;
-                display.get_input_focus(out focus, out revert_to_return);
+                if(modifiercode != 0) {
+                    X.Test.fake_key_event(display, modifiercode, press, 0);                
+                }
                 
-                key_event.display = display;
-                key_event.root = root_window;
-                key_event.window = focus;
-                key_event.subwindow = X.None;
-                key_event.time = X.CURRENT_TIME;
-                key_event.keycode = keycode;
-                key_event.state = modifiers;
-                key_event.type = event_type;
-                key_event.x = 1;
-                key_event.y = 1;
-                key_event.x_root = 1;
-                key_event.y_root = 1;
+                X.Test.fake_key_event(display, keycode, press, 0);                
                 
                 return true;
             }
