@@ -1,0 +1,3 @@
+version = 1
+build_command = ./waf build
+clean_command = ./waf clean
