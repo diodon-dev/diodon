@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: Diodon 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-12 16:36+0200\n"
-"PO-Revision-Date: 2011-09-07 17:44+0000\n"
+"PO-Revision-Date: 2011-10-27 19:35+0000\n"
 "Last-Translator: Oliver Sauder <os@esite.ch>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-10-13 04:48+0000\n"
-"X-Generator: Launchpad (build 14124)\n"
+"X-Launchpad-Export-Date: 2011-10-28 05:41+0000\n"
+"X-Generator: Launchpad (build 14197)\n"
 "Language: \n"
 "X-Poedit-Language: German\n"
 
@@ -24,7 +24,7 @@ msgstr "GTK+ Zwischenablage-Manager"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Active plugins"
-msgstr ""
+msgstr "Aktive Plugins"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:1
@@ -79,7 +79,7 @@ msgstr "Leere Zwischenablage verhindern"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 msgid "List of active plugins."
-msgstr ""
+msgstr "Liste von aktiven Plugins"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 #: ../data/preferences.ui.h:10
@@ -134,7 +134,7 @@ msgstr "Tastenkombinationen"
 
 #: ../data/preferences.ui.h:11
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: ../data/preferences.ui.h:13
 msgid "S_ynchronize clipboards"

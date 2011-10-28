@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-12 16:36+0200\n"
-"PO-Revision-Date: 2011-07-02 14:57+0000\n"
-"Last-Translator: Alexander Semyonov <Unknown>\n"
+"PO-Revision-Date: 2011-10-27 19:45+0000\n"
+"Last-Translator: XPEH <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-10-13 04:48+0000\n"
-"X-Generator: Launchpad (build 14124)\n"
+"X-Launchpad-Export-Date: 2011-10-28 05:41+0000\n"
+"X-Generator: Launchpad (build 14197)\n"
 "Language: ru\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -24,11 +24,11 @@ msgstr "Менеджер буфера обмена"
 
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
-msgstr ""
+msgstr "Менеджер буфера обмена на базе GTK+"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Active plugins"
-msgstr ""
+msgstr "Активные модули"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:1
@@ -48,7 +48,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
 msgid "Automatically paste selected item"
-msgstr ""
+msgstr "Автоматически вставлять выделенный объект"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 #: ../data/preferences.ui.h:3
@@ -56,8 +56,7 @@ msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
 msgstr ""
-"Автоматически вставлять выделенный пункт меню вместо копирования в буфер "
-"обмена."
+"Автоматически вставлять выделенный объект вместо копирования в буфер обмена."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:5
@@ -67,7 +66,7 @@ msgstr "Размер буфера обмена"
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 #: ../data/preferences.ui.h:7
 msgid "History key"
-msgstr "Вызов буфера обмена"
+msgstr "История буфера обмена"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
 #: ../data/preferences.ui.h:8
@@ -76,11 +75,11 @@ msgstr "Комбинация клавиш для быстрого доступа
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Keep clipboard content"
-msgstr ""
+msgstr "Хранить содержимое буфера обмена"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 msgid "List of active plugins."
-msgstr ""
+msgstr "Список активных модулей"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 #: ../data/preferences.ui.h:10
@@ -98,7 +97,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Synchronize clipboards"
-msgstr ""
+msgstr "Синхронизировать буферы обмена"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 #: ../data/preferences.ui.h:14
@@ -113,11 +112,11 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Use clipboard (Ctrl+C)"
-msgstr ""
+msgstr "Использовать буфер обмена (Ctrl+C)"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid "Use primary selection"
-msgstr ""
+msgstr "Использовать выделение мышкой"
 
 #: ../data/preferences.ui.h:4
 msgid "Clipboard"
@@ -133,7 +132,7 @@ msgstr "Комбинации клавиш"
 
 #: ../data/preferences.ui.h:11
 msgid "Plugins"
-msgstr ""
+msgstr "Модули"
 
 #: ../data/preferences.ui.h:13
 msgid "S_ynchronize clipboards"
@@ -145,7 +144,7 @@ msgstr "Использовать выделение _мышкой"
 
 #: ../data/preferences.ui.h:16
 msgid "_Automatically paste selected item"
-msgstr "_Автоматически вставлять выделенный пункт"
+msgstr "_Автоматически вставлять выделенный объект"
 
 #: ../data/preferences.ui.h:17
 msgid "_Keep clipboard content"
@@ -161,7 +160,7 @@ msgstr "<Пусто>"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:94
 msgid "Search Clipboard"
-msgstr ""
+msgstr "Поиск в буфере обмена"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:158
 #: ../plugins/unitylens/unity-lens-plugin.vala:182
@@ -180,7 +179,7 @@ msgstr "Изображения"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:180
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:275
 msgid "Copy to clipboard"
