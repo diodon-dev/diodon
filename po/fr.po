@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-12 16:36+0200\n"
-"PO-Revision-Date: 2011-09-15 13:46+0000\n"
+"PO-Revision-Date: 2011-11-05 20:38+0000\n"
 "Last-Translator: Baptiste Fontaine <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-10-13 04:48+0000\n"
-"X-Generator: Launchpad (build 14124)\n"
+"X-Launchpad-Export-Date: 2011-11-06 05:31+0000\n"
+"X-Generator: Launchpad (build 14231)\n"
 "Language: fr\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -24,11 +24,11 @@ msgstr "Gestionnaire de presse-papier"
 
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
-msgstr ""
+msgstr "Gestionnaire de presse-papier GTK+"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Active plugins"
-msgstr ""
+msgstr "Greffons actifs"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:1
@@ -81,7 +81,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 msgid "List of active plugins."
-msgstr ""
+msgstr "Liste des greffons actifs"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 #: ../data/preferences.ui.h:10
@@ -120,7 +120,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid "Use primary selection"
-msgstr ""
+msgstr "Utiliser la sélection courante"
 
 #: ../data/preferences.ui.h:4
 msgid "Clipboard"
