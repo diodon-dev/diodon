@@ -129,13 +129,10 @@ namespace Diodon
             bool text_available = _clipboard.wait_is_text_available();
             bool image_available = _clipboard.wait_is_image_available();
             bool uris_available = _clipboard.wait_is_uris_available();
-        
+            string? text = request_text();
+            
             // checking if any content known is available
             if(text_available || image_available || uris_available) {
-                // text might be needed for all different
-                // type of content
-                string text = request_text();
-                
                 // checking for uris
                 if(text_available) {
                     // check if text is valid
@@ -155,6 +152,11 @@ namespace Diodon
                         on_image_received(type, pixbuf);
                     }
                 }
+            }
+            // on java applications such as jEdit text_available is set to
+            // false however text is available anyway
+            else if(text != null && text != "") {
+                on_text_received(type, text);
             }
             // checking if clipboard might be empty
             else {

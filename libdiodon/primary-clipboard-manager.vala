@@ -93,11 +93,11 @@ namespace Diodon
         private bool request_text_callback()
         {
             // checking for text
-            if(_clipboard.wait_is_text_available()) {
-                string text = request_text();
-                
+            string? text = request_text();
+            if(text != null && text != "") {
+            
                 // check if text can be accepted
-                if(text != null && text != "" && check_button_state()) {
+                if(check_button_state()) {
                     on_text_received(type, text);
                 }
             }
