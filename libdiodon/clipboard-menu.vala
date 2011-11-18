@@ -74,6 +74,9 @@ namespace Diodon
             foreach(IClipboardItem item in controller.get_items()) {
                 prepend_clipboard_item(item);
             }
+            
+            this.key_press_event.connect(on_key_pressed);
+            this.key_release_event.connect(on_key_released);
         }
         
         /**
@@ -155,18 +158,23 @@ namespace Diodon
         }
         
         /**
-         * Not completed code for bug 792812
+         * select next item when history accelerator is pressed multiple times
          */
-        /*private bool on_key_pressed(Gdk.EventKey event)
+        private bool on_key_pressed(Gdk.EventKey event)
         {
-            // TODO: check for the configured hot key
-            if(event.keyval == 118 && event.state == 12) {
+            uint keyval;
+            Gdk.ModifierType state;
+            ConfigurationModel cfg = controller.get_configuration();
+            Gtk.accelerator_parse(cfg.history_accelerator,
+                out keyval, out state);
+        
+            if(event.keyval == keyval && event.state == state) {
             
-                if(menu.get_selected_item() == null) {
-                    menu.select_first(false);
+                if(get_selected_item() == null) {
+                    select_first(false);
                 }
                 else {
-                    menu.move_selected(1);
+                    move_selected(1);
                 }
                 
                 return true;
@@ -175,20 +183,27 @@ namespace Diodon
             return false;
         }
 
+        /**
+         * activate item when modifier of history accelerator are
+         * released and a item is selected.
+         */
         private bool on_key_released(Gdk.EventKey event)
         {
-            // TODO: check for the configured hotkey
-            // FIXME: the item gets always activated when
-            // Ctrl+Alt is released and not just the first time
-            if(event.state == 12 && event.keyval != 118) {
-                if(menu.get_selected_item() != null) {
-                    menu.activate_item(menu.get_selected_item(), false);
+            uint keyval;
+            Gdk.ModifierType state;
+            ConfigurationModel cfg = controller.get_configuration();
+            Gtk.accelerator_parse(cfg.history_accelerator,
+                out keyval, out state);
+              
+            if(event.state == state && event.is_modifier == 1) {
+                if(get_selected_item() != null) {
+                    activate_item(get_selected_item(), false);
                     return true;
                 }
             }
                 
             return false;
-        }*/
+        }
         
         /**
          * User event: clicked menu item clear
