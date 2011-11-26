@@ -164,7 +164,7 @@ namespace Diodon
          */
         public void press(string accelerator)
         {
-            if(perform_key_event(accelerator, true)) {
+            if(perform_key_event(accelerator, true, 100)) {
                 debug("Successfully pressed key " + accelerator);
             }
         }
@@ -177,7 +177,7 @@ namespace Diodon
          */
         public void release(string accelerator)
         {
-            if(perform_key_event(accelerator, false)) {
+            if(perform_key_event(accelerator, false, 0)) {
                 debug("Successfully released key " + accelerator);
             }
         }
@@ -188,9 +188,10 @@ namespace Diodon
          *
          * @param accelerator accelerator parsable by Gtk.accelerator_parse
          * @param press true for press key; false for releasing
+         * @param delay delay in milli seconds
          * @return true if creation was successful; otherwise false.
          */
-        private bool perform_key_event(string accelerator, bool press)
+        private bool perform_key_event(string accelerator, bool press, ulong delay)
         {
             // convert accelerator
             uint keysym;
@@ -218,10 +219,10 @@ namespace Diodon
             if(keycode != 0) {
                 
                 if(modifiercode != 0) {
-                    X.Test.fake_key_event(display, modifiercode, press, 0);                
+                    X.Test.fake_key_event(display, modifiercode, press, delay);                
                 }
                 
-                X.Test.fake_key_event(display, keycode, press, 0);                
+                X.Test.fake_key_event(display, keycode, press, delay);                
                 
                 return true;
             }
