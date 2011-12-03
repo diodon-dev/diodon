@@ -128,10 +128,10 @@ namespace Diodon
         {
             // on java applications such as jEdit wait_is_text_available returns
             // false even when some text is available
+            string? text = request_text();
             bool text_available = (text != null && text != "") || _clipboard.wait_is_text_available();
             bool image_available = _clipboard.wait_is_image_available();
             bool uris_available = _clipboard.wait_is_uris_available();
-            string? text = request_text();
             
             // checking if any content known is available
             if(text_available || image_available || uris_available) {
