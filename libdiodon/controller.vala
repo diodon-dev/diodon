@@ -478,6 +478,7 @@ namespace Diodon
             else {
                 manager.on_text_received.disconnect(add_as_text_item);
                 manager.on_uris_received.disconnect(uris_received);
+                manager.on_image_received.disconnect(image_received);
                 on_select_item.disconnect(manager.select_item);
                 on_clear.disconnect(manager.clear);    
             }
