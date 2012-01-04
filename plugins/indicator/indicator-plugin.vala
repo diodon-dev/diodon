@@ -39,7 +39,7 @@ namespace Diodon.Plugins
             Controller controller = object as Controller;
            
             if(indicator == null) {
-                indicator = new AppIndicator.Indicator("diodon", "gtk-paste",
+                indicator = new AppIndicator.Indicator("Diodon", "gtk-paste",
                     AppIndicator.IndicatorCategory.APPLICATION_STATUS);
             
                 indicator.set_menu(controller.get_menu());
