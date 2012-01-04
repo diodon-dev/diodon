@@ -6,7 +6,7 @@ import subprocess, os, traceback, waflib
 import Options, Logs
 
 NAME = 'Diodon'
-VERSION = '0.7.0'
+VERSION = '0.8.0'
 APPNAME = 'diodon'
 WEBSITE = 'https://launchpad.net/diodon'
 COPYRIGHT = 'Copyright \xc2\xa9 2010 Diodon Team'
