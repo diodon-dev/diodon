@@ -28,6 +28,7 @@ def options(opt):
     opt.add_option('--debug',                    action='store_true', default=False, dest='debug',     help='Debug mode')
     opt.add_option('--disable-indicator-plugin', action='store_true', default=False, dest='disable_indicator', help='Disable build of indicator plugin')
     opt.add_option('--enable-unitylens-plugin',  action='store_true', default=False, dest='enable_unitylens', help='Enable build of unity lens plugin')
+    opt.add_option('--enable-zeitgeist-plugin',  action='store_true', default=False, dest='enable_zeitgeist', help='Enable build of zeitgeist plugin')
 
 def configure(conf):
     conf.load('compiler_c intltool gnu_dirs glib2')
@@ -64,6 +65,10 @@ def configure(conf):
     if Options.options.enable_unitylens:
         conf.check_cfg(package='unity',   uselib_store='UNITY', atleast_version='4.0.2',  mandatory=1, args='--cflags --libs')
         conf.check_cfg(package='dee-1.0', uselib_store='DEE',   atleast_version='0.5.18', mandatory=1, args='--cflags --libs')
+      
+    conf.env['ZEITGEIST'] = Options.options.enable_zeitgeist
+    if Options.options.enable_zeitgeist:
+        conf.check_cfg(package='zeitgeist-1.0', uselib_store='ZEITGEIST', atleast_version='0.3.12', mandatory=1, args='--cflags --libs')    
 
     # FIXME: conf.env and conf.define should not both be needed?
     conf.define('PACKAGE_NAME', APPNAME)
