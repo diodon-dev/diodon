@@ -1,0 +1,190 @@
+# English (United Kingdom) translation for diodon
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the diodon package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: diodon\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-10-12 16:36+0200\n"
+"PO-Revision-Date: 2012-01-25 09:42+0000\n"
+"Last-Translator: Nick Trew <Unknown>\n"
+"Language-Team: English (United Kingdom) <en_GB@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-01-26 05:37+0000\n"
+"X-Generator: Launchpad (build 14719)\n"
+
+#: ../data/diodon.desktop.in.h:1
+msgid "Clipboard Manager"
+msgstr "Clipboard Manager"
+
+#: ../data/diodon.desktop.in.h:2
+msgid "GTK+ Clipboard Manager"
+msgstr "GTK+ Clipboard Manager"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
+msgid "Active plugins"
+msgstr "Active plugins"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
+#: ../data/preferences.ui.h:1
+msgid ""
+"Adds the primary selection (an area of the screen which is selected with the "
+"mouse) to the clipboard history."
+msgstr ""
+"Adds the primary selection (an area of the screen which is selected with the "
+"mouse) to the clipboard history."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
+#: ../data/preferences.ui.h:2
+msgid ""
+"Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
+"clipboard history."
+msgstr ""
+"Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
+"clipboard history."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
+msgid "Automatically paste selected item"
+msgstr "Automatically paste selected item"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
+#: ../data/preferences.ui.h:3
+msgid ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
+msgstr ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
+#: ../data/preferences.ui.h:5
+msgid "Clipboard size"
+msgstr "Clipboard size"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
+#: ../data/preferences.ui.h:7
+msgid "History key"
+msgstr "History key"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#: ../data/preferences.ui.h:8
+msgid "Hotkey to quickly allow you to access the clipboard history."
+msgstr "Hotkey to quickly allow you to access the clipboard history."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
+msgid "Keep clipboard content"
+msgstr "Keep clipboard content"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
+msgid "List of active plugins."
+msgstr "List of active plugins."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+#: ../data/preferences.ui.h:10
+msgid "Number of items in the clipboard history."
+msgstr "Number of items in the clipboard history."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#: ../data/preferences.ui.h:12
+msgid ""
+"Prevents an empty clipboard. For instance when an application exits, the "
+"clipboard would usually be emptied."
+msgstr ""
+"Prevents an empty clipboard. For instance when an application exits, the "
+"clipboard would usually be emptied."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
+msgid "Synchronize clipboards"
+msgstr "Synchronise clipboards"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
+#: ../data/preferences.ui.h:14
+msgid ""
+"Synchronizes the selection (an area of the screen which is selected with the "
+"mouse) and the clipboard so that anything in the selection is immediately "
+"available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
+"the middle mouse button."
+msgstr ""
+"Synchronises the selection (an area of the screen which is selected with the "
+"mouse) and the clipboard so that anything in the selection is immediately "
+"available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
+"the middle mouse button."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+msgid "Use clipboard (Ctrl+C)"
+msgstr "Use clipboard (Ctrl+C)"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+msgid "Use primary selection"
+msgstr "Use primary selection"
+
+#: ../data/preferences.ui.h:4
+msgid "Clipboard"
+msgstr "Clipboard"
+
+#: ../data/preferences.ui.h:6
+msgid "Diodon Preferences"
+msgstr "Diodon Preferences"
+
+#: ../data/preferences.ui.h:9
+msgid "Hotkeys"
+msgstr "Hotkeys"
+
+#: ../data/preferences.ui.h:11
+msgid "Plugins"
+msgstr "Plugins"
+
+#: ../data/preferences.ui.h:13
+msgid "S_ynchronize clipboards"
+msgstr "S_ynchronise clipboards"
+
+#: ../data/preferences.ui.h:15
+msgid "Use _primary selection"
+msgstr "Use _primary selection"
+
+#: ../data/preferences.ui.h:16
+msgid "_Automatically paste selected item"
+msgstr "_Automatically paste selected item"
+
+#: ../data/preferences.ui.h:17
+msgid "_Keep clipboard content"
+msgstr "_Keep clipboard content"
+
+#: ../data/preferences.ui.h:18
+msgid "_Use clipboard (Ctrl+C)"
+msgstr "_Use clipboard (Ctrl+C)"
+
+#: ../libdiodon/clipboard-menu.vala:41
+msgid "<Empty>"
+msgstr "<Empty>"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:94
+msgid "Search Clipboard"
+msgstr "Search Clipboard"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:158
+#: ../plugins/unitylens/unity-lens-plugin.vala:182
+msgid "Text"
+msgstr "Text"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:162
+#: ../plugins/unitylens/unity-lens-plugin.vala:183
+msgid "Files"
+msgstr "Files"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:166
+#: ../plugins/unitylens/unity-lens-plugin.vala:184
+msgid "Images"
+msgstr "Images"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:180
+msgid "Type"
+msgstr "Type"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:275
+msgid "Copy to clipboard"
+msgstr "Copy to clipboard"
