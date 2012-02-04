@@ -8,10 +8,10 @@ lib = bld.shlib (
   features = 'c cshlib disable_binding',
   target = 'zeitgeist',
   vapi_dirs = '../../vapi ../../libdiodon',
-  uselib = 'ZEITGEIST PEAS',
+  uselib = 'ZEITGEIST PEAS X11 GDKX',
   use = 'libdiodon',
   cflags = ['-include', 'config.h'],
-  packages = 'zeitgeist-1.0 libpeas-1.0',
+  packages = 'zeitgeist-1.0 libpeas-1.0 x11 gdk-x11-3.0',
   source = bld.path.ant_glob (incl='**/*.vala'))
 
 lib.install_path = os.path.join(bld.env['PLUGINS_DIR'], lib.target)

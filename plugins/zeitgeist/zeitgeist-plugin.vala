@@ -58,22 +58,27 @@ namespace Diodon.Plugins
         private void add_clipboard_item(IClipboardItem item)
         {
             if(item is TextClipboardItem) {
+            
                 debug("Add text item to zeitgeist");
+                get_path_of_active_application();
+                
                 Zeitgeist.Subject subject = new Zeitgeist.Subject();
                 
                 subject.set_uri("clipboard://" + item.get_checksum());
-                subject.set_interpretation(Zeitgeist.NFO_DOCUMENT);
-                subject.set_manifestation(Zeitgeist.ZG_USER_ACTIVITY);
+                subject.set_interpretation(Zeitgeist.NFO_TEXT_DOCUMENT);
+                subject.set_manifestation(Zeitgeist.NFO_DATA_CONTAINER);
                 subject.set_mimetype(item.get_mime_type());
-                subject.set_origin("clipboard");
+                //subject.set_origin("clipboard");
                 subject.set_text(item.get_label());
-                subject.set_storage("");
+                //subject.set_storage("");
                 
                 Zeitgeist.Event event = new Zeitgeist.Event();
+                //event.set_id(
                 event.set_interpretation(Zeitgeist.ZG_CREATE_EVENT);
                 event.set_manifestation(Zeitgeist.ZG_USER_ACTIVITY);
                 event.set_actor("application://diodon.desktop");
                 event.add_subject(subject);
+                //event.set_payload();
                 
                 TimeVal cur_time = TimeVal();
                 int64 timestamp = Zeitgeist.Timestamp.from_timeval(cur_time);
@@ -81,6 +86,43 @@ namespace Diodon.Plugins
                 
                 log.insert_events_no_reply(event, null);
             }
+        }
+        
+        private string? get_path_of_active_application()
+        {
+            unowned X.Display display = Gdk.x11_get_default_xdisplay();
+            
+            X.Atom wm_pid = display.intern_atom("_NET_WM_PID", false);
+            
+            if(wm_pid != X.None) {
+            
+                X.Window focused_window;
+                int revert_to_return;
+                display.get_input_focus(out focused_window, out revert_to_return);
+                
+                X.Atom actual_type_return;
+                int actual_format_return;
+                ulong nitems_return;
+                ulong bytes_after_return;
+                void* prop_return = null;
+                
+                
+                int status = display.get_window_property(focused_window, wm_pid, 0, 1024, false,
+                    X.XA_CARDINAL, out actual_type_return, out actual_format_return,
+                    out nitems_return, out bytes_after_return, out prop_return);
+                    
+                debug("Focused window %#x", (int)focused_window);
+                    
+                if(status == X.Success) {
+                    debug("Success");
+                    if(prop_return != null) {
+                        ulong pid = *((ulong*)prop_return);
+                        debug("Copied by process with pid %lu", pid);
+                    }
+                }
+            }
+            
+            return null;
         }
     }
 }
