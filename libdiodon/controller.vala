@@ -339,6 +339,17 @@ namespace Diodon
         }
         
         /**
+         * Get currently selected item for given clipboard type
+         * 
+         * @param type clipboard type
+         * @return clipboard item
+         */
+        public IClipboardItem get_current_item(ClipboardType type)
+        {
+            return clipboard_model.get_current_item(type);
+        }
+        
+        /**
          * Get all items of given category
          * 
          * @param category category to get items 
