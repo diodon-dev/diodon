@@ -91,38 +91,67 @@ namespace Diodon.Plugins
         private string? get_path_of_active_application()
         {
             unowned X.Display display = Gdk.x11_get_default_xdisplay();
-            
             X.Atom wm_pid = display.intern_atom("_NET_WM_PID", false);
             
             if(wm_pid != X.None) {
             
                 X.Window focused_window;
                 int revert_to_return;
+                
                 display.get_input_focus(out focused_window, out revert_to_return);
-                
-                X.Atom actual_type_return;
-                int actual_format_return;
-                ulong nitems_return;
-                ulong bytes_after_return;
-                void* prop_return = null;
-                
-                
-                int status = display.get_window_property(focused_window, wm_pid, 0, 1024, false,
-                    X.XA_CARDINAL, out actual_type_return, out actual_format_return,
-                    out nitems_return, out bytes_after_return, out prop_return);
-                    
                 debug("Focused window %#x", (int)focused_window);
+                X.Window active_window = get_toplevel_parent(display, focused_window);
+                                
+                debug("Active window %#x", (int)active_window);
+                
+                if(active_window != X.None) {
                     
-                if(status == X.Success) {
-                    debug("Success");
-                    if(prop_return != null) {
-                        ulong pid = *((ulong*)prop_return);
-                        debug("Copied by process with pid %lu", pid);
+                    X.Atom actual_type_return;
+                    int actual_format_return;
+                    ulong nitems_return;
+                    ulong bytes_after_return;
+                    void* prop_return = null;
+                    
+                    int status = display.get_window_property(active_window, wm_pid, 0, 1024, false,
+                        0, out actual_type_return, out actual_format_return,
+                        out nitems_return, out bytes_after_return, out prop_return);
+                    debug("Number of items: %lu", nitems_return);
+                        
+                    if(status == X.Success) {
+                        debug("Success");
+                        if(prop_return != null) {
+                            ulong pid = *((ulong*)prop_return);
+                            debug("Copied by process with pid %lu", pid);
+                        }
                     }
                 }
             }
             
             return null;
+        }
+        
+        private X.Window get_toplevel_parent(X.Display display, X.Window window)
+        {
+            X.Window root;
+            X.Window parent;
+            X.Window[] children;
+            
+            while(true) {
+                int status = display.query_tree(window, out root, out parent, out children);
+                debug("Status %d", status);
+                
+                if(status != X.Success) {
+                    break;
+                }
+                
+                if(window == root || parent == root) {
+                    return window;
+                }
+                
+                window = parent;
+            }
+            
+            return X.None;
         }
     }
 }
