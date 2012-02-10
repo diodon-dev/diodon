@@ -60,7 +60,7 @@ namespace Diodon.Plugins
             if(item is TextClipboardItem) {
             
                 debug("Add text item to zeitgeist");
-                get_path_of_active_application();
+                string? origin = get_path_of_active_application();
                 
                 Zeitgeist.Subject subject = new Zeitgeist.Subject();
                 
@@ -68,7 +68,9 @@ namespace Diodon.Plugins
                 subject.set_interpretation(Zeitgeist.NFO_TEXT_DOCUMENT);
                 subject.set_manifestation(Zeitgeist.NFO_DATA_CONTAINER);
                 subject.set_mimetype(item.get_mime_type());
-                //subject.set_origin("clipboard");
+                if(origin != null) {
+                    subject.set_origin(origin);
+                }
                 subject.set_text(item.get_label());
                 //subject.set_storage("");
                 
@@ -93,7 +95,24 @@ namespace Diodon.Plugins
             X.Window window = get_active_window();
             if(window != X.None) {
                 ulong pid = get_pid(window);
-                return null; // TODO
+                
+                if(pid != 0) {
+                    File file = File.new_for_path("/proc/" + pid.to_string() + "/exe");
+                    try {
+                        FileInfo info = file.query_info(FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET, 
+                            FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
+                        if(info != null) {
+                            string path = info.get_attribute_as_string(
+                                FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET);
+                            debug("Path is %s", path);
+                            return path;
+                        }
+                    }
+                    catch(GLib.Error e) {
+                        debug("Error occured while reading %s: %s",
+                            file.get_path(), e.message);
+                    }
+                }
             }
             
             return null;
