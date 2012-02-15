@@ -106,19 +106,19 @@ namespace Diodon
         
         /**
          * Check if given item is equal.
+         * TODO see todo equal_func
          *
          * @return true if equal; otherwise false.
          *
-         * TODO: see todo equal_func
          */
         public abstract bool equals(IClipboardItem *item);
         
         /**
          * return hash code for implemented clipboard item
+         * TODO see todo hash_func
          *
          * @return hash code
          *
-         * TODO: see todo hash_func
          */
         public abstract uint hash();
         
@@ -142,9 +142,8 @@ namespace Diodon
         
         /**
          * hash func helper creating hash code for clipboard item.
-         *
-         * TODO:
-         * in future releases of libgee (currently in development version 0.7.0)
+         * 
+         * TODO in future releases of libgee (currently in development version 0.7.0)
          * there will be a interface called hashable which should be implemented
          * instead of this inconvenient hash func method.
          * 
