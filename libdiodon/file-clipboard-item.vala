@@ -40,7 +40,7 @@ namespace Diodon
         /**
          * Default data constructor needed for reflection.
          * 
-         * @param type clipboard type item is coming from
+         * @param clipboard_type clipboard type item is coming from
          * @param data paths separated with \n
          */ 
         public FileClipboardItem(ClipboardType clipboard_type, string data) throws FileError

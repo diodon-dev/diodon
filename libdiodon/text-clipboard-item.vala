@@ -32,7 +32,7 @@ namespace Diodon
         /**
          * Default data constructor needed for reflection.
          * 
-         * @param type clipboard type item is coming from
+         * @param clipboard_type clipboard type item is coming from
          * @param data simple text
          */ 
         public TextClipboardItem(ClipboardType clipboard_type, string data)
