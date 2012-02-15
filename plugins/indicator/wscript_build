@@ -5,11 +5,12 @@
 import os
 
 lib = bld.shlib (
-  features = 'c cshlib disable_binding',
+  features = 'c cshlib',
   target = 'indicator',
   vapi_dirs = '../../vapi ../../libdiodon',
   uselib = 'APPINDICATOR PEAS',
   use = 'libdiodon',
+  install_binding = False,
   cflags = ['-include', 'config.h'],
   packages = 'appindicator3-0.1 libpeas-1.0',
   source = bld.path.ant_glob (incl='**/*.vala'))

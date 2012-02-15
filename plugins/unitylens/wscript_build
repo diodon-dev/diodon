@@ -5,12 +5,13 @@
 import os
 
 lib = bld.shlib (
-  features = 'c cshlib disable_binding',
+  features = 'c cshlib',
   target = 'unitylens',
   vapi_dirs = '../../vapi ../../libdiodon',
   uselib = 'GTK PEAS UNITY DEE',
   use = 'libdiodon',
   cflags = ['-include', 'config.h'],
+  install_binding = False,
   packages = 'gtk+-3.0 libpeas-1.0 dee-1.0 gio-2.0 unity config',
   source = bld.path.ant_glob (incl='**/*.vala'))
 
