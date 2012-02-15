@@ -14,6 +14,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
  
 namespace Diodon
@@ -21,8 +24,6 @@ namespace Diodon
     /**
      * The clipboard model encapsulates the clipboard state and persists this
      * state with the help of the given IClipboardStorage.
-     *
-     * @author Oliver Sauder <os@esite.ch>
      */
     class ClipboardModel : GLib.Object
     {

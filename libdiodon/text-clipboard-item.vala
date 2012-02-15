@@ -14,14 +14,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
 
 namespace Diodon
 {
     /**
      * Represents a text clipboard item holding simple text.
-     *
-     * @author Oliver Sauder <os@esite.ch>
      */
     public class TextClipboardItem : GLib.Object, IClipboardItem
     {

@@ -14,6 +14,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
  
 namespace Diodon
@@ -22,8 +25,6 @@ namespace Diodon
      * IClipboardStorage interface. Defining methods
      * to store clipboard data into a data container
      * such as xml or sql.
-     *
-     * @author Oliver Sauder <os@esite.ch>
      */
     interface IClipboardStorage : GLib.Object
     {

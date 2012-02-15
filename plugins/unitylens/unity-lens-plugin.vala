@@ -14,6 +14,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
 
 namespace Diodon.Plugins
@@ -31,8 +34,6 @@ namespace Diodon.Plugins
 
     /**
      * Providing access to clipboard history through a unity lens
-     *
-     * @author Oliver Sauder <os@esite.ch>
      */
     public class UnityLensPlugin : Peas.ExtensionBase, Peas.Activatable
     {

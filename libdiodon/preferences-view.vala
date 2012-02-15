@@ -14,14 +14,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
  
 namespace Diodon
 {
     /**
      * Preferences dialog view loading user interface from preferences.ui
-     *
-     * @author Oliver Sauder <os@esite.ch>
      */
     class PreferencesView : GLib.Object
     {

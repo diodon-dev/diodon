@@ -14,6 +14,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
 
 namespace Diodon
@@ -22,8 +25,6 @@ namespace Diodon
      * The controller is responsible to interact with all managers and views
      * passing on information between such and storing the application state
      * in the available models.
-     * 
-     * @author Oliver Sauder <os@esite.ch>
      */
     public class Controller : GLib.Object
     {

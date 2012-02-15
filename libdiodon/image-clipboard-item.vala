@@ -14,6 +14,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
 
 namespace Diodon
@@ -26,8 +29,6 @@ namespace Diodon
      * Stored image will be removed from disc when item is removed from history.
      * To still be able to identify a picture, a md5 sum is built from the 
      * original pic.
-     *
-     * @author Oliver Sauder <os@esite.ch>
      */
     public class ImageClipboardItem : GLib.Object, IClipboardItem
     {

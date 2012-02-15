@@ -14,14 +14,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
 
 namespace Diodon
 {
     /**
      * Class for defining utility methods to be used in any part of diodon.
-     * 
-     * @author Oliver Sauder <os@esite.ch>
      */
     public abstract class Utility : GLib.Object
     {

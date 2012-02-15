@@ -14,6 +14,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
 
 namespace Diodon
@@ -22,8 +25,6 @@ namespace Diodon
      * This class is in charge of retrieving information from
      * the encapsulated gnome clipboard and passing on such to the processes connected
      * to the given signals.
-     * 
-     * @author Oliver Sauder <os@esite.ch>
      */
     class ClipboardManager : GLib.Object
     {

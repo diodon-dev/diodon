@@ -14,6 +14,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
  
 namespace Diodon
@@ -21,8 +24,6 @@ namespace Diodon
     /**
      * Clipboard item interface to be implemented by various different
      * clipboard item types such as Text,File or Image.
-     *
-     * @author Oliver Sauder <os@esite.ch>
      */
     public interface IClipboardItem : GLib.Object
     {

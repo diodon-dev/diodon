@@ -14,6 +14,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
 
 namespace Diodon
@@ -22,8 +25,6 @@ namespace Diodon
      * Specific clipboard manager for primary selection extending
      * basic functionality with primary selection specific use cases.
      * Note that primary selection clipboard manager only supports text.
-     * 
-     * @author Oliver Sauder <os@esite.ch>
      */
     class PrimaryClipboardManager : ClipboardManager
     {

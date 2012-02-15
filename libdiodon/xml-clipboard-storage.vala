@@ -14,6 +14,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
 
 namespace Diodon
@@ -22,8 +25,6 @@ namespace Diodon
      * Xml clipboard storage implementation using
      * libxml2 to store parse and write the xml file.
      * Xml will always be flushed after storage has changed.
-     * 
-     * @author Oliver Sauder <os@esite.ch>
      */
     class XmlClipboardStorage : GLib.Object, IClipboardStorage
     {

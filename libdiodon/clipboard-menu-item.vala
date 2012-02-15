@@ -14,14 +14,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
 
 namespace Diodon
 {
     /**
      * A gtk menu item holding a clipboard item.
-     * 
-     * @author Oliver Sauder <os@esite.ch>
      */
     class ClipboardMenuItem : Gtk.ImageMenuItem
     {

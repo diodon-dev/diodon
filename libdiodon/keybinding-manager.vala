@@ -14,6 +14,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
 
 namespace Diodon
@@ -22,8 +25,6 @@ namespace Diodon
      * This class is in charge to grab keybindings on the X11 display
      * and filter X11-events and passing on such events to the registed
      * handler methods.
-     * 
-     * @author Oliver Sauder <os@esite.ch>
      */
     class KeybindingManager : GLib.Object
     {

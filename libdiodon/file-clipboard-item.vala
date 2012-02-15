@@ -14,14 +14,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author:
+ *  Oliver Sauder <os@esite.ch>
  */
 
 namespace Diodon
 {
     /**
      * Represents a file clipboard item holding a path to a file.
-     *
-     * @author Oliver Sauder <os@esite.ch>
      */
     public class FileClipboardItem : GLib.Object, IClipboardItem
     {
