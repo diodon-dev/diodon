@@ -30,7 +30,7 @@ def options(opt):
     opt.add_option('--enable-unitylens-plugin',  action='store_true', default=False, dest='enable_unitylens', help='Enable build of unity lens plugin')
 
 def configure(conf):
-    conf.load('compiler_c intltool gnu_dirs glib2')
+    conf.load('compiler_c intltool gnu_dirs glib2 valadoc')
     
     conf.load('vala', funs='')
     conf.check_vala(min_version=(0,13,0))
@@ -67,6 +67,7 @@ def configure(conf):
 
     # FIXME: conf.env and conf.define should not both be needed?
     conf.define('PACKAGE_NAME', APPNAME)
+    conf.env['PACKAGE_NAME'] = APPNAME
     conf.define('ACTIVE_PLUGINS', ACTIVE_PLUGINS)
     conf.env['ACTIVE_PLUGINS'] = ACTIVE_PLUGINS
     conf.define('GETTEXT_PACKAGE', APPNAME)
@@ -100,7 +101,7 @@ def configure(conf):
     conf.write_config_header ('config.h', remove=False)
    
 def build(ctx):
-    ctx.add_subdirs('po data libdiodon plugins diodon')
+    ctx.add_subdirs('po data libdiodon plugins diodon doc')
     ctx.add_post_fun(post)
     
 def post(ctx):

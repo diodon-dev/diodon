@@ -1,0 +1,16 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+doc = bld.new_task_gen (
+    features = 'valadoc',
+    output_dir = '../doc/html',
+    package_name = bld.env['PACKAGE_NAME'],
+    package_version = bld.env['VERSION'],
+    packages = 'gtk+-3.0 gee-1.0 libxml-2.0 x11 gdk-x11-3.0 libpeas-gtk-1.0 libpeas-1.0 config xtst gdk-3.0',
+    vapi_dirs = '../vapi',
+#    source = '../libdiodon/controller.vala',
+    force = True)
+    
+path = bld.path.find_dir ('../libdiodon')
+doc.files = path.ant_glob (incl='**/*.vala')
+
