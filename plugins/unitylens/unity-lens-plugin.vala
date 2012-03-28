@@ -97,39 +97,27 @@ namespace Diodon.Plugins
             populate_categories();
             populate_filters();
             lens.add_local_scope(scope);
-            
-            // Listen for filter changes
+
+			// Listen for filter changes
             scope.filters_changed.connect(
-                () => {          
-                    if(scope.active_search != null)
-                    {
-                        scope.notify_property("active-search");
-                    }
+                () => {
+					scope.queue_search_changed(Unity.SearchType.DEFAULT);
                 }
             );
             
-            // Listen for changes to the lens entry search
-            scope.notify["active-search"].connect(
-                (obj, pspec) => {
-                    Unity.LensSearch search = scope.active_search;
-                    update_search_async.begin(search);  
-                }
-            );
-            
-            // Listen for changes to the global search
-            scope.notify["active-global-search"].connect(
-                (obj, pspec) => {
-                    Unity.LensSearch search = scope.active_search;
-                    update_global_search_async.begin(search);  
-                }
-            );
+            scope.generate_search_key.connect ((lens_search) => {
+		        return lens_search.search_string.strip ();
+      		});
+      		
+			// Listen for changes to the lens entry search
+			scope.search_changed.connect(on_search_changed);
             
             // Export the controller on the bus.
             // Unity can see us past this point
             try {
                 lens.export();
             } catch(IOError error) {
-                critical("Failed to export DBus service for '%s': %s",
+                warning("Failed to export DBus service for '%s': %s",
                     lens.dbus_path, error.message);
             }
         }
@@ -190,55 +178,54 @@ namespace Diodon.Plugins
             lens.filters = filters;
         }
         
-        private async void update_search_async(Unity.LensSearch search)
+        private void on_search_changed (Unity.Scope scope,
+            Unity.LensSearch search, Unity.SearchType search_type,
+            Cancellable cancellable)
+        {
+            start_search.begin (search, search_type, cancellable);
+        }
+        
+        private async void start_search (Unity.LensSearch search,
+            Unity.SearchType search_type, Cancellable cancellable)
+        {
+            if (search_type == Unity.SearchType.GLOBAL) {
+                yield update_global_search_async (search, cancellable);
+			}
+			else {
+			    yield update_search_async (search, cancellable);
+			}
+
+            // make sure we don't forget to emit finished (if we didn't get cancelled)
+            if (!cancellable.is_cancelled ()) {
+                if (search.results_model.get_n_rows () == 0) {
+				  search.set_reply_hint ("no-results-hint",
+					_("Sorry, there is no clipboard content that matches your search."));
+				}
+
+				search.finished ();
+			}
+        }
+        
+        private async void update_search_async(Unity.LensSearch search,
+            Cancellable cancellable)
         {
             Dee.Model results_model = scope.results_model;
-            
-            // Prevent concurrent searches and concurrent updates of our models,
-            // by preventing any notify signals from propagating to us.
-            // Important: Remeber to thaw the notifys again!
-            scope.freeze_notify();
             
             string search_string = search.search_string ?? "";
             ClipboardItemType item_type = get_current_type();
             
             update_results_model(results_model, search_string,
-                item_type);
-                
-            // Allow new searches once we enter an idle again.
-            // We don't do it directly from here as that could mean we start
-            // changing the model even before we had flushed out current changes
-            Idle.add (() => {
-                scope.thaw_notify ();
-                return false;
-            });
-            
-            search.finished();
+                item_type, cancellable);
         }
         
-        private async void update_global_search_async(Unity.LensSearch search)
+        private async void update_global_search_async(Unity.LensSearch search,
+            Cancellable cancellable)
         {
             Dee.Model results_model = scope.global_results_model;
             
-            // Prevent concurrent searches and concurrent updates of our models,
-            // by preventing any notify signals from propagating to us.
-            // Important: Remeber to thaw the notifys again!
-            scope.freeze_notify();
-            
             string search_string = search.search_string ?? "";
-            
             update_results_model(results_model, search_string,
-                ClipboardItemType.ALL);
-                
-            // Allow new searches once we enter an idle again.
-            // We don't do it directly from here as that could mean we start
-            // changing the model even before we had flushed out current changes
-            Idle.add (() => {
-                scope.thaw_notify ();
-                return false;
-            });
-            
-            search.finished();
+                ClipboardItemType.ALL, cancellable);
         }
         
         /**
@@ -254,7 +241,8 @@ namespace Diodon.Plugins
             return ClipboardItemType.from_string(type_id);
         }
 
-        private void update_results_model(Dee.Model results_model, string search, ClipboardItemType type)
+        private void update_results_model(Dee.Model results_model, string search,
+            ClipboardItemType type, Cancellable cancellable)
         {
             Controller controller = object as Controller;
             debug("Rebuilding results model");
@@ -265,6 +253,11 @@ namespace Diodon.Plugins
             // add items in reverse order as last added items are
             // more important
             for(int i = items.size -1; i >=0; --i) {
+            
+                if(cancellable.is_cancelled()) {
+                    return;
+                }
+                
                 IClipboardItem item = items.get(i);
                 if(item.matches(search, type)) {
                     results_model.append(

@@ -65,7 +65,7 @@ def configure(conf):
     # check if unity lens plugin should be built
     conf.env['UNITYLENS'] = Options.options.enable_unitylens
     if Options.options.enable_unitylens:
-        conf.check_cfg(package='unity',   uselib_store='UNITY', atleast_version='4.0.2',  mandatory=1, args='--cflags --libs')
+        conf.check_cfg(package='unity',   uselib_store='UNITY', atleast_version='5.8.0',  mandatory=1, args='--cflags --libs')
         conf.check_cfg(package='dee-1.0', uselib_store='DEE',   atleast_version='0.5.18', mandatory=1, args='--cflags --libs')
 
     # FIXME: conf.env and conf.define should not both be needed?
