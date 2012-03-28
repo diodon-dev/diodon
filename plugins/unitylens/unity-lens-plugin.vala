@@ -192,7 +192,7 @@ namespace Diodon.Plugins
         
         private async void update_search_async(Unity.LensSearch search)
         {
-            Dee.SharedModel results_model = scope.results_model;
+            Dee.Model results_model = scope.results_model;
             
             // Prevent concurrent searches and concurrent updates of our models,
             // by preventing any notify signals from propagating to us.
@@ -218,7 +218,7 @@ namespace Diodon.Plugins
         
         private async void update_global_search_async(Unity.LensSearch search)
         {
-            Dee.SharedModel results_model = scope.global_results_model;
+            Dee.Model results_model = scope.global_results_model;
             
             // Prevent concurrent searches and concurrent updates of our models,
             // by preventing any notify signals from propagating to us.
