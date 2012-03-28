@@ -28,7 +28,7 @@ namespace Diodon
      */
     class XmlClipboardStorage : GLib.Object, IClipboardStorage
     {
-        private Gee.ArrayList<IClipboardItem> items;
+        private Gee.List<IClipboardItem> items;
         private string xml_file;
     
         /**

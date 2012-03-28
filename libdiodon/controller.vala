@@ -31,7 +31,7 @@ namespace Diodon
         private Settings settings_clipboard;
         private Settings settings_keybindings;
         private Settings settings_plugins;
-        private Gee.HashMap<ClipboardType, ClipboardManager> clipboard_managers;
+        private Gee.Map<ClipboardType, ClipboardManager> clipboard_managers;
         private ClipboardModel clipboard_model;
         private ConfigurationModel configuration_model;
         private ClipboardMenu menu;
@@ -429,7 +429,7 @@ namespace Diodon
             if(configuration_model.clipboard_size < clipboard_model.get_size()) {
                 // create copy of items as otherwise
                 // removing in a loop does not work
-                Gee.ArrayList<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
+                Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
                 items.add_all(clipboard_model.get_items());
                 
                 int remove = items.size - configuration_model.clipboard_size;
