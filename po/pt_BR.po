@@ -6,11 +6,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-10-12 16:36+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-28 17:25+0200\n"
 "PO-Revision-Date: 2012-02-16 16:43+0000\n"
 "Last-Translator: Hriostat <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,20 +27,11 @@ msgid "GTK+ Clipboard Manager"
 msgstr "Gerenciador de área de transferência em GTK+"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
-msgid "Active plugins"
-msgstr "Plug-ins ativos"
+msgid "Use clipboard (Ctrl+C)"
+msgstr "Usar área de transferênica (Ctrl+C)"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
-#: ../data/preferences.ui.h:1
-msgid ""
-"Adds the primary selection (an area of the screen which is selected with the "
-"mouse) to the clipboard history."
-msgstr ""
-"Adiciona a seleção principal (uma área da tela selecionada com o mouse) para "
-"o histórico da área de transferência."
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
-#: ../data/preferences.ui.h:2
+#: ../data/preferences.ui.h:3
 msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
@@ -47,62 +39,25 @@ msgstr ""
 "Adiciona o texto que é copiado com Ctrl + C, por exemplo, para o histórico "
 "da área de transferência."
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
+msgid "Use primary selection"
+msgstr "Usar seleção primária"
+
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
-msgid "Automatically paste selected item"
-msgstr "Cola o item selecionado automaticamente"
+#: ../data/preferences.ui.h:5
+msgid ""
+"Adds the primary selection (an area of the screen which is selected with the "
+"mouse) to the clipboard history."
+msgstr ""
+"Adiciona a seleção principal (uma área da tela selecionada com o mouse) para "
+"o histórico da área de transferência."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
-#: ../data/preferences.ui.h:3
-msgid ""
-"Automatically paste selected item instead of just copying it to the "
-"clipboard."
-msgstr ""
-"Automaticamente cola o item selecionado ao invés de copiar para a área de "
-"transferência."
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
-#: ../data/preferences.ui.h:5
-msgid "Clipboard size"
-msgstr "Tamanho da área de transferência"
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
-#: ../data/preferences.ui.h:7
-msgid "History key"
-msgstr "Chave do histórico"
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
-#: ../data/preferences.ui.h:8
-msgid "Hotkey to quickly allow you to access the clipboard history."
-msgstr "Atalho para o acesso rápido ao histórico da área de transferência."
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
-msgid "Keep clipboard content"
-msgstr "Manter o conteúdo da área de transferência."
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
-msgid "List of active plugins."
-msgstr "Lista de plug-ins ativos"
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
-#: ../data/preferences.ui.h:10
-msgid "Number of items in the clipboard history."
-msgstr "Número de itens no histórico da área de transferênica."
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
-#: ../data/preferences.ui.h:12
-msgid ""
-"Prevents an empty clipboard. For instance when an application exits, the "
-"clipboard would usually be emptied."
-msgstr ""
-"Impede uma área de transferência vazia. Por exemplo, quando um aplicativo é "
-"encerrado, a área de transferência normalmente seria esvaziado."
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Synchronize clipboards"
 msgstr "Sincronizar áreas de transferênica"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
-#: ../data/preferences.ui.h:14
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
+#: ../data/preferences.ui.h:7
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
 "mouse) and the clipboard so that anything in the selection is immediately "
@@ -113,77 +68,127 @@ msgstr ""
 "área de transferência para que tudo na seleção seja imediatamente disponível "
 "na memória e vice versa."
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
+msgid "Keep clipboard content"
+msgstr "Manter o conteúdo da área de transferência."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#: ../data/preferences.ui.h:9
+msgid ""
+"Prevents an empty clipboard. For instance when an application exits, the "
+"clipboard would usually be emptied."
+msgstr ""
+"Impede uma área de transferência vazia. Por exemplo, quando um aplicativo é "
+"encerrado, a área de transferência normalmente seria esvaziado."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
+msgid "Automatically paste selected item"
+msgstr "Cola o item selecionado automaticamente"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
+#: ../data/preferences.ui.h:11
+msgid ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
+msgstr ""
+"Automaticamente cola o item selecionado ao invés de copiar para a área de "
+"transferência."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+#: ../data/preferences.ui.h:13
+msgid "Clipboard size"
+msgstr "Tamanho da área de transferência"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#: ../data/preferences.ui.h:12
+msgid "Number of items in the clipboard history."
+msgstr "Número de itens no histórico da área de transferênica."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
+#: ../data/preferences.ui.h:16
+msgid "History key"
+msgstr "Chave do histórico"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
+#: ../data/preferences.ui.h:15
+msgid "Hotkey to quickly allow you to access the clipboard history."
+msgstr "Atalho para o acesso rápido ao histórico da área de transferência."
+
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
-msgid "Use clipboard (Ctrl+C)"
-msgstr "Usar área de transferênica (Ctrl+C)"
+msgid "Active plugins"
+msgstr "Plug-ins ativos"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
-msgid "Use primary selection"
-msgstr "Usar seleção primária"
+msgid "List of active plugins."
+msgstr "Lista de plug-ins ativos"
 
-#: ../data/preferences.ui.h:4
-msgid "Clipboard"
-msgstr "Área de transferência"
-
-#: ../data/preferences.ui.h:6
+#: ../data/preferences.ui.h:1
 msgid "Diodon Preferences"
 msgstr "Preferênciad do Diodon"
 
-#: ../data/preferences.ui.h:9
-msgid "Hotkeys"
-msgstr "Teclas de atalho"
-
-#: ../data/preferences.ui.h:11
-msgid "Plugins"
-msgstr "Plug-ins"
-
-#: ../data/preferences.ui.h:13
-msgid "S_ynchronize clipboards"
-msgstr "S_incronizar áreas de transferência"
-
-#: ../data/preferences.ui.h:15
-msgid "Use _primary selection"
-msgstr "Usar seleção _primária"
-
-#: ../data/preferences.ui.h:16
-msgid "_Automatically paste selected item"
-msgstr "Colar _automaticamente item selecionado"
-
-#: ../data/preferences.ui.h:17
-msgid "_Keep clipboard content"
-msgstr "_Manter conteúdo da área de transferência"
-
-#: ../data/preferences.ui.h:18
+#: ../data/preferences.ui.h:2
 msgid "_Use clipboard (Ctrl+C)"
 msgstr "_Usar área de transferência (Ctrl+C)"
 
-#: ../libdiodon/clipboard-menu.vala:41
+#: ../data/preferences.ui.h:4
+msgid "Use _primary selection"
+msgstr "Usar seleção _primária"
+
+#: ../data/preferences.ui.h:6
+msgid "S_ynchronize clipboards"
+msgstr "S_incronizar áreas de transferência"
+
+#: ../data/preferences.ui.h:8
+msgid "_Keep clipboard content"
+msgstr "_Manter conteúdo da área de transferência"
+
+#: ../data/preferences.ui.h:10
+msgid "_Automatically paste selected item"
+msgstr "Colar _automaticamente item selecionado"
+
+#: ../data/preferences.ui.h:14
+msgid "Clipboard"
+msgstr "Área de transferência"
+
+#: ../data/preferences.ui.h:17
+msgid "Hotkeys"
+msgstr "Teclas de atalho"
+
+#: ../data/preferences.ui.h:18
+msgid "Plugins"
+msgstr "Plug-ins"
+
+#: ../libdiodon/clipboard-menu.vala:42
 msgid "<Empty>"
 msgstr "<Vazio>"
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:94
+#: ../plugins/unitylens/unity-lens-plugin.vala:95
 msgid "Search Clipboard"
 msgstr "Procurar Área de Transferência"
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:158
-#: ../plugins/unitylens/unity-lens-plugin.vala:182
+#: ../plugins/unitylens/unity-lens-plugin.vala:147
+#: ../plugins/unitylens/unity-lens-plugin.vala:171
 msgid "Text"
 msgstr "Texto"
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:162
-#: ../plugins/unitylens/unity-lens-plugin.vala:183
+#: ../plugins/unitylens/unity-lens-plugin.vala:151
+#: ../plugins/unitylens/unity-lens-plugin.vala:172
 msgid "Files"
 msgstr "Arquívos"
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:166
-#: ../plugins/unitylens/unity-lens-plugin.vala:184
+#: ../plugins/unitylens/unity-lens-plugin.vala:155
+#: ../plugins/unitylens/unity-lens-plugin.vala:173
 msgid "Images"
 msgstr "Imagens"
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:180
+#: ../plugins/unitylens/unity-lens-plugin.vala:169
 msgid "Type"
 msgstr "Tipo"
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:275
+#: ../plugins/unitylens/unity-lens-plugin.vala:202
+msgid "Sorry, there is no clipboard content that matches your search."
+msgstr ""
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:269
 msgid "Copy to clipboard"
 msgstr "Copiar para a área de transferência"

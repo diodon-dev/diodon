@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-12 16:36+0200\n"
+"POT-Creation-Date: 2012-03-28 17:25+0200\n"
 "PO-Revision-Date: 2011-10-19 01:43+0000\n"
 "Last-Translator: Alex Vikalyuk <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-10-20 04:50+0000\n"
 "X-Generator: Launchpad (build 14165)\n"
-"Language: uk\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -27,20 +27,11 @@ msgid "GTK+ Clipboard Manager"
 msgstr "GTK+ Менеджер буферу обміну"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
-msgid "Active plugins"
-msgstr "Активні додатки"
+msgid "Use clipboard (Ctrl+C)"
+msgstr "Використовувати буфер (Ctrl+C)"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
-#: ../data/preferences.ui.h:1
-msgid ""
-"Adds the primary selection (an area of the screen which is selected with the "
-"mouse) to the clipboard history."
-msgstr ""
-"Додає першочерговий вибір (частина екрану яку вибрано мишкою) до історії "
-"буферу обміну."
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
-#: ../data/preferences.ui.h:2
+#: ../data/preferences.ui.h:3
 msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
@@ -48,62 +39,25 @@ msgstr ""
 "Додає текст який зкопійовано до буферу, напр. з допомогою комбінації \"Ctrl "
 "+ C\", до історії буферу обміну."
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
+msgid "Use primary selection"
+msgstr "Використовувати виділення"
+
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
-msgid "Automatically paste selected item"
-msgstr "Автоматично вставляти вибраний запис"
+#: ../data/preferences.ui.h:5
+msgid ""
+"Adds the primary selection (an area of the screen which is selected with the "
+"mouse) to the clipboard history."
+msgstr ""
+"Додає першочерговий вибір (частина екрану яку вибрано мишкою) до історії "
+"буферу обміну."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
-#: ../data/preferences.ui.h:3
-msgid ""
-"Automatically paste selected item instead of just copying it to the "
-"clipboard."
-msgstr ""
-"Автоматично вставляти вибраний запис замість того, щоб копіювати його в "
-"буфер обміну."
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
-#: ../data/preferences.ui.h:5
-msgid "Clipboard size"
-msgstr "Розмір буферу"
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
-#: ../data/preferences.ui.h:7
-msgid "History key"
-msgstr "Показати історію"
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
-#: ../data/preferences.ui.h:8
-msgid "Hotkey to quickly allow you to access the clipboard history."
-msgstr "Гаряча клавіша для швидкого доступу до історії буферу обміну."
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
-msgid "Keep clipboard content"
-msgstr "Зберігати вміст буферу обміну"
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
-msgid "List of active plugins."
-msgstr "Список активних додатків"
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
-#: ../data/preferences.ui.h:10
-msgid "Number of items in the clipboard history."
-msgstr "Кількість записів в історії буферу обміну."
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
-#: ../data/preferences.ui.h:12
-msgid ""
-"Prevents an empty clipboard. For instance when an application exits, the "
-"clipboard would usually be emptied."
-msgstr ""
-"Запобігає спустошенню буферу обміну. Наприклад, коли програма закривається, "
-"буфер зазвичай очищається."
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Synchronize clipboards"
 msgstr "Синхронізувати буфери обміну"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
-#: ../data/preferences.ui.h:14
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
+#: ../data/preferences.ui.h:7
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
 "mouse) and the clipboard so that anything in the selection is immediately "
@@ -114,77 +68,127 @@ msgstr ""
 "буфер, так що виділення відразу доступні у буфері і навпаки, напр. для "
 "вставлення комбінацією клавіш Ctrl + V і середньою клавішею миши."
 
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
+msgid "Keep clipboard content"
+msgstr "Зберігати вміст буферу обміну"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#: ../data/preferences.ui.h:9
+msgid ""
+"Prevents an empty clipboard. For instance when an application exits, the "
+"clipboard would usually be emptied."
+msgstr ""
+"Запобігає спустошенню буферу обміну. Наприклад, коли програма закривається, "
+"буфер зазвичай очищається."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
+msgid "Automatically paste selected item"
+msgstr "Автоматично вставляти вибраний запис"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
+#: ../data/preferences.ui.h:11
+msgid ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
+msgstr ""
+"Автоматично вставляти вибраний запис замість того, щоб копіювати його в "
+"буфер обміну."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+#: ../data/preferences.ui.h:13
+msgid "Clipboard size"
+msgstr "Розмір буферу"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#: ../data/preferences.ui.h:12
+msgid "Number of items in the clipboard history."
+msgstr "Кількість записів в історії буферу обміну."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
+#: ../data/preferences.ui.h:16
+msgid "History key"
+msgstr "Показати історію"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
+#: ../data/preferences.ui.h:15
+msgid "Hotkey to quickly allow you to access the clipboard history."
+msgstr "Гаряча клавіша для швидкого доступу до історії буферу обміну."
+
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
-msgid "Use clipboard (Ctrl+C)"
-msgstr "Використовувати буфер (Ctrl+C)"
+msgid "Active plugins"
+msgstr "Активні додатки"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
-msgid "Use primary selection"
-msgstr "Використовувати виділення"
+msgid "List of active plugins."
+msgstr "Список активних додатків"
 
-#: ../data/preferences.ui.h:4
-msgid "Clipboard"
-msgstr "Буфер Обміну"
-
-#: ../data/preferences.ui.h:6
+#: ../data/preferences.ui.h:1
 msgid "Diodon Preferences"
 msgstr "Налашування Diodon"
 
-#: ../data/preferences.ui.h:9
-msgid "Hotkeys"
-msgstr "Гарячі клавіші"
-
-#: ../data/preferences.ui.h:11
-msgid "Plugins"
-msgstr "Додатки"
-
-#: ../data/preferences.ui.h:13
-msgid "S_ynchronize clipboards"
-msgstr "С_инхронізація буферів"
-
-#: ../data/preferences.ui.h:15
-msgid "Use _primary selection"
-msgstr "Використовувати _основний вибір"
-
-#: ../data/preferences.ui.h:16
-msgid "_Automatically paste selected item"
-msgstr "_Автоматично вставляти вибрані записи"
-
-#: ../data/preferences.ui.h:17
-msgid "_Keep clipboard content"
-msgstr "_Зберігати вмістиме буферу"
-
-#: ../data/preferences.ui.h:18
+#: ../data/preferences.ui.h:2
 msgid "_Use clipboard (Ctrl+C)"
 msgstr "_Використати буфер (Ctrl+C)"
 
-#: ../libdiodon/clipboard-menu.vala:41
+#: ../data/preferences.ui.h:4
+msgid "Use _primary selection"
+msgstr "Використовувати _основний вибір"
+
+#: ../data/preferences.ui.h:6
+msgid "S_ynchronize clipboards"
+msgstr "С_инхронізація буферів"
+
+#: ../data/preferences.ui.h:8
+msgid "_Keep clipboard content"
+msgstr "_Зберігати вмістиме буферу"
+
+#: ../data/preferences.ui.h:10
+msgid "_Automatically paste selected item"
+msgstr "_Автоматично вставляти вибрані записи"
+
+#: ../data/preferences.ui.h:14
+msgid "Clipboard"
+msgstr "Буфер Обміну"
+
+#: ../data/preferences.ui.h:17
+msgid "Hotkeys"
+msgstr "Гарячі клавіші"
+
+#: ../data/preferences.ui.h:18
+msgid "Plugins"
+msgstr "Додатки"
+
+#: ../libdiodon/clipboard-menu.vala:42
 msgid "<Empty>"
 msgstr "<Порожньо>"
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:94
+#: ../plugins/unitylens/unity-lens-plugin.vala:95
 msgid "Search Clipboard"
 msgstr "Шукати у буфері обміну"
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:158
-#: ../plugins/unitylens/unity-lens-plugin.vala:182
+#: ../plugins/unitylens/unity-lens-plugin.vala:147
+#: ../plugins/unitylens/unity-lens-plugin.vala:171
 msgid "Text"
 msgstr "Текст"
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:162
-#: ../plugins/unitylens/unity-lens-plugin.vala:183
+#: ../plugins/unitylens/unity-lens-plugin.vala:151
+#: ../plugins/unitylens/unity-lens-plugin.vala:172
 msgid "Files"
 msgstr "Файли"
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:166
-#: ../plugins/unitylens/unity-lens-plugin.vala:184
+#: ../plugins/unitylens/unity-lens-plugin.vala:155
+#: ../plugins/unitylens/unity-lens-plugin.vala:173
 msgid "Images"
 msgstr "Зображення"
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:180
+#: ../plugins/unitylens/unity-lens-plugin.vala:169
 msgid "Type"
 msgstr "Тип"
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:275
+#: ../plugins/unitylens/unity-lens-plugin.vala:202
+msgid "Sorry, there is no clipboard content that matches your search."
+msgstr ""
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:269
 msgid "Copy to clipboard"
 msgstr "Скопіювати у буфер обміну"
