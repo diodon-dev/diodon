@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-28 17:25+0200\n"
-"PO-Revision-Date: 2012-03-25 18:02+0000\n"
+"PO-Revision-Date: 2012-03-30 07:54+0000\n"
 "Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-03-29 04:49+0000\n"
+"X-Launchpad-Export-Date: 2012-03-31 05:18+0000\n"
 "X-Generator: Launchpad (build 15032)\n"
 "Language: fi\n"
 
@@ -67,7 +67,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Keep clipboard content"
-msgstr ""
+msgstr "Pidä leikepöydän sisältö"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
 #: ../data/preferences.ui.h:9
@@ -182,7 +182,7 @@ msgstr ""
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:202
 msgid "Sorry, there is no clipboard content that matches your search."
-msgstr ""
+msgstr "Valitettavasti leikepöydällä ei ole hakuasi vastaavaa sisältöä."
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:269
 msgid "Copy to clipboard"
