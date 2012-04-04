@@ -28,6 +28,8 @@ namespace Diodon
      */
     class PrimaryClipboardManager : ClipboardManager
     {
+        private bool stopped = false;
+    
         /**
          * Type is alwawys ClipboardType.PRIMARY for this specific primary
          * selection manager.
@@ -43,7 +45,17 @@ namespace Diodon
          */
         public override void start()
         {
+            stopped = false;
             Timeout.add(500, request_text_callback);
+        }
+        
+        /**
+         * Owner does not always get changed when selection has been changed
+         * therefore we need a timer for the primary selection.
+         */
+        public override void stop()
+        {
+            stopped = true;
         }
         
         /**
@@ -89,25 +101,27 @@ namespace Diodon
         /**
          * Helper method for requesting primary text within a timer
          * 
-         * @return always true, no stopping of timer
+         * @return false to stop timer if requested; otherwise true.
          */
         private bool request_text_callback()
         {
-            // checking for text
-            string? text = request_text();
-            if(text != null && text != "") {
-            
-                // check if text can be accepted
-                if(check_button_state()) {
-                    on_text_received(type, text);
+            if(!stopped) {
+                // checking for text
+                string? text = request_text();
+                if(text != null && text != "") {
+                
+                    // check if text can be accepted
+                    if(check_button_state()) {
+                        on_text_received(type, text);
+                    }
+                }
+                // checking if clipboard might be empty
+                else {
+                    check_clipboard_emptiness();
                 }
             }
-            // checking if clipboard might be empty
-            else {
-                check_clipboard_emptiness();
-            }
             
-            return true;
+            return !stopped; // if stopped return false to stop timer
         }
     }
 }

@@ -88,13 +88,21 @@ namespace Diodon
         }
         
         /**
-         * Starts the process requesting text from encapsulated clipboard.
+         * Starts the process requesting data from encapsulated clipboard.
          * The owner has to change when new data is set in the clipboard
          * therefore just connecting to owner_change will do the trick.
          */
         public virtual void start()
         {
             _clipboard.owner_change.connect(check_clipboard);
+        }
+        
+        /**
+         * Stop the process requesting data from encapsulated clipboard.
+         */
+        public virtual void stop()
+        {
+            _clipboard.owner_change.disconnect(check_clipboard);
         }
         
         /**

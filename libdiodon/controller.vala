@@ -103,11 +103,6 @@ namespace Diodon
         {
             init_configuration();
             
-             // start clipboard managers
-            foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
-                clipboard_manager.start();
-            }
-            
             keybinding_manager.init();
             
             // init peas plugin system
@@ -134,28 +129,6 @@ namespace Diodon
          */
         private void init_configuration()
         {
-            settings_clipboard.bind("use-clipboard", configuration_model,
-                "use-clipboard", SettingsBindFlags.DEFAULT);
-            settings_clipboard.changed["use-clipboard"].connect(
-                (key) => {
-                    enable_clipboard_manager(ClipboardType.CLIPBOARD,
-                        configuration_model.use_clipboard);
-                }
-            );
-            enable_clipboard_manager(ClipboardType.CLIPBOARD,
-                configuration_model.use_clipboard);
-                
-            settings_clipboard.bind("use-primary", configuration_model,
-                "use-primary", SettingsBindFlags.DEFAULT);
-            settings_clipboard.changed["use-primary"].connect(
-                (key) => {
-                    enable_clipboard_manager(ClipboardType.PRIMARY,
-                        configuration_model.use_primary);
-                }
-            );
-            enable_clipboard_manager(ClipboardType.PRIMARY,
-                configuration_model.use_primary);
-            
             settings_clipboard.bind("synchronize-clipboards", configuration_model,
                 "synchronize-clipboards", SettingsBindFlags.DEFAULT);
 
@@ -190,6 +163,30 @@ namespace Diodon
                 }
             );
             change_history_accelerator(configuration_model.history_accelerator);
+            
+            // use clipboard and use primary needs to be initialized last as this
+            // will start the polling of clipboard process
+            settings_clipboard.bind("use-clipboard", configuration_model,
+                "use-clipboard", SettingsBindFlags.DEFAULT);
+            settings_clipboard.changed["use-clipboard"].connect(
+                (key) => {
+                    enable_clipboard_manager(ClipboardType.CLIPBOARD,
+                        configuration_model.use_clipboard);
+                }
+            );
+            enable_clipboard_manager(ClipboardType.CLIPBOARD,
+                configuration_model.use_clipboard);
+                
+            settings_clipboard.bind("use-primary", configuration_model,
+                "use-primary", SettingsBindFlags.DEFAULT);
+            settings_clipboard.changed["use-primary"].connect(
+                (key) => {
+                    enable_clipboard_manager(ClipboardType.PRIMARY,
+                        configuration_model.use_primary);
+                }
+            );
+            enable_clipboard_manager(ClipboardType.PRIMARY,
+                configuration_model.use_primary);
         }
         
         /**
@@ -486,8 +483,10 @@ namespace Diodon
                 manager.on_image_received.connect(image_received);
                 on_select_item.connect(manager.select_item);
                 on_clear.connect(manager.clear);
+                manager.start();
             }
             else {
+                manager.stop();
                 manager.on_text_received.disconnect(add_as_text_item);
                 manager.on_uris_received.disconnect(uris_received);
                 manager.on_image_received.disconnect(image_received);
