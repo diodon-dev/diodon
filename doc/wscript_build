@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 from waflib import Build, Utils
+import os
 
 # FIXME: there must be an easier way to install a directory recursively
 # best option would be to add an install option to valadoc task itself
@@ -27,14 +28,18 @@ doc.files = path.ant_glob (incl='**/*.vala')
 output_dir = bld.path.find_or_declare('../doc/html')
 output_dir.mkdir()
 
-outputs_html = output_dir.ant_glob (incl='*')
-bld.install_files('${PREFIX}/share/doc/diodon-dev/html', outputs_html)
-
-diodon_html = output_dir.ant_glob (incl='diodon/*')
-bld.install_files('${PREFIX}/share/doc/diodon-dev/html/diodon', diodon_html)
-
-diodon_img_html = output_dir.ant_glob (incl='diodon/img/*')
-bld.install_files('${PREFIX}/share/doc/diodon-dev/html/diodon/img', diodon_img_html)
+# install all html files into the according directory
+nodes = output_dir.ant_glob(incl='**/*')
+for node in nodes:
+    # difference between basedir and given dir
+    relfile = node.path_from(output_dir)
+    pos = relfile.rfind(os.sep)
+    subpath = ''
+    if pos > -1:
+        subpath = relfile[:pos]
+    # add difference of path to install dir
+    install_dir = '${PREFIX}/share/doc/diodon-dev/html/' + subpath
+    bld.install_files(install_dir, node)
 
 bld.post_mode = Build.POST_LAZY
 bld.add_group()
