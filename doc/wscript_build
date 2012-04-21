@@ -1,6 +1,17 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
+from waflib import Build, Utils
+
+# FIXME: there must be an easier way to install a directory recursively
+# best option would be to add an install option to valadoc task itself
+def signature_task(task):    
+    bld = task.generator.bld 
+    
+    path = bld.path.find_or_declare('../_build_/doc/html')
+    for x in path.ant_glob('**/*', remove=False): 
+        x.sig = Utils.h_file(x.abspath())
+    
 doc = bld.new_task_gen (
     features = 'valadoc',
     output_dir = '../doc/html',
@@ -12,4 +23,24 @@ doc = bld.new_task_gen (
     
 path = bld.path.find_dir ('../libdiodon')
 doc.files = path.ant_glob (incl='**/*.vala')
+
+output_dir = bld.path.find_or_declare('../doc/html')
+output_dir.mkdir()
+
+outputs_html = output_dir.ant_glob (incl='*')
+bld.install_files('${PREFIX}/share/doc/diodon-dev/html', outputs_html)
+
+diodon_html = output_dir.ant_glob (incl='diodon/*')
+bld.install_files('${PREFIX}/share/doc/diodon-dev/html/diodon', diodon_html)
+
+diodon_img_html = output_dir.ant_glob (incl='diodon/img/*')
+bld.install_files('${PREFIX}/share/doc/diodon-dev/html/diodon/img', diodon_img_html)
+
+bld.post_mode = Build.POST_LAZY
+bld.add_group()
+
+bld.new_task_gen(
+  name = 'signature_task',
+  always = True,
+  rule = signature_task)
 
