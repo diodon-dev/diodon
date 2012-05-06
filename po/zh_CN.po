@@ -1,0 +1,182 @@
+# Chinese (Simplified) translation for diodon
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the diodon package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: diodon\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-03-28 17:25+0200\n"
+"PO-Revision-Date: 2012-05-05 06:26+0000\n"
+"Last-Translator: Wang Dianjin <Unknown>\n"
+"Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-05-06 04:51+0000\n"
+"X-Generator: Launchpad (build 15195)\n"
+
+#: ../data/diodon.desktop.in.h:1
+msgid "Clipboard Manager"
+msgstr "剪贴板管理器"
+
+#: ../data/diodon.desktop.in.h:2
+msgid "GTK+ Clipboard Manager"
+msgstr "GTK+ 剪贴板管理器"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
+msgid "Use clipboard (Ctrl+C)"
+msgstr "使用剪贴板(Ctrl+C)"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
+#: ../data/preferences.ui.h:3
+msgid ""
+"Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
+"clipboard history."
+msgstr "例如使用 Ctrl + C 将已复制的文本添加到剪贴板历史。"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
+msgid "Use primary selection"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
+#: ../data/preferences.ui.h:5
+msgid ""
+"Adds the primary selection (an area of the screen which is selected with the "
+"mouse) to the clipboard history."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
+msgid "Synchronize clipboards"
+msgstr "同步剪贴板"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
+#: ../data/preferences.ui.h:7
+msgid ""
+"Synchronizes the selection (an area of the screen which is selected with the "
+"mouse) and the clipboard so that anything in the selection is immediately "
+"available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
+"the middle mouse button."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
+msgid "Keep clipboard content"
+msgstr "保留剪贴板内容"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#: ../data/preferences.ui.h:9
+msgid ""
+"Prevents an empty clipboard. For instance when an application exits, the "
+"clipboard would usually be emptied."
+msgstr "预防剪贴板为空。例如当一个应用程序存在时，剪贴板通常会被清空。"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
+msgid "Automatically paste selected item"
+msgstr "自动粘贴已选条目"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
+#: ../data/preferences.ui.h:11
+msgid ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
+msgstr "自动粘贴已选条目，不只是复制到剪贴板。"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+#: ../data/preferences.ui.h:13
+msgid "Clipboard size"
+msgstr "剪贴板大小"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#: ../data/preferences.ui.h:12
+msgid "Number of items in the clipboard history."
+msgstr "剪贴板历史条目数。"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
+#: ../data/preferences.ui.h:16
+msgid "History key"
+msgstr "历史按键"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
+#: ../data/preferences.ui.h:15
+msgid "Hotkey to quickly allow you to access the clipboard history."
+msgstr "快速访问剪贴板历史的热键。"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+msgid "Active plugins"
+msgstr "活动插件"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+msgid "List of active plugins."
+msgstr "活动插件列表。"
+
+#: ../data/preferences.ui.h:1
+msgid "Diodon Preferences"
+msgstr "Diodon 首选项"
+
+#: ../data/preferences.ui.h:2
+msgid "_Use clipboard (Ctrl+C)"
+msgstr "使用剪贴板(Ctrl+C)(_U)"
+
+#: ../data/preferences.ui.h:4
+msgid "Use _primary selection"
+msgstr ""
+
+#: ../data/preferences.ui.h:6
+msgid "S_ynchronize clipboards"
+msgstr "同步剪贴板(_Y)"
+
+#: ../data/preferences.ui.h:8
+msgid "_Keep clipboard content"
+msgstr "保留剪贴板内容(_K)"
+
+#: ../data/preferences.ui.h:10
+msgid "_Automatically paste selected item"
+msgstr "自动粘贴所选条目(_A)"
+
+#: ../data/preferences.ui.h:14
+msgid "Clipboard"
+msgstr "剪贴板"
+
+#: ../data/preferences.ui.h:17
+msgid "Hotkeys"
+msgstr "热键"
+
+#: ../data/preferences.ui.h:18
+msgid "Plugins"
+msgstr "插件"
+
+#: ../libdiodon/clipboard-menu.vala:42
+msgid "<Empty>"
+msgstr "<空>"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:95
+msgid "Search Clipboard"
+msgstr "搜索剪贴板"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:147
+#: ../plugins/unitylens/unity-lens-plugin.vala:171
+msgid "Text"
+msgstr "文本"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:151
+#: ../plugins/unitylens/unity-lens-plugin.vala:172
+msgid "Files"
+msgstr "文件"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:155
+#: ../plugins/unitylens/unity-lens-plugin.vala:173
+msgid "Images"
+msgstr "图片"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:169
+msgid "Type"
+msgstr "类型"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:202
+msgid "Sorry, there is no clipboard content that matches your search."
+msgstr "对不起，没有与您搜索匹配的剪贴板内容。"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:269
+msgid "Copy to clipboard"
+msgstr "复制到剪贴板"
