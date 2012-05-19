@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-28 17:25+0200\n"
-"PO-Revision-Date: 2011-10-19 01:43+0000\n"
-"Last-Translator: Alex Vikalyuk <Unknown>\n"
+"PO-Revision-Date: 2012-05-18 14:24+0000\n"
+"Last-Translator: Alex Vykalyuk <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-03-29 04:49+0000\n"
-"X-Generator: Launchpad (build 15032)\n"
+"X-Launchpad-Export-Date: 2012-05-19 05:37+0000\n"
+"X-Generator: Launchpad (build 15259)\n"
 "Language: uk\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -188,6 +188,8 @@ msgstr "Тип"
 #: ../plugins/unitylens/unity-lens-plugin.vala:202
 msgid "Sorry, there is no clipboard content that matches your search."
 msgstr ""
+"Вибачте, але в буфері обміну немає об'єктів, що відповідають критеріям "
+"пошуку."
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:269
 msgid "Copy to clipboard"
