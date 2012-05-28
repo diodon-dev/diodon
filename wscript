@@ -31,6 +31,7 @@ def options(opt):
     opt.add_option('--disable-indicator-plugin', action='store_true', default=False, dest='disable_indicator', help='Disable build of indicator plugin')
     opt.add_option('--enable-unitylens-plugin',  action='store_true', default=False, dest='enable_unitylens', help='Enable build of unity lens plugin')
     opt.add_option('--build-doc',                action='store_true', default=False, dest='doc', help='Build the api documentation')
+    opt.add_option('--skiptests',                action='store_true', default=False, dest='skiptests', help='Skip unit tests')
 
 def configure(conf):
     conf.load('compiler_c intltool gnu_dirs glib2 waf_unit_test')
@@ -106,7 +107,11 @@ def configure(conf):
     conf.write_config_header ('config.h', remove=False)
 
 def build(ctx):
-    ctx.add_subdirs('po data libdiodon plugins diodon tests')
+    ctx.add_subdirs('po data libdiodon plugins diodon')
+    
+    if not Options.options.skiptests:
+        ctx.add_subdirs('tests')
+        
     if ctx.env['VALADOC']:
     	ctx.add_subdirs('doc')
     ctx.add_post_fun(post)
