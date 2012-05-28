@@ -1,0 +1,16 @@
+#! /usr/bin/env python
+# encoding: utf-8
+# Oliver Sauder, 2010
+
+import Options
+
+prog = bld.new_task_gen (
+  features = 'c cprogram',
+  target = 'diodon-test',
+  vapi_dirs = '../vapi ../libdiodon',
+  uselib = 'GTK UNIQUE GIOUNIX',
+  use = 'libdiodon',
+  cflags = ['-include', 'config.h'],
+  packages = 'gtk+-3.0 unique-3.0 gio-unix-2.0 config',
+  source = bld.path.ant_glob (incl='**/*.vala'))
+

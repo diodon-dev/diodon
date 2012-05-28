@@ -20,6 +20,7 @@ out = '_build_'
 
 def options(opt):
     opt.tool_options('compiler_c')
+    opt.tool_options('waf_unit_test')
     opt.tool_options('vala')
     opt.tool_options('gnu_dirs')
     opt.tool_options('intltool')
@@ -31,7 +32,7 @@ def options(opt):
     opt.add_option('--build-doc',                action='store_true', default=False, dest='doc', help='Build the api documentation')
 
 def configure(conf):
-    conf.load('compiler_c intltool gnu_dirs glib2')
+    conf.load('compiler_c intltool gnu_dirs glib2 waf_unit_test')
     if Options.options.doc:
     	conf.load('valadoc')
     
@@ -104,7 +105,7 @@ def configure(conf):
     conf.write_config_header ('config.h', remove=False)
    
 def build(ctx):
-    ctx.add_subdirs('po data libdiodon plugins diodon')
+    ctx.add_subdirs('po data libdiodon plugins diodon tests')
     if ctx.env['VALADOC']:
     	ctx.add_subdirs('doc')
     ctx.add_post_fun(post)
