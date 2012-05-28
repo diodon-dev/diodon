@@ -4,6 +4,7 @@
 
 import subprocess, os, traceback, waflib
 import Options, Logs
+from waflib.Tools import waf_unit_test
 
 NAME = 'Diodon'
 VERSION = '0.8.0'
@@ -103,14 +104,28 @@ def configure(conf):
         conf.env['VALAFLAGS'] = ['-g', '-v', '--enable-checking']
 
     conf.write_config_header ('config.h', remove=False)
-   
+
 def build(ctx):
     ctx.add_subdirs('po data libdiodon plugins diodon tests')
     if ctx.env['VALADOC']:
     	ctx.add_subdirs('doc')
     ctx.add_post_fun(post)
     
+    # to execute all tests:
+	# $ waf --alltests
+	# to set this behaviour permanenly:    
+    ctx.options.all_tests = True
+
 def post(ctx):
+    waf_unit_test.summary(ctx)
+    
+    # Tests have to pass
+    lst = getattr(ctx, 'utest_results', [])
+    if lst:
+        tfail = len([x for x in lst if x[1]])
+        if tfail:
+            ctx.fatal("Some test failed.")
+	
     if ctx.cmd == 'install':
         ctx.exec_command('/sbin/ldconfig')
 

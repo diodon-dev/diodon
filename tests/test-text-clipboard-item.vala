@@ -29,7 +29,7 @@ namespace Diodon
 	    public TestTextClipboardItem()
 	    {
 		    base("TestTextClipboardItem");
-		    add_test("[TestTextClipboardItem] test_matches", test_matches);
+		    add_test("test_matches", test_matches);
 	    }
 
 	    public void test_matches()

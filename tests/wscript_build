@@ -5,7 +5,7 @@
 import Options
 
 prog = bld.new_task_gen (
-  features = 'c cprogram',
+  features = 'c cprogram test',
   target = 'diodon-test',
   vapi_dirs = '../vapi ../libdiodon',
   uselib = 'GTK UNIQUE GIOUNIX',
