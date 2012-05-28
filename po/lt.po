@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-28 17:25+0200\n"
-"PO-Revision-Date: 2012-03-07 11:11+0000\n"
+"PO-Revision-Date: 2012-05-27 12:18+0000\n"
 "Last-Translator: Mantas Kriaučiūnas <mantas@akl.lt>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-03-29 04:49+0000\n"
-"X-Generator: Launchpad (build 15032)\n"
+"X-Launchpad-Export-Date: 2012-05-28 05:34+0000\n"
+"X-Generator: Launchpad (build 15288)\n"
 "Language: lt\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -39,7 +39,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
-msgstr ""
+msgstr "Naudoti žymimo teksto iškarpinę (primary selection)"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
 #: ../data/preferences.ui.h:5
@@ -50,7 +50,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Synchronize clipboards"
-msgstr ""
+msgstr "Sinchronizuoti iškarpines"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
@@ -63,7 +63,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Keep clipboard content"
-msgstr ""
+msgstr "Išlaikyti iškarpinės turinį"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
 #: ../data/preferences.ui.h:9
@@ -74,7 +74,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Automatically paste selected item"
-msgstr ""
+msgstr "Automatiškai įdėti parinktą iškarpinės elementą"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 #: ../data/preferences.ui.h:11
@@ -105,7 +105,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Active plugins"
-msgstr ""
+msgstr "Įjungti papildiniai"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid "List of active plugins."
@@ -121,7 +121,7 @@ msgstr ""
 
 #: ../data/preferences.ui.h:4
 msgid "Use _primary selection"
-msgstr ""
+msgstr "Naudoti žymimo teksto iškarpinę (_primary selection)"
 
 #: ../data/preferences.ui.h:6
 msgid "S_ynchronize clipboards"
@@ -133,7 +133,7 @@ msgstr "_Saugoti iškarpinės turinį"
 
 #: ../data/preferences.ui.h:10
 msgid "_Automatically paste selected item"
-msgstr ""
+msgstr "_Automatiškai įdėti parinktą iškarpinės elementą"
 
 #: ../data/preferences.ui.h:14
 msgid "Clipboard"
@@ -145,7 +145,7 @@ msgstr "„Karštieji“ klavišai"
 
 #: ../data/preferences.ui.h:18
 msgid "Plugins"
-msgstr ""
+msgstr "Papildiniai"
 
 #: ../libdiodon/clipboard-menu.vala:42
 msgid "<Empty>"
@@ -153,26 +153,26 @@ msgstr "<Tuščia>"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:95
 msgid "Search Clipboard"
-msgstr ""
+msgstr "Ieškoti kopijavimų istorijoje"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:147
 #: ../plugins/unitylens/unity-lens-plugin.vala:171
 msgid "Text"
-msgstr ""
+msgstr "Tekstas"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:151
 #: ../plugins/unitylens/unity-lens-plugin.vala:172
 msgid "Files"
-msgstr ""
+msgstr "Failai"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:155
 #: ../plugins/unitylens/unity-lens-plugin.vala:173
 msgid "Images"
-msgstr ""
+msgstr "Paveikslai"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:169
 msgid "Type"
-msgstr ""
+msgstr "Tipas"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:202
 msgid "Sorry, there is no clipboard content that matches your search."
@@ -180,4 +180,4 @@ msgstr ""
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:269
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Kopijuoti į iškarpinę"
