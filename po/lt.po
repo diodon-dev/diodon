@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-28 17:25+0200\n"
-"PO-Revision-Date: 2012-05-27 12:18+0000\n"
-"Last-Translator: Mantas Kriaučiūnas <mantas@akl.lt>\n"
+"PO-Revision-Date: 2012-09-15 12:08+0000\n"
+"Last-Translator: Aurimas Fišeras <Unknown>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-28 05:34+0000\n"
-"X-Generator: Launchpad (build 15288)\n"
+"X-Launchpad-Export-Date: 2012-09-16 04:49+0000\n"
+"X-Generator: Launchpad (build 15944)\n"
 "Language: lt\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -24,11 +24,11 @@ msgstr "Iškarpinės tvarkytuvė"
 
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
-msgstr ""
+msgstr "GTK+ iškarpinės tvarkytuvė"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"
-msgstr ""
+msgstr "Naudoti iškarpinę (Vald+C)"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:3
@@ -36,6 +36,8 @@ msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
+"Prideda tekstą, kuris yra nukopijuojamas į iškarpinę su, pvz., Vald + C į "
+"iškarpinės istoriją."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
@@ -47,6 +49,8 @@ msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
 "mouse) to the clipboard history."
 msgstr ""
+"Prideda pirminį žymėjimą (ekrano plotą, kuris yra pažymėtas pele) į "
+"iškarpinės istoriją."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Synchronize clipboards"
@@ -60,6 +64,9 @@ msgid ""
 "available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
 "the middle mouse button."
 msgstr ""
+"Sinchronizuoja žymėjimą (ekrano plotą, kuris yra pažymėtas pele) ir "
+"iškarpinę, kad bet kas pažymėta iš karto būtų prieinama iškarpinėje ir "
+"atvirkščiai, pavyzdžiui, įterpimui su Vald + V ir viduriniuoju pelės klavišu."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Keep clipboard content"
@@ -71,6 +78,8 @@ msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
 msgstr ""
+"Išvengia tuščios iškarpinės. Pavyzdžiui, kai programa baigia darbą, "
+"iškarpinė paprastai būna išvaloma."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Automatically paste selected item"
@@ -82,11 +91,12 @@ msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
 msgstr ""
+"Automatiškai įdėti pažymėtą elementą vietoje tik nukopijavimo į iškarpinę."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 #: ../data/preferences.ui.h:13
 msgid "Clipboard size"
-msgstr ""
+msgstr "Iškarpinės dydis"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
 #: ../data/preferences.ui.h:12
@@ -96,12 +106,12 @@ msgstr "Iškarpinės istorijoje saugomų elementų skaičius."
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 #: ../data/preferences.ui.h:16
 msgid "History key"
-msgstr ""
+msgstr "Istorijos klavišas"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 #: ../data/preferences.ui.h:15
 msgid "Hotkey to quickly allow you to access the clipboard history."
-msgstr ""
+msgstr "Spartusis klavišas greitam priėjimui prie iškarpinės istorijos."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Active plugins"
@@ -109,7 +119,7 @@ msgstr "Įjungti papildiniai"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid "List of active plugins."
-msgstr ""
+msgstr "Aktyvių papildinių sąrašas."
 
 #: ../data/preferences.ui.h:1
 msgid "Diodon Preferences"
@@ -117,19 +127,19 @@ msgstr "Diodon programos nustatymai"
 
 #: ../data/preferences.ui.h:2
 msgid "_Use clipboard (Ctrl+C)"
-msgstr ""
+msgstr "Naudoti _iškarpinę (Vald+C)"
 
 #: ../data/preferences.ui.h:4
 msgid "Use _primary selection"
-msgstr "Naudoti žymimo teksto iškarpinę (_primary selection)"
+msgstr ""
 
 #: ../data/preferences.ui.h:6
 msgid "S_ynchronize clipboards"
-msgstr "S_inchronizuoti iškarpines"
+msgstr "_Sinchronizuoti iškarpines"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
-msgstr "_Saugoti iškarpinės turinį"
+msgstr "Iš_laikyti iškarpinės turinį"
 
 #: ../data/preferences.ui.h:10
 msgid "_Automatically paste selected item"
@@ -141,7 +151,7 @@ msgstr "Iškarpinė"
 
 #: ../data/preferences.ui.h:17
 msgid "Hotkeys"
-msgstr "„Karštieji“ klavišai"
+msgstr "Spartieji klavišai"
 
 #: ../data/preferences.ui.h:18
 msgid "Plugins"
@@ -153,7 +163,7 @@ msgstr "<Tuščia>"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:95
 msgid "Search Clipboard"
-msgstr "Ieškoti kopijavimų istorijoje"
+msgstr "Ieškoti iškarpinėje"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:147
 #: ../plugins/unitylens/unity-lens-plugin.vala:171
@@ -176,7 +186,7 @@ msgstr "Tipas"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:202
 msgid "Sorry, there is no clipboard content that matches your search."
-msgstr ""
+msgstr "Atsiprašome, nėra iškarpinės turinio, kuris atitinka paiešką."
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:269
 msgid "Copy to clipboard"
