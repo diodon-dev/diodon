@@ -1,4 +1,4 @@
-# Turkish translation for diodon
+# English (United Kingdom) translation for diodon
 # Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the diodon package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
@@ -6,177 +6,180 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-28 17:25+0200\n"
-"PO-Revision-Date: 2012-10-03 22:03+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Turkish <tr@li.org>\n"
+"PO-Revision-Date: 2012-10-04 00:16+0200\n"
+"Last-Translator: Recep Çakan <gecegezen@mail.ru>\n"
+"Language-Team: English (United Kingdom) <en_GB@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-10-04 05:37+0000\n"
-"X-Generator: Launchpad (build 16061)\n"
+"X-Launchpad-Export-Date: 2012-04-26 05:00+0000\n"
+"X-Generator: Launchpad (build 15149)\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Language: tr_TR\n"
+"X-Source-Language: en\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
-msgstr ""
+msgstr "Pano Yöneticisi"
 
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
-msgstr ""
+msgstr "GTK+ Pano Yöneticisi"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"
-msgstr ""
+msgstr "Panoyu kullan (Ctrl+C)"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
-#: ../data/preferences.ui.h:3
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2 ../data/preferences.ui.h:3
 msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
-msgstr ""
+msgstr "Kopyalana nesnenin konumunu metin olarak pano geçmişine kopyalar."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
-msgstr ""
+msgstr "Seçilen metni panoya kopyala"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
-#: ../data/preferences.ui.h:5
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4 ../data/preferences.ui.h:5
 msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
 "mouse) to the clipboard history."
 msgstr ""
+"Seçilen metni pano geçmişine kopyalar (Sadece fare ile seçilen metni "
+"kopyalar)."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Synchronize clipboards"
-msgstr ""
+msgstr "Senkronize panolar"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
-#: ../data/preferences.ui.h:7
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6 ../data/preferences.ui.h:7
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
 "mouse) and the clipboard so that anything in the selection is immediately "
 "available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
 "the middle mouse button."
-msgstr ""
+msgstr "Aktif edildiğinde, fare ile seçilen yerin hemen önüne yapıştırır."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Keep clipboard content"
-msgstr ""
+msgstr "Pano içeriyini tut"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
-#: ../data/preferences.ui.h:9
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8 ../data/preferences.ui.h:9
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
-msgstr ""
+msgstr "Genelde bir uygulama kapatıldıktan sonra panoyu temizler."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Automatically paste selected item"
-msgstr ""
+msgstr "Seçilen nesneyi otomatik yapıştır"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 #: ../data/preferences.ui.h:11
 msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
-msgstr ""
+msgstr "Panodan seçilen nesneyi son konuma otomatik olarak yapıştırır."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 #: ../data/preferences.ui.h:13
 msgid "Clipboard size"
-msgstr ""
+msgstr "Pano boyutu"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
 #: ../data/preferences.ui.h:12
 msgid "Number of items in the clipboard history."
-msgstr ""
+msgstr "Pano geçmişinde tutulan nesne sayısı."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 #: ../data/preferences.ui.h:16
 msgid "History key"
-msgstr ""
+msgstr "Geçmiş Kısayollu"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 #: ../data/preferences.ui.h:15
 msgid "Hotkey to quickly allow you to access the clipboard history."
-msgstr ""
+msgstr "Kısayollar; pano geçmişine kolaylıkla erişmenizi sağlar."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Active plugins"
-msgstr ""
+msgstr "Aktive eklentiler"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid "List of active plugins."
-msgstr ""
+msgstr "Aktive eklentileri listele."
 
 #: ../data/preferences.ui.h:1
 msgid "Diodon Preferences"
-msgstr ""
+msgstr "Tercihler "
 
 #: ../data/preferences.ui.h:2
 msgid "_Use clipboard (Ctrl+C)"
-msgstr ""
+msgstr "_Panoyu kullan  (Ctrl+C)"
 
 #: ../data/preferences.ui.h:4
 msgid "Use _primary selection"
-msgstr ""
+msgstr "_Birincil seçim kullanın"
 
 #: ../data/preferences.ui.h:6
 msgid "S_ynchronize clipboards"
-msgstr ""
+msgstr "S_enkronize panolar"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
-msgstr ""
+msgstr "_Pano içeriğini tut"
 
 #: ../data/preferences.ui.h:10
 msgid "_Automatically paste selected item"
-msgstr ""
+msgstr "S_eçilen nesneyi otomatik yapıştır"
 
 #: ../data/preferences.ui.h:14
 msgid "Clipboard"
-msgstr ""
+msgstr "Pano"
 
 #: ../data/preferences.ui.h:17
 msgid "Hotkeys"
-msgstr ""
+msgstr "Kısayollar"
 
 #: ../data/preferences.ui.h:18
 msgid "Plugins"
-msgstr ""
+msgstr "Eklentiler"
 
 #: ../libdiodon/clipboard-menu.vala:42
 msgid "<Empty>"
-msgstr ""
+msgstr "<Boş>"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:95
 msgid "Search Clipboard"
-msgstr ""
+msgstr "Panoda Ara"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:147
 #: ../plugins/unitylens/unity-lens-plugin.vala:171
 msgid "Text"
-msgstr ""
+msgstr "Metin"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:151
 #: ../plugins/unitylens/unity-lens-plugin.vala:172
 msgid "Files"
-msgstr ""
+msgstr "Dosyalar"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:155
 #: ../plugins/unitylens/unity-lens-plugin.vala:173
 msgid "Images"
-msgstr ""
+msgstr "Resimler"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:169
 msgid "Type"
-msgstr ""
+msgstr "Tür"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:202
 msgid "Sorry, there is no clipboard content that matches your search."
-msgstr ""
+msgstr "Üzgünüz, aramanız ile eşleşen bir pano içeriği bulunamadı."
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:269
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Panoya kopyala"
+
