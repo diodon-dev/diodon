@@ -8,16 +8,15 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-28 17:25+0200\n"
-"PO-Revision-Date: 2012-10-04 00:16+0200\n"
-"Last-Translator: Recep Çakan <gecegezen@mail.ru>\n"
+"PO-Revision-Date: 2012-10-04 20:42+0000\n"
+"Last-Translator: gecegezen <Unknown>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-26 05:00+0000\n"
-"X-Generator: Launchpad (build 15149)\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Launchpad-Export-Date: 2012-10-05 04:52+0000\n"
+"X-Generator: Launchpad (build 16061)\n"
+"Language: \n"
 "X-Language: tr_TR\n"
 "X-Source-Language: en\n"
 
@@ -33,7 +32,8 @@ msgstr "GTK+ Pano Yöneticisi"
 msgid "Use clipboard (Ctrl+C)"
 msgstr "Panoyu kullan (Ctrl+C)"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2 ../data/preferences.ui.h:3
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
+#: ../data/preferences.ui.h:3
 msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
@@ -43,7 +43,8 @@ msgstr "Kopyalana nesnenin konumunu metin olarak pano geçmişine kopyalar."
 msgid "Use primary selection"
 msgstr "Seçilen metni panoya kopyala"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4 ../data/preferences.ui.h:5
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
+#: ../data/preferences.ui.h:5
 msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
 "mouse) to the clipboard history."
@@ -55,7 +56,8 @@ msgstr ""
 msgid "Synchronize clipboards"
 msgstr "Senkronize panolar"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6 ../data/preferences.ui.h:7
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
+#: ../data/preferences.ui.h:7
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
 "mouse) and the clipboard so that anything in the selection is immediately "
@@ -67,7 +69,8 @@ msgstr "Aktif edildiğinde, fare ile seçilen yerin hemen önüne yapıştırır
 msgid "Keep clipboard content"
 msgstr "Pano içeriyini tut"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8 ../data/preferences.ui.h:9
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#: ../data/preferences.ui.h:9
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
@@ -114,7 +117,7 @@ msgstr "Aktive eklentileri listele."
 
 #: ../data/preferences.ui.h:1
 msgid "Diodon Preferences"
-msgstr "Tercihler "
+msgstr "Tercihler"
 
 #: ../data/preferences.ui.h:2
 msgid "_Use clipboard (Ctrl+C)"
@@ -182,4 +185,3 @@ msgstr "Üzgünüz, aramanız ile eşleşen bir pano içeriği bulunamadı."
 #: ../plugins/unitylens/unity-lens-plugin.vala:269
 msgid "Copy to clipboard"
 msgstr "Panoya kopyala"
-
