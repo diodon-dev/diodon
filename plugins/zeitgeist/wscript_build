@@ -5,12 +5,13 @@
 import os
 
 lib = bld.shlib (
-  features = 'c cshlib disable_binding',
+  features = 'c cshlib',
   target = 'zeitgeist',
   vapi_dirs = '../../vapi ../../libdiodon',
   uselib = 'ZEITGEIST PEAS X11 GDKX',
   use = 'libdiodon',
   cflags = ['-include', 'config.h'],
+  install_binding = False,
   packages = 'zeitgeist-1.0 libpeas-1.0 x11 gdk-x11-3.0',
   source = bld.path.ant_glob (incl='**/*.vala'))
 
