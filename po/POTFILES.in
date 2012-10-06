@@ -9,3 +9,4 @@ plugins/indicator/indicator.plugin.in
 plugins/unitylens/diodon.lens.in.in
 plugins/unitylens/unity-lens-plugin.vala
 plugins/unitylens/unitylens.plugin.in
+plugins/zeitgeist/zeitgeist.plugin.in
