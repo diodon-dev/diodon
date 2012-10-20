@@ -22,11 +22,6 @@
 namespace Diodon
 {
     /**
-     * determine if debug mode is enabled
-     */
-    private static bool debug_enabled = false;
-    
-    /**
      * determine whether version information should be printed
      */
     private static bool show_version = false;
@@ -40,7 +35,6 @@ namespace Diodon
      * list of available command line options
      */
     private static const OptionEntry[] options = {
-        { "debug", 'd', 0, OptionArg.NONE, ref debug_enabled, "Enable debug mode", null },
         { "version", 'v', 0, OptionArg.NONE, ref show_version, "Print version information", null },
         { null }
     };
@@ -66,11 +60,6 @@ namespace Diodon
             if(show_version) {
                 stdout.printf("Diodon %s\n", Config.VERSION);
                 return 0; // bail out
-            }
-            
-            // mute debug log if not enabled
-            if(!debug_enabled) {
-                Log.set_handler(null, LogLevelFlags.LEVEL_DEBUG, mute_log_handler);
             }
             
             Gtk.init(ref args);
@@ -109,14 +98,6 @@ namespace Diodon
             stdout.printf("Option parsing failed: %s\n", e.message);
             return 1;
         }
-    }
-    
-    /**
-     * Callback to mute log message
-     */
-    private static void mute_log_handler(string? log_domain,
-        LogLevelFlags log_levels, string message)
-    {
     }
 }
 
