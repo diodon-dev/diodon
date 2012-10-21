@@ -237,9 +237,7 @@ namespace Diodon
         private Gdk.FilterReturn event_filter(Gdk.XEvent gdk_xevent, Gdk.Event gdk_event)
         {
             Gdk.FilterReturn filter_return = Gdk.FilterReturn.CONTINUE;
-                       
-            void* pointer = &gdk_xevent;
-            X.Event* xevent = (X.Event*) pointer;
+            X.Event* xevent = (X.Event*) gdk_xevent;
              
              if(xevent->type == X.EventType.KeyPress) {
                 foreach(Keybinding binding in bindings) {
