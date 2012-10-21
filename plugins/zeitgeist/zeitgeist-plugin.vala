@@ -105,11 +105,11 @@ namespace Diodon.Plugins
                 if(pid != 0) {
                     File file = File.new_for_path("/proc/" + pid.to_string() + "/exe");
                     try {
-                        FileInfo info = file.query_info(FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET, 
+                        FileInfo info = file.query_info(FileAttribute.STANDARD_SYMLINK_TARGET, 
                             FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
                         if(info != null) {
                             string path = info.get_attribute_as_string(
-                                FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET);
+                                FileAttribute.STANDARD_SYMLINK_TARGET);
                             debug("Path is %s", path);
                             return path;
                         }
