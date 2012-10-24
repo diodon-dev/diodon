@@ -7,22 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-28 17:25+0200\n"
+"POT-Creation-Date: 2012-10-24 21:43+0200\n"
 "PO-Revision-Date: 2012-02-16 16:43+0000\n"
 "Last-Translator: Hriostat <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-03-29 04:49+0000\n"
 "X-Generator: Launchpad (build 15032)\n"
-"Language: pt_BR\n"
 
-#: ../data/diodon.desktop.in.h:1
+#: ../data/diodon.desktop.in.h:1 ../plugins/unitylens/diodon.lens.in.in.h:1
 msgid "Clipboard Manager"
 msgstr "Gerenciador de área de transferência"
 
-#: ../data/diodon.desktop.in.h:2
+#: ../data/diodon.desktop.in.h:2 ../plugins/unitylens/diodon.lens.in.in.h:2
 msgid "GTK+ Clipboard Manager"
 msgstr "Gerenciador de área de transferência em GTK+"
 
@@ -162,6 +162,24 @@ msgstr "Plug-ins"
 msgid "<Empty>"
 msgstr "<Vazio>"
 
+#: ../plugins/indicator/indicator.plugin.in.h:1
+msgid "Application Indicator"
+msgstr ""
+
+#: ../plugins/indicator/indicator.plugin.in.h:2
+msgid "Access clipboard history with an application indicator."
+msgstr ""
+
+#: ../plugins/indicator/indicator.plugin.in.h:3
+#: ../plugins/unitylens/unitylens.plugin.in.h:3
+msgid "Copyright © 2011 Diodon Team"
+msgstr ""
+
+#: ../plugins/unitylens/diodon.lens.in.in.h:3
+#, fuzzy
+msgid "Search clipboard"
+msgstr "Procurar Área de Transferência"
+
 #: ../plugins/unitylens/unity-lens-plugin.vala:95
 msgid "Search Clipboard"
 msgstr "Procurar Área de Transferência"
@@ -192,3 +210,23 @@ msgstr ""
 #: ../plugins/unitylens/unity-lens-plugin.vala:269
 msgid "Copy to clipboard"
 msgstr "Copiar para a área de transferência"
+
+#: ../plugins/unitylens/unitylens.plugin.in.h:1
+msgid "Unity Lens"
+msgstr ""
+
+#: ../plugins/unitylens/unitylens.plugin.in.h:2
+msgid "Access clipboard history with the unity dash."
+msgstr ""
+
+#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:1
+msgid "Zeitgeist Data-Source"
+msgstr ""
+
+#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:2
+msgid "Adds clipboard activities as events to the Zeitgeist daemon."
+msgstr ""
+
+#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:3
+msgid "Copyright © 2012 Diodon Team"
+msgstr ""
