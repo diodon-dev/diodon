@@ -11,12 +11,12 @@ msgstr ""
 "PO-Revision-Date: 2012-05-18 14:24+0000\n"
 "Last-Translator: Alex Vykalyuk <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-19 05:37+0000\n"
-"X-Generator: Launchpad (build 15259)\n"
+"X-Launchpad-Export-Date: 2012-10-25 05:53+0000\n"
+"X-Generator: Launchpad (build 16179)\n"
+"Language: uk\n"
 
 #: ../data/diodon.desktop.in.h:1 ../plugins/unitylens/diodon.lens.in.in.h:1
 msgid "Clipboard Manager"
@@ -176,9 +176,8 @@ msgid "Copyright © 2011 Diodon Team"
 msgstr ""
 
 #: ../plugins/unitylens/diodon.lens.in.in.h:3
-#, fuzzy
 msgid "Search clipboard"
-msgstr "Шукати у буфері обміну"
+msgstr ""
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:95
 msgid "Search Clipboard"
