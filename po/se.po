@@ -1,0 +1,219 @@
+# Northern Sami translation for diodon
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the diodon package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: diodon\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-10-24 21:43+0200\n"
+"PO-Revision-Date: 2012-11-11 23:15+0000\n"
+"Last-Translator: Christopher Forster <Unknown>\n"
+"Language-Team: Northern Sami <se@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-11-13 05:44+0000\n"
+"X-Generator: Launchpad (build 16251)\n"
+
+#: ../data/diodon.desktop.in.h:1 ../plugins/unitylens/diodon.lens.in.in.h:1
+msgid "Clipboard Manager"
+msgstr "Čuohpusgirjigieđahalli"
+
+#: ../data/diodon.desktop.in.h:2 ../plugins/unitylens/diodon.lens.in.in.h:2
+msgid "GTK+ Clipboard Manager"
+msgstr "GTK+ Čuohpusgirjigieđahalli"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
+msgid "Use clipboard (Ctrl+C)"
+msgstr "Geavat čuohpusgirji (Ctrl+C)"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
+#: ../data/preferences.ui.h:3
+msgid ""
+"Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
+"clipboard history."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
+msgid "Use primary selection"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
+#: ../data/preferences.ui.h:5
+msgid ""
+"Adds the primary selection (an area of the screen which is selected with the "
+"mouse) to the clipboard history."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
+msgid "Synchronize clipboards"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
+#: ../data/preferences.ui.h:7
+msgid ""
+"Synchronizes the selection (an area of the screen which is selected with the "
+"mouse) and the clipboard so that anything in the selection is immediately "
+"available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
+"the middle mouse button."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
+msgid "Keep clipboard content"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#: ../data/preferences.ui.h:9
+msgid ""
+"Prevents an empty clipboard. For instance when an application exits, the "
+"clipboard would usually be emptied."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
+msgid "Automatically paste selected item"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
+#: ../data/preferences.ui.h:11
+msgid ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+#: ../data/preferences.ui.h:13
+msgid "Clipboard size"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#: ../data/preferences.ui.h:12
+msgid "Number of items in the clipboard history."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
+#: ../data/preferences.ui.h:16
+msgid "History key"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
+#: ../data/preferences.ui.h:15
+msgid "Hotkey to quickly allow you to access the clipboard history."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+msgid "Active plugins"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+msgid "List of active plugins."
+msgstr ""
+
+#: ../data/preferences.ui.h:1
+msgid "Diodon Preferences"
+msgstr "Diodon Oidimat"
+
+#: ../data/preferences.ui.h:2
+msgid "_Use clipboard (Ctrl+C)"
+msgstr ""
+
+#: ../data/preferences.ui.h:4
+msgid "Use _primary selection"
+msgstr ""
+
+#: ../data/preferences.ui.h:6
+msgid "S_ynchronize clipboards"
+msgstr ""
+
+#: ../data/preferences.ui.h:8
+msgid "_Keep clipboard content"
+msgstr ""
+
+#: ../data/preferences.ui.h:10
+msgid "_Automatically paste selected item"
+msgstr ""
+
+#: ../data/preferences.ui.h:14
+msgid "Clipboard"
+msgstr "Čuohpusgirji"
+
+#: ../data/preferences.ui.h:17
+msgid "Hotkeys"
+msgstr ""
+
+#: ../data/preferences.ui.h:18
+msgid "Plugins"
+msgstr "Lassemoduvllat"
+
+#: ../libdiodon/clipboard-menu.vala:42
+msgid "<Empty>"
+msgstr "<guorus>"
+
+#: ../plugins/indicator/indicator.plugin.in.h:1
+msgid "Application Indicator"
+msgstr ""
+
+#: ../plugins/indicator/indicator.plugin.in.h:2
+msgid "Access clipboard history with an application indicator."
+msgstr ""
+
+#: ../plugins/indicator/indicator.plugin.in.h:3
+#: ../plugins/unitylens/unitylens.plugin.in.h:3
+msgid "Copyright © 2011 Diodon Team"
+msgstr ""
+
+#: ../plugins/unitylens/diodon.lens.in.in.h:3
+msgid "Search clipboard"
+msgstr ""
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:95
+msgid "Search Clipboard"
+msgstr ""
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:147
+#: ../plugins/unitylens/unity-lens-plugin.vala:171
+msgid "Text"
+msgstr ""
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:151
+#: ../plugins/unitylens/unity-lens-plugin.vala:172
+msgid "Files"
+msgstr ""
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:155
+#: ../plugins/unitylens/unity-lens-plugin.vala:173
+msgid "Images"
+msgstr "Govat"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:169
+msgid "Type"
+msgstr "Šládja"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:202
+msgid "Sorry, there is no clipboard content that matches your search."
+msgstr ""
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:269
+msgid "Copy to clipboard"
+msgstr ""
+
+#: ../plugins/unitylens/unitylens.plugin.in.h:1
+msgid "Unity Lens"
+msgstr ""
+
+#: ../plugins/unitylens/unitylens.plugin.in.h:2
+msgid "Access clipboard history with the unity dash."
+msgstr ""
+
+#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:1
+msgid "Zeitgeist Data-Source"
+msgstr ""
+
+#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:2
+msgid "Adds clipboard activities as events to the Zeitgeist daemon."
+msgstr ""
+
+#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:3
+msgid "Copyright © 2012 Diodon Team"
+msgstr ""
