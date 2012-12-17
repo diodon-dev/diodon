@@ -91,7 +91,12 @@ namespace Diodon
             menu_item.highlight_item();
             
             // re-arranging
-            reorder_child(menu_item, 0);
+            //reorder_child(menu_item, 0);
+            
+            // FIXME: this is a workaround for Bug 785852 on launchpad
+            // as re-ordering does not work on application indicator
+            remove_clipboard_item(item);
+            prepend_clipboard_item(item);
         }
         
         /**
