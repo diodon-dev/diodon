@@ -1,7 +1,7 @@
 [Lens]
 DBusName=@BUSNAME@.Unity.Lens.Diodon
 DBusPath=@BUSOBJECTPATH@/unity/lens/diodon
-Icon=gtk-paste
+Icon=diodon-panel
 _Name=Clipboard Manager
 _Description=GTK+ Clipboard Manager
 _SearchHint=Search clipboard
