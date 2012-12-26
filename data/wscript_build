@@ -46,6 +46,6 @@ for icon in icons:
     if pos > -1:
         subpath = relfile[:pos]
     # add difference of path to install dir
-    install_dir = '${DATADIR}/icons/hicolor/' + subpath
+    install_dir = '${DATADIR}/icons/' + subpath
     bld.install_files(install_dir, icon)
 

@@ -40,7 +40,7 @@ namespace Diodon.Plugins
             Controller controller = object as Controller;
            
             if(indicator == null) {
-                indicator = new AppIndicator.Indicator("Diodon", "diodon",
+                indicator = new AppIndicator.Indicator("Diodon", "diodon-panel",
                     AppIndicator.IndicatorCategory.APPLICATION_STATUS);
             
                 indicator.set_menu(controller.get_menu());
