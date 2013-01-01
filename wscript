@@ -7,7 +7,7 @@ import Options, Logs
 from waflib.Tools import waf_unit_test
 
 NAME = 'Diodon'
-VERSION = '0.9.0'
+VERSION = '1.0.0'
 APPNAME = 'diodon'
 WEBSITE = 'https://launchpad.net/diodon'
 COPYRIGHT = 'Copyright \xc2\xa9 2010 Diodon Team'
