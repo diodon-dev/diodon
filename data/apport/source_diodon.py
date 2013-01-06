@@ -6,7 +6,7 @@ Author: Oliver Sauder <os@esite.ch>
 '''
 
 import apport
-from apport.hookutils import *
+from apport.hookutils import attach_file_if_exists
 from os import path, getenv
 
 def add_info(report):
