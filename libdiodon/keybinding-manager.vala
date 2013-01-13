@@ -220,10 +220,10 @@ namespace Diodon
             if(keycode != 0) {
                 
                 if(modifiercode != 0) {
-                    X.Test.fake_key_event(display, modifiercode, press, delay);                
+                    XTest.fake_key_event(display, modifiercode, press, delay);                
                 }
                 
-                X.Test.fake_key_event(display, keycode, press, delay);                
+                XTest.fake_key_event(display, keycode, press, delay);                
                 
                 return true;
             }
