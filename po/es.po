@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-24 21:43+0200\n"
-"PO-Revision-Date: 2012-05-02 14:10+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
+"PO-Revision-Date: 2013-01-15 18:40+0000\n"
+"Last-Translator: Jose Luis Tirado <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-10-25 05:53+0000\n"
-"X-Generator: Launchpad (build 16179)\n"
+"X-Launchpad-Export-Date: 2013-01-16 05:00+0000\n"
+"X-Generator: Launchpad (build 16420)\n"
 "Language: es\n"
 
 #: ../data/diodon.desktop.in.h:1 ../plugins/unitylens/diodon.lens.in.in.h:1
@@ -64,10 +64,10 @@ msgid ""
 "available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
 "the middle mouse button."
 msgstr ""
-"Sincroniza la selección (un área de la pantalla que es seleccionada con el "
-"ratón) y el portapapeles de forma que nada en la selección ya está "
-"disponible en el portapapeles y viceversa, por ejemplo, para pegar con Ctrl "
-"+ V y el botón central del ratón."
+"Sincroniza la selección (un área de la pantalla seleccionada con el ratón) y "
+"el portapapeles de forma que cualquier cosa en la selección esté "
+"inmediatamente disponible en el portapapeles y viceversa, por ejemplo para "
+"pegar con Ctrl + V y el botón central del ratón."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Keep clipboard content"
@@ -166,20 +166,21 @@ msgstr "<Vacío>"
 
 #: ../plugins/indicator/indicator.plugin.in.h:1
 msgid "Application Indicator"
-msgstr ""
+msgstr "Indicador de aplicación"
 
 #: ../plugins/indicator/indicator.plugin.in.h:2
 msgid "Access clipboard history with an application indicator."
 msgstr ""
+"Acceder al historial del portapapeles mediante un indicador de aplicación."
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
 #: ../plugins/unitylens/unitylens.plugin.in.h:3
 msgid "Copyright © 2011 Diodon Team"
-msgstr ""
+msgstr "Copyright © 2011 Equipo de Diodon"
 
 #: ../plugins/unitylens/diodon.lens.in.in.h:3
 msgid "Search clipboard"
-msgstr ""
+msgstr "Buscar en el portapapeles"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:95
 msgid "Search Clipboard"
@@ -214,20 +215,21 @@ msgstr "Copiar al portapapeles"
 
 #: ../plugins/unitylens/unitylens.plugin.in.h:1
 msgid "Unity Lens"
-msgstr ""
+msgstr "Lente de Unity"
 
 #: ../plugins/unitylens/unitylens.plugin.in.h:2
 msgid "Access clipboard history with the unity dash."
-msgstr ""
+msgstr "Acceder al historial del portapapeles mediante el tablero de Unity"
 
 #: ../plugins/zeitgeist/zeitgeist.plugin.in.h:1
 msgid "Zeitgeist Data-Source"
-msgstr ""
+msgstr "Fuente de datos de Zeitgeist"
 
 #: ../plugins/zeitgeist/zeitgeist.plugin.in.h:2
 msgid "Adds clipboard activities as events to the Zeitgeist daemon."
 msgstr ""
+"Añade las actividades del portapapeles como eventos al demonio de Zeitgeist."
 
 #: ../plugins/zeitgeist/zeitgeist.plugin.in.h:3
 msgid "Copyright © 2012 Diodon Team"
-msgstr ""
+msgstr "Copyright © 2012 Equipo de Diodon"
