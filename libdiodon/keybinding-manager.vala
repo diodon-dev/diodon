@@ -26,7 +26,7 @@ namespace Diodon
      * and filter X11-events and passing on such events to the registed
      * handler methods.
      */
-    class KeybindingManager : GLib.Object
+    public class KeybindingManager : GLib.Object
     {
         /**
          * list of binded keybindings

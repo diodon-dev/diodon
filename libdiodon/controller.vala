@@ -378,6 +378,14 @@ namespace Diodon
         }
         
         /**
+         * access to current keybinding manager
+         */
+        public KeybindingManager get_keybinding_manager()
+        {
+            return keybinding_manager;
+        }
+        
+        /**
          * Set text on all other clipboards then current type
          */
         private void synchronize(IClipboardItem item)
