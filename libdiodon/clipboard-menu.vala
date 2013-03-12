@@ -173,8 +173,9 @@ namespace Diodon
             ConfigurationModel cfg = controller.get_configuration();
             Gtk.accelerator_parse(cfg.history_accelerator,
                 out keyval, out state);
-        
-            if(event.keyval == keyval && event.state == state) {
+            uint event_state = KeybindingManager.remove_lockmodifiers(event.state);
+            
+            if(event.keyval == keyval && event_state == state) {
             
                 if(get_selected_item() == null) {
                     select_first(false);
@@ -200,8 +201,9 @@ namespace Diodon
             ConfigurationModel cfg = controller.get_configuration();
             Gtk.accelerator_parse(cfg.history_accelerator,
                 out keyval, out state);
+            uint event_state = KeybindingManager.remove_lockmodifiers(event.state);
               
-            if(event.state == state && event.is_modifier == 1) {
+            if(event_state == state && event.is_modifier == 1) {
                 if(get_selected_item() != null) {
                     activate_item(get_selected_item(), false);
                     return true;

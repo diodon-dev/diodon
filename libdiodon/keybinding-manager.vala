@@ -184,6 +184,17 @@ namespace Diodon
         }
         
         /**
+         * Remove lock modifiers (NumLock, CapsLock, ScrollLock) from
+         * key state
+         *
+         * @param state key state of a gdk event
+         */
+        public static uint remove_lockmodifiers(uint state)
+        {
+            return state & ~ (Gdk.ModifierType.MOD2_MASK|Gdk.ModifierType.LOCK_MASK|Gdk.ModifierType.MOD5_MASK);
+        }
+        
+        /**
          * Helper method performing given accelerator on current active
          * window.
          *
@@ -241,8 +252,7 @@ namespace Diodon
              
              if(xevent->type == X.EventType.KeyPress) {
                 foreach(Keybinding binding in bindings) {
-                    // remove NumLock, CapsLock and ScrollLock from key state
-                    uint event_mods = xevent.xkey.state & ~ (lock_modifiers[7]);
+                    uint event_mods = remove_lockmodifiers(xevent.xkey.state);
                     if(xevent->xkey.keycode == binding.keycode && event_mods == binding.modifiers) {
                         // call all handlers with pressed key and modifiers
                         binding.handler(gdk_event);
