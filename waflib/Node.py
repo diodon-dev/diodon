@@ -52,6 +52,7 @@ exclude_regs = '''
 **/{arch}
 **/_darcs
 **/_darcs/**
+**/.intlcache
 **/.DS_Store'''
 """
 Ant patterns for files and folders to exclude while doing the
