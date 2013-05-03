@@ -247,20 +247,29 @@ namespace Diodon
          */
         private Gdk.FilterReturn event_filter(Gdk.XEvent gdk_xevent, Gdk.Event gdk_event)
         {
-            Gdk.FilterReturn filter_return = Gdk.FilterReturn.CONTINUE;
             X.Event* xevent = (X.Event*) gdk_xevent;
-             
-             if(xevent->type == X.EventType.KeyPress) {
+            
+            debug("Event filter hit: %d, %d",
+                xevent.type, gdk_event.type);
+                
+            if(xevent->type == X.EventType.KeyPress) {
+                debug("Key pressed, keycode: %u, modifiers: %u",
+                    xevent->xkey.keycode, xevent->xkey.state);
+                    
                 foreach(Keybinding binding in bindings) {
                     uint event_mods = remove_lockmodifiers(xevent.xkey.state);
                     if(xevent->xkey.keycode == binding.keycode && event_mods == binding.modifiers) {
+                        debug("Keybinding hit with accelerator %s",
+                            binding.accelerator);
+                        
                         // call all handlers with pressed key and modifiers
                         binding.handler(gdk_event);
+                        return Gdk.FilterReturn.REMOVE;
                     }
                 }
-             }
+            }
              
-            return filter_return;
+            return Gdk.FilterReturn.CONTINUE;
         }
     }
 }
