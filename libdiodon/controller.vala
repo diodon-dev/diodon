@@ -196,7 +196,8 @@ namespace Diodon
          */
         public void select_item(IClipboardItem item)
         {   
-            clipboard_model.select_item(item);
+            clipboard_model.select_item(item, configuration_model.use_clipboard,
+                configuration_model.use_primary);
             
             on_select_item(item);
             

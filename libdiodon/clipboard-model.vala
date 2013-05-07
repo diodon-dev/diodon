@@ -152,14 +152,22 @@ namespace Diodon
          * Select clipboard item.
          * 
          * @param item item to be selected
+         * @param use_clipboard whether item gets selected for clipboard
+         * @param use_primary whether item gets selected for primary selection
          */         
-        public void select_item(IClipboardItem item)
+        public void select_item(IClipboardItem item, bool use_clipboard, bool use_primary)
         {  
             // selected item is always at the end of history
             storage.remove_item(item);
             storage.add_item(item);
             
-            current_items.set(item.get_clipboard_type(), item);
+            // verify that current items are selected correctly
+            if(use_clipboard) {
+                current_items.set(ClipboardType.CLIPBOARD, item);
+            }
+            if(use_primary) {
+                current_items.set(ClipboardType.PRIMARY, item);
+            }
         }
         
         /**

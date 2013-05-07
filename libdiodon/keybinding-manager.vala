@@ -249,9 +249,6 @@ namespace Diodon
         {
             X.Event* xevent = (X.Event*) gdk_xevent;
             
-            debug("Event filter hit: %d, %d",
-                xevent.type, gdk_event.type);
-                
             if(xevent->type == X.EventType.KeyPress) {
                 debug("Key pressed, keycode: %u, modifiers: %u",
                     xevent->xkey.keycode, xevent->xkey.state);
