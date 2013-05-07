@@ -55,6 +55,7 @@ def configure(conf):
     conf.check_cfg(package='unique-3.0',        uselib_store='UNIQUE',       atleast_version='3.0.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='x11',               uselib_store='X11',          atleast_version='1.3.2',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='xtst',              uselib_store='XTST',         atleast_version='1.2.0',  mandatory=1, args='--cflags --libs')
+    conf.check_cfg(package='zeitgeist-1.0',     uselib_store='ZEITGEIST',    atleast_version='0.3.18', mandatory=1, args='--cflags --libs')    
     
     # FIXME: waf throws up when assigning an empty string
     # we need a better way of configuring plugins which are enabled
@@ -71,10 +72,6 @@ def configure(conf):
     if Options.options.enable_unitylens:
         conf.check_cfg(package='unity',   uselib_store='UNITY', atleast_version='5.8.0',  mandatory=1, args='--cflags --libs')
         conf.check_cfg(package='dee-1.0', uselib_store='DEE',   atleast_version='0.5.18', mandatory=1, args='--cflags --libs')
-      
-    conf.env['ZEITGEIST'] = Options.options.enable_zeitgeist
-    if Options.options.enable_zeitgeist:
-        conf.check_cfg(package='zeitgeist-1.0', uselib_store='ZEITGEIST', atleast_version='0.3.12', mandatory=1, args='--cflags --libs')    
 
     # FIXME: conf.env and conf.define should not both be needed?
     conf.define('PACKAGE_NAME', APPNAME)
