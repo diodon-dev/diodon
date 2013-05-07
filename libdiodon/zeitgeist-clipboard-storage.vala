@@ -47,8 +47,8 @@ namespace Diodon
       
             log = new Zeitgeist.Log();
             zg_index = new Zeitgeist.Index();
-            monitor = new Zeitgeist.Monitor (new Zeitgeist.TimeRange.from_now(),
-                zg_templates);
+            //monitor = new Zeitgeist.Monitor (new Zeitgeist.TimeRange.from_now(),
+            //    zg_templates);
         }
         
         public void remove_item(IClipboardItem item)
@@ -62,6 +62,48 @@ namespace Diodon
         
         public void add_item(IClipboardItem item)
         {
+            string interpretation = get_interpretation(item);
+            string? origin = Utility.get_path_of_active_application();
+            
+            Zeitgeist.Subject subject = new Zeitgeist.Subject();
+            subject.set_uri("clipboard://" + item.get_checksum());
+            subject.set_interpretation(interpretation);
+            subject.set_manifestation(Zeitgeist.NFO_DATA_CONTAINER);
+            subject.set_mimetype(item.get_mime_type());
+            if(origin != null) {
+                subject.set_origin(origin);
+            }
+            subject.set_text(item.get_clipboard_data());
+            
+            Zeitgeist.Event event = new Zeitgeist.Event();
+            // TODO: this should actually be a copy event
+            event.set_interpretation(Zeitgeist.ZG_CREATE_EVENT);
+            event.set_manifestation(Zeitgeist.ZG_USER_ACTIVITY);
+            event.set_actor("application://diodon.desktop");
+            event.add_subject(subject);
+            
+            // content should be added, however ignored as currently
+            // data is not being read
+            //event.set_payload();
+            
+            TimeVal cur_time = TimeVal();
+            int64 timestamp = Zeitgeist.Timestamp.from_timeval(cur_time);
+            event.set_timestamp(timestamp);
+            
+            log.insert_events_no_reply(event, null);
+        }
+        
+        private string get_interpretation(IClipboardItem item)
+        {
+            string interpretation = Zeitgeist.NFO_PLAIN_TEXT_DOCUMENT;
+            if(item is FileClipboardItem) {
+                interpretation = Zeitgeist.NFO_FILE_DATA_OBJECT;
+            }
+            else if (item is ImageClipboardItem) {
+                interpretation = Zeitgeist.NFO_IMAGE;
+            }
+            
+            return interpretation;
         }
     }  
 }
