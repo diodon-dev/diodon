@@ -165,14 +165,18 @@ def teardown_tests(ctx):
     
     # write test summary
     waf_unit_test.summary(ctx)
-    
-    # Ensure that all tests have passed
+
+    # Ensure that all tests have passed, if not log errors
     lst = getattr(ctx, 'utest_results', [])
     if lst:
         tfail = len([x for x in lst if x[1]])
         if tfail:
+            for (filename, returncode, stdout, stderr) in lst:
+                Logs.warn(stdout)
+                Logs.warn(stderr)
+                
             ctx.fatal("Some test failed.")
-
+   
 def stop_zeitgeist_daemon(zeitgeist_process):
     """
     Kill started test zeitgeist daemon
