@@ -45,11 +45,41 @@ namespace Diodon
 
 	    public void test_add_text_item()
 	    {   
+	        unowned PtrArray zg_templates = new PtrArray.sized(1);
+            var ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
+                             new Subject.full ("clipboard*",
+                                               NFO_PLAIN_TEXT_DOCUMENT,
+                                               NFO_DATA_CONTAINER,
+                                               "",
+                                               "",
+                                               "test_add_text_item",
+                                               ""));
+            zg_templates.add ((ev as GLib.Object).ref());
+	    
 	        TextClipboardItem text_item = new TextClipboardItem(
-	            ClipboardType.CLIPBOARD, "test");
+	            ClipboardType.CLIPBOARD, "test_add_text_item");
  	        this.storage.add_item(text_item);
  	        
- 	        //this.log.find_events(
+ 	        TimeRange time_range = new TimeRange.anytime();
+            this.log.find_events.begin(
+                time_range,
+                zg_templates,
+                StorageState.ANY,
+                // not one as the event might be added more then once
+                // and in this case the test fail
+                40,
+                ResultType.MOST_RECENT_SUBJECTS,
+                null,
+                (obj, res) => {                     
+                    try {
+                        ResultSet results = this.log.find_events.end(res);
+                        // there should only be one test_add_text_item
+                        assert(results.size()==1);
+                     } catch(GLib.Error e) {
+                        Test.message(e.message);
+                        assert(false);
+                    }
+                });
 	    }
 	}
 }
