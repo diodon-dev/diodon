@@ -3,7 +3,7 @@
 # Oliver Sauder, 2010
 
 from subprocess import Popen, PIPE
-import os, traceback, waflib, tempfile, time, signal
+import os, traceback, waflib, tempfile, time, signal, random, dbus
 import Options, Logs
 from waflib.Build import BuildContext
 from waflib.Tools import waf_unit_test
@@ -23,6 +23,7 @@ out = '_build_'
 
 class CustomBuildContext(BuildContext):
     zeitgeist_process = None
+    dbus = None
 
 def options(opt):
     opt.tool_options('compiler_c')
@@ -131,6 +132,17 @@ def build(ctx):
     ctx.options.all_tests = True
 
 def setup_tests(ctx):
+    """
+    ctx.dbus = DBusPrivateMessageBus()
+    error = ctx.dbus.run(ignore_errors=True)
+    if error:
+        error = "Failed to setup private bus, error was %s" %error
+        raise RuntimeError(error)
+    else:
+        Logs.info("Testsuite is running using a private dbus bus")
+        config = ctx.dbus.dbus_config.copy()
+        config.update({"DISPLAY": ctx.dbus.DISPLAY, "pid.Xvfb": ctx.dbus.display.pid})
+    """
     ctx.zeitgeist_process = start_zeitgeist_daemon()
     
 # TODO: is this really the best spot to start the zeitgeist daemon?
@@ -148,7 +160,7 @@ def start_zeitgeist_daemon():
     args = { 'env': zg_env }
     args['stderr'] = PIPE
     args['stdout'] = PIPE
-    zeitgeist_process = Popen(('/usr/bin/zeitgeist-daemon', '--replace'), **args)
+    zeitgeist_process = Popen(('/usr/bin/zeitgeist-daemon', '--replace', '--no-datahub'), **args)
     
     # give the process some time to wake up
     time.sleep(1)
@@ -156,13 +168,14 @@ def start_zeitgeist_daemon():
     # raise runtime error if process failed to start
     error = zeitgeist_process.poll()
     if error:
-        error = "'%s' exits with error %i." %(cmd, error)
+        error = "zeitgeist-daemon exits with error %i." %(error)
         raise RuntimeError(error)
     
     return zeitgeist_process
     
 def teardown_tests(ctx):
     stop_zeitgeist_daemon(ctx.zeitgeist_process)
+    # ctx.dbus.quit(ignore_errors=True)
     
     # write test summary
     waf_unit_test.summary(ctx)
@@ -216,4 +229,53 @@ def shutdown(self):
             Logs.error("Failed to generate po template.")
             Logs.errors("Make sure intltool is installed.")
         os.chdir ('..')
+
+# TODO class needs to be moved elsewhere, waf task might be considered
+class DBusPrivateMessageBus(object):
+	# Choose a random number so it's possible to have more than
+	# one test running at once.
+	DISPLAY = ":%d" % random.randint(20, 100)
+
+	def _run(self):
+		os.environ.update({"DISPLAY": self.DISPLAY})
+		devnull = file("/dev/null", "w")
+		self.display = Popen(
+			["Xvfb", self.DISPLAY, "-screen", "0", "1024x768x8"],
+			stderr=devnull, stdout=devnull
+		)
+		# give the display some time to wake up
+		time.sleep(1)
+		err = self.display.poll()
+		if err:
+			raise RuntimeError("Could not start Xvfb on display %s, got err=%i" %(self.DISPLAY, err))
+		dbus = Popen(["dbus-launch"], stdout=PIPE)
+		time.sleep(1)
+		self.dbus_config = dict(l.split("=", 1) for l in dbus.communicate()[0].split("\n") if l)
+		os.environ.update(self.dbus_config)
+		
+	def run(self, ignore_errors=False):
+		try:
+			return self._run()
+		except Exception, e:
+			if ignore_errors:
+				return e
+			raise
+
+	def _quit(self):
+		os.kill(self.display.pid, signal.SIGKILL)
+		self.display.wait()
+		pid = int(self.dbus_config["DBUS_SESSION_BUS_PID"])
+		os.kill(pid, signal.SIGKILL)
+		try:
+			os.waitpid(pid, 0)
+		except OSError:
+			pass
+			
+	def quit(self, ignore_errors=False):
+		try:
+			return self._quit()
+		except Exception, e:
+			if ignore_errors:
+				return e
+			raise
 
