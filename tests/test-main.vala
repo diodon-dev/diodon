@@ -23,7 +23,8 @@ namespace Diodon
 {
     public static int main(string[] args)
     {
-        Test.init (ref args);
+        Test.init(ref args);
+        Gtk.init(ref args);
         
 	    TestSuite.get_root().add_suite(new TestTextClipboardItem().get_suite());
 	    TestSuite.get_root().add_suite(new TestKeybindingManager().get_suite());
