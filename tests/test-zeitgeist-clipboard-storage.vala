@@ -44,8 +44,9 @@ namespace Diodon
         }
 
 	    public void test_add_text_item()
-	    {   
-	        unowned PtrArray zg_templates = new PtrArray.sized(1);
+	    {
+            
+	        unowned PtrArray zg_templates = unowned new PtrArray.sized(1);
             var ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
                              new Subject.full ("clipboard*",
                                                NFO_PLAIN_TEXT_DOCUMENT,
