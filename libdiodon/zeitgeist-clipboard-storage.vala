@@ -63,7 +63,7 @@ namespace Diodon
          */
         public void add_item(IClipboardItem item)
         {
-            /*string interpretation = get_interpretation(item);
+            string interpretation = get_interpretation(item);
             string? origin = Utility.get_path_of_active_application();
             
             Zeitgeist.Subject subject = new Zeitgeist.Subject();
@@ -91,7 +91,7 @@ namespace Diodon
             int64 timestamp = Zeitgeist.Timestamp.from_timeval(cur_time);
             event.set_timestamp(timestamp);
             
-            log.insert_events_no_reply(event, null);*/
+            log.insert_events_no_reply(event, null);
         }
         
         private string get_interpretation(IClipboardItem item)
