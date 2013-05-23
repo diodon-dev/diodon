@@ -45,7 +45,7 @@ namespace Diodon
 
 	    public void test_add_text_item()
 	    {
-            
+	        MainLoop mainloop = new MainLoop(MainContext.default ());
 	        PtrArray zg_templates = new PtrArray.sized(1);
             var ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
                              new Subject.full ("clipboard*",
@@ -62,6 +62,7 @@ namespace Diodon
  	        this.storage.add_item(text_item);
  	        
  	        TimeRange time_range = new TimeRange.anytime();
+ 	        
             this.log.find_events.begin(
                 time_range,
                 (owned)zg_templates,
@@ -80,7 +81,11 @@ namespace Diodon
                         Test.message(e.message);
                         assert(false);
                     }
+                    
+                    mainloop.quit();
                 });
+                
+            mainloop.run();
 	    }
 	}
 }
