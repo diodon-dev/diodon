@@ -46,7 +46,7 @@ namespace Diodon
 	    public void test_add_text_item()
 	    {
             
-	        unowned PtrArray zg_templates = unowned new PtrArray.sized(1);
+	        PtrArray zg_templates = new PtrArray.sized(1);
             var ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
                              new Subject.full ("clipboard*",
                                                NFO_PLAIN_TEXT_DOCUMENT,
@@ -64,7 +64,7 @@ namespace Diodon
  	        TimeRange time_range = new TimeRange.anytime();
             this.log.find_events.begin(
                 time_range,
-                zg_templates,
+                (owned)zg_templates,
                 StorageState.ANY,
                 // not one as the event might be added more then once
                 // and in this case the test fail
