@@ -2,8 +2,10 @@
 # encoding: utf-8
 # Oliver Sauder, 2010
 
-import subprocess, os, traceback, waflib
+from subprocess import Popen, PIPE
+import os, traceback, waflib, tempfile, time, signal
 import Options, Logs
+from waflib.Build import BuildContext
 from waflib.Tools import waf_unit_test
 
 NAME = 'Diodon'
@@ -18,6 +20,9 @@ VERSION_MAJOR_MINOR = '.'.join (VERSION.split ('.')[0:2])
 VERSION_MAJOR = '.'.join (VERSION.split ('.')[0:1])
 top = '.'
 out = '_build_'
+
+class CustomBuildContext(BuildContext):
+    zeitgeist_process = None
 
 def options(opt):
     opt.tool_options('compiler_c')
@@ -113,6 +118,8 @@ def build(ctx):
     
     if not Options.options.skiptests:
         ctx.add_subdirs('tests')
+        ctx.add_pre_fun(setup_tests)
+        ctx.add_post_fun(teardown_tests)
         
     if ctx.env['VALADOC']:
     	ctx.add_subdirs('doc')
@@ -123,16 +130,57 @@ def build(ctx):
 	# to set this behaviour permanenly:    
     ctx.options.all_tests = True
 
-def post(ctx):
+def setup_tests(ctx):
+    ctx.zeitgeist_process = start_zeitgeist_daemon()
+    
+def start_zeitgeist_daemon():
+    """
+    start zeitgeist daemon writing to temporary data path
+    """
+    zg_env = os.environ.copy()
+    datapath = tempfile.mkdtemp(prefix="zeitgeist.datapath.")
+    zg_env.update({
+        "ZEITGEIST_DATABASE_PATH": ":memory:",
+        "ZEITGEIST_DATA_PATH": datapath,
+        "XDG_CACHE_HOME": os.path.join(datapath, "cache"),
+    })
+    args = { 'env': zg_env }
+    args['stderr'] = PIPE
+    args['stdout'] = PIPE
+    zeitgeist_process = Popen(('/usr/bin/zeitgeist-daemon', '--replace'), **args)
+    
+    # give the process some time to wake up
+    time.sleep(1)
+    
+    # raise runtime error if process failed to start
+    error = zeitgeist_process.poll()
+    if error:
+        error = "'%s' exits with error %i." %(cmd, error)
+        raise RuntimeError(error)
+    
+    return zeitgeist_process
+    
+def teardown_tests(ctx):
+    stop_zeitgeist_daemon(ctx.zeitgeist_process)
+    
+    # write test summary
     waf_unit_test.summary(ctx)
     
-    # Tests have to pass
+    # Ensure that all tests have passed
     lst = getattr(ctx, 'utest_results', [])
     if lst:
         tfail = len([x for x in lst if x[1]])
         if tfail:
             ctx.fatal("Some test failed.")
-	
+
+def stop_zeitgeist_daemon(zeitgeist_process):
+    """
+    Kill started test zeitgeist daemon
+    """
+    os.kill(zeitgeist_process.pid, signal.SIGKILL)
+    zeitgeist_process.wait()
+
+def post(ctx):
     if ctx.cmd == 'install':
         ctx.exec_command('/sbin/ldconfig')
 

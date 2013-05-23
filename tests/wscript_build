@@ -8,9 +8,9 @@ prog = bld.new_task_gen (
   features = 'c cprogram test',
   target = 'diodon-test',
   vapi_dirs = '../vapi ../libdiodon',
-  uselib = 'GTK UNIQUE GIOUNIX',
+  uselib = 'GTK UNIQUE GIOUNIX ZEITGEIST',
   use = 'libdiodon',
   cflags = ['-include', 'config.h'],
-  packages = 'gtk+-3.0 unique-3.0 gio-unix-2.0 config',
+  packages = 'gtk+-3.0 unique-3.0 gio-unix-2.0 config zeitgeist-1.0',
   source = bld.path.ant_glob (incl='**/*.vala'))
 

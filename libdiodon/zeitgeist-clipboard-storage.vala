@@ -27,26 +27,24 @@ namespace Diodon
      * Zeitgeist clipboard storage implementation using
      * libzeitgeist to store clipboard items as events with subjects.
      */
-    class ZeitgeistClipboardStorage : GLib.Object
+    public class ZeitgeistClipboardStorage : GLib.Object
     {
         private Zeitgeist.Log log;
-        private Index zg_index;
-        private Monitor monitor;
+        private Index index;
         
         // basic clipboard zeitgeist templates used for filtering while searching
-        private PtrArray zg_templates;
+        private PtrArray templates;
         
         public ZeitgeistClipboardStorage()
         {
-            zg_templates = new PtrArray.sized(1);
+            this.templates = new PtrArray.sized(1);
             Event event = new Event.full(ZG_ACCESS_EVENT,
                 ZG_USER_ACTIVITY, "", new Subject.full("clipboard*",
                     "", "", "", "", "", ""));
-                                               
-            zg_templates.add((event as GLib.Object).ref());
+            this.templates.add((event as GLib.Object).ref());
       
-            log = new Zeitgeist.Log();
-            zg_index = new Zeitgeist.Index();
+            this.log = Zeitgeist.Log.get_default();
+            this.index = new Zeitgeist.Index();
             //monitor = new Zeitgeist.Monitor (new Zeitgeist.TimeRange.from_now(),
             //    zg_templates);
         }
@@ -60,6 +58,9 @@ namespace Diodon
             return new Gee.ArrayList<IClipboardItem>();
         }
         
+        /**
+         * Add clipboard item as Zeitgeist event and subject to zeitgeist log.
+         */
         public void add_item(IClipboardItem item)
         {
             string interpretation = get_interpretation(item);

@@ -27,6 +27,7 @@ namespace Diodon
         
 	    TestSuite.get_root().add_suite(new TestTextClipboardItem().get_suite());
 	    TestSuite.get_root().add_suite(new TestKeybindingManager().get_suite());
+	    TestSuite.get_root().add_suite(new TestZeitgeistClipboardStorage().get_suite());
 	    
 	    return Test.run ();
     }
