@@ -133,6 +133,7 @@ def build(ctx):
 def setup_tests(ctx):
     ctx.zeitgeist_process = start_zeitgeist_daemon()
     
+# TODO: is this really the best spot to start the zeitgeist daemon?
 def start_zeitgeist_daemon():
     """
     start zeitgeist daemon writing to temporary data path
