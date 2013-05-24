@@ -49,8 +49,23 @@ namespace Diodon
             //    zg_templates);
         }
         
-        public void remove_item(IClipboardItem item)
+        public async void remove_item(IClipboardItem item)
         {
+            try {
+                PtrArray templates = create_item_event_templates(item);
+                Array event_ids = yield log.find_event_ids(
+                    new TimeRange.anytime(),
+                    (owned)templates, 
+                    StorageState.ANY,
+                    1,
+                    ResultType.MOST_RECENT_SUBJECTS,
+                    null);
+                
+                yield log.delete_events((owned)event_ids, null);
+            } catch(GLib.Error e) {
+                warning("Remove item %s not successful, error: %s",
+                    item.get_clipboard_data(), e.message);
+            }
         }
         
         public Gee.List<IClipboardItem> get_recent_items()
@@ -61,37 +76,42 @@ namespace Diodon
         /**
          * Add clipboard item as Zeitgeist event and subject to zeitgeist log.
          */
-        public void add_item(IClipboardItem item)
+        public async void add_item(IClipboardItem item)
         {
-            string interpretation = get_interpretation(item);
-            string? origin = Utility.get_path_of_active_application();
-            
-            Zeitgeist.Subject subject = new Zeitgeist.Subject();
-            subject.set_uri("clipboard://" + item.get_checksum());
-            subject.set_interpretation(interpretation);
-            subject.set_manifestation(Zeitgeist.NFO_DATA_CONTAINER);
-            subject.set_mimetype(item.get_mime_type());
-            if(origin != null) {
-                subject.set_origin(origin);
+            try {
+                string interpretation = get_interpretation(item);
+                string? origin = Utility.get_path_of_active_application();
+                
+                Zeitgeist.Subject subject = new Zeitgeist.Subject();
+                subject.set_uri("clipboard://" + item.get_checksum());
+                subject.set_interpretation(interpretation);
+                subject.set_manifestation(Zeitgeist.NFO_DATA_CONTAINER);
+                subject.set_mimetype(item.get_mime_type());
+                if(origin != null) {
+                    subject.set_origin(origin);
+                }
+                subject.set_text(item.get_clipboard_data());
+                
+                Zeitgeist.Event event = new Zeitgeist.Event();
+                // TODO: this should actually be a copy event
+                event.set_interpretation(Zeitgeist.ZG_CREATE_EVENT);
+                event.set_manifestation(Zeitgeist.ZG_USER_ACTIVITY);
+                event.set_actor("application://diodon.desktop");
+                event.add_subject(subject);
+                
+                // content should be added, however ignored as currently
+                // data is not being read
+                //event.set_payload();
+                
+                TimeVal cur_time = TimeVal();
+                int64 timestamp = Zeitgeist.Timestamp.from_timeval(cur_time);
+                event.set_timestamp(timestamp);
+                
+                yield log.insert_events(null, event);
+            } catch(GLib.Error e) {
+                warning("Add item %s not successful, error: %s",
+                    item.get_clipboard_data(), e.message);
             }
-            subject.set_text(item.get_clipboard_data());
-            
-            Zeitgeist.Event event = new Zeitgeist.Event();
-            // TODO: this should actually be a copy event
-            event.set_interpretation(Zeitgeist.ZG_CREATE_EVENT);
-            event.set_manifestation(Zeitgeist.ZG_USER_ACTIVITY);
-            event.set_actor("application://diodon.desktop");
-            event.add_subject(subject);
-            
-            // content should be added, however ignored as currently
-            // data is not being read
-            //event.set_payload();
-            
-            TimeVal cur_time = TimeVal();
-            int64 timestamp = Zeitgeist.Timestamp.from_timeval(cur_time);
-            event.set_timestamp(timestamp);
-            
-            log.insert_events_no_reply(event, null);
         }
         
         private string get_interpretation(IClipboardItem item)
@@ -105,6 +125,26 @@ namespace Diodon
             }
             
             return interpretation;
+        }
+        
+        private PtrArray create_item_event_templates(IClipboardItem item)
+        {
+            PtrArray events = new PtrArray.sized(1);
+            Event ev = new Zeitgeist.Event.full(
+                ZG_CREATE_EVENT,
+                ZG_USER_ACTIVITY,
+                "", // actor not defiend
+                new Subject.full (
+                    "clipboard*",
+                    get_interpretation(item),
+                    NFO_DATA_CONTAINER,
+                    "",
+                    "",
+                    item.get_clipboard_data(),
+                    ""));
+                    
+            events.add ((ev as GLib.Object).ref());
+            return events;
         }
     }  
 }

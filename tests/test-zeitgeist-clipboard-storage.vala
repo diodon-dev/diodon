@@ -28,65 +28,103 @@ namespace Diodon
      */
     class TestZeitgeistClipboardStorage : TestCase
     {
+        private delegate void CleanUpMethod();
+        
         private ZeitgeistClipboardStorage storage;
         private Zeitgeist.Log log;
+        private MainLoop mainloop;
         
 	    public TestZeitgeistClipboardStorage()
 	    {
-		    base("ZeitgeistClipboardStorage");
+		    base("TestZeitgeistClipboardStorage");
 		    add_test("test_add_text_item", test_add_text_item);
+		    add_test("test_remove_text_item", test_remove_text_item);
 	    }
 	    
 	    public override void set_up()
 	    {
 	        this.log = Zeitgeist.Log.get_default();
             this.storage = new ZeitgeistClipboardStorage();
+            
+            // main loop needed as finding, deleting events is async and would
+            // otherwise not be executed after test terminated.
+            this.mainloop = new MainLoop(MainContext.default());
         }
 
 	    public void test_add_text_item()
 	    {
-	        MainLoop mainloop = new MainLoop(MainContext.default ());
-	        PtrArray zg_templates = new PtrArray.sized(1);
-            var ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
+	        TextClipboardItem text_item = new TextClipboardItem(
+	            ClipboardType.CLIPBOARD, "test_add_text_item");
+ 	        this.storage.add_item.begin(text_item, (obj, res) => {
+ 	            assert_text_item("test_add_text_item", 1,
+ 	                () => { this.mainloop.quit(); }
+ 	            );
+ 	        });
+ 	        
+ 	        this.mainloop.run();
+	    }
+	    
+	    public void test_remove_text_item()
+	    {
+	        string test_text =  "test_remove_text_item";
+	        
+	        TextClipboardItem text_item = new TextClipboardItem(
+	            ClipboardType.CLIPBOARD, test_text);
+ 	        this.storage.add_item.begin(text_item, (obj, res) => {
+ 	            assert_text_item(test_text, 1, null);
+ 	            this.storage.remove_item.begin(text_item, (obj, res) => {
+ 	                assert_text_item(test_text, 0,
+ 	                    () => { this.mainloop.quit(); }
+ 	                );
+ 	            }); 
+ 	        });
+ 	        
+ 	        this.mainloop.run();
+	    }
+	    
+	    /**
+	     * assert whether text item is added to Zeitgeist Log in assigned quantity
+         */
+	    private void assert_text_item(string text, uint qty, CleanUpMethod? clean_up)
+	    {
+	       
+	        PtrArray templates = new PtrArray.sized(1);
+	        TimeRange time_range = new TimeRange.anytime();
+            Event ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
                              new Subject.full ("clipboard*",
                                                NFO_PLAIN_TEXT_DOCUMENT,
                                                NFO_DATA_CONTAINER,
                                                "",
                                                "",
-                                               "test_add_text_item",
+                                               text,
                                                ""));
-            zg_templates.add ((ev as GLib.Object).ref());
-	    
-	        TextClipboardItem text_item = new TextClipboardItem(
-	            ClipboardType.CLIPBOARD, "test_add_text_item");
- 	        this.storage.add_item(text_item);
- 	        
- 	        TimeRange time_range = new TimeRange.anytime();
- 	        
-            this.log.find_events.begin(
+            templates.add ((ev as GLib.Object).ref());
+                
+	        this.log.find_events.begin(
                 time_range,
-                (owned)zg_templates,
+                (owned)templates,
                 StorageState.ANY,
-                // not one as the event might be added more then once
-                // and in this case the test fail
-                40,
+                // not only one resp. qty as the event might be added more then once
+                // and in this case the test should fail
+                1 + qty,
                 ResultType.MOST_RECENT_SUBJECTS,
                 null,
                 (obj, res) => {                     
                     try {
                         ResultSet results = this.log.find_events.end(res);
-                        // there should only be one test_add_text_item
-                        assert(results.size()==1);
+                        assert(results.size()==qty);
                      } catch(GLib.Error e) {
-                        Test.message(e.message);
+                        warning(e.message);
                         assert(false);
                     }
                     
-                    mainloop.quit();
+                    if(clean_up != null) {
+                        clean_up();
+                    }
                 });
-                
-            mainloop.run();
-	    }
+    	}
 	}
+	
+	
 }
 
