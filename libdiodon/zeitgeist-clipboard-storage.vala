@@ -127,14 +127,14 @@ namespace Diodon
             Event ev = new Zeitgeist.Event.full(
                 ZG_CREATE_EVENT,
                 ZG_USER_ACTIVITY,
-                "", // actor not defiend
+                "application://diodon.desktop",
                 new Subject.full (
-                    "clipboard*",
+                    "clipboard://" + item.get_checksum(),
                     get_interpretation(item),
                     NFO_DATA_CONTAINER,
                     "",
                     "",
-                    item.get_clipboard_data(),
+                    "",
                     ""));
                     
             events.add ((ev as GLib.Object).ref());
