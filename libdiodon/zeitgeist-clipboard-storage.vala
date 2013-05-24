@@ -32,23 +32,17 @@ namespace Diodon
         private Zeitgeist.Log log;
         private Index index;
         
-        // basic clipboard zeitgeist templates used for filtering while searching
-        private PtrArray templates;
-        
         public ZeitgeistClipboardStorage()
         {
-            this.templates = new PtrArray.sized(1);
-            Event event = new Event.full(ZG_ACCESS_EVENT,
-                ZG_USER_ACTIVITY, "", new Subject.full("clipboard*",
-                    "", "", "", "", "", ""));
-            this.templates.add((event as GLib.Object).ref());
-      
             this.log = Zeitgeist.Log.get_default();
             this.index = new Zeitgeist.Index();
-            //monitor = new Zeitgeist.Monitor (new Zeitgeist.TimeRange.from_now(),
-            //    zg_templates);
         }
         
+        /**
+         * Remove all events matching given clipboard item
+         *
+         * @param clipboard item to be removed
+         */
         public async void remove_item(IClipboardItem item)
         {
             try {
@@ -57,8 +51,8 @@ namespace Diodon
                     new TimeRange.anytime(),
                     (owned)templates, 
                     StorageState.ANY,
-                    1,
-                    ResultType.MOST_RECENT_SUBJECTS,
+                    uint32.MAX,
+                    ResultType.MOST_RECENT_EVENTS, // all events
                     null);
                 
                 yield log.delete_events((owned)event_ids, null);

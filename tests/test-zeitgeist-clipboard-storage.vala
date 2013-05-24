@@ -70,13 +70,19 @@ namespace Diodon
 	        
 	        TextClipboardItem text_item = new TextClipboardItem(
 	            ClipboardType.CLIPBOARD, test_text);
+	        // add first item
  	        this.storage.add_item.begin(text_item, (obj, res) => {
  	            assert_text_item(test_text, 1, null);
- 	            this.storage.remove_item.begin(text_item, (obj, res) => {
- 	                assert_text_item(test_text, 0,
- 	                    () => { this.mainloop.quit(); }
+ 	            // add another one
+ 	            this.storage.add_item.begin(text_item, (obj, res) => {
+ 	                assert_text_item(test_text, 2, null);
+ 	                    // remove item which should delete all (two) added
+ 	                    this.storage.remove_item.begin(text_item, (obj, res) => {
+         	                assert_text_item(test_text, 0,
+ 	                            () => { this.mainloop.quit(); }
  	                );
- 	            }); 
+ 	            });
+ 	          }); 
  	        });
  	        
  	        this.mainloop.run();
@@ -107,7 +113,7 @@ namespace Diodon
                 // not only one resp. qty as the event might be added more then once
                 // and in this case the test should fail
                 1 + qty,
-                ResultType.MOST_RECENT_SUBJECTS,
+                ResultType.MOST_RECENT_EVENTS,
                 null,
                 (obj, res) => {                     
                     try {
