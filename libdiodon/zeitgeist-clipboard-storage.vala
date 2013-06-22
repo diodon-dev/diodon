@@ -62,7 +62,13 @@ namespace Diodon
             }
         }
         
-        public Gee.List<IClipboardItem> get_recent_items()
+        /**
+         * Get most recent items limited by assigned num_items. List will filter
+         * out any duplicates according to their checksum resp. uri in zeitgeist.
+         *
+         * @param num_items number of recent items
+         */
+        public Gee.List<IClipboardItem> get_recent_items(int num_items)
         {
             return new Gee.ArrayList<IClipboardItem>();
         }

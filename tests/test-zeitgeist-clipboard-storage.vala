@@ -26,72 +26,110 @@ namespace Diodon
     /**
      * Testing of ZeitgeistClipboardStorage functionality
      */
-    class TestZeitgeistClipboardStorage : TestCase
+    class TestZeitgeistClipboardStorage : FsoFramework.Test.TestCase
     {
-        private delegate void CleanUpMethod();
-        
         private ZeitgeistClipboardStorage storage;
         private Zeitgeist.Log log;
-        private MainLoop mainloop;
         
 	    public TestZeitgeistClipboardStorage()
 	    {
 		    base("TestZeitgeistClipboardStorage");
-		    add_test("test_add_text_item", test_add_text_item);
-		    add_test("test_remove_text_item", test_remove_text_item);
+		    add_async_test("test_add_text_item",
+		        cb => test_add_text_item.begin(cb),
+		        res => test_add_text_item.end(res)
+		    );
+		    add_async_test("test_remove_text_item",
+		        cb => test_remove_text_item.begin(cb),
+		        res => test_remove_text_item.end(res)
+		    );
+		    add_async_test("test_get_recent_items",
+		        cb => test_get_recent_items.begin(cb),
+		        res => test_get_recent_items.end(res)
+		    );
 	    }
 	    
 	    public override void set_up()
 	    {
 	        this.log = Zeitgeist.Log.get_default();
             this.storage = new ZeitgeistClipboardStorage();
-            
-            // main loop needed as finding, deleting events is async and would
-            // otherwise not be executed after test terminated.
-            this.mainloop = new MainLoop(MainContext.default());
         }
 
-	    public void test_add_text_item()
+	    public async void test_add_text_item() throws FsoFramework.Test.AssertError
 	    {
 	        TextClipboardItem text_item = new TextClipboardItem(
 	            ClipboardType.CLIPBOARD, "test_add_text_item");
- 	        this.storage.add_item.begin(text_item, (obj, res) => {
- 	            assert_text_item("test_add_text_item", 1,
- 	                () => { this.mainloop.quit(); }
- 	            );
- 	        });
- 	        
- 	        this.mainloop.run();
+ 	        yield this.storage.add_item(text_item);
+ 	        yield assert_text_item("test_add_text_item", 1);
 	    }
 	    
-	    public void test_remove_text_item()
+	    public async void test_remove_text_item() throws FsoFramework.Test.AssertError
 	    {
 	        string test_text =  "test_remove_text_item";
-	        
 	        TextClipboardItem text_item = new TextClipboardItem(
 	            ClipboardType.CLIPBOARD, test_text);
 	        // add first item
- 	        this.storage.add_item.begin(text_item, (obj, res) => {
- 	            assert_text_item(test_text, 1, null);
- 	            // add another one
- 	            this.storage.add_item.begin(text_item, (obj, res) => {
- 	                assert_text_item(test_text, 2, null);
- 	                    // remove item which should delete all (two) added
- 	                    this.storage.remove_item.begin(text_item, (obj, res) => {
-         	                assert_text_item(test_text, 0,
- 	                            () => { this.mainloop.quit(); }
- 	                );
- 	            });
- 	          }); 
- 	        });
- 	        
- 	        this.mainloop.run();
+	        yield this.storage.add_item(text_item);
+	        yield assert_text_item(test_text, 1);
+	        
+	        // add another one
+	        yield this.storage.add_item(text_item);
+	        yield assert_text_item(test_text, 2);
+	        
+	        // remove item which should delete all (two) added
+	        yield this.storage.remove_item(text_item);
+	        yield assert_text_item(test_text, 0);
+	    }
+	    
+	    public async void test_get_recent_items() throws FsoFramework.Test.AssertError
+	    {
+	        
+	    }
+	    
+	    public override void tear_down()
+	    {
+	        try {
+	            FsoFramework.Test.wait_for_async(1000,
+	                cb => empty_zeitgeist_storage.begin(cb),
+	                res => empty_zeitgeist_storage.end(res));
+	        } catch(GLib.Error e) {
+                warning(e.message);
+            }
+        }
+	    
+	    private async void empty_zeitgeist_storage()
+	    {
+	        PtrArray templates = new PtrArray.sized(1);
+	        TimeRange time_range = new TimeRange.anytime();
+            Event ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
+                             new Subject.full ("clipboard*",
+                                               NFO_PLAIN_TEXT_DOCUMENT,
+                                               NFO_DATA_CONTAINER,
+                                               "",
+                                               "",
+                                               "",
+                                               ""));
+            templates.add ((ev as GLib.Object).ref());
+            
+            try {
+	            Array event_ids = yield log.find_event_ids(
+	                time_range,
+	                (owned)templates, 
+                    StorageState.ANY,
+                    uint32.MAX,
+                    ResultType.MOST_RECENT_EVENTS,
+                    null
+                );
+                
+                yield log.delete_events((owned)event_ids, null);
+            } catch(GLib.Error e) {
+                warning(e.message);
+            }
 	    }
 	    
 	    /**
 	     * assert whether text item is added to Zeitgeist Log in assigned quantity
          */
-	    private void assert_text_item(string text, uint qty, CleanUpMethod? clean_up)
+	    private async void assert_text_item(string text, uint qty) throws FsoFramework.Test.AssertError
 	    {
 	       
 	        PtrArray templates = new PtrArray.sized(1);
@@ -106,31 +144,24 @@ namespace Diodon
                                                ""));
             templates.add ((ev as GLib.Object).ref());
                 
-	        this.log.find_events.begin(
-                time_range,
-                (owned)templates,
-                StorageState.ANY,
-                // not only one resp. qty as the event might be added more then once
-                // and in this case the test should fail
-                1 + qty,
-                ResultType.MOST_RECENT_EVENTS,
-                null,
-                (obj, res) => {                     
-                    try {
-                        ResultSet results = this.log.find_events.end(res);
-                        assert(results.size()==qty);
-                     } catch(GLib.Error e) {
-                        warning(e.message);
-                        assert(false);
-                    }
+            try {
+	            ResultSet results = yield this.log.find_events(
+                    time_range,
+                    (owned)templates,
+                    StorageState.ANY,
+                    // not only one resp. qty as the event might be added more than
+                    // once resp. qty and in such a case the test should fail
+                    1 + qty,
+                    ResultType.MOST_RECENT_EVENTS,
+                    null);
+                                   
+                    FsoFramework.Test.Assert.are_equal(results.size(), qty,
+                        "Result size did not match expected quantity");
                     
-                    if(clean_up != null) {
-                        clean_up();
-                    }
-                });
+            } catch(GLib.Error e) {
+                FsoFramework.Test.Assert.is_true(false, e.message);
+            }
     	}
 	}
-	
-	
 }
 

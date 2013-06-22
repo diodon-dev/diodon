@@ -24,7 +24,7 @@ namespace Diodon
     /**
      * Testing of TextClipboardItem functionality
      */
-    class TestTextClipboardItem : TestCase
+    class TestTextClipboardItem : FsoFramework.Test.TestCase
     {
 	    public TestTextClipboardItem()
 	    {
