@@ -70,7 +70,50 @@ namespace Diodon
          */
         public async Gee.List<IClipboardItem> get_recent_items(int num_items)
         {
-            return new Gee.ArrayList<IClipboardItem>();
+            Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
+            PtrArray templates = new PtrArray.sized(1);
+	        TimeRange time_range = new TimeRange.anytime();
+            Event ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
+                             new Subject.full ("clipboard*",
+                                               NFO_PLAIN_TEXT_DOCUMENT,
+                                               NFO_DATA_CONTAINER,
+                                               "",
+                                               "",
+                                               "",
+                                               ""));
+            templates.add ((ev as GLib.Object).ref());
+            
+            try {
+	            Zeitgeist.ResultSet events = yield log.find_events(
+	                time_range,
+	                (owned)templates, 
+                    StorageState.ANY,
+                    num_items,
+                    // this will filter duplicates according to their uri
+                    ResultType.MOST_RECENT_SUBJECTS,
+                    null
+                );
+                
+                // convert events to clipoard item
+                foreach(Event event in events) {
+                    if (event.num_subjects() > 0) {
+                        Subject subject = event.get_subject(0);
+                        IClipboardItem item = create_clipboard_item(subject);
+                        if(item != null) {
+                            items.add(item);
+                        }
+                    } else {
+                      warning ("Unexpected event without subject");
+                      continue;
+                    }
+                }
+                
+            } catch(GLib.Error e) {
+                warning("Get recent items not successful, error: %s",
+                    e.message);
+            }
+            
+            return items;
         }
         
         /**
@@ -114,14 +157,40 @@ namespace Diodon
             }
         }
         
+        private IClipboardItem? create_clipboard_item(Subject subject)
+        {
+            string interpreation = subject.get_interpretation();
+            IClipboardItem item = null;
+            string text = subject.get_text();
+            
+            try {
+                if(strcmp(NFO_PLAIN_TEXT_DOCUMENT, interpreation) == 0) {
+                   item = new TextClipboardItem(ClipboardType.NONE, text); 
+                }
+                
+                else if(strcmp(NFO_FILE_DATA_OBJECT, interpreation) == 0) {
+                    item = new FileClipboardItem(ClipboardType.NONE, text);
+                } 
+                    
+                else if(strcmp(NFO_IMAGE, interpreation) == 0) {
+                    // TODO: implement image item
+                }
+            } catch (Error e) {
+                warning ("loading of item of interpreation %s with data %s failed. Cause: %s",
+                    interpreation, text, e.message);
+            } 
+            
+            return item;
+        }
+        
         private string get_interpretation(IClipboardItem item)
         {
-            string interpretation = Zeitgeist.NFO_PLAIN_TEXT_DOCUMENT;
+            string interpretation = NFO_PLAIN_TEXT_DOCUMENT;
             if(item is FileClipboardItem) {
-                interpretation = Zeitgeist.NFO_FILE_DATA_OBJECT;
+                interpretation = NFO_FILE_DATA_OBJECT;
             }
             else if (item is ImageClipboardItem) {
-                interpretation = Zeitgeist.NFO_IMAGE;
+                interpretation = NFO_IMAGE;
             }
             
             return interpretation;

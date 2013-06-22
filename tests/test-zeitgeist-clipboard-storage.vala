@@ -82,23 +82,36 @@ namespace Diodon
 	    
 	    public async void test_get_recent_items() throws FsoFramework.Test.AssertError
 	    {
+	        const int ITEMS = 10;
+	        const int RECENT_ITEMS = 5;
+	        
 	        // add some items
-	        for(int i=1; i<=10; ++i) {
+	        for(int i=1; i<=ITEMS; ++i) {
 	            yield this.storage.add_item(
 	                new TextClipboardItem(ClipboardType.CLIPBOARD, i.to_string()));
 	        }
+	        // add a duplicate to test that duplicates are being ignored
+	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD,
+	            ITEMS.to_string()));
 	        
-	        const int RECENT_ITEMS = 5;
 	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(RECENT_ITEMS);
 	        FsoFramework.Test.Assert.are_equal(items.size, RECENT_ITEMS,
 	            "Invalid number of recent items");
 	        
 	        // recent items should be in reverse order
-	        for(int i=RECENT_ITEMS; i>=1; --i) {   
-	            IClipboardItem item = items.get(i);
-	            FsoFramework.Test.Assert.are_equal(item.get_clipboard_data(),
-	                i.to_string(), "Invalid clipboard item content");
+	        int current_item = ITEMS;
+	        foreach(IClipboardItem item in items) {
+                FsoFramework.Test.Assert.is_true(item is TextClipboardItem,
+	                "Should be of type TextClipboardItem");
+	            FsoFramework.Test.Assert.are_equal_string(item.get_clipboard_data(),
+	                current_item.to_string(), "Invalid clipboard item content");	            
+	            --current_item;
 	        }
+	        
+	        // only number of available items should be returned even when asked for more
+	        items = yield this.storage.get_recent_items(ITEMS + 1);
+	        FsoFramework.Test.Assert.are_equal(items.size, ITEMS,
+	            "Invalid number of recent items");
 	    }
 	    
 	    public override void tear_down()
@@ -175,7 +188,7 @@ namespace Diodon
                         "Result size did not match expected quantity");
                     
             } catch(GLib.Error e) {
-                FsoFramework.Test.Assert.is_true(false, e.message);
+                FsoFramework.Test.Assert.fail(e.message);
             }
     	}
 	}

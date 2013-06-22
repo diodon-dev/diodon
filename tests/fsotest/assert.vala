@@ -71,9 +71,27 @@ namespace FsoFramework.Test
          **/
         public static void are_equal<T>( T expected, T actual, string message = "" ) throws AssertError
         {
+            
             if ( expected != actual )
             {
                 var msg = @"$(typed_value_to_string(expected)) != $(typed_value_to_string(actual))";
+                throw_unexpected_value( @"Actual value is not the same as the expected one: $(msg)", message );
+            }
+        }
+        
+        /**
+         * Check wether two values of type string are the same. If both values are different an
+         * exception of type AssertError is thrown.
+         *
+         * @param expected Expected value
+         * @param actual Actual value to compare with the expected one
+         * @param message Extra description message if both values are different
+         **/
+        public static void are_equal_string ( string expected, string actual, string message = "" ) throws AssertError
+        {
+            if ( strcmp( expected, actual ) != 0 )
+            {
+                var msg = @"$(expected) != $(actual)";
                 throw_unexpected_value( @"Actual value is not the same as the expected one: $(msg)", message );
             }
         }
