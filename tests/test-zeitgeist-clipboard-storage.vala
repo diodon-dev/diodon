@@ -82,7 +82,23 @@ namespace Diodon
 	    
 	    public async void test_get_recent_items() throws FsoFramework.Test.AssertError
 	    {
+	        // add some items
+	        for(int i=1; i<=10; ++i) {
+	            yield this.storage.add_item(
+	                new TextClipboardItem(ClipboardType.CLIPBOARD, i.to_string()));
+	        }
 	        
+	        const int RECENT_ITEMS = 5;
+	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(RECENT_ITEMS);
+	        FsoFramework.Test.Assert.are_equal(items.size, RECENT_ITEMS,
+	            "Invalid number of recent items");
+	        
+	        // recent items should be in reverse order
+	        for(int i=RECENT_ITEMS; i>=1; --i) {   
+	            IClipboardItem item = items.get(i);
+	            FsoFramework.Test.Assert.are_equal(item.get_clipboard_data(),
+	                i.to_string(), "Invalid clipboard item content");
+	        }
 	    }
 	    
 	    public override void tear_down()

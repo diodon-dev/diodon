@@ -68,7 +68,7 @@ namespace Diodon
          *
          * @param num_items number of recent items
          */
-        public Gee.List<IClipboardItem> get_recent_items(int num_items)
+        public async Gee.List<IClipboardItem> get_recent_items(int num_items)
         {
             return new Gee.ArrayList<IClipboardItem>();
         }
