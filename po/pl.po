@@ -1,0 +1,227 @@
+# Polish translation for diodon
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the diodon package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: diodon\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-10-24 21:43+0200\n"
+"PO-Revision-Date: 2013-07-15 08:54+0000\n"
+"Last-Translator: Michał Olber <michal.olber@osworld.pl>\n"
+"Language-Team: Polish <pl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-07-17 06:45+0000\n"
+"X-Generator: Launchpad (build 16696)\n"
+
+#: ../data/diodon.desktop.in.h:1 ../plugins/unitylens/diodon.lens.in.in.h:1
+msgid "Clipboard Manager"
+msgstr "Menadżer Schowka"
+
+#: ../data/diodon.desktop.in.h:2 ../plugins/unitylens/diodon.lens.in.in.h:2
+msgid "GTK+ Clipboard Manager"
+msgstr "Menadżer schowka GTK+"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
+msgid "Use clipboard (Ctrl+C)"
+msgstr "Użyj schowka (Ctrl+C)"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
+#: ../data/preferences.ui.h:3
+msgid ""
+"Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
+"clipboard history."
+msgstr "Dodaje skopiowany tekst ze schowka do historii schowka systemowego"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
+msgid "Use primary selection"
+msgstr "Używaj podstawowego zaznaczenia"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
+#: ../data/preferences.ui.h:5
+msgid ""
+"Adds the primary selection (an area of the screen which is selected with the "
+"mouse) to the clipboard history."
+msgstr ""
+"Dodaje podstawowe zaznaczenie (obszar na ekranie, który jest zaznaczony przy "
+"pomocy myszy) do historii schowka"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
+msgid "Synchronize clipboards"
+msgstr "Synchronizuj schowki"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
+#: ../data/preferences.ui.h:7
+msgid ""
+"Synchronizes the selection (an area of the screen which is selected with the "
+"mouse) and the clipboard so that anything in the selection is immediately "
+"available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
+"the middle mouse button."
+msgstr ""
+"Synchronizuj zaznaczony obszar (obszar na ekranie, który jest zaznaczony "
+"przy pomocy myszy) i schowek, dzięki czemu wszystko w tym obszarze jest "
+"natychmiast dostępne w schowku systemowym i odwrotnie."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
+msgid "Keep clipboard content"
+msgstr "Zachowaj zawartość schowka systemowego"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#: ../data/preferences.ui.h:9
+msgid ""
+"Prevents an empty clipboard. For instance when an application exits, the "
+"clipboard would usually be emptied."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
+msgid "Automatically paste selected item"
+msgstr "Wkleja automatycznie zaznaczone wpisy"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
+#: ../data/preferences.ui.h:11
+msgid ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
+msgstr ""
+"Wkleja automatycznie zaznaczone wpisy, zamiast je tylko kopiować do schowka"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+#: ../data/preferences.ui.h:13
+msgid "Clipboard size"
+msgstr "Wielkość schowka"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#: ../data/preferences.ui.h:12
+msgid "Number of items in the clipboard history."
+msgstr "Liczba wpisów w historii schowka"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
+#: ../data/preferences.ui.h:16
+msgid "History key"
+msgstr "Klucz historii"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
+#: ../data/preferences.ui.h:15
+msgid "Hotkey to quickly allow you to access the clipboard history."
+msgstr "Skrót klawiszowy szybkiego dostępu do historii schowka systemowego"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+msgid "Active plugins"
+msgstr "Aktywne wtyczki"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+msgid "List of active plugins."
+msgstr "Lista aktywnych wtyczek"
+
+#: ../data/preferences.ui.h:1
+msgid "Diodon Preferences"
+msgstr "Właściwości programu"
+
+#: ../data/preferences.ui.h:2
+msgid "_Use clipboard (Ctrl+C)"
+msgstr "Używaj _schowka systemowego"
+
+#: ../data/preferences.ui.h:4
+msgid "Use _primary selection"
+msgstr "Używaj _podstawowego zaznaczenia"
+
+#: ../data/preferences.ui.h:6
+msgid "S_ynchronize clipboards"
+msgstr "S_ynchronizuj schowki"
+
+#: ../data/preferences.ui.h:8
+msgid "_Keep clipboard content"
+msgstr "_Zachowaj zawartość schowka"
+
+#: ../data/preferences.ui.h:10
+msgid "_Automatically paste selected item"
+msgstr "Wkleja automatycznie zaznaczony wpis"
+
+#: ../data/preferences.ui.h:14
+msgid "Clipboard"
+msgstr "Schowek"
+
+#: ../data/preferences.ui.h:17
+msgid "Hotkeys"
+msgstr "Skróty klawiszowe"
+
+#: ../data/preferences.ui.h:18
+msgid "Plugins"
+msgstr "Wtyczki"
+
+#: ../libdiodon/clipboard-menu.vala:42
+msgid "<Empty>"
+msgstr "<Pusty>"
+
+#: ../plugins/indicator/indicator.plugin.in.h:1
+msgid "Application Indicator"
+msgstr "Application Indicator"
+
+#: ../plugins/indicator/indicator.plugin.in.h:2
+msgid "Access clipboard history with an application indicator."
+msgstr "Dostęp do historii schowka z użyciem panelu aplikacji"
+
+#: ../plugins/indicator/indicator.plugin.in.h:3
+#: ../plugins/unitylens/unitylens.plugin.in.h:3
+msgid "Copyright © 2011 Diodon Team"
+msgstr "Prawa autorskie © 2011 Diodon Team"
+
+#: ../plugins/unitylens/diodon.lens.in.in.h:3
+msgid "Search clipboard"
+msgstr "Przeszukaj schowek systemowy"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:95
+msgid "Search Clipboard"
+msgstr "Przeszukaj schowek systemowy"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:147
+#: ../plugins/unitylens/unity-lens-plugin.vala:171
+msgid "Text"
+msgstr "Tylko etykiety"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:151
+#: ../plugins/unitylens/unity-lens-plugin.vala:172
+msgid "Files"
+msgstr "Pliki"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:155
+#: ../plugins/unitylens/unity-lens-plugin.vala:173
+msgid "Images"
+msgstr "Grafiki"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:169
+msgid "Type"
+msgstr "Typ"
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:202
+msgid "Sorry, there is no clipboard content that matches your search."
+msgstr ""
+"Przepraszamy, nie ma aktualnie zawartości w schowku, która odpowiadałaby "
+"kryteriom wyszukiwania."
+
+#: ../plugins/unitylens/unity-lens-plugin.vala:269
+msgid "Copy to clipboard"
+msgstr "Skopiuj do schowka."
+
+#: ../plugins/unitylens/unitylens.plugin.in.h:1
+msgid "Unity Lens"
+msgstr "Panel wyszukiwania Unity (Unity Lens)"
+
+#: ../plugins/unitylens/unitylens.plugin.in.h:2
+msgid "Access clipboard history with the unity dash."
+msgstr "Dostęp do schowka systemowego po przez panel wyszukiwania Unity"
+
+#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:1
+msgid "Zeitgeist Data-Source"
+msgstr "Zeitgeist Data-Source"
+
+#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:2
+msgid "Adds clipboard activities as events to the Zeitgeist daemon."
+msgstr "Dodaje aktywność schowka do demona Zeitgeist, jako zdarzenia"
+
+#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:3
+msgid "Copyright © 2012 Diodon Team"
+msgstr "Prawa autorskie © 2012 Diodon Team"
