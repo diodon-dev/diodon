@@ -90,12 +90,6 @@ namespace Diodon
         public abstract void to_clipboard(Gtk.Clipboard clipboard);
         
         /**
-         * Will be called when clipboard items gets removed from storage.
-         * Can be used for cleaning up functionality.
-         */
-        public abstract void remove();
-        
-        /**
          * Determine if given item matches search string and section
          *
          * @param search search string

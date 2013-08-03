@@ -23,6 +23,8 @@ namespace Diodon
 {
     /**
      * The configuration model encapsulates the configuration state.
+     *
+     * TODO consider renaming to ClipboardConfiguration
      */
     public class ConfigurationModel : GLib.Object
     {
@@ -55,6 +57,7 @@ namespace Diodon
         public bool instant_paste { get; set; default = true; }
         
         /**
+         * TODO rename to recent items size
          * size of clipboard history.
          * Value must be bigger than 0 and lower or equal than 100.
          */

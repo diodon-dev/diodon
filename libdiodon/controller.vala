@@ -34,7 +34,6 @@ namespace Diodon
         private Gee.Map<ClipboardType, ClipboardManager> clipboard_managers;
         private ClipboardModel clipboard_model;
         private ConfigurationModel configuration_model;
-        private ClipboardMenu menu;
         private PreferencesView preferences_view;
         private KeybindingManager keybinding_manager;
         private Peas.ExtensionSet extension_set;
@@ -80,13 +79,11 @@ namespace Diodon
             peas_engine.add_search_path(user_plugins_dir, user_plugins_dir);
             peas_engine.enable_loader("python");
             
-            IClipboardStorage storage = new XmlClipboardStorage(diodon_dir,
-                "storage.xml");
+            ZeitgeistClipboardStorage storage = new ZeitgeistClipboardStorage();
             clipboard_model = new ClipboardModel(storage);
             
             configuration_model = new ConfigurationModel();   
             
-            menu = new ClipboardMenu(this);
             preferences_view = new PreferencesView(this);                  
         }
         
@@ -119,9 +116,6 @@ namespace Diodon
             
             settings_plugins.bind("active-plugins", peas_engine, "loaded-plugins",
                 SettingsBindFlags.DEFAULT);
-            
-            // and finally the menu
-            menu.init();
         }
         
         /**
@@ -148,12 +142,6 @@ namespace Diodon
                 
             settings_clipboard.bind("clipboard-size", configuration_model,
                 "clipboard-size", SettingsBindFlags.DEFAULT);
-            settings_clipboard.changed["clipboard-size"].connect(
-                (key) => {
-                    change_clipboard_size(configuration_model.clipboard_size);
-                }
-            );
-            change_clipboard_size(configuration_model.clipboard_size);
                 
             settings_keybindings.bind("history-accelerator", configuration_model,
                 "history-accelerator", SettingsBindFlags.DEFAULT);
@@ -194,9 +182,9 @@ namespace Diodon
          *
          * @param item item to be selected
          */
-        public void select_item(IClipboardItem item)
+        public async void select_item(IClipboardItem item)
         {   
-            clipboard_model.select_item(item, configuration_model.use_clipboard,
+            yield clipboard_model.select_item(item, configuration_model.use_clipboard,
                 configuration_model.use_primary);
             
             on_select_item(item);
@@ -237,9 +225,9 @@ namespace Diodon
          *
          * @param item item to be removed
          */
-        public void remove_item(IClipboardItem item)
+        public async void remove_item(IClipboardItem item)
         {
-            clipboard_model.remove_item(item);
+            yield clipboard_model.remove_item(item);
             on_remove_item(item);
         }
        
@@ -248,10 +236,10 @@ namespace Diodon
          * 
          * @param text text to be added
          */
-        public void add_as_text_item(ClipboardType type, string text)
+        public async void add_text_item(ClipboardType type, string text)
         {
             IClipboardItem item = new TextClipboardItem(type, text);
-            add_item(item);
+            yield add_item(item);
         }
         
         /**
@@ -260,11 +248,11 @@ namespace Diodon
          * 
          * @param paths paths received
          */
-        private void uris_received(ClipboardType type, string paths)
+        public async void add_file_item(ClipboardType type, string paths)
         {
             try {
                 IClipboardItem item = new FileClipboardItem(type, paths);
-                add_item(item);
+                yield add_item(item);
             } catch(FileError e) {
                 warning("Adding file(s) to history failed: " + e.message);
             }
@@ -274,11 +262,11 @@ namespace Diodon
          * Handling image retrieved from clipboard bu adding it to the storage
          * and appending it to the menu of the indicator.
          */
-        private void image_received(ClipboardType type, Gdk.Pixbuf pixbuf)
+        public async void add_image_item(ClipboardType type, Gdk.Pixbuf pixbuf)
         {
             try {
                 IClipboardItem item = new ImageClipboardItem.with_image(type, pixbuf);
-                add_item(item);
+                yield add_item(item);
             } catch(GLib.Error e) {
                 warning("Adding image to history failed: " + e.message);
             }
@@ -290,7 +278,7 @@ namespace Diodon
          *
          * @param item item received
          */
-        public void add_item(IClipboardItem item)
+        public async void add_item(IClipboardItem item)
         {
             ClipboardType type = item.get_clipboard_type();
             string label = item.get_label();
@@ -301,40 +289,24 @@ namespace Diodon
                 debug("received item of type %s from clipboard %d with label %s",
                     item.get_type().name(), type, label);
                 
-                // remove item from clipboard if it already exists
-                if(clipboard_model.get_items().contains(item)) {
-                    int index = clipboard_model.get_items().index_of(item);
-                    // remove the on item available in the list
-                    remove_item(clipboard_model.get_items().get(index));
-                }
-                
-                // check if maximum clipboard size has been reached
-                if(configuration_model.clipboard_size == clipboard_model.get_size()) {
-                    remove_item(clipboard_model.get_last_item());
-                }
-                
-                clipboard_model.add_item(item);
+                yield clipboard_model.add_item(item);
                 on_add_item(item);
 
                 if(configuration_model.synchronize_clipboards) {
                     synchronize(item);
                 }
             }
-            else {
-                // item is not used in history
-                // therefore we need to clean up
-                item.remove();
-            }
         }
        
         /**
-         * Get all clipboard items
+         * Get recent items whereas size is not bigger than configured recent
+         * item size 
          * 
-         * @return list of clipboard items
+         * @return list recent items
          */ 
-        public Gee.List<IClipboardItem> get_items()
+        public async Gee.List<IClipboardItem> get_recent_items()
         {
-            return clipboard_model.get_items();
+            return yield clipboard_model.get_recent_items(configuration_model.clipboard_size);
         }
         
         /**
@@ -346,28 +318,6 @@ namespace Diodon
         public IClipboardItem get_current_item(ClipboardType type)
         {
             return clipboard_model.get_current_item(type);
-        }
-        
-        /**
-         * Get all items of given category
-         * 
-         * @param category category to get items 
-         * @return list of clipboard items of given category
-         */
-        public Gee.List<IClipboardItem> get_items_by_cateogry(ClipboardCategory category)
-        {
-            return clipboard_model.get_items_by_cateogry(category);
-        }
-        
-        /**
-         * Get clipboard item by given checksum.
-         *
-         * @param checksum clipboad item checksum
-         * @return clipboard item or null if not available
-         */
-        public IClipboardItem? get_item_by_checksum(string checksum)
-        {
-            return clipboard_model.get_item_by_checksum(checksum);
         }
         
         /**
@@ -425,28 +375,6 @@ namespace Diodon
         }
         
         /**
-         * Change size of clipboard history which might cause removing
-         * of some items.
-         * 
-         * @param size clipboard history size
-         */
-        private void change_clipboard_size(int size)
-        {
-            if(configuration_model.clipboard_size < clipboard_model.get_size()) {
-                // create copy of items as otherwise
-                // removing in a loop does not work
-                Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
-                items.add_all(clipboard_model.get_items());
-                
-                int remove = items.size - configuration_model.clipboard_size;
-                for(int i = 0; i < remove; ++i) {
-                    IClipboardItem item = items.get(i);
-                    remove_item(item);
-                }
-            }
-        }
-
-        /**
          * change history accelerator key and bind new key to open_history.
          *
          * @param accelerator accelerator parseable by Gtk.accelerator_parse
@@ -461,18 +389,32 @@ namespace Diodon
             // let's bind new one
             keybinding_manager.bind(accelerator, show_history);
         }
+        
+        /**
+         * Create clipboard menu with current recent items.
+         */
+        private async ClipboardMenu create_clipboard_menu()
+        {
+            Gee.List<IClipboardItem> items = yield get_recent_items();
+            return new ClipboardMenu(this, items);
+        }
 
         /**
          * Open menu to view history
          */        
         public void show_history()
         {
+            create_clipboard_menu.begin((obj, res) => {
+                ClipboardMenu menu = create_clipboard_menu.end(res);
+                menu.show_menu();
+            });
+            
             // execute show_menu in main loop
             // to avoid dead lock
-            Timeout.add(100, () => {
-                menu.show_menu();
-                return false; // stop timer
-            });
+            //Timeout.add(100, () => {
+            //    menu.show_menu();
+            //    return false; // stop timer
+            //});
         }
 
         /**
@@ -487,18 +429,18 @@ namespace Diodon
             ClipboardManager manager = clipboard_managers.get(type);
             
             if(enable) {
-                manager.on_text_received.connect(add_as_text_item);
-                manager.on_uris_received.connect(uris_received);
-                manager.on_image_received.connect(image_received);
+                manager.on_text_received.connect(add_text_item);
+                manager.on_uris_received.connect(add_file_item);
+                manager.on_image_received.connect(add_image_item);
                 on_select_item.connect(manager.select_item);
                 on_clear.connect(manager.clear);
                 manager.start();
             }
             else {
                 manager.stop();
-                manager.on_text_received.disconnect(add_as_text_item);
-                manager.on_uris_received.disconnect(uris_received);
-                manager.on_image_received.disconnect(image_received);
+                manager.on_text_received.disconnect(add_text_item);
+                manager.on_uris_received.disconnect(add_file_item);
+                manager.on_image_received.disconnect(add_image_item);
                 on_select_item.disconnect(manager.select_item);
                 on_clear.disconnect(manager.clear);    
             }
@@ -537,14 +479,6 @@ namespace Diodon
         {
             clipboard_model.clear();
             on_clear();
-        }
-        
-        /**
-         * Get clipboard history menu.
-         */
-        public Gtk.Menu get_menu()
-        {
-            return menu;
         }
         
         /**

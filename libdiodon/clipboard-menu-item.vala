@@ -60,11 +60,11 @@ namespace Diodon
          * Highlight item by changing label to bold
          * TODO: get this up and running
          */        
-        public void highlight_item()
+        /*public void highlight_item()
         {
-            /*Gtk.Label label = get_menu_label();
-            label.set_markup("<b>%s</b>".printf(get_label()));*/
-        }
+            Gtk.Label label = get_menu_label();
+            label.set_markup("<b>%s</b>".printf(get_label()));
+        }*/
         
         /**
          * Gets the child of Gtk.Bin base class which represents

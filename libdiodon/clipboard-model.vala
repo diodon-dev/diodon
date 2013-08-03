@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2010 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2010-2013 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -23,19 +23,16 @@ namespace Diodon
 {
     /**
      * The clipboard model encapsulates the clipboard state and persists this
-     * state with the help of the given IClipboardStorage.
+     * state with the help of given clipboard storage.
+     * 
+     * TODO consider renaming of class e.g. to ClipboardHistory
      */
     class ClipboardModel : GLib.Object
     {
-        private IClipboardStorage storage;
+        private ZeitgeistClipboardStorage storage;
         private Gee.HashMap<ClipboardType, IClipboardItem> current_items;
  
-        /** 
-         * Storage constructor
-         *
-         * @param storage
-         */
-        public ClipboardModel(IClipboardStorage storage)
+        public ClipboardModel(ZeitgeistClipboardStorage storage)
         {
             this.storage = storage;     
             this.current_items = new Gee.HashMap<ClipboardType, IClipboardItem>();
@@ -53,75 +50,15 @@ namespace Diodon
         }
         
         /**
-         * Get last respectively oldest available clipboard item
+         * Get most recent items limited by assigned num_items. List will filter
+         * out any duplicates according to their checksum. Most recent item
+         * will be on the top of the list.
          *
-         * @return last item or null if no item is available
+         * @param num_items number of recent items
          */
-        public IClipboardItem get_last_item()
+        public async Gee.List<IClipboardItem> get_recent_items(int num_items)
         {
-            IClipboardItem item = null;
-            
-            if(get_size() > 0) {
-                item = get_items().first();
-            }
-            
-            return item;
-        }
-        
-        /**
-         * Get all clipboard items
-         * 
-         * @return list of clipboard items
-         */
-        public Gee.List<IClipboardItem> get_items()
-        {
-            return storage.get_items();
-        }
-        
-        /**
-         * Get all items of given category
-         * 
-         * @param category category to get items 
-         * @return list of clipboard items of given category
-         */
-        public Gee.List<IClipboardItem> get_items_by_cateogry(ClipboardCategory category)
-        {
-            Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>(
-                (GLib.EqualFunc?)IClipboardItem.equal_func);
-            foreach(IClipboardItem item in get_items()) {
-                if(item.get_category() == category) {
-                    items.add(item);
-                }
-            }
-            
-            return items;
-        }
-        
-        /**
-         * Get clipboard item by given checksum.
-         *
-         * @param checksum clipboad item checksum
-         * @return clipboard item or null if not available
-         */
-        public IClipboardItem? get_item_by_checksum(string checksum)
-        {
-            foreach(IClipboardItem item in get_items()) {
-                if(str_equal(item.get_checksum(), checksum)) {
-                    return item;
-                }
-            }
-            
-            return null;
-        }
-        
-        /**
-         * Get number of items available
-         *
-         * @return number of items
-         */
-        public int get_size()
-        {
-            return get_items().size;
+            return yield storage.get_recent_items(num_items);
         }
         
         /**
@@ -129,12 +66,9 @@ namespace Diodon
          */
         public void clear()
         {
-            foreach(IClipboardItem item in get_items()) {
-                item.remove();
-            }
-            
-            storage.clear();
-            current_items.clear();
+            // TODO not implement yet. Is this still needed though with Zeitgeist?
+            //storage.clear();
+            //current_items.clear();
         }
         
         /**
@@ -142,9 +76,9 @@ namespace Diodon
          * 
          * @param item item to be added
          */
-        public void add_item(IClipboardItem item)
+        public async void add_item(IClipboardItem item)
         {
-            storage.add_item(item);
+            yield storage.add_item(item);
             current_items.set(item.get_clipboard_type(), item);
         }
         
@@ -155,11 +89,11 @@ namespace Diodon
          * @param use_clipboard whether item gets selected for clipboard
          * @param use_primary whether item gets selected for primary selection
          */         
-        public void select_item(IClipboardItem item, bool use_clipboard, bool use_primary)
+        public async void select_item(IClipboardItem item, bool use_clipboard, bool use_primary)
         {  
-            // selected item is always at the end of history
-            storage.remove_item(item);
-            storage.add_item(item);
+            // selected item is always at the end of history, so we need to
+            // add it again
+            yield storage.add_item(item);
             
             // verify that current items are selected correctly
             if(use_clipboard) {
@@ -175,10 +109,9 @@ namespace Diodon
          *
          * @param item item to be removed
          */
-        public void remove_item(IClipboardItem item)
+        public async void remove_item(IClipboardItem item)
         {
-            storage.remove_item(item);
-            item.remove(); // finally cleaning up
+            yield storage.remove_item(item);
         }
     }  
 }

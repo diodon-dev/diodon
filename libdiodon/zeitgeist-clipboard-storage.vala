@@ -65,6 +65,7 @@ namespace Diodon
         /**
          * Get most recent items limited by assigned num_items. List will filter
          * out any duplicates according to their checksum resp. uri in zeitgeist.
+         * Most recent item will be on the top.
          *
          * @param num_items number of recent items
          */

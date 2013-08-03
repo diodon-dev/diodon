@@ -27,7 +27,6 @@ namespace Diodon
     class ClipboardMenu : Gtk.Menu
     {
         private Controller controller;
-        private Gtk.MenuItem empty_item;
         
         /**
          * HashMap to look up corresponding clipboard menu item of given
@@ -35,13 +34,15 @@ namespace Diodon
          */
         private Gee.Map<IClipboardItem, ClipboardMenuItem> clipboard_menu_items;
         
-        public ClipboardMenu(Controller controller)
+        public ClipboardMenu(Controller controller, Gee.List<IClipboardItem> items)
         {
             this.controller = controller;
             
-            empty_item = new Gtk.MenuItem.with_label(_("<Empty>"));
-            empty_item.set_sensitive(false);
-            append(empty_item); 
+            if(items.size <= 0) {
+                Gtk.MenuItem empty_item = new Gtk.MenuItem.with_label(_("<Empty>"));
+                empty_item.set_sensitive(false);
+                append(empty_item);
+            } 
             
             Gtk.SeparatorMenuItem sep_item = new Gtk.SeparatorMenuItem();
             append(sep_item);
@@ -62,105 +63,32 @@ namespace Diodon
             
             clipboard_menu_items = new Gee.HashMap<IClipboardItem, ClipboardMenuItem>(
                 (GLib.HashFunc?)IClipboardItem.hash_func, (GLib.EqualFunc?)IClipboardItem.equal_func);
-        }
-        
-        public void init()
-        {
-            controller.on_select_item.connect(select_clipboard_item);
-            controller.on_add_item.connect(prepend_clipboard_item);
-            controller.on_remove_item.connect(remove_clipboard_item);
-            controller.on_clear.connect(clear);
-            
-             // add all available items from storage to menu
-            foreach(IClipboardItem item in controller.get_items()) {
-                prepend_clipboard_item(item);
-            }
             
             this.key_press_event.connect(on_key_pressed);
             this.key_release_event.connect(on_key_released);
+            
+            foreach(IClipboardItem item in items) {
+                append_clipboard_item(item);
+            }
         }
         
         /**
-         * Select item by moving it to the top of the menu
-         * 
-         * @param item item to be selected
-         */
-        public void select_clipboard_item(IClipboardItem item)
-        {
-            ClipboardMenuItem menu_item = clipboard_menu_items.get(item);
-            menu_item.highlight_item();
-            
-            // re-arranging
-            //reorder_child(menu_item, 0);
-            
-            // FIXME: this is a workaround for Bug 785852 on launchpad
-            // as re-ordering does not work on application indicator
-            remove_clipboard_item(item);
-            prepend_clipboard_item(item);
-        }
-        
-        /**
-         * Prepend given item to menu.
+         * Append given clipboard item to menu.
          * 
          * @param entry entry to be added
          */
-        public void prepend_clipboard_item(IClipboardItem item)
+        public void append_clipboard_item(IClipboardItem item)
         {
             ClipboardMenuItem menu_item = new ClipboardMenuItem(item);
             menu_item.activate.connect(on_clicked_item);
             menu_item.show();
             clipboard_menu_items.set(item, menu_item);
-            prepend(menu_item);
-            
-            hide_empty_item(); // just in case
-        }
-        
-        /**
-         * Remove given item from menu
-         * 
-         * @param item item to be removed
-         */
-        public void remove_clipboard_item(IClipboardItem item)
-        {
-            ClipboardMenuItem menu_item = null;
-            clipboard_menu_items.unset(item, out menu_item);
-            remove(menu_item);
-            menu_item.destroy();
-        }
-        
-        /**
-         * Delete all clipboard menu items from menu
-         */
-        public void clear()
-        {
-            foreach(ClipboardMenuItem menu_item in clipboard_menu_items.values) {
-                remove(menu_item);
-                menu_item.destroy();
-            }
-            
-            clipboard_menu_items.clear();
-            show_empty_item();
+            append(menu_item);
         }
         
         public void show_menu()
         {
             popup(null, null, null, 0, Gtk.get_current_event_time());
-        }
-        
-        /**
-         * Show empty clipboard label
-         */
-        private void show_empty_item()
-        {
-            empty_item.set_visible(true);
-        }
-        
-        /**
-         * Hide empty clipboard label
-         */
-        private void hide_empty_item()
-        {
-            empty_item.set_visible(false);
         }
         
         /**
@@ -245,7 +173,7 @@ namespace Diodon
         private void on_clicked_item(Gtk.MenuItem menu_item)
         {
             ClipboardMenuItem clipboard_menu_item = (ClipboardMenuItem)menu_item;
-            controller.select_item(clipboard_menu_item.get_clipboard_item());
+            controller.select_item.begin(clipboard_menu_item.get_clipboard_item());
         }        
     }
 }
