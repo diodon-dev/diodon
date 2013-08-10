@@ -70,6 +70,11 @@ namespace Diodon
         public abstract Icon get_icon();
         
         /**
+         * Retrieves any additional data needed to reconstruct clipboard content
+         */
+        public abstract ByteArray? get_payload();
+        
+        /**
          * A string representing clipboard item.
          *
          * @return data

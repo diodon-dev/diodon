@@ -143,6 +143,14 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public ByteArray? get_payload()
+        {
+            return null;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
         public string get_checksum()
         {
             return Checksum.compute_for_string(ChecksumType.MD5, _paths);

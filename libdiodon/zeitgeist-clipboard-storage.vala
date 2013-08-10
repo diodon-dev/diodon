@@ -145,7 +145,10 @@ namespace Diodon
                 
                 // content should be added, however ignored as currently
                 // data is not being read
-                //event.set_payload();
+                ByteArray? payload = item.get_payload();
+                if(payload != null) {
+                    event.set_payload((owned)payload);
+                }
                 
                 TimeVal cur_time = TimeVal();
                 int64 timestamp = Zeitgeist.Timestamp.from_timeval(cur_time);

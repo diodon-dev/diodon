@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2011 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2011-2013 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -34,33 +34,11 @@ namespace Diodon
     {
         private ClipboardType _clipboard_type;
         private string _checksum; // check sum to identify pic content
-        private Gdk.Pixbuf _pixbuf_preview; // scaled pixbuf for preview
+        private Gdk.Pixbuf _pixbuf;
         private string _label;
         
         /**
-         * path where pixbuf image has been stored on disc
-         */
-        private string _path;
-
-        /**
-         * Default data constructor needed for reflection.
-         * 
-         * @param clipboard_type clipboard type item is coming from
-         * @param data image path
-         */ 
-        public ImageClipboardItem(ClipboardType clipboard_type, string data) throws GLib.Error
-        {
-            _clipboard_type = clipboard_type;
-            _path = data;
-            
-            // temporarily load pix buf so needed information can be extracted
-            Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(data);
-            extract_pixbuf_info(pixbuf);
-        }
-        
-        /**
-         * Create image clipboard item by a pixbuf which will be stored to the
-         * disc for later use.
+         * Create image clipboard item by a pixbuf.
          * 
          * @param clipboard_type clipboard type item is coming from
          * @param pixbuf image from clipboard
@@ -68,8 +46,19 @@ namespace Diodon
         public ImageClipboardItem.with_image(ClipboardType clipboard_type, Gdk.Pixbuf pixbuf) throws GLib.Error
         {
             _clipboard_type = clipboard_type;
-            _path = save_pixbuf(pixbuf);
             extract_pixbuf_info(pixbuf);
+        }
+        
+        /**
+         * Create image clipboard item by given payload.
+         * 
+         * @param clipboard_type clipboard type item is coming from
+         * @param pixbuf image from clipboard
+         */
+        public ImageClipboardItem.with_payload(ClipboardType clipboard_type, ByteArray payload) throws GLib.Error
+        {
+            _clipboard_type = clipboard_type;
+            // TODO implement
         }
     
         /**
@@ -83,9 +72,9 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-	    public string get_clipboard_data()
+	    public string get_text()
         {
-            return _path;
+            return _label; // label is representation of image
         }
 
         /**
@@ -110,8 +99,10 @@ namespace Diodon
 	     */
         public Icon get_icon()
         {
-            FileIcon icon = new FileIcon(File.new_for_path(_path));
-            return icon;
+            // TODO niy
+            //FileIcon icon = new FileIcon(File.new_for_path(_path));
+            //return icon;
+            return ContentType.get_icon(get_mime_type());
         }
         
         /**
@@ -127,9 +118,19 @@ namespace Diodon
 	     */
         public Gtk.Image? get_image()
         {
-            return new Gtk.Image.from_pixbuf(_pixbuf_preview);
+            Gdk.Pixbuf pixbuf_preview = create_scaled_pixbuf(_pixbuf);
+            return new Gtk.Image.from_pixbuf(pixbuf_preview);
         }
-
+        
+        /**
+	     * {@inheritDoc}
+	     */
+        public ByteArray? get_payload()
+        {
+            // TODO not implemented yet
+            return null;
+        }
+        
         /**
          * {@inheritDoc}
          */
@@ -143,29 +144,8 @@ namespace Diodon
 	     */
         public void to_clipboard(Gtk.Clipboard clipboard)
         {
-            try {
-                 Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(_path);
-                 clipboard.set_image(pixbuf);
-                 clipboard.store();
-            } 
-            catch(Error e) {
-                warning("Loading of image %s failed. Cause: %s", _path, e.message);
-            }
-        }
-        
-        /**
-	     * {@inheritDoc}
-	     */
-	    public void remove()
-        {
-            debug("Removing image %s from storage", _path);
-            // remove temporarily stored image
-            File image = File.new_for_path(_path);
-            try {
-                image.delete();
-            } catch (Error e) {
-                warning ("removing of image file %s failed. Cause: %s", _path, e.message);
-            }
+             clipboard.set_image(_pixbuf);
+             clipboard.store();
         }
         
         /**
@@ -222,11 +202,9 @@ namespace Diodon
             checksum.update(pixbuf.get_pixels(), pixbuf.height * pixbuf.rowstride);
             _checksum = checksum.get_string().dup();
             
-            debug("Build checksum %s for pic %s", _checksum, _path);
-            
             // label in format [{width}x{height}]
             _label ="[%dx%d]".printf(pixbuf.width, pixbuf.height); 
-            _pixbuf_preview = create_scaled_pixbuf(pixbuf);
+            _pixbuf = pixbuf;
         }
         
         /**
