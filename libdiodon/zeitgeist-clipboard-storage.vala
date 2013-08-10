@@ -58,7 +58,7 @@ namespace Diodon
                 yield log.delete_events((owned)event_ids, null);
             } catch(GLib.Error e) {
                 warning("Remove item %s not successful, error: %s",
-                    item.get_clipboard_data(), e.message);
+                    item.get_text(), e.message);
             }
         }
         
@@ -134,7 +134,7 @@ namespace Diodon
                 if(origin != null) {
                     subject.set_origin(origin);
                 }
-                subject.set_text(item.get_clipboard_data());
+                subject.set_text(item.get_text());
                 
                 Zeitgeist.Event event = new Zeitgeist.Event();
                 // TODO: this should actually be a copy event
@@ -154,7 +154,7 @@ namespace Diodon
                 yield log.insert_events(null, event);
             } catch(GLib.Error e) {
                 warning("Add item %s not successful, error: %s",
-                    item.get_clipboard_data(), e.message);
+                    item.get_text(), e.message);
             }
         }
         

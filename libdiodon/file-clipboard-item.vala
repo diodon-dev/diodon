@@ -69,7 +69,7 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-	    public string get_clipboard_data()
+	    public string get_text()
         {
             return _paths;
         }
@@ -175,14 +175,6 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-	    public void remove()
-        {
-            // no cleaning up needed
-        }
-        
-        /**
-	     * {@inheritDoc}
-	     */
         public bool matches(string search, ClipboardItemType type)
         {
             bool matches = false;
@@ -205,7 +197,7 @@ namespace Diodon
             bool equals = false;
             
             if(item is FileClipboardItem) {
-                equals = str_equal(_paths, item->get_clipboard_data());
+                equals = str_equal(_paths, item->get_text());
             }
             
             return equals;

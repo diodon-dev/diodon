@@ -103,7 +103,7 @@ namespace Diodon
 	        foreach(IClipboardItem item in items) {
                 FsoFramework.Test.Assert.is_true(item is TextClipboardItem,
 	                "Should be of type TextClipboardItem");
-	            FsoFramework.Test.Assert.are_equal_string(item.get_clipboard_data(),
+	            FsoFramework.Test.Assert.are_equal_string(item.get_text(),
 	                current_item.to_string(), "Invalid clipboard item content");	            
 	            --current_item;
 	        }

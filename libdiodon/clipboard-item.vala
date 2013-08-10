@@ -70,12 +70,11 @@ namespace Diodon
         public abstract Icon get_icon();
         
         /**
-         * A string representing all information to rebuild a clipboard
-         * item again.
+         * A string representing clipboard item.
          *
          * @return data
          */
-        public abstract string get_clipboard_data();
+        public abstract string get_text();
         
         /**
          * Get unique checksum for clipboard content.
