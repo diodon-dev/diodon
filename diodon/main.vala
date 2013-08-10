@@ -78,7 +78,7 @@ namespace Diodon
 
             // setup controller            
             controller = new Controller();
-            controller.init();
+            controller.init.begin();
             
             // register app activate will open controller history
             app.message_received.connect((command, message_data, time_) => {

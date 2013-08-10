@@ -92,6 +92,22 @@ namespace Diodon
         }
         
         /**
+         * Completely destroy menu by cleaning up menu items and menu itself.
+         */
+        public void destroy_menu()
+        {
+            foreach(Gtk.Widget item in get_children()) {
+                remove(item);
+                
+                item.destroy();
+                item.dispose();
+            }
+            
+            destroy();
+            dispose();
+        }
+        
+        /**
          * select next item when history accelerator is pressed multiple times
          */
         private bool on_key_pressed(Gdk.EventKey event)

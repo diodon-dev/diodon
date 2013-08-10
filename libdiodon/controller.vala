@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2010-2011 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2010-2013 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -38,6 +38,7 @@ namespace Diodon
         private KeybindingManager keybinding_manager;
         private Peas.ExtensionSet extension_set;
         private Peas.Engine peas_engine;
+        private ClipboardMenu recent_menu = null;
         
         /**
          * Called when a item has been selected.
@@ -58,6 +59,11 @@ namespace Diodon
          * Called when all items need to be cleared
          */
         public signal void on_clear();
+        
+        /**
+         * Called after recent menu has been rebuilt
+         */
+        public signal void on_recent_menu_changed(Gtk.Menu recent_menu);
         
         public Controller()
         {            
@@ -96,9 +102,16 @@ namespace Diodon
         /**
          * Initializes views, models and managers.
          */
-        public void init()
+        public async void init()
         {
             init_configuration();
+            
+            // make sure that recent menu gets rebuild when recent history changes
+            yield rebuild_recent_menu();
+            on_add_item.connect((item) => { rebuild_recent_menu.begin(); } );
+            on_select_item.connect((item) => { rebuild_recent_menu.begin(); } ); 
+            on_clear.connect(() => { rebuild_recent_menu.begin(); } );
+            on_remove_item.connect((item) => { rebuild_recent_menu.begin(); } );
             
             keybinding_manager.init();
             
@@ -142,7 +155,12 @@ namespace Diodon
                 
             settings_clipboard.bind("clipboard-size", configuration_model,
                 "clipboard-size", SettingsBindFlags.DEFAULT);
-                
+            settings_keybindings.changed["clipboard-size"].connect(
+                (key) => {
+                    rebuild_recent_menu.begin();
+                }
+            );
+            
             settings_keybindings.bind("history-accelerator", configuration_model,
                 "history-accelerator", SettingsBindFlags.DEFAULT);
             settings_keybindings.changed["history-accelerator"].connect(
@@ -393,10 +411,16 @@ namespace Diodon
         /**
          * Create clipboard menu with current recent items.
          */
-        private async ClipboardMenu create_clipboard_menu()
+        private async void rebuild_recent_menu()
         {
             Gee.List<IClipboardItem> items = yield get_recent_items();
-            return new ClipboardMenu(this, items);
+            
+            if(recent_menu != null) {
+                recent_menu.destroy_menu();
+            }
+            
+            recent_menu = new ClipboardMenu(this, items);
+            on_recent_menu_changed(recent_menu);
         }
 
         /**
@@ -404,17 +428,21 @@ namespace Diodon
          */        
         public void show_history()
         {
-            create_clipboard_menu.begin((obj, res) => {
-                ClipboardMenu menu = create_clipboard_menu.end(res);
-                menu.show_menu();
-            });
-            
             // execute show_menu in main loop
             // to avoid dead lock
-            //Timeout.add(100, () => {
-            //    menu.show_menu();
-            //    return false; // stop timer
-            //});
+            Timeout.add(100, () => {
+                recent_menu.show_menu();
+                return false; // stop timer
+            });
+        }
+        
+        /**
+         * Get current recent menu. Recent menu can change at any time so
+         * consider registering to on_recent_menu_changed() event. 
+         */
+        public Gtk.Menu get_recent_menu()
+        {
+            return recent_menu;
         }
 
         /**
