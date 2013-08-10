@@ -28,12 +28,6 @@ namespace Diodon
     {
         private Controller controller;
         
-        /**
-         * HashMap to look up corresponding clipboard menu item of given
-         * clipboard item.
-         */
-        private Gee.Map<IClipboardItem, ClipboardMenuItem> clipboard_menu_items;
-        
         public ClipboardMenu(Controller controller, Gee.List<IClipboardItem> items)
         {
             this.controller = controller;
@@ -42,7 +36,11 @@ namespace Diodon
                 Gtk.MenuItem empty_item = new Gtk.MenuItem.with_label(_("<Empty>"));
                 empty_item.set_sensitive(false);
                 append(empty_item);
-            } 
+            }
+            
+            foreach(IClipboardItem item in items) {
+                append_clipboard_item(item);
+            }
             
             Gtk.SeparatorMenuItem sep_item = new Gtk.SeparatorMenuItem();
             append(sep_item);
@@ -61,15 +59,8 @@ namespace Diodon
             
             show_all();
             
-            clipboard_menu_items = new Gee.HashMap<IClipboardItem, ClipboardMenuItem>(
-                (GLib.HashFunc?)IClipboardItem.hash_func, (GLib.EqualFunc?)IClipboardItem.equal_func);
-            
             this.key_press_event.connect(on_key_pressed);
             this.key_release_event.connect(on_key_released);
-            
-            foreach(IClipboardItem item in items) {
-                append_clipboard_item(item);
-            }
         }
         
         /**
@@ -82,7 +73,6 @@ namespace Diodon
             ClipboardMenuItem menu_item = new ClipboardMenuItem(item);
             menu_item.activate.connect(on_clicked_item);
             menu_item.show();
-            clipboard_menu_items.set(item, menu_item);
             append(menu_item);
         }
         
