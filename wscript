@@ -104,13 +104,13 @@ def configure(conf):
       
     # set 'default' variant
     conf.define ('DEBUG', 0)
-    conf.env['CFLAGS']=['-O2']
+    conf.env['CFLAGS'] = ['-O2', '-w']
     conf.env['VALAFLAGS'] = ['--disable-assert']
     
     # set some debug relevant config values
     if Options.options.debug:
         conf.define ('DEBUG', 1)
-        conf.env['CFLAGS'] = ['-O0', '-g3']
+        conf.env['CFLAGS'] = ['-O0', '-g3', '-w']
         conf.env['VALAFLAGS'] = ['-g', '-v', '--enable-checking']
 
     conf.write_config_header ('config.h', remove=False)
