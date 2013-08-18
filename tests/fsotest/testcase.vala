@@ -27,7 +27,7 @@ public abstract class FsoFramework.Test.TestCase : Object
     private GLib.TestSuite _suite;
     private Adaptor[] _adaptors = new Adaptor[0];
 
-    public delegate void TestMethod ();
+    public delegate void TestMethod () throws GLib.Error;
 
     public TestCase (string name)
     {

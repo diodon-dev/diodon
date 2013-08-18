@@ -32,21 +32,17 @@ namespace Diodon
 		    add_test("test_image_clipboard_item_new_with_payload", test_image_clipboard_item_new_with_payload);
 	    }
 
-	    public void test_image_clipboard_item_new_with_payload()
+	    public void test_image_clipboard_item_new_with_payload() throws GLib.Error
 	    {
-	        try {
-	            Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Config.TEST_DATA_DIR + "Diodon-64x64.png");
-	            
-	            ImageClipboardItem item1 = new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD, pixbuf);
-	            string checksum1 = item1.get_checksum();
-	            
-	            ImageClipboardItem item2 = new ImageClipboardItem.with_payload(ClipboardType.CLIPBOARD, item1.get_payload());
-	            string checksum2 = item2.get_checksum();
-	            
-	            FsoFramework.Test.Assert.are_equal_string(checksum1, checksum2, "Images are not the same");
-	        } catch(GLib.Error e) {
-	            FsoFramework.Test.Assert.fail(e.message);
-	        }
+            Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Config.TEST_DATA_DIR + "Diodon-64x64.png");
+            
+            ImageClipboardItem item1 = new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD, pixbuf);
+            string checksum1 = item1.get_checksum();
+            
+            ImageClipboardItem item2 = new ImageClipboardItem.with_payload(ClipboardType.CLIPBOARD, item1.get_payload());
+            string checksum2 = item2.get_checksum();
+            
+            FsoFramework.Test.Assert.are_equal_string(checksum1, checksum2, "Images are not the same");
 	    }
 	}
 }
