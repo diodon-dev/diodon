@@ -100,6 +100,7 @@ def configure(conf):
     conf.define('PLUGINS_DIR', os.path.join(conf.env['LIBDIR'], APPNAME, 'plugins'))
     conf.env['PLUGINS_DIR'] = os.path.join(conf.env['LIBDIR'], APPNAME, 'plugins')
     conf.define('PLUGINS_DATA_DIR', os.path.join(conf.env['DATADIR'], APPNAME, 'plugins'))
+    conf.define('TEST_DATA_DIR', conf.path.abspath() + '/tests/data/')
       
     # set 'default' variant
     conf.define ('DEBUG', 0)
