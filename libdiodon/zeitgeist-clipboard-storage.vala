@@ -99,7 +99,7 @@ namespace Diodon
                 foreach(Event event in events) {
                     if (event.num_subjects() > 0) {
                         Subject subject = event.get_subject(0);
-                        IClipboardItem item = create_clipboard_item(subject);
+                        IClipboardItem item = create_clipboard_item(event, subject);
                         if(item != null) {
                             items.add(item);
                         }
@@ -161,11 +161,12 @@ namespace Diodon
             }
         }
         
-        private IClipboardItem? create_clipboard_item(Subject subject)
+        private IClipboardItem? create_clipboard_item(Event event, Subject subject)
         {
             string interpreation = subject.get_interpretation();
             IClipboardItem item = null;
             string text = subject.get_text();
+            unowned ByteArray payload = event.get_payload();
             
             try {
                 if(strcmp(NFO_PLAIN_TEXT_DOCUMENT, interpreation) == 0) {
@@ -177,7 +178,7 @@ namespace Diodon
                 } 
                     
                 else if(strcmp(NFO_IMAGE, interpreation) == 0) {
-                    // TODO: implement image item
+                    item = new ImageClipboardItem.with_payload(ClipboardType.NONE, payload);
                 }
             } catch (Error e) {
                 warning ("loading of item of interpreation %s with data %s failed. Cause: %s",
