@@ -58,7 +58,12 @@ namespace Diodon
         public ImageClipboardItem.with_payload(ClipboardType clipboard_type, ByteArray payload) throws GLib.Error
         {
             _clipboard_type = clipboard_type;
-            // TODO implement
+            
+            Gdk.PixbufLoader loader = new Gdk.PixbufLoader();
+            loader.write(payload.data);
+            loader.close();
+            Gdk.Pixbuf pixbuf = loader.get_pixbuf();
+            extract_pixbuf_info(pixbuf);
         }
     
         /**
@@ -125,10 +130,11 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public ByteArray? get_payload()
+        public ByteArray? get_payload() throws GLib.Error
         {
-            // TODO not implemented yet
-            return null;
+            uint8[] buffer;
+            _pixbuf.save_to_buffer(out buffer, "png");
+            return new ByteArray.take(buffer);
         }
         
         /**
@@ -226,34 +232,6 @@ namespace Diodon
             // scale pixbuf to menu icon size
             Gdk.Pixbuf scaled = pixbuf.scale_simple(width, height, Gdk.InterpType.BILINEAR);
             return scaled;
-        }
-        
-        /**
-         * Store pixbuf to file system and return path to it.
-         *
-         * @param pixbuf pixbuf to be stored
-         */
-        private static string save_pixbuf(Gdk.Pixbuf pixbuf) throws GLib.Error
-        {
-            // create a file name in the diodon user data dir images folder
-            string filename = "";
-            string data_dir = Utility.get_user_data_dir();
-            string image_data_dir = Path.build_filename(data_dir, "images");
-            
-            if(Utility.make_directory_with_parents(image_data_dir)) {
-            
-                // image file name equal timestamp in seconds
-                // plus a random number in case when multiple images
-                // are copied to a clipboard in one second
-                int id = Random.int_range(1000, 9999);
-                DateTime now = new DateTime.now_local();
-                string name = now.format("%Y%m%d-%H%M%S") + "-%i.png".printf(id);
-                
-                filename = Path.build_filename(image_data_dir, name);
-                pixbuf.save(filename, "png");
-            }
-        
-            return filename;
         }
     }  
 }

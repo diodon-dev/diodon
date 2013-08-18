@@ -131,7 +131,15 @@ public abstract class FsoFramework.Test.TestCase : Object
             }
             else
             {
-                this._test ();
+                try
+                {
+                    this._test ();
+                }
+                catch (GLib.Error err)
+                {
+                    message(@"Got exception while excuting test: $(err.message)");
+                    GLib.Test.fail();
+                }
             }
         }
 

@@ -72,7 +72,7 @@ namespace Diodon
         /**
          * Retrieves any additional data needed to reconstruct clipboard content
          */
-        public abstract ByteArray? get_payload();
+        public abstract ByteArray? get_payload() throws GLib.Error;
         
         /**
          * A string representing clipboard item.
