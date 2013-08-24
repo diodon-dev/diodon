@@ -46,6 +46,10 @@ namespace Diodon
 		        cb => test_get_recent_items.begin(cb),
 		        res => test_get_recent_items.end(res)
 		    );
+		    add_async_test("test_get_item_by_checksum",
+		        cb => test_get_item_by_checksum.begin(cb),
+		        res => test_get_item_by_checksum.end(res)
+		    );
 	    }
 	    
 	    public override void set_up()
@@ -112,6 +116,22 @@ namespace Diodon
 	        items = yield this.storage.get_recent_items(ITEMS + 1);
 	        FsoFramework.Test.Assert.are_equal(items.size, ITEMS,
 	            "Invalid number of recent items");
+	    }
+	    
+	    public async void test_get_item_by_checksum() throws FsoFramework.Test.AssertError
+	    {
+	        // add test item
+	        TextClipboardItem text_item = new TextClipboardItem(ClipboardType.CLIPBOARD, "checksum");
+	        yield this.storage.add_item(text_item);
+	        
+	        // check item availability
+	        IClipboardItem item = yield this.storage.get_item_by_checksum(text_item.get_checksum());
+	        FsoFramework.Test.Assert.is_true(item != null, "Item not found");
+	        FsoFramework.Test.Assert.are_equal_string("checksum", item.get_text(), "Invalid content");
+	        
+	        // check item which is not available
+	        IClipboardItem not_found = yield this.storage.get_item_by_checksum("invalidchecksum");
+	        FsoFramework.Test.Assert.is_true(item == null, "Item was not null");
 	    }
 	    
 	    public override void tear_down()

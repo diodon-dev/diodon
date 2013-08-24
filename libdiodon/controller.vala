@@ -196,7 +196,17 @@ namespace Diodon
         }
         
         /**
-         * Select clipboard item
+         * Select a clipboard item identified by its checksum
+         */
+        public async void select_item_checksum(string checksum)
+        {
+            
+        }
+        
+        /**
+         * Select clipboard item. Discouraged to use as it usually means to hold
+         * a complete item in memory before selecting it. See select_item_checksum
+         * for an alternative.
          *
          * @param item item to be selected
          */

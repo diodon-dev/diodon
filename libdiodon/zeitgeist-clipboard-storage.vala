@@ -63,6 +63,17 @@ namespace Diodon
         }
         
         /**
+         * Get clipboard item by its given checksum
+         *
+         * @param checksum checksum of clipboard item
+         * @return clipboard item or null if not available
+         */
+        public async IClipboardItem? get_item_by_checksum(string checksum)
+        {
+            return null;
+        }
+        
+        /**
          * Get most recent items limited by assigned num_items. List will filter
          * out any duplicates according to their checksum resp. uri in zeitgeist.
          * Most recent item will be on the top.
@@ -143,8 +154,6 @@ namespace Diodon
                 event.set_actor("application://diodon.desktop");
                 event.add_subject(subject);
                 
-                // content should be added, however ignored as currently
-                // data is not being read
                 ByteArray? payload = item.get_payload();
                 if(payload != null) {
                     event.set_payload((owned)payload);
