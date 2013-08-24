@@ -22,11 +22,9 @@
 namespace Diodon
 {
     /**
-     * The configuration model encapsulates the configuration state.
-     *
-     * TODO consider renaming to ClipboardConfiguration
+     * Clipboard configuration encapsulating configuration state.
      */
-    public class ConfigurationModel : GLib.Object
+    public class ClipboardConfiguration : GLib.Object
     {
         private int _clipboard_size = 25;
         private string _history_accelerator = "<Ctrl><Alt>V";

@@ -27,25 +27,21 @@ namespace Diodon
     class PreferencesView : GLib.Object
     {
         private Gtk.Dialog preferences;
-        private Controller controller;
         
-        public PreferencesView(Controller controller)
+        public PreferencesView()
         {
-            this.controller = controller;
         }
 
         /**
          * Show preferences view
          *
-         * @param model configuration model to initialize dialog
+         * @param configuraiton configuration to initialize dialog
          */
-        public void show(ConfigurationModel model)
+        public void show(ClipboardConfiguration configuration)
         {
             // check if preferences window is already open
             if(preferences == null) {
                 try {
-                    ConfigurationModel cfg = controller.get_configuration();
-                
                     // builder
                     Gtk.Builder builder = new Gtk.Builder();
                     builder.set_translation_domain(Config.GETTEXT_PACKAGE);
@@ -54,59 +50,59 @@ namespace Diodon
                     // use_clipboard
                     Gtk.ToggleButton use_clipboard = 
                         builder.get_object("checkbutton_use_clipboard") as Gtk.ToggleButton;
-                    use_clipboard.active = model.use_clipboard;
+                    use_clipboard.active = configuration.use_clipboard;
                     use_clipboard.toggled.connect(() => {
-                        cfg.use_clipboard = !cfg.use_clipboard;
+                        configuration.use_clipboard = !configuration.use_clipboard;
                     } );
                     
                     // use_primary
                     Gtk.ToggleButton use_primary = builder.get_object("checkbutton_use_primary") as Gtk.ToggleButton;
-                    use_primary.active = model.use_primary;
+                    use_primary.active = configuration.use_primary;
                     use_primary.toggled.connect(() => {
-                        cfg.use_primary = !cfg.use_primary;
+                        configuration.use_primary = !configuration.use_primary;
                     } );
                     
                     // synchronize_clipboards
                     Gtk.ToggleButton synchronize_clipboards = 
                         builder.get_object("checkbutton_synchronize_clipboards") as Gtk.ToggleButton;
-                    synchronize_clipboards.active = model.synchronize_clipboards;
+                    synchronize_clipboards.active = configuration.synchronize_clipboards;
                     synchronize_clipboards.toggled.connect(() => {
-                        cfg.synchronize_clipboards = !cfg.synchronize_clipboards;
+                        configuration.synchronize_clipboards = !configuration.synchronize_clipboards;
                     } );
                     
                     // keep clipboard content
                     Gtk.ToggleButton keep_clipboard_content =
                         builder.get_object("checkbutton_keep_clipboard_content") as Gtk.ToggleButton;
-                    keep_clipboard_content.active = model.keep_clipboard_content;
+                    keep_clipboard_content.active = configuration.keep_clipboard_content;
                     keep_clipboard_content.toggled.connect(() => {
-                        cfg.keep_clipboard_content = !cfg.keep_clipboard_content;
+                        configuration.keep_clipboard_content = !configuration.keep_clipboard_content;
                     } );
                     
                     // instant paste
                     Gtk.ToggleButton instant_paste =
                         builder.get_object("checkbutton_instant_paste") as Gtk.ToggleButton;
-                    instant_paste.active = model.instant_paste;
+                    instant_paste.active = configuration.instant_paste;
                     instant_paste.toggled.connect(() => {
-                        cfg.instant_paste = !cfg.instant_paste;
+                        configuration.instant_paste = !configuration.instant_paste;
                     } );
                     
                     // clipboard_size
                     Gtk.SpinButton clipboard_size = 
                         builder.get_object("spinbutton_clipboard_size") as Gtk.SpinButton;
-                    clipboard_size.value = model.clipboard_size;
+                    clipboard_size.value = configuration.clipboard_size;
                     clipboard_size.value_changed.connect(() => {
-                        cfg.clipboard_size = clipboard_size.get_value_as_int();
+                        configuration.clipboard_size = clipboard_size.get_value_as_int();
                     });
                     clipboard_size.editing_done.connect(() => {
-                        cfg.clipboard_size = clipboard_size.get_value_as_int();
+                        configuration.clipboard_size = clipboard_size.get_value_as_int();
                     });
                     
                     // history_accelerator
                     Gtk.Entry history_accelerator = 
                         builder.get_object("entry_history_accelerator") as Gtk.Entry;
-                    history_accelerator.text = model.history_accelerator;
+                    history_accelerator.text = configuration.history_accelerator;
                     history_accelerator.changed.connect(() => {
-                        cfg.history_accelerator = history_accelerator.get_text();
+                        configuration.history_accelerator = history_accelerator.get_text();
                     });
                     
                     // plugins

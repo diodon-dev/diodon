@@ -33,7 +33,7 @@ namespace Diodon
         private Settings settings_plugins;
         private Gee.Map<ClipboardType, ClipboardManager> clipboard_managers;
         private ClipboardHistory history;
-        private ConfigurationModel configuration_model;
+        private ClipboardConfiguration configuration;
         private PreferencesView preferences_view;
         private KeybindingManager keybinding_manager;
         private Peas.ExtensionSet extension_set;
@@ -88,9 +88,9 @@ namespace Diodon
             ZeitgeistClipboardStorage storage = new ZeitgeistClipboardStorage();
             history = new ClipboardHistory(storage);
             
-            configuration_model = new ConfigurationModel();   
+            configuration = new ClipboardConfiguration();   
             
-            preferences_view = new PreferencesView(this);                  
+            preferences_view = new PreferencesView();                  
         }
         
         private void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
@@ -136,24 +136,24 @@ namespace Diodon
          */
         private void init_configuration()
         {
-            settings_clipboard.bind("synchronize-clipboards", configuration_model,
+            settings_clipboard.bind("synchronize-clipboards", configuration,
                 "synchronize-clipboards", SettingsBindFlags.DEFAULT);
 
-            settings_clipboard.bind("keep-clipboard-content", configuration_model,
+            settings_clipboard.bind("keep-clipboard-content", configuration,
                 "keep-clipboard-content", SettingsBindFlags.DEFAULT);
             settings_clipboard.changed["keep-clipboard-content"].connect(
                 (key) => {
                     enable_keep_clipboard_content(
-                        configuration_model.keep_clipboard_content);
+                        configuration.keep_clipboard_content);
                 }
             );
             enable_keep_clipboard_content(
-                configuration_model.keep_clipboard_content);
+                configuration.keep_clipboard_content);
             
-            settings_clipboard.bind("instant-paste", configuration_model,
+            settings_clipboard.bind("instant-paste", configuration,
                 "instant-paste", SettingsBindFlags.DEFAULT);
                 
-            settings_clipboard.bind("clipboard-size", configuration_model,
+            settings_clipboard.bind("clipboard-size", configuration,
                 "clipboard-size", SettingsBindFlags.DEFAULT);
             settings_keybindings.changed["clipboard-size"].connect(
                 (key) => {
@@ -161,38 +161,38 @@ namespace Diodon
                 }
             );
             
-            settings_keybindings.bind("history-accelerator", configuration_model,
+            settings_keybindings.bind("history-accelerator", configuration,
                 "history-accelerator", SettingsBindFlags.DEFAULT);
             settings_keybindings.changed["history-accelerator"].connect(
                 (key) => {
-                    change_history_accelerator(configuration_model.history_accelerator);
+                    change_history_accelerator(configuration.history_accelerator);
                 }
             );
-            change_history_accelerator(configuration_model.history_accelerator);
+            change_history_accelerator(configuration.history_accelerator);
             
             // use clipboard and use primary needs to be initialized last as this
             // will start the polling of clipboard process
-            settings_clipboard.bind("use-clipboard", configuration_model,
+            settings_clipboard.bind("use-clipboard", configuration,
                 "use-clipboard", SettingsBindFlags.DEFAULT);
             settings_clipboard.changed["use-clipboard"].connect(
                 (key) => {
                     enable_clipboard_manager(ClipboardType.CLIPBOARD,
-                        configuration_model.use_clipboard);
+                        configuration.use_clipboard);
                 }
             );
             enable_clipboard_manager(ClipboardType.CLIPBOARD,
-                configuration_model.use_clipboard);
+                configuration.use_clipboard);
                 
-            settings_clipboard.bind("use-primary", configuration_model,
+            settings_clipboard.bind("use-primary", configuration,
                 "use-primary", SettingsBindFlags.DEFAULT);
             settings_clipboard.changed["use-primary"].connect(
                 (key) => {
                     enable_clipboard_manager(ClipboardType.PRIMARY,
-                        configuration_model.use_primary);
+                        configuration.use_primary);
                 }
             );
             enable_clipboard_manager(ClipboardType.PRIMARY,
-                configuration_model.use_primary);
+                configuration.use_primary);
         }
         
         /**
@@ -215,12 +215,12 @@ namespace Diodon
          */
         public async void select_item(IClipboardItem item)
         {   
-            yield history.select_item(item, configuration_model.use_clipboard,
-                configuration_model.use_primary);
+            yield history.select_item(item, configuration.use_clipboard,
+                configuration.use_primary);
             
             on_select_item(item);
             
-            if(configuration_model.instant_paste) {
+            if(configuration.instant_paste) {
                 execute_paste(item);
             }
         }
@@ -233,14 +233,14 @@ namespace Diodon
         public void execute_paste(IClipboardItem item)
         {
             string key = null;
-            if(configuration_model.use_clipboard) {
+            if(configuration.use_clipboard) {
                 key = "<Ctrl>V";
             }
             
             // prefer primary selection paste as such works
             // in more cases (e.g. terminal)
             // however it does not work with files and images
-            if(configuration_model.use_primary && item is TextClipboardItem) {
+            if(configuration.use_primary && item is TextClipboardItem) {
                 key = "<Shift>Insert";
             }
             
@@ -323,7 +323,7 @@ namespace Diodon
                 yield history.add_item(item);
                 on_add_item(item);
 
-                if(configuration_model.synchronize_clipboards) {
+                if(configuration.synchronize_clipboards) {
                     synchronize(item);
                 }
             }
@@ -337,7 +337,7 @@ namespace Diodon
          */ 
         public async Gee.List<IClipboardItem> get_recent_items()
         {
-            return yield history.get_recent_items(configuration_model.clipboard_size);
+            return yield history.get_recent_items(configuration.clipboard_size);
         }
         
         /**
@@ -354,9 +354,9 @@ namespace Diodon
         /**
          * access to current configuration settings
          */
-        public ConfigurationModel get_configuration()
+        public ClipboardConfiguration get_configuration()
         {
-            return configuration_model;
+            return configuration;
         }
         
         /**
@@ -413,8 +413,8 @@ namespace Diodon
         private void change_history_accelerator(string accelerator)
         {
             // check if there is a previos accelerator to unbind
-            if(configuration_model.previous_history_accelerator != null) {
-                keybinding_manager.unbind(configuration_model.previous_history_accelerator);
+            if(configuration.previous_history_accelerator != null) {
+                keybinding_manager.unbind(configuration.previous_history_accelerator);
             }
             
             // let's bind new one
@@ -510,7 +510,7 @@ namespace Diodon
          */
         public void show_preferences()
         {
-            preferences_view.show(configuration_model);
+            preferences_view.show(configuration);
         }
         
         /**

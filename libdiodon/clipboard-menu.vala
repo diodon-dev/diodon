@@ -104,7 +104,7 @@ namespace Diodon
         {
             uint keyval;
             Gdk.ModifierType state;
-            ConfigurationModel cfg = controller.get_configuration();
+            ClipboardConfiguration cfg = controller.get_configuration();
             Gtk.accelerator_parse(cfg.history_accelerator,
                 out keyval, out state);
             uint event_state = KeybindingManager.remove_lockmodifiers(event.state);
@@ -132,7 +132,7 @@ namespace Diodon
         {
             uint keyval;
             Gdk.ModifierType state;
-            ConfigurationModel cfg = controller.get_configuration();
+            ClipboardConfiguration cfg = controller.get_configuration();
             Gtk.accelerator_parse(cfg.history_accelerator,
                 out keyval, out state);
             uint event_state = KeybindingManager.remove_lockmodifiers(event.state);
