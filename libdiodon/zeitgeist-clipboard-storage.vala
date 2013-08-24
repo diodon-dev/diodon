@@ -45,6 +45,8 @@ namespace Diodon
          */
         public async void remove_item(IClipboardItem item)
         {
+            debug("Remove item with given checksum %s", item.get_checksum());
+            
             try {
                 PtrArray templates = create_item_event_templates(item);
                 Array event_ids = yield log.find_event_ids(
@@ -108,6 +110,10 @@ namespace Diodon
                     e.message);
             }
             
+            if(item == null) {
+                debug("Item with checksum %s could not be found", checksum);
+            }
+            
             return item;
         }
         
@@ -118,8 +124,10 @@ namespace Diodon
          *
          * @param num_items number of recent items
          */
-        public async Gee.List<IClipboardItem> get_recent_items(int num_items)
+        public async Gee.List<IClipboardItem> get_recent_items(uint32 num_items)
         {
+            debug("Get recent %u items", num_items);
+            
             Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
             PtrArray templates = new PtrArray.sized(1);
 	        TimeRange time_range = new TimeRange.anytime();
@@ -171,6 +179,8 @@ namespace Diodon
          */
         public async void add_item(IClipboardItem item)
         {
+            debug("Add item %s to clipboard", item.get_label());
+            
             try {
                 string interpretation = get_interpretation(item);
                 string? origin = Utility.get_path_of_active_application();
@@ -213,6 +223,8 @@ namespace Diodon
          */
         public async void clear()
         {
+            debug("Clear clipboard history");
+            
             PtrArray templates = new PtrArray.sized(1);
 	        TimeRange time_range = new TimeRange.anytime();
             Event ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
