@@ -516,9 +516,9 @@ namespace Diodon
         /**
          * Clear all clipboard items from history
          */
-        public void clear()
+        public async void clear()
         {
-            clipboard_model.clear();
+            yield clipboard_model.clear();
             on_clear();
         }
         

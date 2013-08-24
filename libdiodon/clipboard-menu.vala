@@ -152,7 +152,7 @@ namespace Diodon
          */
         private void on_clicked_clear()
         {
-            controller.clear();
+            controller.clear.begin();
         }
         
         /**
