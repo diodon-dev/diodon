@@ -32,7 +32,7 @@ namespace Diodon
         private Settings settings_keybindings;
         private Settings settings_plugins;
         private Gee.Map<ClipboardType, ClipboardManager> clipboard_managers;
-        private ClipboardModel clipboard_model;
+        private ClipboardHistory history;
         private ConfigurationModel configuration_model;
         private PreferencesView preferences_view;
         private KeybindingManager keybinding_manager;
@@ -86,7 +86,7 @@ namespace Diodon
             peas_engine.enable_loader("python");
             
             ZeitgeistClipboardStorage storage = new ZeitgeistClipboardStorage();
-            clipboard_model = new ClipboardModel(storage);
+            history = new ClipboardHistory(storage);
             
             configuration_model = new ConfigurationModel();   
             
@@ -200,7 +200,7 @@ namespace Diodon
          */
         public async void select_item_by_checksum(string checksum)
         {
-            IClipboardItem item = yield clipboard_model.get_item_by_checksum(checksum);
+            IClipboardItem item = yield history.get_item_by_checksum(checksum);
             if(item != null) {
                 yield select_item(item);
             }
@@ -215,7 +215,7 @@ namespace Diodon
          */
         public async void select_item(IClipboardItem item)
         {   
-            yield clipboard_model.select_item(item, configuration_model.use_clipboard,
+            yield history.select_item(item, configuration_model.use_clipboard,
                 configuration_model.use_primary);
             
             on_select_item(item);
@@ -258,7 +258,7 @@ namespace Diodon
          */
         public async void remove_item(IClipboardItem item)
         {
-            yield clipboard_model.remove_item(item);
+            yield history.remove_item(item);
             on_remove_item(item);
         }
        
@@ -313,14 +313,14 @@ namespace Diodon
         {
             ClipboardType type = item.get_clipboard_type();
             string label = item.get_label();
-            IClipboardItem current_item = clipboard_model.get_current_item(type);
+            IClipboardItem current_item = history.get_current_item(type);
             
             // check if received item is different from last item
             if(current_item == null || !IClipboardItem.equal_func(current_item, item)) {
                 debug("received item of type %s from clipboard %d with label %s",
                     item.get_type().name(), type, label);
                 
-                yield clipboard_model.add_item(item);
+                yield history.add_item(item);
                 on_add_item(item);
 
                 if(configuration_model.synchronize_clipboards) {
@@ -337,7 +337,7 @@ namespace Diodon
          */ 
         public async Gee.List<IClipboardItem> get_recent_items()
         {
-            return yield clipboard_model.get_recent_items(configuration_model.clipboard_size);
+            return yield history.get_recent_items(configuration_model.clipboard_size);
         }
         
         /**
@@ -348,7 +348,7 @@ namespace Diodon
          */
         public IClipboardItem get_current_item(ClipboardType type)
         {
-            return clipboard_model.get_current_item(type);
+            return history.get_current_item(type);
         }
         
         /**
@@ -379,7 +379,7 @@ namespace Diodon
                     if(type != clipboard_manager.clipboard_type) {
                         // check if item is already active in clipboard
                         // which will be synced to
-                        IClipboardItem current_item = clipboard_model.get_current_item(
+                        IClipboardItem current_item = history.get_current_item(
                             clipboard_manager.clipboard_type);
                         if(current_item == null || !IClipboardItem.equal_func(current_item, item)) {
                             clipboard_manager.select_item(item);
@@ -397,7 +397,7 @@ namespace Diodon
         private void clipboard_empty(ClipboardType type)
         {               
             // check if a item is there to restore lost content
-            IClipboardItem item = clipboard_model.get_current_item(type);
+            IClipboardItem item = history.get_current_item(type);
             if(item != null) {
                 debug("Clipboard " + "%d".printf(type) + " is empty.");   
                 ClipboardManager manager = clipboard_managers.get(type);
@@ -518,7 +518,7 @@ namespace Diodon
          */
         public async void clear()
         {
-            yield clipboard_model.clear();
+            yield history.clear();
             on_clear();
         }
         

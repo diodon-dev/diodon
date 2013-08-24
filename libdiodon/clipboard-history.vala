@@ -22,17 +22,15 @@
 namespace Diodon
 {
     /**
-     * The clipboard model encapsulates the clipboard state and persists this
-     * state with the help of given clipboard storage.
-     * 
-     * TODO consider renaming of class e.g. to ClipboardHistory
+     * The clipboard history encapsulates the clipboard state and persists this
+     * state with the help of given zeitgeist clipboard storage.
      */
-    class ClipboardModel : GLib.Object
+    class ClipboardHistory : GLib.Object
     {
         private ZeitgeistClipboardStorage storage;
         private Gee.HashMap<ClipboardType, IClipboardItem> current_items;
  
-        public ClipboardModel(ZeitgeistClipboardStorage storage)
+        public ClipboardHistory(ZeitgeistClipboardStorage storage)
         {
             this.storage = storage;     
             this.current_items = new Gee.HashMap<ClipboardType, IClipboardItem>();
