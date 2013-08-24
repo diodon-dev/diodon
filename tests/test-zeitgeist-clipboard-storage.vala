@@ -131,7 +131,7 @@ namespace Diodon
 	        
 	        // check item which is not available
 	        IClipboardItem not_found = yield this.storage.get_item_by_checksum("invalidchecksum");
-	        FsoFramework.Test.Assert.is_true(item == null, "Item was not null");
+	        FsoFramework.Test.Assert.is_true(not_found == null, "Item was not null");
 	    }
 	    
 	    public override void tear_down()
@@ -151,7 +151,7 @@ namespace Diodon
 	        TimeRange time_range = new TimeRange.anytime();
             Event ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
                              new Subject.full ("clipboard*",
-                                               NFO_PLAIN_TEXT_DOCUMENT,
+                                               "",
                                                NFO_DATA_CONTAINER,
                                                "",
                                                "",

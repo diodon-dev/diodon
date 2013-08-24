@@ -198,9 +198,12 @@ namespace Diodon
         /**
          * Select a clipboard item identified by its checksum
          */
-        public async void select_item_checksum(string checksum)
+        public async void select_item_by_checksum(string checksum)
         {
-            
+            IClipboardItem item = yield clipboard_model.get_item_by_checksum(checksum);
+            if(item != null) {
+                yield select_item(item);
+            }
         }
         
         /**

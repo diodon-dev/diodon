@@ -50,6 +50,17 @@ namespace Diodon
         }
         
         /**
+         * Get item of given checksum
+         * 
+         * @param checksum checksum of item to retrieve
+         * @return clipboard item of given checksum; otherwise null
+         */         
+        public async IClipboardItem? get_item_by_checksum(string checksum)
+        {  
+            return yield storage.get_item_by_checksum(checksum);
+        }
+        
+        /**
          * Get most recent items limited by assigned num_items. List will filter
          * out any duplicates according to their checksum. Most recent item
          * will be on the top of the list.

@@ -179,7 +179,7 @@ namespace Diodon
         private void on_clicked_item(Gtk.MenuItem menu_item)
         {
             ClipboardMenuItem clipboard_menu_item = (ClipboardMenuItem)menu_item;
-            controller.select_item.begin(clipboard_menu_item.get_clipboard_item());
+            controller.select_item_by_checksum.begin(clipboard_menu_item.get_item_checksum());
         }        
     }
 }

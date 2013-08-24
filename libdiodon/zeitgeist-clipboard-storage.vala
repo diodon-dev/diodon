@@ -66,11 +66,49 @@ namespace Diodon
          * Get clipboard item by its given checksum
          *
          * @param checksum checksum of clipboard item
-         * @return clipboard item or null if not available
+         * @return clipboard item of given checksum; othterwise null if not available
          */
         public async IClipboardItem? get_item_by_checksum(string checksum)
         {
-            return null;
+            debug("Get item with given checksum %s", checksum);
+            
+            PtrArray templates = new PtrArray.sized(1);
+	        TimeRange time_range = new TimeRange.anytime();
+            Event ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
+                             new Subject.full ("clipboard://" + checksum,
+                                               "",
+                                               NFO_DATA_CONTAINER,
+                                               "",
+                                               "",
+                                               "",
+                                               ""));
+            templates.add ((ev as GLib.Object).ref());
+            
+            IClipboardItem item = null;
+            try {
+	            Zeitgeist.ResultSet events = yield log.find_events(
+	                time_range,
+	                (owned)templates, 
+                    StorageState.ANY,
+                    1,
+                    // this will filter duplicates according to their uri
+                    ResultType.MOST_RECENT_SUBJECTS,
+                    null
+                );
+                
+                if(events.size() > 0) {
+                    Event event = events.next();
+                    if (event.num_subjects() > 0) {
+                        Subject subject = event.get_subject(0);
+                        item = create_clipboard_item(event, subject);
+                    }
+                }
+            } catch(GLib.Error e) {
+                warning("Get item by checksum not successful, error: %s",
+                    e.message);
+            }
+            
+            return item;
         }
         
         /**
