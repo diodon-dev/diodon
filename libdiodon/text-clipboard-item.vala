@@ -117,7 +117,7 @@ namespace Diodon
 	     */
         public string get_checksum()
         {
-            return Checksum.compute_for_string(ChecksumType.MD5, _text);
+            return Checksum.compute_for_string(ChecksumType.SHA1, _text);
         }
                         
         /**

@@ -22,18 +22,12 @@
 namespace Diodon
 {
     /**
-     * Represents a image clipboard item holding. For memory consumption
-     * reasons the pixbuf is not hold in the memory but stored to the disc
-     * and only loaded when requested.
-     * However a scaled pixbuf of the image is still needed for preview reasons.
-     * Stored image will be removed from disc when item is removed from history.
-     * To still be able to identify a picture, a md5 sum is built from the 
-     * original pic.
+     * An image clipboard item representing such in a preview image.
      */
     public class ImageClipboardItem : GLib.Object, IClipboardItem
     {
         private ClipboardType _clipboard_type;
-        private string _checksum; // check sum to identify pic content
+        private string _checksum; // checksum to identify pic content
         private Gdk.Pixbuf _pixbuf;
         private string _label;
         
@@ -203,8 +197,8 @@ namespace Diodon
          */
         private void extract_pixbuf_info(Gdk.Pixbuf pixbuf)
         {
-            // create md5 sum of picture
-            Checksum checksum = new Checksum(ChecksumType.MD5);
+            // create checksum of picture
+            Checksum checksum = new Checksum(ChecksumType.SHA1);
             checksum.update(pixbuf.get_pixels(), pixbuf.height * pixbuf.rowstride);
             _checksum = checksum.get_string().dup();
             
