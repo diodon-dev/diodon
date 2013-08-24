@@ -153,9 +153,9 @@ namespace Diodon
             settings_clipboard.bind("instant-paste", configuration,
                 "instant-paste", SettingsBindFlags.DEFAULT);
                 
-            settings_clipboard.bind("clipboard-size", configuration,
-                "clipboard-size", SettingsBindFlags.DEFAULT);
-            settings_keybindings.changed["clipboard-size"].connect(
+            settings_clipboard.bind("recent-items-size", configuration,
+                "recent-items-size", SettingsBindFlags.DEFAULT);
+            settings_clipboard.changed["recent-items-size"].connect(
                 (key) => {
                     rebuild_recent_menu.begin();
                 }
@@ -337,7 +337,7 @@ namespace Diodon
          */ 
         public async Gee.List<IClipboardItem> get_recent_items()
         {
-            return yield history.get_recent_items(configuration.clipboard_size);
+            return yield history.get_recent_items(configuration.recent_items_size);
         }
         
         /**

@@ -25,17 +25,17 @@
       <_summary>Automatically paste selected item</_summary>
       <_description>Automatically paste selected item instead of just copying it to the clipboard.</_description>
     </key>
-    <key name="clipboard-size" type="u">
+    <key name="recent-items-size" type="u">
       <default>25</default>
-      <_summary>Clipboard size</_summary>
-      <_description>Number of items in the clipboard history.</_description>
+      <_summary>Number of recent clipboard items</_summary>
+      <_description>Number of recent clipboard items shown in clipboard menu.</_description>
     </key>
   </schema>
   <schema gettext-domain="@GETTEXT_PACKAGE@" id="net.launchpad.Diodon.keybindings" path="/net/launchpad/diodon/keybindings/">
     <key name="history-accelerator" type="s">
       <default>'&lt;Ctrl&gt;&lt;Alt&gt;V'</default>
       <_summary>History key</_summary>
-      <_description>Hotkey to quickly allow you to access the clipboard history.</_description>
+      <_description>Hotkey to quickly allow you to access menu with recent clipboard items.</_description>
     </key>
   </schema>
   <schema gettext-domain="@GETTEXT_PACKAGE@" id="net.launchpad.Diodon.plugins" path="/net/launchpad/diodon/plugins/">

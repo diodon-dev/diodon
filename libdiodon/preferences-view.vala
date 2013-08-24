@@ -86,15 +86,15 @@ namespace Diodon
                         configuration.instant_paste = !configuration.instant_paste;
                     } );
                     
-                    // clipboard_size
-                    Gtk.SpinButton clipboard_size = 
-                        builder.get_object("spinbutton_clipboard_size") as Gtk.SpinButton;
-                    clipboard_size.value = configuration.clipboard_size;
-                    clipboard_size.value_changed.connect(() => {
-                        configuration.clipboard_size = clipboard_size.get_value_as_int();
+                    // recent_items_size
+                    Gtk.SpinButton recent_items_size = 
+                        builder.get_object("spinbutton_recent_items_size") as Gtk.SpinButton;
+                    recent_items_size.value = configuration.recent_items_size;
+                    recent_items_size.value_changed.connect(() => {
+                        configuration.recent_items_size = recent_items_size.get_value_as_int();
                     });
-                    clipboard_size.editing_done.connect(() => {
-                        configuration.clipboard_size = clipboard_size.get_value_as_int();
+                    recent_items_size.editing_done.connect(() => {
+                        configuration.recent_items_size = recent_items_size.get_value_as_int();
                     });
                     
                     // history_accelerator
