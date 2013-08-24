@@ -208,6 +208,39 @@ namespace Diodon
             }
         }
         
+        /**
+         * Clear all clipboard items in zeitgeist storage
+         */
+        public async void clear()
+        {
+            PtrArray templates = new PtrArray.sized(1);
+	        TimeRange time_range = new TimeRange.anytime();
+            Event ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
+                             new Subject.full ("clipboard*",
+                                               "",
+                                               NFO_DATA_CONTAINER,
+                                               "",
+                                               "",
+                                               "",
+                                               ""));
+            templates.add ((ev as GLib.Object).ref());
+            
+            try {
+	            Array event_ids = yield log.find_event_ids(
+	                time_range,
+	                (owned)templates, 
+                    StorageState.ANY,
+                    uint32.MAX,
+                    ResultType.MOST_RECENT_EVENTS,
+                    null
+                );
+                
+                yield log.delete_events((owned)event_ids, null);
+            } catch(GLib.Error e) {
+                warning("Failed to clear items: %s", e.message);
+            }
+        }
+        
         private IClipboardItem? create_clipboard_item(Event event, Subject subject)
         {
             string interpreation = subject.get_interpretation();

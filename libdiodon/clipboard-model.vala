@@ -75,11 +75,10 @@ namespace Diodon
         /**
          * clear items and resetting selected item 
          */
-        public void clear()
+        public async void clear()
         {
-            // TODO not implement yet. Is this still needed though with Zeitgeist?
-            //storage.clear();
-            //current_items.clear();
+            yield storage.clear();
+            current_items.clear();
         }
         
         /**

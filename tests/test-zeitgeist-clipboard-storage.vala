@@ -50,6 +50,10 @@ namespace Diodon
 		        cb => test_get_item_by_checksum.begin(cb),
 		        res => test_get_item_by_checksum.end(res)
 		    );
+		    add_async_test("test_clear",
+		        cb => test_clear.begin(cb),
+		        res => test_clear.end(res)
+		    );
 	    }
 	    
 	    public override void set_up()
@@ -134,46 +138,30 @@ namespace Diodon
 	        FsoFramework.Test.Assert.is_true(not_found == null, "Item was not null");
 	    }
 	    
+	    public async void test_clear() throws FsoFramework.Test.AssertError, GLib.Error
+	    {
+	        // add test data
+	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD, "1"));
+	        yield this.storage.add_item(new FileClipboardItem(ClipboardType.CLIPBOARD, Config.TEST_DATA_DIR + "Diodon-64x64.png"));
+	        Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Config.TEST_DATA_DIR + "Diodon-64x64.png");
+	        yield this.storage.add_item(new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD, pixbuf));
+	        
+	        yield this.storage.clear();
+	        
+	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(3);
+	        FsoFramework.Test.Assert.are_equal(0, items.size, "Items found");
+	    }
+	    
 	    public override void tear_down()
 	    {
 	        try {
 	            FsoFramework.Test.wait_for_async(1000,
-	                cb => empty_zeitgeist_storage.begin(cb),
-	                res => empty_zeitgeist_storage.end(res));
+	                cb => this.storage.clear.begin(cb),
+	                res => this.storage.clear.end(res));
 	        } catch(GLib.Error e) {
                 warning(e.message);
             }
         }
-	    
-	    private async void empty_zeitgeist_storage()
-	    {
-	        PtrArray templates = new PtrArray.sized(1);
-	        TimeRange time_range = new TimeRange.anytime();
-            Event ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
-                             new Subject.full ("clipboard*",
-                                               "",
-                                               NFO_DATA_CONTAINER,
-                                               "",
-                                               "",
-                                               "",
-                                               ""));
-            templates.add ((ev as GLib.Object).ref());
-            
-            try {
-	            Array event_ids = yield log.find_event_ids(
-	                time_range,
-	                (owned)templates, 
-                    StorageState.ANY,
-                    uint32.MAX,
-                    ResultType.MOST_RECENT_EVENTS,
-                    null
-                );
-                
-                yield log.delete_events((owned)event_ids, null);
-            } catch(GLib.Error e) {
-                warning(e.message);
-            }
-	    }
 	    
 	    /**
 	     * assert whether text item is added to Zeitgeist Log in assigned quantity
