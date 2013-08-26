@@ -9,6 +9,3 @@ if bld.env['UNITYLENS']:
     
 if bld.env['INDICATOR']:
     bld.add_subdirs('indicator')
-
-if bld.env['ZEITGEIST']:
-    bld.add_subdirs('zeitgeist')

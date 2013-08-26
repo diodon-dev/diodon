@@ -36,7 +36,6 @@ def options(opt):
     opt.add_option('--debug',                    action='store_true', default=False, dest='debug',     help='Debug mode')
     opt.add_option('--disable-indicator-plugin', action='store_true', default=False, dest='disable_indicator', help='Disable build of indicator plugin')
     opt.add_option('--enable-unitylens-plugin',  action='store_true', default=False, dest='enable_unitylens', help='Enable build of unity lens plugin')
-    opt.add_option('--enable-zeitgeist-plugin',  action='store_true', default=False, dest='enable_zeitgeist', help='Enable build of zeitgeist plugin')
     opt.add_option('--build-doc',                action='store_true', default=False, dest='doc', help='Build the api documentation')
     opt.add_option('--skiptests',                action='store_true', default=False, dest='skiptests', help='Skip unit tests')
 
