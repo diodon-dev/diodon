@@ -131,8 +131,7 @@ namespace Diodon
          */ 
         public void hide()
         {
-            preferences.hide();
-            preferences.destroy();
+            preferences.close();
         }
         
         /**
