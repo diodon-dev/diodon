@@ -26,6 +26,9 @@ namespace Diodon.Plugins
      */
     public class UnityScopePlugin : Peas.ExtensionBase, Peas.Activatable
     {
+        const string GROUP_NAME = Config.BUSNAME + ".Unity.Scope.Clipboard";
+        const string UNIQUE_NAME = Config.BUSOBJECTPATH + "/unity/scope/clipboard";
+        
         public Object object { get; construct; }
         
         public UnityScopePlugin()
@@ -35,16 +38,49 @@ namespace Diodon.Plugins
         
         public void activate()
         {
-            debug("activate unitylens plugin");
+            debug("activate unityscope plugin");
+            
+            // Create and set up clipboard category for the scope, including an icon
+            Icon catIcon = new ThemedIcon("diodon-panel");
+            Unity.Category cat = new Unity.Category("global", _("Clipboard"),
+                catIcon, Unity.CategoryRenderer.HORIZONTAL_TILE);
+            Unity.CategorySet cats = new Unity.CategorySet();
+            cats.add(cat);
+            
+            // Create and setup the scope
+            Unity.SimpleScope scope = new Unity.SimpleScope();
+            scope.group_name = GROUP_NAME;
+            scope.unique_name = UNIQUE_NAME;
+            scope.set_search_func(search);
+            scope.set_preview_func(preview);
+            scope.category_set = cats;
+            
+            Unity.ScopeDBusConnector connector = new Unity.ScopeDBusConnector(scope);
+            try {
+                connector.export();
+                Unity.ScopeDBusConnector.run();
+            } catch(Error error) {
+                warning("Failed to Unity ScopeDBusConnector': %s",
+                    error.message);
+            }
         }
 
         public void deactivate()
         {
-            debug("deactivate unitylens plugin");
+            debug("deactivate unityscope plugin");
         }
 
         public void update_state ()
         {
+        }
+        
+        private static void search(Unity.ScopeSearchBase search)
+        {
+        }
+        
+        private static Unity.AbstractPreview? preview(Unity.ResultPreviewer previewer)
+        {
+            return null;
         }
     }
 }
