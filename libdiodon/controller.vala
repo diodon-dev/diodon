@@ -316,7 +316,8 @@ namespace Diodon
             IClipboardItem current_item = history.get_current_item(type);
             
             // check if received item is different from last item
-            if(current_item == null || !IClipboardItem.equal_func(current_item, item)) {
+            // TODO: interface IClipboardItem should implement Hashable which currently ends in a compliation error
+            if(current_item == null || ((Gee.Hashable<IClipboardItem>)current_item).equal_to(item)) {
                 debug("received item of type %s from clipboard %d with label %s",
                     item.get_type().name(), type, label);
                 
@@ -381,7 +382,8 @@ namespace Diodon
                         // which will be synced to
                         IClipboardItem current_item = history.get_current_item(
                             clipboard_manager.clipboard_type);
-                        if(current_item == null || !IClipboardItem.equal_func(current_item, item)) {
+                        // TODO: interface IClipboardItem should implement Hashable which currently ends in a compliation error
+                        if(current_item == null || !((Gee.Hashable<IClipboardItem>)current_item).equal_to(item)) {
                             clipboard_manager.select_item(item);
                         }
                     }

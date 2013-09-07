@@ -101,58 +101,6 @@ namespace Diodon
          * @return true when match; otherwise false.
          */
         public abstract bool matches(string search, ClipboardItemType type);
-        
-        /**
-         * Check if given item is equal.
-         * TODO see todo equal_func
-         *
-         * @return true if equal; otherwise false.
-         *
-         */
-        public abstract bool equals(IClipboardItem *item);
-        
-        /**
-         * return hash code for implemented clipboard item
-         * TODO see todo hash_func
-         *
-         * @return hash code
-         *
-         */
-        public abstract uint hash();
-        
-        /**
-         * equal func helper comparing two clipboard items.
-         *
-         * TODO:
-         * in future releases of libgee (currently in development version 0.7.0)
-         * there will be a interface called hashable which should be implemented
-         * instead of this inconvenient equal func method.
-         * 
-         * @param item_a item to be compared
-         * @param item_b other item to be compared
-         * 
-         * @return true if equal; otherwise false.
-         */
-        public static bool equal_func(IClipboardItem* item_a, IClipboardItem* item_b)
-        {
-            return item_a->equals(item_b);
-        }
-        
-        /**
-         * hash func helper creating hash code for clipboard item.
-         * 
-         * TODO in future releases of libgee (currently in development version 0.7.0)
-         * there will be a interface called hashable which should be implemented
-         * instead of this inconvenient hash func method.
-         * 
-         * @param item item to create hash from
-         * 
-         * @return generated hash code
-         */
-        public static uint hash_func (IClipboardItem* item)
-        {
-            return item->hash();
-        }
     }    
 }
 

@@ -24,7 +24,7 @@ namespace Diodon
     /**
      * Represents a file clipboard item holding a path to a file.
      */
-    public class FileClipboardItem : GLib.Object, IClipboardItem
+    public class FileClipboardItem : IClipboardItem, Gee.Hashable<IClipboardItem>, GLib.Object
     {
         /**
          * a special target type for copying files so nautilus can paste it
@@ -197,23 +197,17 @@ namespace Diodon
             return matches;
         }
         
-        /**
-	     * {@inheritDoc}
-	     */
-	    public bool equals(IClipboardItem* item)
+	    public bool equal_to(IClipboardItem item)
         {
             bool equals = false;
             
             if(item is FileClipboardItem) {
-                equals = str_equal(_paths, item->get_text());
+                equals = str_equal(_paths, item.get_text());
             }
             
             return equals;
         }
         
-        /**
-	     * {@inheritDoc}
-	     */
 	    public uint hash()
         {
             return str_hash(_paths);
