@@ -294,6 +294,10 @@ namespace Diodon
                 else if(strcmp(NFO.IMAGE, interpreation) == 0) {
                     item = new ImageClipboardItem.with_payload(ClipboardType.NONE, payload);
                 }
+            } catch(GLib.FileError e) {  
+                // file errors happen constantly when e.g. some moved/deleted a file which has been
+                // copied in the past. Therefore we just note this as debug.
+                debug("Could not create FileClipboardItem: %s", e.message);  
             } catch (Error e) {
                 warning ("loading of item of interpreation %s with data %s failed. Cause: %s",
                     interpreation, text, e.message);
