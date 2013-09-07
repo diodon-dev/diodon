@@ -11,6 +11,6 @@ prog = bld.new_task_gen (
   uselib = 'GTK UNIQUE GIOUNIX ZEITGEIST',
   use = 'libdiodon',
   cflags = ['-include', 'config.h'],
-  packages = 'gtk+-3.0 unique-3.0 gio-unix-2.0 config zeitgeist-1.0',
+  packages = 'gtk+-3.0 unique-3.0 gio-unix-2.0 config zeitgeist-2.0',
   source = bld.path.ant_glob (incl='**/*.vala'))
 

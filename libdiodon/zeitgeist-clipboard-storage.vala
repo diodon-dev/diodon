@@ -35,7 +35,7 @@ namespace Diodon
         public ZeitgeistClipboardStorage()
         {
             this.log = Zeitgeist.Log.get_default();
-            this.index = new Zeitgeist.Index();
+            this.index = new Index();
         }
         
         /**
@@ -48,16 +48,19 @@ namespace Diodon
             debug("Remove item with given checksum %s", item.get_checksum());
             
             try {
-                PtrArray templates = create_item_event_templates(item);
-                Array event_ids = yield log.find_event_ids(
+                GenericArray<Event> templates = create_item_event_templates(item);
+                uint32[] ids = yield log.find_event_ids(
                     new TimeRange.anytime(),
-                    (owned)templates, 
+                    templates,
                     StorageState.ANY,
                     uint32.MAX,
                     ResultType.MOST_RECENT_EVENTS, // all events
                     null);
                 
-                yield log.delete_events((owned)event_ids, null);
+                Array<uint32> events = new Array<uint32>();
+                events.append_vals(ids, ids.length);
+                
+                yield log.delete_events(events, null);
             } catch(GLib.Error e) {
                 warning("Remove item %s not successful, error: %s",
                     item.get_text(), e.message);
@@ -74,23 +77,27 @@ namespace Diodon
         {
             debug("Get item with given checksum %s", checksum);
             
-            PtrArray templates = new PtrArray.sized(1);
+            GenericArray<Event> templates = new GenericArray<Event>();
 	        TimeRange time_range = new TimeRange.anytime();
-            Event ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
-                             new Subject.full ("clipboard://" + checksum,
-                                               "",
-                                               NFO_DATA_CONTAINER,
-                                               "",
-                                               "",
-                                               "",
-                                               ""));
-            templates.add ((ev as GLib.Object).ref());
+            Event template = new Event.full(
+                            ZG.CREATE_EVENT,
+                            ZG.USER_ACTIVITY,
+                            null,
+                            null,
+                            new Subject.full ("clipboard://" + checksum,
+                                               null,
+                                               NFO.DATA_CONTAINER,
+                                               null,
+                                               null,
+                                               null,
+                                               null));
+            templates.add(template);
             
             IClipboardItem item = null;
             try {
-	            Zeitgeist.ResultSet events = yield log.find_events(
+	            ResultSet events = yield log.find_events(
 	                time_range,
-	                (owned)templates, 
+	                templates, 
                     StorageState.ANY,
                     1,
                     // this will filter duplicates according to their uri
@@ -98,13 +105,13 @@ namespace Diodon
                     null
                 );
                 
-                if(events.size() > 0) {
-                    Event event = events.next();
+                foreach(Event event in events) {
                     if (event.num_subjects() > 0) {
                         Subject subject = event.get_subject(0);
                         item = create_clipboard_item(event, subject);
                     }
                 }
+                
             } catch(GLib.Error e) {
                 warning("Get item by checksum not successful, error: %s",
                     e.message);
@@ -129,22 +136,26 @@ namespace Diodon
             debug("Get recent %u items", num_items);
             
             Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
-            PtrArray templates = new PtrArray.sized(1);
+            GenericArray<Event> templates = new GenericArray<Event>();
 	        TimeRange time_range = new TimeRange.anytime();
-            Event ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
-                             new Subject.full ("clipboard*",
-                                               "",
-                                               NFO_DATA_CONTAINER,
-                                               "",
-                                               "",
-                                               "",
-                                               ""));
-            templates.add ((ev as GLib.Object).ref());
+            Event template = new Event.full (
+                            ZG.CREATE_EVENT,
+                            ZG.USER_ACTIVITY,
+                            null,
+                            null,
+                            new Subject.full ("clipboard*",
+                                               null,
+                                               NFO.DATA_CONTAINER,
+                                               null,
+                                               null,
+                                               null,
+                                               null));
+            templates.add (template);
             
             try {
-	            Zeitgeist.ResultSet events = yield log.find_events(
+	            ResultSet events = yield log.find_events(
 	                time_range,
-	                (owned)templates, 
+	                templates, 
                     StorageState.ANY,
                     num_items,
                     // this will filter duplicates according to their uri
@@ -185,33 +196,36 @@ namespace Diodon
                 string interpretation = get_interpretation(item);
                 string? origin = Utility.get_path_of_active_application();
                 
-                Zeitgeist.Subject subject = new Zeitgeist.Subject();
-                subject.set_uri("clipboard://" + item.get_checksum());
-                subject.set_interpretation(interpretation);
-                subject.set_manifestation(Zeitgeist.NFO_DATA_CONTAINER);
-                subject.set_mimetype(item.get_mime_type());
+                Subject subject = new Subject();
+                subject.uri = "clipboard://" + item.get_checksum();
+                subject.interpretation = interpretation;
+                subject.manifestation = NFO.DATA_CONTAINER;
+                subject.mimetype = item.get_mime_type();
                 if(origin != null) {
-                    subject.set_origin(origin);
+                    subject.origin = origin;
                 }
-                subject.set_text(item.get_text());
+                subject.text = item.get_text();
                 
-                Zeitgeist.Event event = new Zeitgeist.Event();
+                Event event = new Event();
                 // TODO: this should actually be a copy event
-                event.set_interpretation(Zeitgeist.ZG_CREATE_EVENT);
-                event.set_manifestation(Zeitgeist.ZG_USER_ACTIVITY);
-                event.set_actor("application://diodon.desktop");
+                event.interpretation = ZG.CREATE_EVENT;
+                event.manifestation = ZG.USER_ACTIVITY;
+                event.actor = "application://diodon.desktop";
                 event.add_subject(subject);
                 
                 ByteArray? payload = item.get_payload();
                 if(payload != null) {
-                    event.set_payload((owned)payload);
+                    event.payload = payload;
                 }
                 
                 TimeVal cur_time = TimeVal();
-                int64 timestamp = Zeitgeist.Timestamp.from_timeval(cur_time);
-                event.set_timestamp(timestamp);
+                int64 timestamp = Timestamp.from_timeval(cur_time);
+                event.timestamp = timestamp;
                 
-                yield log.insert_events(null, event);
+                GenericArray<Event> events = new GenericArray<Event>();
+                events.add(event);
+                
+                yield log.insert_events(events);
             } catch(GLib.Error e) {
                 warning("Add item %s not successful, error: %s",
                     item.get_text(), e.message);
@@ -225,29 +239,37 @@ namespace Diodon
         {
             debug("Clear clipboard history");
             
-            PtrArray templates = new PtrArray.sized(1);
+            GenericArray<Event> templates = new GenericArray<Event>();
 	        TimeRange time_range = new TimeRange.anytime();
-            Event ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
-                             new Subject.full ("clipboard*",
-                                               "",
-                                               NFO_DATA_CONTAINER,
-                                               "",
-                                               "",
-                                               "",
-                                               ""));
-            templates.add ((ev as GLib.Object).ref());
+            Event template = new Event.full (
+                ZG.CREATE_EVENT,
+                ZG.USER_ACTIVITY,
+                null,
+                null,
+                new Subject.full (
+                    "clipboard*",
+                    null,
+                    NFO.DATA_CONTAINER,
+                    null,
+                    null,
+                    null,
+                    null));
+            templates.add(template);
             
             try {
-	            Array event_ids = yield log.find_event_ids(
+	            uint32[] ids = yield log.find_event_ids(
 	                time_range,
-	                (owned)templates, 
+	                templates, 
                     StorageState.ANY,
                     uint32.MAX,
                     ResultType.MOST_RECENT_EVENTS,
                     null
                 );
                 
-                yield log.delete_events((owned)event_ids, null);
+                Array<uint32> events = new Array<uint32>();
+                events.append_vals(ids, ids.length);
+                yield log.delete_events(events);
+                
             } catch(GLib.Error e) {
                 warning("Failed to clear items: %s", e.message);
             }
@@ -255,21 +277,21 @@ namespace Diodon
         
         private IClipboardItem? create_clipboard_item(Event event, Subject subject)
         {
-            string interpreation = subject.get_interpretation();
+            string interpreation = subject.interpretation;
             IClipboardItem item = null;
-            string text = subject.get_text();
-            unowned ByteArray payload = event.get_payload();
+            string text = subject.text;
+            unowned ByteArray payload = event.payload;
             
             try {
-                if(strcmp(NFO_PLAIN_TEXT_DOCUMENT, interpreation) == 0) {
+                if(strcmp(NFO.PLAIN_TEXT_DOCUMENT, interpreation) == 0) {
                    item = new TextClipboardItem(ClipboardType.NONE, text); 
                 }
                 
-                else if(strcmp(NFO_FILE_DATA_OBJECT, interpreation) == 0) {
+                else if(strcmp(NFO.FILE_DATA_OBJECT, interpreation) == 0) {
                     item = new FileClipboardItem(ClipboardType.NONE, text);
                 } 
                     
-                else if(strcmp(NFO_IMAGE, interpreation) == 0) {
+                else if(strcmp(NFO.IMAGE, interpreation) == 0) {
                     item = new ImageClipboardItem.with_payload(ClipboardType.NONE, payload);
                 }
             } catch (Error e) {
@@ -282,34 +304,36 @@ namespace Diodon
         
         private string get_interpretation(IClipboardItem item)
         {
-            string interpretation = NFO_PLAIN_TEXT_DOCUMENT;
+            string interpretation = NFO.PLAIN_TEXT_DOCUMENT;
             if(item is FileClipboardItem) {
-                interpretation = NFO_FILE_DATA_OBJECT;
+                interpretation = NFO.FILE_DATA_OBJECT;
             }
             else if (item is ImageClipboardItem) {
-                interpretation = NFO_IMAGE;
+                interpretation = NFO.IMAGE;
             }
             
             return interpretation;
         }
         
-        private PtrArray create_item_event_templates(IClipboardItem item)
+        private GenericArray<Event> create_item_event_templates(IClipboardItem item)
         {
-            PtrArray events = new PtrArray.sized(1);
-            Event ev = new Zeitgeist.Event.full(
-                ZG_CREATE_EVENT,
-                ZG_USER_ACTIVITY,
+            GenericArray<Event> events = new GenericArray<Event>();
+            
+            Event event = new Event.full(
+                ZG.CREATE_EVENT,
+                ZG.USER_ACTIVITY,
                 "application://diodon.desktop",
+                null, // origin not necessary
                 new Subject.full (
                     "clipboard://" + item.get_checksum(),
                     get_interpretation(item),
-                    NFO_DATA_CONTAINER,
-                    "",
-                    "",
-                    "",
-                    ""));
+                    NFO.DATA_CONTAINER,
+                    null,
+                    null,
+                    null,
+                    null));
                     
-            events.add ((ev as GLib.Object).ref());
+            events.add(event);
             return events;
         }
     }  

@@ -168,23 +168,23 @@ namespace Diodon
          */
 	    private async void assert_text_item(string text, uint qty) throws FsoFramework.Test.AssertError
 	    {
-	       
-	        PtrArray templates = new PtrArray.sized(1);
+	        GenericArray<Event> templates = new GenericArray<Event>();
 	        TimeRange time_range = new TimeRange.anytime();
-            Event ev = new Zeitgeist.Event.full (ZG_CREATE_EVENT, ZG_USER_ACTIVITY, "",
-                             new Subject.full ("clipboard*",
-                                               NFO_PLAIN_TEXT_DOCUMENT,
-                                               NFO_DATA_CONTAINER,
-                                               "",
-                                               "",
-                                               text,
-                                               ""));
-            templates.add ((ev as GLib.Object).ref());
+            Event template = new Zeitgeist.Event.full (ZG.CREATE_EVENT, ZG.USER_ACTIVITY, null, null,
+                                new Subject.full (
+                                    "clipboard*",
+                                    NFO.PLAIN_TEXT_DOCUMENT,
+                                    NFO.DATA_CONTAINER,
+                                    null,
+                                    null,
+                                    text,
+                                    null));
+            templates.add(template);
                 
             try {
 	            ResultSet results = yield this.log.find_events(
                     time_range,
-                    (owned)templates,
+                    templates,
                     StorageState.ANY,
                     // not only one resp. qty as the event might be added more than
                     // once resp. qty and in such a case the test should fail
