@@ -35,7 +35,7 @@ def options(opt):
     opt.add_option('--update-po',                action='store_true', default=False, dest='update_po', help='Update localization files')
     opt.add_option('--debug',                    action='store_true', default=False, dest='debug',     help='Debug mode')
     opt.add_option('--disable-indicator-plugin', action='store_true', default=False, dest='disable_indicator', help='Disable build of indicator plugin')
-    opt.add_option('--enable-unitylens-plugin',  action='store_true', default=False, dest='enable_unitylens', help='Enable build of unity lens plugin')
+    opt.add_option('--enable-unityscope-plugin', action='store_true', default=False, dest='enable_unityscope', help='Enable build of unity scope plugin')
     opt.add_option('--build-doc',                action='store_true', default=False, dest='doc', help='Build the api documentation')
     opt.add_option('--skiptests',                action='store_true', default=False, dest='skiptests', help='Skip unit tests')
 
@@ -71,11 +71,10 @@ def configure(conf):
         conf.check_cfg(package='appindicator3-0.1', uselib_store='APPINDICATOR', atleast_version='0.3.0',  mandatory=1, args='--cflags --libs')
         ACTIVE_PLUGINS = "'indicator'"
         
-    # check if unity lens plugin should be built
-    conf.env['UNITYLENS'] = Options.options.enable_unitylens
-    if Options.options.enable_unitylens:
-        conf.check_cfg(package='unity',   uselib_store='UNITY', atleast_version='5.8.0',  mandatory=1, args='--cflags --libs')
-        conf.check_cfg(package='dee-1.0', uselib_store='DEE',   atleast_version='0.5.18', mandatory=1, args='--cflags --libs')
+    # check if unity scope plugin should be built
+    conf.env['UNITYSCOPE'] = Options.options.enable_unityscope
+    if Options.options.enable_unityscope:
+        conf.check_cfg(package='unity',   uselib_store='UNITY', atleast_version='7.1.0',  mandatory=1, args='--cflags --libs')
 
     # FIXME: conf.env and conf.define should not both be needed?
     conf.define('PACKAGE_NAME', APPNAME)

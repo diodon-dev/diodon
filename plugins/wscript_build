@@ -4,8 +4,8 @@
 
 import Options
 
-if bld.env['UNITYLENS']:
-    bld.add_subdirs('unitylens')
+if bld.env['UNITYSCOPE']:
+    bld.add_subdirs('unityscope')
     
 if bld.env['INDICATOR']:
     bld.add_subdirs('indicator')

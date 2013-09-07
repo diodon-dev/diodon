@@ -1,0 +1,7 @@
+[Plugin]
+Module=unityscope
+_Name=Unity Scope
+_Description=Access clipboard history with the unity dash.
+Authors=Oliver Sauder <os@esite.ch>
+_Copyright=Copyright © 2013 Diodon Team
+
