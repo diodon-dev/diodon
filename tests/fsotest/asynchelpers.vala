@@ -34,7 +34,7 @@ namespace FsoFramework.Test
 
         public SignalWaiter(owned Predicate predicate)
         {
-            this.predicate = predicate;
+            this.predicate = (owned)predicate;
         }
 
         public int callback()
@@ -83,7 +83,7 @@ namespace FsoFramework.Test
         // FIXME: The fixture should push a new context in set_up and
         // pop it back on clean-up! (But it's GLib 2.21.0+ and
         // I still have 2.20.4)
-        var waiter = new SignalWaiter(predicate);
+        var waiter = new SignalWaiter((owned)predicate);
         // Connect to the signal
         var sh = Signal.connect_swapped(emitter, signame, (Callback)SignalWaiter.callback, waiter);
         // Run the block to trigger the signal
