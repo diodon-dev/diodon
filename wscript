@@ -45,7 +45,7 @@ def configure(conf):
     	conf.load('valadoc')
     
     conf.load('vala', funs='')
-    conf.check_vala(min_version=(0,16,0))
+    conf.check_vala(min_version=(0,20,0))
     
     conf.check_cfg(package='gdk-3.0',           uselib_store='GDK',          atleast_version='3.0.8',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gdk-x11-3.0',       uselib_store='GDKX',         atleast_version='3.0.8',  mandatory=1, args='--cflags --libs')
