@@ -18,6 +18,21 @@ lib = bld.shlib (
 lib.install_path = os.path.join(bld.env['PLUGINS_DIR'], lib.target)
 
 bld.new_task_gen (
+  features = "subst",
+  source= "diodon.scope.in.in",
+  target= "diodon.scope.in",
+  GETTEXT_PACKAGE = bld.env['GETTEXT_PACKAGE'],
+  BUSNAME = bld.env['BUSNAME'],
+  BUSOBJECTPATH = bld.env['BUSOBJECTPATH'])
+    
+bld.new_task_gen (
+  features = 'intltool_in',
+  podir = '../../po',
+  source = 'diodon.scope.in',
+  flags = ["-d", "-q", "-u", "-c"],
+  install_path = "${DATADIR}/unity/scopes/clipboard")
+
+bld.new_task_gen (
   features = 'intltool_in',
   podir = '../../po',
   source = 'unityscope.plugin.in',
