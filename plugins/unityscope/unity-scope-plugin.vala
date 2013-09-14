@@ -29,18 +29,42 @@ namespace Diodon.Plugins
         const string GROUP_NAME = Config.BUSNAME + ".Unity.Scope.Clipboard";
         const string UNIQUE_NAME = Config.BUSOBJECTPATH + "/unity/scope/clipboard";
         const string CLIPBOARD_URI = "clipboard://";
+        private uint dbus_id;
         
         public Object object { get; construct; }
         
         public UnityScopePlugin()
         {
             Object();
+            dbus_id = 0;
         }
         
         public void activate()
         {
             debug("activate unityscope plugin");
             
+            if(dbus_id == 0) {
+                // Export the scope on the session bus - as everywhere else
+                // these values should match those definedd in the .scope file 
+                dbus_id = Bus.own_name(BusType.SESSION, GROUP_NAME,
+                    BusNameOwnerFlags.NONE, on_bus_acquired, on_name_acquired, on_name_lost);
+             }
+        }
+
+        public void deactivate()
+        {
+            debug("deactivate unityscope plugin");
+        }
+
+        public void update_state()
+        {
+        }
+        
+        /**
+         * Called when bus has been acquired
+         */
+        private void on_bus_acquired(DBusConnection conn, string name)
+        {
             // Create and set up clipboard category for the scope, including an icon
             Icon catIcon = new ThemedIcon("diodon-panel");
             Unity.Category cat = new Unity.Category("global", _("Clipboard"),
@@ -65,14 +89,22 @@ namespace Diodon.Plugins
                     error.message);
             }
         }
-
-        public void deactivate()
+        
+        /**
+         * Called when dbus connection name has been accired.
+         */
+        private void on_name_acquired(DBusConnection conn, string name)
         {
-            debug("deactivate unityscope plugin");
+            debug("Acquired name %s. We're the main instance.\nAll system are go.",
+                   name);
         }
-
-        public void update_state()
+        
+        /**
+         * Called when dbus connection has been lost
+         */
+        private void on_name_lost(DBusConnection conn, string name)
         {
+            debug("Another daemon is running. Bailing out.");
         }
         
         private static void search(Unity.ScopeSearchBase search)
@@ -99,7 +131,11 @@ namespace Diodon.Plugins
         private static Gee.List<IClipboardItem> get_results(string search_query)
         {
             // TODO: access zeitgeist
-            return null;
+            Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
+            items.add(new TextClipboardItem(ClipboardType.NONE, "test1"));
+            items.add(new TextClipboardItem(ClipboardType.NONE, "test2"));
+            
+            return items;
         }
         
         private static Unity.AbstractPreview? preview(Unity.ResultPreviewer previewer)
