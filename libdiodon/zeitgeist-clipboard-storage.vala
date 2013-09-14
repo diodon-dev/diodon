@@ -109,6 +109,7 @@ namespace Diodon
                     if (event.num_subjects() > 0) {
                         Subject subject = event.get_subject(0);
                         item = create_clipboard_item(event, subject);
+                        break;
                     }
                 }
                 
@@ -125,32 +126,52 @@ namespace Diodon
         }
         
         /**
+         * Get clipboard items which match given search query
+         *
+         * @param search_query query to search items for
+         * @return clipboard items matching given search query
+         */
+        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query)
+        {
+            debug("Get items by search query %s", search_query);
+            
+            TimeRange time_range = new TimeRange.anytime();
+            GenericArray<Event> templates = create_all_items_event_templates();
+            
+            try {
+                ResultSet events = yield index.search(
+                    search_query,
+                    time_range,
+                    templates,
+                    0,
+                    100, // setting limit to 100 for now, for memory reasons
+                    ResultType.RELEVANCY,
+                    null); 
+                    
+                return create_clipboard_items(events);
+                
+            } catch(GLib.Error e) {
+                warning("Get items by search query not successful, error: %s",
+                    e.message);
+            }
+            
+            return new Gee.ArrayList<IClipboardItem>();;
+        }
+        
+        /**
          * Get most recent items limited by assigned num_items. List will filter
          * out any duplicates according to their checksum resp. uri in zeitgeist.
          * Most recent item will be on the top.
          *
          * @param num_items number of recent items
+         * @return list of recent clipboard items
          */
         public async Gee.List<IClipboardItem> get_recent_items(uint32 num_items)
         {
             debug("Get recent %u items", num_items);
             
-            Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
-            GenericArray<Event> templates = new GenericArray<Event>();
-	        TimeRange time_range = new TimeRange.anytime();
-            Event template = new Event.full (
-                            ZG.CREATE_EVENT,
-                            ZG.USER_ACTIVITY,
-                            null,
-                            null,
-                            new Subject.full ("clipboard*",
-                                               null,
-                                               NFO.DATA_CONTAINER,
-                                               null,
-                                               null,
-                                               null,
-                                               null));
-            templates.add (template);
+            TimeRange time_range = new TimeRange.anytime();
+            GenericArray<Event> templates = create_all_items_event_templates();
             
             try {
 	            ResultSet events = yield log.find_events(
@@ -163,26 +184,14 @@ namespace Diodon
                     null
                 );
                 
-                // convert events to clipoard item
-                foreach(Event event in events) {
-                    if (event.num_subjects() > 0) {
-                        Subject subject = event.get_subject(0);
-                        IClipboardItem item = create_clipboard_item(event, subject);
-                        if(item != null) {
-                            items.add(item);
-                        }
-                    } else {
-                      warning ("Unexpected event without subject");
-                      continue;
-                    }
-                }
+                return create_clipboard_items(events);
                 
             } catch(GLib.Error e) {
                 warning("Get recent items not successful, error: %s",
                     e.message);
             }
             
-            return items;
+            return new Gee.ArrayList<IClipboardItem>();;
         }
         
         /**
@@ -239,22 +248,8 @@ namespace Diodon
         {
             debug("Clear clipboard history");
             
-            GenericArray<Event> templates = new GenericArray<Event>();
+            GenericArray<Event> templates = create_all_items_event_templates();
 	        TimeRange time_range = new TimeRange.anytime();
-            Event template = new Event.full (
-                ZG.CREATE_EVENT,
-                ZG.USER_ACTIVITY,
-                null,
-                null,
-                new Subject.full (
-                    "clipboard*",
-                    null,
-                    NFO.DATA_CONTAINER,
-                    null,
-                    null,
-                    null,
-                    null));
-            templates.add(template);
             
             try {
 	            uint32[] ids = yield log.find_event_ids(
@@ -317,6 +312,49 @@ namespace Diodon
             }
             
             return interpretation;
+        }
+        
+        private Gee.List<IClipboardItem> create_clipboard_items(ResultSet events)
+        {
+            Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
+            
+            foreach(Event event in events) {
+                if (event.num_subjects() > 0) {
+                    Subject subject = event.get_subject(0);
+                    IClipboardItem item = create_clipboard_item(event, subject);
+                    if(item != null) {
+                        items.add(item);
+                    }
+                } else {
+                  warning ("Unexpected event without subject");
+                  continue;
+                }
+            }
+            
+            return items;
+        }
+        
+        /**
+         * Create array of event templates which matches all clipboard items.
+         */
+        private GenericArray<Event> create_all_items_event_templates()
+        {
+            GenericArray<Event> templates = new GenericArray<Event>();
+            Event template = new Event.full (
+                            ZG.CREATE_EVENT,
+                            ZG.USER_ACTIVITY,
+                            null,
+                            null,
+                            new Subject.full ("clipboard*",
+                                               null,
+                                               NFO.DATA_CONTAINER,
+                                               null,
+                                               null,
+                                               null,
+                                               null));
+            templates.add (template);
+            
+            return templates;
         }
         
         private GenericArray<Event> create_item_event_templates(IClipboardItem item)

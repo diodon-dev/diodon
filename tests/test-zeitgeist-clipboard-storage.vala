@@ -54,6 +54,10 @@ namespace Diodon
 		        cb => test_clear.begin(cb),
 		        res => test_clear.end(res)
 		    );
+//		    add_async_test("test_get_items_by_search_query",
+//		        cb => test_get_items_by_search_query.begin(cb),
+//		        res => test_get_items_by_search_query.end(res)
+//		    );
 	    }
 	    
 	    public override void set_up()
@@ -150,6 +154,19 @@ namespace Diodon
 	        
 	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(3);
 	        FsoFramework.Test.Assert.are_equal(0, items.size, "Items found");
+	    }
+	    
+	    public async void test_get_items_by_search_query() throws FsoFramework.Test.AssertError, GLib.Error
+	    {
+	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD, "TestName"));
+	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD, "TestName"));
+	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD, "SampleName"));
+	        
+	        Gee.List<IClipboardItem> items = yield this.storage.get_items_by_search_query("name");
+	        FsoFramework.Test.Assert.are_equal(2, items.size, "Invalid number of items found");
+	        
+	        items = yield this.storage.get_items_by_search_query("sample");
+	        FsoFramework.Test.Assert.are_equal(1, items.size, "Invalid number of items found");
 	    }
 	    
 	    public override void tear_down()

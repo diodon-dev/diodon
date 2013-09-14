@@ -28,6 +28,7 @@ namespace Diodon.Plugins
     {
         const string GROUP_NAME = Config.BUSNAME + ".Unity.Scope.Clipboard";
         const string UNIQUE_NAME = Config.BUSOBJECTPATH + "/unity/scope/clipboard";
+        const string CLIPBOARD_URI = "clipboard://";
         
         public Object object { get; construct; }
         
@@ -60,7 +61,7 @@ namespace Diodon.Plugins
                 connector.export();
                 Unity.ScopeDBusConnector.run();
             } catch(Error error) {
-                warning("Failed to Unity ScopeDBusConnector': %s",
+                warning("Failed to export Unity ScopeDBusConnector': %s",
                     error.message);
             }
         }
@@ -70,12 +71,35 @@ namespace Diodon.Plugins
             debug("deactivate unityscope plugin");
         }
 
-        public void update_state ()
+        public void update_state()
         {
         }
         
         private static void search(Unity.ScopeSearchBase search)
         {
+            Gee.List<IClipboardItem> items = get_results(search.search_context.search_query);
+            
+            foreach(IClipboardItem item in items) {
+                Unity.ScopeResult result = Unity.ScopeResult();
+                
+                result.uri = CLIPBOARD_URI + item.get_checksum();
+                result.title = item.get_label();
+                result.icon_hint = item.get_icon().to_string();
+                result.category = 0;
+                result.result_type = Unity.ResultType.DEFAULT; //?
+                result.mimetype = item.get_mime_type();
+                result.comment = item.get_text();
+                result.dnd_uri = result.uri; //?
+                // TODO: metadata
+                
+                search.search_context.result_set.add_result(result);
+            }
+        }
+        
+        private static Gee.List<IClipboardItem> get_results(string search_query)
+        {
+            // TODO: access zeitgeist
+            return null;
         }
         
         private static Unity.AbstractPreview? preview(Unity.ResultPreviewer previewer)
