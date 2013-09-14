@@ -24,7 +24,7 @@ namespace Diodon
     /**
      * Represents a text clipboard item holding simple text.
      */
-    public class TextClipboardItem : GLib.Object, Gee.Hashable<IClipboardItem>, IClipboardItem
+    public class TextClipboardItem : GLib.Object, IClipboardItem
     {
         private string _text;
         private ClipboardType _clipboard_type;
@@ -149,12 +149,12 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-	    public bool equal_to(IClipboardItem item)
+	    public bool equals(IClipboardItem* item)
         {
             bool equals = false;
             
             if(item is TextClipboardItem) {
-                equals = str_equal(_text, item.get_text());
+                equals = str_equal(_text, item->get_text());
             }
             
             return equals;

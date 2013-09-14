@@ -24,6 +24,10 @@ namespace Diodon
     /**
      * Clipboard item interface to be implemented by various different
      * clipboard item types such as Text,File or Image.
+     *
+     * TODO
+     * interface IClipboardItem should extends Gee.Hashable which currently ends
+     * in a compliation error of classes implenting this interface.
      */
     public interface IClipboardItem : GLib.Object
     {
@@ -101,6 +105,47 @@ namespace Diodon
          * @return true when match; otherwise false.
          */
         public abstract bool matches(string search, ClipboardItemType type);
+        
+        /**
+         * Check if given item is equal.
+         *
+         * @return true if equal; otherwise false.
+         *
+         */
+        public abstract bool equals(IClipboardItem *item);
+        
+        /**
+         * return hash code for implemented clipboard item
+         *
+         * @return hash code
+         *
+         */
+        public abstract uint hash();
+        
+        /**
+         * equal func helper comparing two clipboard items.
+         *
+         * @param item_a item to be compared
+         * @param item_b other item to be compared
+         * 
+         * @return true if equal; otherwise false.
+         */
+        public static bool equal_func(IClipboardItem* item_a, IClipboardItem* item_b)
+        {
+            return item_a->equals(item_b);
+        }
+        
+        /**
+         * hash func helper creating hash code for clipboard item.
+         * 
+         * @param item item to create hash from
+         * 
+         * @return generated hash code
+         */
+        public static uint hash_func (IClipboardItem* item)
+        {
+            return item->hash();
+        }
     }    
 }
 

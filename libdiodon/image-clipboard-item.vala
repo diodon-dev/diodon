@@ -24,7 +24,7 @@ namespace Diodon
     /**
      * An image clipboard item representing such in a preview image.
      */
-    public class ImageClipboardItem : GLib.Object, Gee.Hashable<IClipboardItem>, IClipboardItem
+    public class ImageClipboardItem : GLib.Object, IClipboardItem
     {
         private ClipboardType _clipboard_type;
         private string _checksum; // checksum to identify pic content
@@ -168,13 +168,13 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-	    public bool equal_to(IClipboardItem item)
+	    public bool equals(IClipboardItem* item)
         {
             bool equals = false;
             
             if(item is ImageClipboardItem) {
-                ImageClipboardItem image_item = (ImageClipboardItem)item;
-                equals = str_equal(_checksum, image_item._checksum);
+                ImageClipboardItem* image_item = (ImageClipboardItem*)item;
+                equals = str_equal(_checksum, image_item->_checksum);
             }
             
             return equals;
