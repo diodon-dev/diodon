@@ -29,42 +29,18 @@ namespace Diodon.Plugins
         const string GROUP_NAME = Config.BUSNAME + ".Unity.Scope.Clipboard";
         const string UNIQUE_NAME = Config.BUSOBJECTPATH + "/unity/scope/clipboard";
         const string CLIPBOARD_URI = "clipboard://";
-        private uint dbus_id;
         
         public Object object { get; construct; }
         
         public UnityScopePlugin()
         {
             Object();
-            dbus_id = 0;
         }
         
         public void activate()
         {
             debug("activate unityscope plugin");
             
-            if(dbus_id == 0) {
-                // Export the scope on the session bus - as everywhere else
-                // these values should match those definedd in the .scope file 
-                dbus_id = Bus.own_name(BusType.SESSION, GROUP_NAME,
-                    BusNameOwnerFlags.NONE, on_bus_acquired, on_name_acquired, on_name_lost);
-             }
-        }
-
-        public void deactivate()
-        {
-            debug("deactivate unityscope plugin");
-        }
-
-        public void update_state()
-        {
-        }
-        
-        /**
-         * Called when bus has been acquired
-         */
-        private void on_bus_acquired(DBusConnection conn, string name)
-        {
             // Create and set up clipboard category for the scope, including an icon
             Icon catIcon = new ThemedIcon("diodon-panel");
             Unity.Category cat = new Unity.Category("global", _("Clipboard"),
@@ -76,7 +52,7 @@ namespace Diodon.Plugins
             Unity.SimpleScope scope = new Unity.SimpleScope();
             scope.group_name = GROUP_NAME;
             scope.unique_name = UNIQUE_NAME;
-            scope.set_search_func(search);
+            scope.set_search_async_func(search_async);
             scope.set_preview_func(preview);
             scope.category_set = cats;
             
@@ -89,27 +65,24 @@ namespace Diodon.Plugins
                     error.message);
             }
         }
-        
-        /**
-         * Called when dbus connection name has been accired.
-         */
-        private void on_name_acquired(DBusConnection conn, string name)
+
+        public void deactivate()
         {
-            debug("Acquired name %s. We're the main instance.\nAll system are go.",
-                   name);
+            debug("deactivate unityscope plugin");
+        }
+
+        public void update_state()
+        {
         }
         
-        /**
-         * Called when dbus connection has been lost
-         */
-        private void on_name_lost(DBusConnection conn, string name)
+        private void search_async(Unity.ScopeSearchBase search, Unity.ScopeSearchBaseCallback callback)
         {
-            debug("Another daemon is running. Bailing out.");
+           this.search.begin(search, () => { callback(search); });
         }
         
-        private static void search(Unity.ScopeSearchBase search)
+        private async void search(Unity.ScopeSearchBase search)
         {
-            Gee.List<IClipboardItem> items = get_results(search.search_context.search_query);
+            Gee.List<IClipboardItem> items = yield get_results(search.search_context.search_query);
             
             foreach(IClipboardItem item in items) {
                 Unity.ScopeResult result = Unity.ScopeResult();
@@ -128,17 +101,14 @@ namespace Diodon.Plugins
             }
         }
         
-        private static Gee.List<IClipboardItem> get_results(string search_query)
+        private async Gee.List<IClipboardItem> get_results(string search_query)
         {
-            // TODO: access zeitgeist
-            Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
-            items.add(new TextClipboardItem(ClipboardType.NONE, "test1"));
-            items.add(new TextClipboardItem(ClipboardType.NONE, "test2"));
+            Controller controller = object as Controller;
             
-            return items;
+            return yield controller.get_items_by_search_query(search_query);
         }
         
-        private static Unity.AbstractPreview? preview(Unity.ResultPreviewer previewer)
+        private Unity.AbstractPreview? preview(Unity.ResultPreviewer previewer)
         {
             return null;
         }

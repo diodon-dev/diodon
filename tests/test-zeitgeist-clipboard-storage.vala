@@ -54,10 +54,11 @@ namespace Diodon
 		        cb => test_clear.begin(cb),
 		        res => test_clear.end(res)
 		    );
-//		    add_async_test("test_get_items_by_search_query",
-//		        cb => test_get_items_by_search_query.begin(cb),
-//		        res => test_get_items_by_search_query.end(res)
-//		    );
+		    // TODO: issue to run DBus service in test
+		    //add_async_test("test_get_items_by_search_query",
+		    //    cb => test_get_items_by_search_query.begin(cb),
+		    //    res => test_get_items_by_search_query.end(res)
+		    //);
 	    }
 	    
 	    public override void set_up()

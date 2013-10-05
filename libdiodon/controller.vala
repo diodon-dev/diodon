@@ -341,6 +341,17 @@ namespace Diodon
         }
         
         /**
+         * Get clipboard items which match given search query
+         *
+         * @param search_query query to search items for
+         * @return clipboard items matching given search query
+         */
+        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query)
+        {
+            return yield history.get_items_by_search_query(search_query);
+        }
+        
+        /**
          * Get currently selected item for given clipboard type
          * 
          * @param type clipboard type

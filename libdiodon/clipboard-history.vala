@@ -59,6 +59,17 @@ namespace Diodon
         }
         
         /**
+         * Get clipboard items which match given search query
+         *
+         * @param search_query query to search items for
+         * @return clipboard items matching given search query
+         */
+        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query)
+        {
+            return yield storage.get_items_by_search_query(search_query);
+        }
+        
+        /**
          * Get most recent items limited by assigned num_items. List will filter
          * out any duplicates according to their checksum. Most recent item
          * will be on the top of the list.

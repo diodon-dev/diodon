@@ -130,7 +130,6 @@ def build(ctx):
     ctx.options.all_tests = True
 
 def setup_tests(ctx):
-    """
     ctx.dbus = DBusPrivateMessageBus()
     error = ctx.dbus.run(ignore_errors=True)
     if error:
@@ -140,7 +139,7 @@ def setup_tests(ctx):
         Logs.info("Testsuite is running using a private dbus bus")
         config = ctx.dbus.dbus_config.copy()
         config.update({"DISPLAY": ctx.dbus.DISPLAY, "pid.Xvfb": ctx.dbus.display.pid})
-    """
+        
     ctx.zeitgeist_process = start_zeitgeist_daemon()
     
 # TODO: is this really the best spot to start the zeitgeist daemon?
@@ -173,7 +172,7 @@ def start_zeitgeist_daemon():
     
 def teardown_tests(ctx):
     stop_zeitgeist_daemon(ctx.zeitgeist_process)
-    # ctx.dbus.quit(ignore_errors=True)
+    ctx.dbus.quit(ignore_errors=True)
     
     # write test summary
     waf_unit_test.summary(ctx)

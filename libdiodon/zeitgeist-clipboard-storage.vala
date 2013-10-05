@@ -197,7 +197,7 @@ namespace Diodon
         /**
          * Add clipboard item as Zeitgeist event and subject to zeitgeist log.
          */
-        public async void add_item(IClipboardItem item)
+        public async void   (IClipboardItem item)
         {
             debug("Add item %s to clipboard", item.get_label());
             
@@ -330,6 +330,8 @@ namespace Diodon
                   continue;
                 }
             }
+            
+            debug("Created %d clipboard items", items.size);
             
             return items;
         }
