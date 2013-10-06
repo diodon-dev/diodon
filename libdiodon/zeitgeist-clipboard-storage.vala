@@ -197,7 +197,7 @@ namespace Diodon
         /**
          * Add clipboard item as Zeitgeist event and subject to zeitgeist log.
          */
-        public async void   (IClipboardItem item)
+        public async void add_item(IClipboardItem item)
         {
             debug("Add item %s to clipboard", item.get_label());
             
