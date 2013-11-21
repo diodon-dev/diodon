@@ -37,11 +37,49 @@ namespace Diodon
         
         private Zeitgeist.Log log;
         private Index index;
+        private Monitor monitor;
+        
+        private Gee.HashMap<ClipboardType, IClipboardItem> current_items;
+        
+        /**
+         * Called when a item has been inserted.
+         */
+        public signal void on_items_inserted();
+        
+        /**
+         * Called when a item has been deleted.
+         */
+        public signal void on_items_deleted();
         
         public ZeitgeistClipboardStorage()
         {
+            this.monitor = new Monitor(new TimeRange.from_now(),
+                create_all_items_event_templates());
+            this.monitor.events_inserted.connect(() => { on_items_inserted(); } );   
+            this.monitor.events_deleted.connect(() => { on_items_deleted(); } );
+            
             this.log = Zeitgeist.Log.get_default();
+            
+            try {
+                this.log.install_monitor(monitor);
+            } catch(GLib.Error e) {
+                error("Could not install monitor: %s", e.message);
+            }
+            
             this.index = new Index();
+            
+            this.current_items = new Gee.HashMap<ClipboardType, IClipboardItem>(); 
+        }
+        
+        /**
+         * Get currently selected item for given clipboard type
+         * 
+         * @param type clipboard type
+         * @return clipboard item
+         */
+        public IClipboardItem get_current_item(ClipboardType type)
+        {
+            return current_items.get(type);
         }
         
         /**
@@ -263,6 +301,30 @@ namespace Diodon
                 warning("Add item %s not successful, error: %s",
                     item.get_text(), e.message);
             }
+            
+            current_items.set(item.get_clipboard_type(), item);
+        }
+        
+        /**
+         * Select clipboard item.
+         * 
+         * @param item item to be selected
+         * @param use_clipboard whether item gets selected for clipboard
+         * @param use_primary whether item gets selected for primary selection
+         */         
+        public async void select_item(IClipboardItem item, bool use_clipboard, bool use_primary)
+        {  
+            // selected item is always at the end of history, so we need to
+            // add it again
+            yield add_item(item);
+            
+            // verify that current items are selected correctly
+            if(use_clipboard) {
+                current_items.set(ClipboardType.CLIPBOARD, item);
+            }
+            if(use_primary) {
+                current_items.set(ClipboardType.PRIMARY, item);
+            }
         }
         
         /**
@@ -292,6 +354,8 @@ namespace Diodon
             } catch(GLib.Error e) {
                 warning("Failed to clear items: %s", e.message);
             }
+            
+            current_items.clear();
         }
         
         private IClipboardItem? create_clipboard_item(Event event, Subject subject)
