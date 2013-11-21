@@ -59,6 +59,8 @@ namespace Diodon.Plugins
             try {
                 connector.export();
                 Unity.ScopeDBusConnector.run();
+                
+                debug("Unity scope has been closed");
             } catch(Error error) {
                 warning("Failed to export Unity ScopeDBusConnector': %s",
                     error.message);
