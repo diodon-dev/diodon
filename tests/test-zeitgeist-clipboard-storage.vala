@@ -190,7 +190,7 @@ namespace Diodon
 	        TimeRange time_range = new TimeRange.anytime();
             Event template = new Zeitgeist.Event.full (ZG.CREATE_EVENT, ZG.USER_ACTIVITY, null, null,
                                 new Subject.full (
-                                    "clipboard*",
+                                    ZeitgeistClipboardStorage.CLIPBOARD_URI + "*",
                                     NFO.PLAIN_TEXT_DOCUMENT,
                                     NFO.DATA_CONTAINER,
                                     null,

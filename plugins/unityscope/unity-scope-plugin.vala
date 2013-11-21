@@ -28,7 +28,6 @@ namespace Diodon.Plugins
     {
         const string GROUP_NAME = Config.BUSNAME + ".Unity.Scope.Clipboard";
         const string UNIQUE_NAME = Config.BUSOBJECTPATH + "/unity/scope/clipboard";
-        const string CLIPBOARD_URI = "clipboard://";
         
         public Object object { get; construct; }
         
@@ -87,7 +86,7 @@ namespace Diodon.Plugins
             foreach(IClipboardItem item in items) {
                 Unity.ScopeResult result = Unity.ScopeResult();
                 
-                result.uri = CLIPBOARD_URI + item.get_checksum();
+                result.uri = ZeitgeistClipboardStorage.CLIPBOARD_URI + item.get_checksum();
                 result.title = item.get_label();
                 result.icon_hint = item.get_icon().to_string();
                 result.category = 0;

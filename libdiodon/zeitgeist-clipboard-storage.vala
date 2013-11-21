@@ -29,6 +29,12 @@ namespace Diodon
      */
     public class ZeitgeistClipboardStorage : GLib.Object
     {
+        // FIXME this should be clipboard:// however as such is currently filtered
+        // by zeitgeist we have to set an accepted uri otherwise clipboard events
+        // won't be indexed by fts
+        // see https://bugs.freedesktop.org/show_bug.cgi?id=70173
+        public const string CLIPBOARD_URI = "dav://";
+        
         private Zeitgeist.Log log;
         private Index index;
         
@@ -84,7 +90,7 @@ namespace Diodon
                             ZG.USER_ACTIVITY,
                             null,
                             null,
-                            new Subject.full ("clipboard://" + checksum,
+                            new Subject.full (CLIPBOARD_URI + checksum,
                                                null,
                                                NFO.DATA_CONTAINER,
                                                null,
@@ -206,7 +212,7 @@ namespace Diodon
                 string? origin = Utility.get_path_of_active_application();
                 
                 Subject subject = new Subject();
-                subject.uri = "clipboard://" + item.get_checksum();
+                subject.uri = CLIPBOARD_URI + item.get_checksum();
                 subject.interpretation = interpretation;
                 subject.manifestation = NFO.DATA_CONTAINER;
                 subject.mimetype = item.get_mime_type();
@@ -347,7 +353,7 @@ namespace Diodon
                             ZG.USER_ACTIVITY,
                             null,
                             null,
-                            new Subject.full ("clipboard*",
+                            new Subject.full (CLIPBOARD_URI + "*",
                                                null,
                                                NFO.DATA_CONTAINER,
                                                null,
@@ -369,7 +375,7 @@ namespace Diodon
                 "application://diodon.desktop",
                 null, // origin not necessary
                 new Subject.full (
-                    "clipboard://" + item.get_checksum(),
+                    CLIPBOARD_URI + item.get_checksum(),
                     get_interpretation(item),
                     NFO.DATA_CONTAINER,
                     null,
