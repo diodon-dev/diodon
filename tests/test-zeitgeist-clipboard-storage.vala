@@ -188,7 +188,11 @@ namespace Diodon
 	    {
 	        GenericArray<Event> templates = new GenericArray<Event>();
 	        TimeRange time_range = new TimeRange.anytime();
-            Event template = new Zeitgeist.Event.full (ZG.CREATE_EVENT, ZG.USER_ACTIVITY, null, null,
+            Event template = new Zeitgeist.Event.full (
+                                ZG.CREATE_EVENT,
+                                ZG.USER_ACTIVITY,
+                                null,
+                                "application://diodon.desktop", // origin events added by diodon
                                 new Subject.full (
                                     ZeitgeistClipboardStorage.CLIPBOARD_URI + "*",
                                     NFO.PLAIN_TEXT_DOCUMENT,

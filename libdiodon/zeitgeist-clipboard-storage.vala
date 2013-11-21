@@ -89,7 +89,7 @@ namespace Diodon
                             ZG.CREATE_EVENT,
                             ZG.USER_ACTIVITY,
                             null,
-                            null,
+                            "application://diodon.desktop", // origin events only added by diodon
                             new Subject.full (CLIPBOARD_URI + checksum,
                                                null,
                                                NFO.DATA_CONTAINER,
@@ -209,23 +209,41 @@ namespace Diodon
             
             try {
                 string interpretation = get_interpretation(item);
-                string? origin = Utility.get_path_of_active_application();
+                string? path_of_app = Utility.get_path_of_active_application();
                 
                 Subject subject = new Subject();
                 subject.uri = CLIPBOARD_URI + item.get_checksum();
                 subject.interpretation = interpretation;
                 subject.manifestation = NFO.DATA_CONTAINER;
                 subject.mimetype = item.get_mime_type();
-                if(origin != null) {
-                    subject.origin = origin;
-                }
+                // set path of active location as origin of copy event
+                subject.origin = path_of_app;
                 subject.text = item.get_text();
                 
                 Event event = new Event();
                 // TODO: this should actually be a copy event
                 event.interpretation = ZG.CREATE_EVENT;
                 event.manifestation = ZG.USER_ACTIVITY;
-                event.actor = "application://diodon.desktop";
+                // event origin is which clipboard manager event comes from
+                event.origin = "application://diodon.desktop";
+                
+                // actor is application triggering copy event
+                if(path_of_app != null) {
+                    try {
+                        AppInfo appInfo = AppInfo.create_from_commandline(path_of_app,
+                            null, AppInfoCreateFlags.NONE);
+                        event.set_actor_from_app_info(appInfo);
+                    } catch(GLib.Error e) {
+                        warning("Could not create AppInfo for %s: %s",
+                            path_of_app, e.message);
+                    }
+                }
+                // actor is mandantory, fallback to diodon
+                if(event.actor == null) {
+                    event.actor = "application://diodon.desktop";
+                }
+                debug("event actor set to %s", event.actor);
+                
                 event.add_subject(subject);
                 
                 ByteArray? payload = item.get_payload();
@@ -352,7 +370,7 @@ namespace Diodon
                             ZG.CREATE_EVENT,
                             ZG.USER_ACTIVITY,
                             null,
-                            null,
+                            "application://diodon.desktop", // origin events only added by diodon
                             new Subject.full (CLIPBOARD_URI + "*",
                                                null,
                                                NFO.DATA_CONTAINER,
@@ -372,8 +390,8 @@ namespace Diodon
             Event event = new Event.full(
                 ZG.CREATE_EVENT,
                 ZG.USER_ACTIVITY,
-                "application://diodon.desktop",
-                null, // origin not necessary
+                null, // find copy events for all actors / applications
+                "application://diodon.desktop", // origin events only added by diodon
                 new Subject.full (
                     CLIPBOARD_URI + item.get_checksum(),
                     get_interpretation(item),
