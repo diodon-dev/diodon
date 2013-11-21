@@ -12,7 +12,7 @@ lib = bld.shlib (
   use = 'libdiodon',
   cflags = ['-include', 'config.h'],
   install_binding = False,
-  packages = 'gtk+-3.0 libpeas-1.0 gio-2.0 unity config gee-0.8',
+  packages = 'gtk+-3.0 libpeas-1.0 gio-2.0 unity config gee-1.0',
   source = bld.path.ant_glob (incl='**/*.vala'))
 
 lib.install_path = os.path.join(bld.env['PLUGINS_DIR'], lib.target)
