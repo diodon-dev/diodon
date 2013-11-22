@@ -29,7 +29,7 @@ namespace Diodon.Plugins
         const string GROUP_NAME = Config.BUSNAME + ".Unity.Scope.Clipboard";
         const string UNIQUE_NAME = Config.BUSOBJECTPATH + "/unity/scope/clipboard";
         
-        public Object object { get; construct; }
+        public Object object { owned get; construct; }
         
         public UnityScopePlugin()
         {
@@ -70,6 +70,7 @@ namespace Diodon.Plugins
         public void deactivate()
         {
             debug("deactivate unityscope plugin");
+            Unity.ScopeDBusConnector.quit();
         }
 
         public void update_state()

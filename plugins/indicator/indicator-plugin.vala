@@ -28,7 +28,7 @@ namespace Diodon.Plugins
     public class IndicatorPlugin : Peas.ExtensionBase, Peas.Activatable
     {
         private AppIndicator.Indicator indicator;
-        public Object object { get; construct; }
+        public Object object { owned get; construct; }
 
         public IndicatorPlugin()
         {

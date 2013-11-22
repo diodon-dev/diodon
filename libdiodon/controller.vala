@@ -93,9 +93,15 @@ namespace Diodon
         }
         
         private void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
-            Peas.Extension exten, void* data)
+            Peas.Extension exten)
         {
             ((Peas.Activatable)exten).activate();
+        }
+        
+        private void on_extension_removed(Peas.ExtensionSet set, Peas.PluginInfo info, 
+            Peas.Extension exten)
+        {
+            ((Peas.Activatable)exten).deactivate();
         }
         
         /**
@@ -116,7 +122,7 @@ namespace Diodon
             // init peas plugin system
             extension_set = new Peas.ExtensionSet(peas_engine, typeof(Peas.Activatable),
                 "object", this);
-            extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_added, null);
+            extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_added);
             
             extension_set.extension_added.connect((info, exten) => {
                 ((Peas.Activatable)exten).activate();
@@ -536,6 +542,9 @@ namespace Diodon
          */
         public void quit()
         {
+            // shutdown all plugins first
+            extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_removed);
+            
             Gtk.main_quit();
         }
     }  
