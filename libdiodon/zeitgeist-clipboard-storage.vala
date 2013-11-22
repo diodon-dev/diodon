@@ -182,21 +182,23 @@ namespace Diodon
             TimeRange time_range = new TimeRange.anytime();
             GenericArray<Event> templates = create_all_items_event_templates();
             
-            try {
-                ResultSet events = yield index.search(
-                    search_query,
-                    time_range,
-                    templates,
-                    0,
-                    100, // setting limit to 100 for now, for memory reasons
-                    ResultType.RELEVANCY,
-                    null); 
+            if(search_query != null && search_query.length > 0) {
+                try {
+                    ResultSet events = yield index.search(
+                        search_query,
+                        time_range,
+                        templates,
+                        0,
+                        100, // setting limit to 100 for now, for memory reasons
+                        ResultType.RELEVANCY,
+                        null); 
+                        
+                    return create_clipboard_items(events);
                     
-                return create_clipboard_items(events);
-                
-            } catch(GLib.Error e) {
-                warning("Get items by search query not successful, error: %s",
-                    e.message);
+                } catch(GLib.Error e) {
+                    warning("Get items by search query '%s' not successful, error: %s",
+                        search_query, e.message);
+                }
             }
             
             return new Gee.ArrayList<IClipboardItem>();;
