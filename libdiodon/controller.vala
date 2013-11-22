@@ -92,16 +92,16 @@ namespace Diodon
             preferences_view = new PreferencesView();                  
         }
         
-        private void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
-            Peas.Extension exten)
+        private static void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
+            Peas.Extension activatable)
         {
-            ((Peas.Activatable)exten).activate();
+            ((Peas.Activatable)activatable).activate();
         }
         
-        private void on_extension_removed(Peas.ExtensionSet set, Peas.PluginInfo info, 
-            Peas.Extension exten)
-        {
-            ((Peas.Activatable)exten).deactivate();
+        private static void on_extension_removed(Peas.ExtensionSet set, Peas.PluginInfo info, 
+            Peas.Extension activatable)
+        {   
+            ((Peas.Activatable)activatable).deactivate();
         }
         
         /**
