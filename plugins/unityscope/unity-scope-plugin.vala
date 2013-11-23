@@ -109,9 +109,9 @@ namespace Diodon.Plugins
                 result.comment = item.get_text();
                 result.dnd_uri = result.uri;
                 
-                result.metadata = new GLib.HashTable<string,GLib.Variant>(str_hash, str_equal);
+                result.metadata = new HashTable<string, Variant>(str_hash, str_equal);
                 if(origin != null) {
-                    result.metadata.insert("orgin", item.get_origin());
+                    result.metadata.insert("origin", new Variant.string(origin));
                 }
                 // TODO: add more metadata e.g. timestamp
                 
@@ -128,7 +128,28 @@ namespace Diodon.Plugins
         
         private Unity.AbstractPreview? preview(Unity.ResultPreviewer previewer)
         {
-            return null;
+            Unity.ScopeResult result = previewer.result;
+        
+            debug("Show preview for %s", result.title);
+            
+            Unity.Preview preview = new Unity.GenericPreview(result.title,
+                result.comment, Icon.new_for_string(result.icon_hint));
+            
+            Unity.PreviewAction copy_action = new Unity.PreviewAction.with_uri(result.uri,
+                _("Paste"), null);
+            preview.add_action(copy_action);
+            
+            // add metadata if available
+            if(result.metadata != null) {
+                Variant? orign_variant = result.metadata.lookup("origin");
+                if(orign_variant != null) {
+                    Unity.InfoHint origin_info = new Unity.InfoHint.with_variant(
+                        "origin", _("Origin"), null, orign_variant);
+                    preview.add_info(origin_info);
+                }
+            }
+            
+            return preview;
         }
     }
 }
