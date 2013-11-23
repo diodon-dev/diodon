@@ -249,15 +249,13 @@ namespace Diodon
             
             try {
                 string interpretation = get_interpretation(item);
-                string? path_of_app = Utility.get_path_of_active_application();
                 
                 Subject subject = new Subject();
                 subject.uri = CLIPBOARD_URI + item.get_checksum();
                 subject.interpretation = interpretation;
                 subject.manifestation = NFO.DATA_CONTAINER;
                 subject.mimetype = item.get_mime_type();
-                // set path of active location as origin of copy event
-                subject.origin = path_of_app;
+                subject.origin = item.get_origin();
                 subject.text = item.get_text();
                 
                 Event event = new Event();
@@ -268,14 +266,14 @@ namespace Diodon
                 event.origin = "application://diodon.desktop";
                 
                 // actor is application triggering copy event
-                if(path_of_app != null) {
+                if(subject.origin != null) {
                     try {
-                        AppInfo appInfo = AppInfo.create_from_commandline(path_of_app,
+                        AppInfo appInfo = AppInfo.create_from_commandline(subject.origin,
                             null, AppInfoCreateFlags.NONE);
                         event.set_actor_from_app_info(appInfo);
                     } catch(GLib.Error e) {
                         warning("Could not create AppInfo for %s: %s",
-                            path_of_app, e.message);
+                            subject.origin, e.message);
                     }
                 }
                 // actor is mandantory, fallback to diodon
@@ -365,19 +363,20 @@ namespace Diodon
             string interpreation = subject.interpretation;
             IClipboardItem item = null;
             string text = subject.text;
+            string? origin = subject.origin;
             unowned ByteArray payload = event.payload;
             
             try {
                 if(strcmp(NFO.PLAIN_TEXT_DOCUMENT, interpreation) == 0) {
-                   item = new TextClipboardItem(ClipboardType.NONE, text); 
+                   item = new TextClipboardItem(ClipboardType.NONE, text, origin); 
                 }
                 
                 else if(strcmp(NFO.FILE_DATA_OBJECT, interpreation) == 0) {
-                    item = new FileClipboardItem(ClipboardType.NONE, text);
+                    item = new FileClipboardItem(ClipboardType.NONE, text, origin);
                 } 
                     
                 else if(strcmp(NFO.IMAGE, interpreation) == 0) {
-                    item = new ImageClipboardItem.with_payload(ClipboardType.NONE, payload);
+                    item = new ImageClipboardItem.with_payload(ClipboardType.NONE, payload, origin);
                 }
             } catch(GLib.FileError e) {  
                 // file errors happen constantly when e.g. some moved/deleted a file which has been

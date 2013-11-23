@@ -30,16 +30,19 @@ namespace Diodon
         private string _checksum; // checksum to identify pic content
         private Gdk.Pixbuf _pixbuf;
         private string _label;
+        private string? _origin;
         
         /**
          * Create image clipboard item by a pixbuf.
          * 
          * @param clipboard_type clipboard type item is coming from
          * @param pixbuf image from clipboard
+         * @param origin origin of clipboard item as application path
          */
-        public ImageClipboardItem.with_image(ClipboardType clipboard_type, Gdk.Pixbuf pixbuf) throws GLib.Error
+        public ImageClipboardItem.with_image(ClipboardType clipboard_type, Gdk.Pixbuf pixbuf, string? origin) throws GLib.Error
         {
             _clipboard_type = clipboard_type;
+            _origin = origin;
             extract_pixbuf_info(pixbuf);
         }
         
@@ -48,10 +51,12 @@ namespace Diodon
          * 
          * @param clipboard_type clipboard type item is coming from
          * @param pixbuf image from clipboard
+         * @param origin origin of clipboard item as application path
          */
-        public ImageClipboardItem.with_payload(ClipboardType clipboard_type, ByteArray payload) throws GLib.Error
+        public ImageClipboardItem.with_payload(ClipboardType clipboard_type, ByteArray payload, string? origin) throws GLib.Error
         {
             _clipboard_type = clipboard_type;
+            _origin = origin;
             
             Gdk.PixbufLoader loader = new Gdk.PixbufLoader();
             loader.write(payload.data);
@@ -74,6 +79,14 @@ namespace Diodon
 	    public string get_text()
         {
             return _label; // label is representation of image
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+	    public string? get_origin()
+        {
+            return _origin;
         }
 
         /**

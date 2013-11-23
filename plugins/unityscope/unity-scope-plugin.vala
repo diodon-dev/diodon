@@ -96,15 +96,19 @@ namespace Diodon.Plugins
             foreach(IClipboardItem item in items) {
                 Unity.ScopeResult result = Unity.ScopeResult();
                 
-                result.uri = ZeitgeistClipboardStorage.CLIPBOARD_URI + item.get_checksum();
+                result.uri = "clipboard://" + item.get_checksum();
+                // TODO see comment ZeitgeistClipboardStorage.CLIPBOARD_URI but
+                // here we actually need clipboard:// uri
+                //result.uri = ZeitgeistClipboardStorage.CLIPBOARD_URI + item.get_checksum();
                 result.title = item.get_label();
                 result.icon_hint = item.get_icon().to_string();
                 result.category = 0;
-                result.result_type = Unity.ResultType.DEFAULT; //?
+                result.result_type = Unity.ResultType.DEFAULT; 
                 result.mimetype = item.get_mime_type();
                 result.comment = item.get_text();
-                result.dnd_uri = result.uri; //?
-                // TODO: metadata
+                result.dnd_uri = result.uri;
+                
+                // TODO: metadata e.g. origin
                 
                 search.search_context.result_set.add_result(result);
             }

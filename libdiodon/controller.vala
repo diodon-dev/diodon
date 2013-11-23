@@ -270,10 +270,11 @@ namespace Diodon
          * Add given text as text item to current clipboard history
          * 
          * @param text text to be added
+         * @param origin origin of clipboard item as application path
          */
-        public async void add_text_item(ClipboardType type, string text)
+        public async void add_text_item(ClipboardType type, string text, string? origin)
         {
-            IClipboardItem item = new TextClipboardItem(type, text);
+            IClipboardItem item = new TextClipboardItem(type, text, origin);
             yield add_item(item);
         }
         
@@ -282,11 +283,12 @@ namespace Diodon
          * and appending it to the menu of the indicator
          * 
          * @param paths paths received
+         * @param origin origin of clipboard item as application path
          */
-        public async void add_file_item(ClipboardType type, string paths)
+        public async void add_file_item(ClipboardType type, string paths, string? origin)
         {
             try {
-                IClipboardItem item = new FileClipboardItem(type, paths);
+                IClipboardItem item = new FileClipboardItem(type, paths, origin);
                 yield add_item(item);
             } catch(FileError e) {
                 warning("Adding file(s) to history failed: " + e.message);
@@ -296,11 +298,13 @@ namespace Diodon
         /**
          * Handling image retrieved from clipboard bu adding it to the storage
          * and appending it to the menu of the indicator.
+         *
+         * @param origin origin of clipboard item as application path
          */
-        public async void add_image_item(ClipboardType type, Gdk.Pixbuf pixbuf)
+        public async void add_image_item(ClipboardType type, Gdk.Pixbuf pixbuf, string? origin)
         {
             try {
-                IClipboardItem item = new ImageClipboardItem.with_image(type, pixbuf);
+                IClipboardItem item = new ImageClipboardItem.with_image(type, pixbuf, origin);
                 yield add_item(item);
             } catch(GLib.Error e) {
                 warning("Adding image to history failed: " + e.message);

@@ -91,6 +91,14 @@ namespace Diodon
         public abstract string get_checksum();
         
         /**
+         * Get origin resp. path of application which has triggered copy event
+         * creating this clipboard item.
+         *
+         * @return origin as application path if available; otherwise null
+         */
+        public abstract string? get_origin();
+        
+        /**
          * Select the current item in the given gtk clipboard
          *
          * @param clipboard gtk clipboard

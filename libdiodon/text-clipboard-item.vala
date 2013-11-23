@@ -27,6 +27,7 @@ namespace Diodon
     public class TextClipboardItem : GLib.Object, IClipboardItem
     {
         private string _text;
+        private string? _origin;
         private ClipboardType _clipboard_type;
        
         /**
@@ -34,11 +35,13 @@ namespace Diodon
          * 
          * @param clipboard_type clipboard type item is coming from
          * @param data simple text
+         * @param origin origin of clipboard item as application path
          */ 
-        public TextClipboardItem(ClipboardType clipboard_type, string data)
+        public TextClipboardItem(ClipboardType clipboard_type, string data, string? origin)
         {
             _clipboard_type = clipboard_type;
             _text = data;
+            _origin = origin;
         }
     
         /**
@@ -55,6 +58,14 @@ namespace Diodon
 	    public string get_text()
         {
             return _text;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+	    public string? get_origin()
+        {
+            return _origin;
         }
 
         /**

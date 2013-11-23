@@ -35,6 +35,7 @@ namespace Diodon
          * file paths separated with \n
          */
         private string _paths;
+        private string? _origin;
         private ClipboardType _clipboard_type;
        
         /**
@@ -42,11 +43,13 @@ namespace Diodon
          * 
          * @param clipboard_type clipboard type item is coming from
          * @param data paths separated with \n
+         * @param origin origin of clipboard item as application path
          */ 
-        public FileClipboardItem(ClipboardType clipboard_type, string data) throws FileError
+        public FileClipboardItem(ClipboardType clipboard_type, string data, string? origin) throws FileError
         {
             _clipboard_type = clipboard_type;
             _paths = data;
+            _origin = origin;
             
             // check if all paths are available
             string[] paths = convert_to_paths(_paths);
@@ -72,6 +75,14 @@ namespace Diodon
 	    public string get_text()
         {
             return _paths;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+	    public string? get_origin()
+        {
+            return _origin;
         }
 
         /**
