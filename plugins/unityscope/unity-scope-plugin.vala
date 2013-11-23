@@ -95,6 +95,7 @@ namespace Diodon.Plugins
             
             foreach(IClipboardItem item in items) {
                 Unity.ScopeResult result = Unity.ScopeResult();
+                string? origin = item.get_origin();
                 
                 result.uri = "clipboard://" + item.get_checksum();
                 // TODO see comment ZeitgeistClipboardStorage.CLIPBOARD_URI but
@@ -108,7 +109,11 @@ namespace Diodon.Plugins
                 result.comment = item.get_text();
                 result.dnd_uri = result.uri;
                 
-                // TODO: metadata e.g. origin
+                result.metadata = new GLib.HashTable<string,GLib.Variant>(str_hash, str_equal);
+                if(origin != null) {
+                    result.metadata.insert("orgin", item.get_origin());
+                }
+                // TODO: add more metadata e.g. timestamp
                 
                 search.search_context.result_set.add_result(result);
             }
