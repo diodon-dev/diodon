@@ -40,6 +40,23 @@ namespace Diodon.Plugins
         {
             debug("activate unityscope plugin");
             
+            // needs to be done async as ScopeDBusConnector.run otherwise
+            // blocks this method to finish and successfully activate plugin
+            setup_scope.begin();
+        }
+
+        public void deactivate()
+        {
+            debug("deactivate unityscope plugin");
+            Unity.ScopeDBusConnector.quit();
+        }
+
+        public void update_state()
+        {
+        }
+        
+        private async void setup_scope()
+        {
             // Create and set up clipboard category for the scope, including an icon
             Icon catIcon = new ThemedIcon("diodon-panel");
             Unity.Category cat = new Unity.Category("global", _("Clipboard"),
@@ -65,16 +82,6 @@ namespace Diodon.Plugins
                 warning("Failed to export Unity ScopeDBusConnector': %s",
                     error.message);
             }
-        }
-
-        public void deactivate()
-        {
-            debug("deactivate unityscope plugin");
-            Unity.ScopeDBusConnector.quit();
-        }
-
-        public void update_state()
-        {
         }
         
         private void search_async(Unity.ScopeSearchBase search, Unity.ScopeSearchBaseCallback callback)
