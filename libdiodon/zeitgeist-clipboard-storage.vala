@@ -33,7 +33,7 @@ namespace Diodon
         // by zeitgeist we have to set an accepted uri otherwise clipboard events
         // won't be indexed by fts
         // see https://bugs.freedesktop.org/show_bug.cgi?id=70173
-        public const string CLIPBOARD_URI = "dav://";
+        public const string CLIPBOARD_URI = "dav:";
         
         private Zeitgeist.Log log;
         private Index index;

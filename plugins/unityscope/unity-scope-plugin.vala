@@ -97,7 +97,7 @@ namespace Diodon.Plugins
                 Unity.ScopeResult result = Unity.ScopeResult();
                 string? origin = item.get_origin();
                 
-                result.uri = "clipboard://" + item.get_checksum();
+                result.uri = "clipboard:" + item.get_checksum();
                 // TODO see comment ZeitgeistClipboardStorage.CLIPBOARD_URI but
                 // here we actually need clipboard:// uri
                 //result.uri = ZeitgeistClipboardStorage.CLIPBOARD_URI + item.get_checksum();
