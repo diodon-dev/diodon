@@ -29,6 +29,7 @@ namespace Diodon
     class PrimaryClipboardManager : ClipboardManager
     {
         private bool stopped = false;
+        private string? _last_received = null;
     
         /**
          * Type is alwawys ClipboardType.PRIMARY for this specific primary
@@ -109,12 +110,17 @@ namespace Diodon
                 // checking for text
                 string? text = request_text();
                 if(text != null && text != "") {
-                
                     // check if text can be accepted
                     if(check_button_state()) {
-                        string? origin = Utility.get_path_of_active_application();
-                        on_text_received(type, text, origin);
-                    }
+                        // we are in a timer here and because of performance
+                        // reasons we want to make sure that this is not the same
+                        // content again before we check path_of_active_application
+                        if(_last_received == null || !str_equal(text, _last_received)) {
+                            string? origin = Utility.get_path_of_active_application();
+                            _last_received = text;
+                            on_text_received(type, text, origin);
+                        }
+                   }
                 }
                 // checking if clipboard might be empty
                 else {
