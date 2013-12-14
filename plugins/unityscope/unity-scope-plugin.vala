@@ -28,6 +28,7 @@ namespace Diodon.Plugins
     {
         const string GROUP_NAME = Config.BUSNAME + ".Unity.Scope.Clipboard";
         const string UNIQUE_NAME = Config.BUSOBJECTPATH + "/unity/scope/clipboard";
+        private bool activated = false;
         
         public Object object { owned get; construct; }
         
@@ -39,6 +40,7 @@ namespace Diodon.Plugins
         public void activate()
         {
             debug("activate unityscope plugin");
+            activated = true;
             
             // needs to be done async as ScopeDBusConnector.run otherwise
             // blocks this method to finish and successfully activate plugin
@@ -48,6 +50,7 @@ namespace Diodon.Plugins
         public void deactivate()
         {
             debug("deactivate unityscope plugin");
+            activated = false;
             Unity.ScopeDBusConnector.quit();
         }
 
@@ -57,30 +60,42 @@ namespace Diodon.Plugins
         
         private async void setup_scope()
         {
-            // Create and set up clipboard category for the scope, including an icon
-            Icon catIcon = new ThemedIcon("diodon-panel");
-            Unity.Category cat = new Unity.Category("global", _("Clipboard"),
-                catIcon, Unity.CategoryRenderer.HORIZONTAL_TILE);
-            Unity.CategorySet cats = new Unity.CategorySet();
-            cats.add(cat);
-            
-            // Create and setup the scope
-            Unity.SimpleScope scope = new Unity.SimpleScope();
-            scope.group_name = GROUP_NAME;
-            scope.unique_name = UNIQUE_NAME;
-            scope.set_search_async_func(search_async);
-            scope.set_preview_func(preview);
-            scope.category_set = cats;
-            
-            Unity.ScopeDBusConnector connector = new Unity.ScopeDBusConnector(scope);
-            try {
-                connector.export();
-                Unity.ScopeDBusConnector.run();
+            // TODO:
+            // this is a workaround as scope manager closes scopes when there are
+            // not in use anymore. However as this is not a dbus service scopes
+            // service does not know how to restart this scope
+            // therefore do we try to let it run all the time
+            // in the long run this scope needs to move into its own dbus service.
+            while(activated) {
+                debug("Start Unity Scope");
                 
-                debug("Unity scope has been closed");
-            } catch(Error error) {
-                warning("Failed to export Unity ScopeDBusConnector': %s",
-                    error.message);
+                // Create and set up clipboard category for the scope, including an icon
+                Icon catIcon = new ThemedIcon("diodon-panel");
+                Unity.Category cat = new Unity.Category("global", _("Clipboard"),
+                    catIcon, Unity.CategoryRenderer.HORIZONTAL_TILE);
+                Unity.CategorySet cats = new Unity.CategorySet();
+                cats.add(cat);
+                
+                // Create and setup the scope
+                Unity.SimpleScope scope = new Unity.SimpleScope();
+                scope.group_name = GROUP_NAME;
+                scope.unique_name = UNIQUE_NAME;
+                scope.set_search_async_func(search_async);
+                scope.set_preview_func(preview);
+                scope.category_set = cats;
+                
+                Unity.ScopeDBusConnector connector = new Unity.ScopeDBusConnector(scope);
+                try {
+                    connector.export();
+                    Unity.ScopeDBusConnector.run();
+                    
+                    debug("Unity scope has been closed");
+                } catch(Error error) {
+                    warning("Failed to export Unity ScopeDBusConnector': %s",
+                        error.message);
+                }
+                
+                yield;
             }
         }
         
@@ -131,7 +146,6 @@ namespace Diodon.Plugins
             Unity.ScopeResult result = previewer.result;
         
             debug("Show preview for %s", result.title);
-            
             Unity.Preview preview = new Unity.GenericPreview(result.title,
                 result.comment, Icon.new_for_string(result.icon_hint));
             
