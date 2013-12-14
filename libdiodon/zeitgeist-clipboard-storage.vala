@@ -177,15 +177,16 @@ namespace Diodon
          */
         public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query)
         {
-            debug("Get items by search query %s", search_query);
             
             TimeRange time_range = new TimeRange.anytime();
             GenericArray<Event> templates = create_all_items_event_templates();
             
-            if(search_query != null && search_query.length > 0) {
+            string query = prepare_search_string(search_query);
+            if(query != "") {
+                debug("Get items by search query %s", search_query);
                 try {
                     ResultSet events = yield index.search(
-                        search_query,
+                        query,
                         time_range,
                         templates,
                         0,
@@ -359,7 +360,7 @@ namespace Diodon
             current_items.clear();
         }
         
-        private IClipboardItem? create_clipboard_item(Event event, Subject subject)
+        private static IClipboardItem? create_clipboard_item(Event event, Subject subject)
         {
             string interpreation = subject.interpretation;
             IClipboardItem item = null;
@@ -391,7 +392,7 @@ namespace Diodon
             return item;
         }
         
-        private string get_interpretation(IClipboardItem item)
+        private static string get_interpretation(IClipboardItem item)
         {
             string interpretation = NFO.PLAIN_TEXT_DOCUMENT;
             if(item is FileClipboardItem) {
@@ -404,7 +405,7 @@ namespace Diodon
             return interpretation;
         }
         
-        private Gee.List<IClipboardItem> create_clipboard_items(ResultSet events)
+        private static Gee.List<IClipboardItem> create_clipboard_items(ResultSet events)
         {
             Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
             
@@ -429,7 +430,7 @@ namespace Diodon
         /**
          * Create array of event templates which matches all clipboard items.
          */
-        private GenericArray<Event> create_all_items_event_templates()
+        private static GenericArray<Event> create_all_items_event_templates()
         {
             GenericArray<Event> templates = new GenericArray<Event>();
             Event template = new Event.full (
@@ -449,7 +450,7 @@ namespace Diodon
             return templates;
         }
         
-        private GenericArray<Event> create_item_event_templates(IClipboardItem item)
+        private static GenericArray<Event> create_item_event_templates(IClipboardItem item)
         {
             GenericArray<Event> events = new GenericArray<Event>();
             
@@ -469,6 +470,17 @@ namespace Diodon
                     
             events.add(event);
             return events;
+        }
+        
+        private static string prepare_search_string(string search_string)
+        {
+            string s = search_string.strip();
+
+            if (!s.has_suffix ("*") && s != "") {
+                s = s + "*";
+            }
+
+            return s;
         }
     }  
 }
