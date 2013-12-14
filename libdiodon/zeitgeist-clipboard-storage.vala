@@ -190,7 +190,8 @@ namespace Diodon
                         templates,
                         0,
                         100, // setting limit to 100 for now, for memory reasons
-                        ResultType.RELEVANCY,
+                        // this will filter duplicates according to their uri
+                        ResultType.MOST_RECENT_SUBJECTS,
                         null); 
                         
                     return create_clipboard_items(events);
