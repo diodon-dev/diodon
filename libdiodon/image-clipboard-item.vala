@@ -111,9 +111,15 @@ namespace Diodon
 	     */
         public Icon get_icon()
         {
-            File file = save_tmp_pixbuf(_pixbuf);
-            FileIcon icon = new FileIcon(file);
-            return icon;
+            try {
+                File file = save_tmp_pixbuf(_pixbuf);
+                FileIcon icon = new FileIcon(file);
+                return icon;
+            } catch(Error e) {
+                warning("Could not create icon for image %s. Fallback to content type",
+                    _checksum);
+                return ContentType.get_icon(get_mime_type());
+            }
         }
         
         /**

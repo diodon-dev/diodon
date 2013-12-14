@@ -117,8 +117,8 @@ namespace Diodon
             string[] uris = convert_to_uris(_paths);
             File file = File.new_for_uri(uris[0]);
             try {
-                FileInfo file_info = file.query_info(FileAttribute.STANDARD_CONTENT_TYPE, 0, null);
-                mime_type = file_info.get_content_type();
+                FileInfo file_info = file.query_info(FileAttribute.STANDARD_FAST_CONTENT_TYPE, 0, null);
+                mime_type = file_info.get_attribute_as_string(FileAttribute.STANDARD_FAST_CONTENT_TYPE);
             } catch(GLib.Error e) {
                 warning("Could not determine mime type of file %s", uris[0]);
             }
@@ -148,7 +148,29 @@ namespace Diodon
 	     */
         public Icon get_icon()
         {
-            return ContentType.get_icon(get_mime_type());
+            const string FILE_ATTRS = 
+              FileAttribute.THUMBNAIL_PATH;
+
+            // icon of first file is used
+            string mime_type = get_mime_type();
+            string[] uris = convert_to_uris(_paths);
+            File file = File.new_for_uri(uris[0]);
+            try {
+                FileInfo info = file.query_info(FILE_ATTRS, 0);
+                Icon icon = info.get_icon();
+                string thumbnail_path = info.get_attribute_byte_string(FileAttribute.THUMBNAIL_PATH);
+                if(thumbnail_path != null) {
+                    return new FileIcon(File.new_for_path(thumbnail_path));
+                }
+                else if(icon != null) {
+                    return icon;
+                }
+            } catch(GLib.Error e) {
+                warning("Could not determine mime type of file %s", uris[0]);
+            }
+            
+            // default icon of mime type
+            return ContentType.get_icon(mime_type);
         }
         
         /**
