@@ -201,6 +201,11 @@ namespace Diodon
                     warning("Get items by search query '%s' not successful, error: %s",
                         search_query, e.message);
                 }
+            // TODO: we do not have a master scope to filter search results
+            // therefore images can never be found. This is a workaround for 
+            // now that there are always results
+            } else {
+                return yield get_recent_items(100);
             }
             
             return new Gee.ArrayList<IClipboardItem>();;

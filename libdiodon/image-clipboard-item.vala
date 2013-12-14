@@ -111,10 +111,9 @@ namespace Diodon
 	     */
         public Icon get_icon()
         {
-            // TODO niy
-            //FileIcon icon = new FileIcon(File.new_for_path(_path));
-            //return icon;
-            return ContentType.get_icon(get_mime_type());
+            File file = save_tmp_pixbuf(_pixbuf);
+            FileIcon icon = new FileIcon(file);
+            return icon;
         }
         
         /**
@@ -239,6 +238,25 @@ namespace Diodon
             // scale pixbuf to menu icon size
             Gdk.Pixbuf scaled = pixbuf.scale_simple(width, height, Gdk.InterpType.BILINEAR);
             return scaled;
+        }
+        
+        /**
+         * Store pixbuf in tmp folder but only if it does not exist
+         *
+         * @param pixbuf pixbuf to be stored
+         * @return file object of stored pixbuf
+         */
+        private File save_tmp_pixbuf(Gdk.Pixbuf pixbuf) throws GLib.Error
+        {
+            string filename = Path.build_filename(Environment.get_tmp_dir(),
+                "diodon-" + _checksum + ".png");
+            
+            File file = File.new_for_path(filename);
+            if(!file.query_exists(null)) {
+                pixbuf.save(filename, "png");
+            }
+        
+            return file;
         }
     }  
 }
