@@ -375,7 +375,7 @@ namespace Diodon
                 
                 else if(strcmp(NFO.FILE_DATA_OBJECT, interpreation) == 0) {
                     item = new FileClipboardItem(ClipboardType.NONE, text, origin);
-                } 
+                }
                     
                 else if(strcmp(NFO.IMAGE, interpreation) == 0) {
                     item = new ImageClipboardItem.with_payload(ClipboardType.NONE, payload, origin);

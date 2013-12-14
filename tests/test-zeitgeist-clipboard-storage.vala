@@ -46,6 +46,10 @@ namespace Diodon
 		        cb => test_get_recent_items.begin(cb),
 		        res => test_get_recent_items.end(res)
 		    );
+		    add_async_test("test_get_recent_items_image",
+		        cb => test_get_recent_items_image.begin(cb),
+		        res => test_get_recent_items_image.end(res)
+		    );
 		    add_async_test("test_get_item_by_checksum",
 		        cb => test_get_item_by_checksum.begin(cb),
 		        res => test_get_item_by_checksum.end(res)
@@ -125,6 +129,19 @@ namespace Diodon
 	        items = yield this.storage.get_recent_items(ITEMS + 1);
 	        FsoFramework.Test.Assert.are_equal(items.size, ITEMS,
 	            "Invalid number of recent items");
+	    }
+	    
+	    public async void test_get_recent_items_image() throws FsoFramework.Test.AssertError, GLib.Error
+	    {
+	        // add image item
+            Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Config.TEST_DATA_DIR + "Diodon-64x64.png");
+	        yield this.storage.add_item(new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD,
+	            pixbuf, "/path/to/app"));
+	                
+	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(100);
+	        FsoFramework.Test.Assert.are_equal(items.size, 1, "Invalid number of recent items");
+	        IClipboardItem item = items.get(0);
+	        FsoFramework.Test.Assert.are_equal_string(item.get_label(), "[64x64]", "Invalid image label");
 	    }
 	    
 	    public async void test_get_item_by_checksum() throws FsoFramework.Test.AssertError
