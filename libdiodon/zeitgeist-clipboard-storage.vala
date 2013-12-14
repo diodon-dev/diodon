@@ -476,6 +476,8 @@ namespace Diodon
         {
             string s = search_string.strip();
 
+            // TODO: query can have several parts and this needs to be taken
+            // into consideration
             if (!s.has_suffix ("*") && s != "") {
                 s = s + "*";
             }
