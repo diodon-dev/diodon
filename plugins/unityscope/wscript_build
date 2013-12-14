@@ -30,7 +30,7 @@ bld.new_task_gen (
   podir = '../../po',
   source = 'diodon.scope.in',
   flags = ["-d", "-q", "-u", "-c"],
-  install_path = "${DATADIR}/unity/scopes/clipboard")
+  install_path = "${DATADIR}/unity/scopes/info")
 
 bld.new_task_gen (
   features = 'intltool_in',
