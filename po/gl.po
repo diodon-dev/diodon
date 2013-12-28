@@ -8,26 +8,26 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-10-24 21:43+0200\n"
-"PO-Revision-Date: 2013-12-10 18:59+0000\n"
+"PO-Revision-Date: 2013-12-27 14:02+0000\n"
 "Last-Translator: Manuel Xosé Lemos <Unknown>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-12-11 05:54+0000\n"
-"X-Generator: Launchpad (build 16869)\n"
+"X-Launchpad-Export-Date: 2013-12-28 05:27+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
 
 #: ../data/diodon.desktop.in.h:1 ../plugins/unitylens/diodon.lens.in.in.h:1
 msgid "Clipboard Manager"
-msgstr "Xestor do portarretallos"
+msgstr "Xestor do portapapeis"
 
 #: ../data/diodon.desktop.in.h:2 ../plugins/unitylens/diodon.lens.in.in.h:2
 msgid "GTK+ Clipboard Manager"
-msgstr "Xestor do portarretallos en GTK+"
+msgstr "Xestor do portapapeis en GTK+"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"
-msgstr "Usar portarretallos (Ctrl+C)"
+msgstr "Usar portapapeis (Ctrl+C)"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:3
@@ -35,8 +35,8 @@ msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
-"Engade o texto copiado ao portarretallos, por exemplo con Ctrl+C, ao "
-"historial do portarretallos."
+"Engade o texto copiado ao portapapeis, por exemplo con Ctrl+C, ao historial "
+"do portapapeis."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
@@ -49,11 +49,11 @@ msgid ""
 "mouse) to the clipboard history."
 msgstr ""
 "Engade a selección primaria (unha área da pantalla seleccionada co rato) ao "
-"historial do portarretallos."
+"historial do portapapeis."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Synchronize clipboards"
-msgstr "Sincronizar portarretallos"
+msgstr "Sincronizar portapapeis"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
@@ -64,9 +64,9 @@ msgid ""
 "the middle mouse button."
 msgstr ""
 "Sincroniza a selección (unha área da pantalla seleccionada co rato) e o "
-"portarretallos de forma que calquera cousa da selección estea inmediatamente "
-"dispoñibel no portarretallos e viceversa, por exemplo para pegar con Ctrl+V "
-"e o botón central do rato."
+"portapapeis de forma que calquera cousa da selección estea inmediatamente "
+"dispoñíbel no portapapeis e viceversa, por exemplo para pegar con Ctrl+V e o "
+"botón central do rato."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Keep clipboard content"
@@ -78,8 +78,8 @@ msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
 msgstr ""
-"Evita que o portarretallos quede baleiro. Por exemplo, cando un aplicativo "
-"se pecha, a miúdo o portarretallos quedará baleiro."
+"Evita que o portapapeis quede baleiro. Por exemplo, cando un aplicativo se "
+"pecha, a miúdo o portapapeis quedará baleiro."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Automatically paste selected item"
@@ -92,17 +92,17 @@ msgid ""
 "clipboard."
 msgstr ""
 "Pegar automaticamente o elemento seleccionado no canto de copialo ao "
-"portarretallos."
+"portapapeis."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 #: ../data/preferences.ui.h:13
 msgid "Clipboard size"
-msgstr "Tamaño do portarretallos"
+msgstr "Tamaño do portapapeis"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
 #: ../data/preferences.ui.h:12
 msgid "Number of items in the clipboard history."
-msgstr "Número de elementos no historial do portarretallos."
+msgstr "Número de elementos no historial do portapapeis."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 #: ../data/preferences.ui.h:16
@@ -112,7 +112,7 @@ msgstr "Historial"
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 #: ../data/preferences.ui.h:15
 msgid "Hotkey to quickly allow you to access the clipboard history."
-msgstr "Atallo para acceder rapidamente ao historial do portarretallos."
+msgstr "Atallo para acceder rapidamente ao historial do portapapeis."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Active plugins"
@@ -128,7 +128,7 @@ msgstr "Preferencias de Diodon"
 
 #: ../data/preferences.ui.h:2
 msgid "_Use clipboard (Ctrl+C)"
-msgstr "_Usar portarretallos (Ctrl+C)"
+msgstr "_Usar portapapeis (Ctrl+C)"
 
 #: ../data/preferences.ui.h:4
 msgid "Use _primary selection"
@@ -136,11 +136,11 @@ msgstr "Usa_r selección primaria"
 
 #: ../data/preferences.ui.h:6
 msgid "S_ynchronize clipboards"
-msgstr "S_incronizar portarretallos"
+msgstr "S_incronizar portapapeis"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
-msgstr "_Manter o contido no portarretallos"
+msgstr "_Manter o contido no portapapeis"
 
 #: ../data/preferences.ui.h:10
 msgid "_Automatically paste selected item"
@@ -148,7 +148,7 @@ msgstr "Pegar _automaticamente o elemento seleccionado"
 
 #: ../data/preferences.ui.h:14
 msgid "Clipboard"
-msgstr "Portarretallos"
+msgstr "Portapapeis"
 
 #: ../data/preferences.ui.h:17
 msgid "Hotkeys"
@@ -169,7 +169,7 @@ msgstr "Indicador de aplicativo"
 #: ../plugins/indicator/indicator.plugin.in.h:2
 msgid "Access clipboard history with an application indicator."
 msgstr ""
-"Acceder ao historial do portarretallos mediante un indicador de aplicativo."
+"Acceder ao historial do portapapeis mediante un indicador de aplicativo."
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
 #: ../plugins/unitylens/unitylens.plugin.in.h:3
@@ -178,11 +178,11 @@ msgstr "Copyright © 2011 Equipo de Diodon"
 
 #: ../plugins/unitylens/diodon.lens.in.in.h:3
 msgid "Search clipboard"
-msgstr "Buscar no portarretallos"
+msgstr "Buscar no portapapeis"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:95
 msgid "Search Clipboard"
-msgstr "Buscar no portarretallos"
+msgstr "Buscar no Portapapeis"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:147
 #: ../plugins/unitylens/unity-lens-plugin.vala:171
@@ -205,11 +205,11 @@ msgstr "Tipo"
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:202
 msgid "Sorry, there is no clipboard content that matches your search."
-msgstr "Non hay contigo do portarretallos que coincida coa súa busca."
+msgstr "Non hay contigo do portapapeis que coincida coa súa busca."
 
 #: ../plugins/unitylens/unity-lens-plugin.vala:269
 msgid "Copy to clipboard"
-msgstr "Copiar no portarretallos"
+msgstr "Copiar no portapapeis"
 
 #: ../plugins/unitylens/unitylens.plugin.in.h:1
 msgid "Unity Lens"
@@ -217,7 +217,7 @@ msgstr "Lentes de Unity"
 
 #: ../plugins/unitylens/unitylens.plugin.in.h:2
 msgid "Access clipboard history with the unity dash."
-msgstr "Acceder ao historial do portarretallos mediante o panel de Unity"
+msgstr "Acceder ao historial do portapapeis mediante o panel de Unity"
 
 #: ../plugins/zeitgeist/zeitgeist.plugin.in.h:1
 msgid "Zeitgeist Data-Source"
@@ -226,7 +226,7 @@ msgstr "Fonte de datos de Zeitgeist"
 #: ../plugins/zeitgeist/zeitgeist.plugin.in.h:2
 msgid "Adds clipboard activities as events to the Zeitgeist daemon."
 msgstr ""
-"Engade a actividade do portarretallos como eventos ao demonio de Zeitgeist."
+"Engade a actividade do portapapeis como eventos ao demonio de Zeitgeist."
 
 #: ../plugins/zeitgeist/zeitgeist.plugin.in.h:3
 msgid "Copyright © 2012 Diodon Team"
