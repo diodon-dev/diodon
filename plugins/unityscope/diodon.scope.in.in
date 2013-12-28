@@ -1,0 +1,18 @@
+[Scope]
+DBusName=@BUSNAME@.Unity.Scope.Clipboard
+DBusPath=@BUSOBJECTPATH@/unity/scope/clipboard
+RequiredMetadata=
+OptionalMetadata=origin[s];
+Keywords=clipboard;diodon;
+_Name=Clipboard History
+_Description=This is an Ubuntu search plugin that enables information from Diodon to be searched and displayed in the Dash underneath the Clipboard header.
+_SearchHint=Search clipboard
+Type=info
+Icon=@DATADIR@/icons/ubuntu-mono-dark/status/16/diodon-panel.svg
+
+#
+# Make translation work with Ubuntu's special handling of keyfiles
+#
+[Desktop Entry]
+X-Ubuntu-Gettext-Domain=@GETTEXT_PACKAGE@
+

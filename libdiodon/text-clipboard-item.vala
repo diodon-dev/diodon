@@ -27,6 +27,7 @@ namespace Diodon
     public class TextClipboardItem : GLib.Object, IClipboardItem
     {
         private string _text;
+        private string? _origin;
         private ClipboardType _clipboard_type;
        
         /**
@@ -34,11 +35,13 @@ namespace Diodon
          * 
          * @param clipboard_type clipboard type item is coming from
          * @param data simple text
+         * @param origin origin of clipboard item as application path
          */ 
-        public TextClipboardItem(ClipboardType clipboard_type, string data)
+        public TextClipboardItem(ClipboardType clipboard_type, string data, string? origin)
         {
             _clipboard_type = clipboard_type;
             _text = data;
+            _origin = origin;
         }
     
         /**
@@ -52,9 +55,17 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-	    public string get_clipboard_data()
+	    public string get_text()
         {
             return _text;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+	    public string? get_origin()
+        {
+            return _origin;
         }
 
         /**
@@ -107,9 +118,17 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public ByteArray? get_payload()
+        {
+            return null;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
         public string get_checksum()
         {
-            return Checksum.compute_for_string(ChecksumType.MD5, _text);
+            return Checksum.compute_for_string(ChecksumType.SHA1, _text);
         }
                         
         /**
@@ -119,14 +138,6 @@ namespace Diodon
         {
             clipboard.set_text(_text, -1);
             clipboard.store();
-        }
-        
-        /**
-	     * {@inheritDoc}
-	     */
-	    public void remove()
-        {
-            // no cleaning up needed
         }
         
         /**
@@ -154,7 +165,7 @@ namespace Diodon
             bool equals = false;
             
             if(item is TextClipboardItem) {
-                equals = str_equal(_text, item->get_clipboard_data());
+                equals = str_equal(_text, item->get_text());
             }
             
             return equals;

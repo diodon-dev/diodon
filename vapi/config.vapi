@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2010 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2010-2013 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
@@ -37,5 +37,7 @@ namespace Config
   public const string LIBDIR;
   public const string PLUGINS_DIR;
   public const string PLUGINS_DATA_DIR;
+  
+  public const string TEST_DATA_DIR;
 }
 

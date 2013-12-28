@@ -37,7 +37,7 @@ namespace Diodon
          * @param type type of clipboard text belongs to
          * @param text received text from clipboard which is never null or empty
          */
-        public signal void on_text_received(ClipboardType type, string text);
+        public signal void on_text_received(ClipboardType type, string text, string? origin);
         
         /**
          * Called when uris have been received from clipboard.
@@ -47,7 +47,7 @@ namespace Diodon
          * @param type type of clipboard uris belong to
          * @param paths paths separated with /n.
          */
-        public signal void on_uris_received(ClipboardType type, string paths);
+        public signal void on_uris_received(ClipboardType type, string paths, string? origin);
         
         /**
          * Called when a image has been received from the clipboard.
@@ -55,7 +55,7 @@ namespace Diodon
          * @param type type of clipboard image belongs to
          * @param pixbuf image as a pixbuf object
          */
-        public signal void on_image_received(ClipboardType type, Gdk.Pixbuf pixbuf);
+        public signal void on_image_received(ClipboardType type, Gdk.Pixbuf pixbuf, string? origin);
         
         /**
          * Called when the clipboard is empty
@@ -144,15 +144,17 @@ namespace Diodon
             
             // checking if any content known is available
             if(text_available || image_available || uris_available) {
+                string? origin = Utility.get_path_of_active_application();
+                
                 // checking for uris
                 if(text_available) {
                     // check if text is valid
                     if(text != null && text != "") {
                         if(uris_available) {
-                            on_uris_received(type, text);
+                            on_uris_received(type, text, origin);
                          }
                          else {
-                            on_text_received(type, text);
+                            on_text_received(type, text, origin);
                          }
                     }
                 }
@@ -160,7 +162,7 @@ namespace Diodon
                 else if(image_available) {
                     Gdk.Pixbuf? pixbuf = request_image();
                     if(pixbuf != null) {
-                        on_image_received(type, pixbuf);
+                        on_image_received(type, pixbuf, origin);
                     }
                 }
             }

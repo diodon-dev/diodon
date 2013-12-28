@@ -24,7 +24,7 @@ namespace Diodon
     /**
      * Testing of TestKeybindingManager functionality
      */
-    class TestKeybindingManager : TestCase
+    class TestKeybindingManager : FsoFramework.Test.TestCase
     {
 	    public TestKeybindingManager()
 	    {

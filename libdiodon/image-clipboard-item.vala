@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2011 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2011-2013 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -22,53 +22,46 @@
 namespace Diodon
 {
     /**
-     * Represents a image clipboard item holding. For memory consumption
-     * reasons the pixbuf is not hold in the memory but stored to the disc
-     * and only loaded when requested.
-     * However a scaled pixbuf of the image is still needed for preview reasons.
-     * Stored image will be removed from disc when item is removed from history.
-     * To still be able to identify a picture, a md5 sum is built from the 
-     * original pic.
+     * An image clipboard item representing such in a preview image.
      */
     public class ImageClipboardItem : GLib.Object, IClipboardItem
     {
         private ClipboardType _clipboard_type;
-        private string _checksum; // check sum to identify pic content
-        private Gdk.Pixbuf _pixbuf_preview; // scaled pixbuf for preview
+        private string _checksum; // checksum to identify pic content
+        private Gdk.Pixbuf _pixbuf;
         private string _label;
+        private string? _origin;
         
         /**
-         * path where pixbuf image has been stored on disc
-         */
-        private string _path;
-
-        /**
-         * Default data constructor needed for reflection.
+         * Create image clipboard item by a pixbuf.
          * 
          * @param clipboard_type clipboard type item is coming from
-         * @param data image path
-         */ 
-        public ImageClipboardItem(ClipboardType clipboard_type, string data) throws GLib.Error
+         * @param pixbuf image from clipboard
+         * @param origin origin of clipboard item as application path
+         */
+        public ImageClipboardItem.with_image(ClipboardType clipboard_type, Gdk.Pixbuf pixbuf, string? origin) throws GLib.Error
         {
             _clipboard_type = clipboard_type;
-            _path = data;
-            
-            // temporarily load pix buf so needed information can be extracted
-            Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(data);
+            _origin = origin;
             extract_pixbuf_info(pixbuf);
         }
         
         /**
-         * Create image clipboard item by a pixbuf which will be stored to the
-         * disc for later use.
+         * Create image clipboard item by given payload.
          * 
          * @param clipboard_type clipboard type item is coming from
          * @param pixbuf image from clipboard
+         * @param origin origin of clipboard item as application path
          */
-        public ImageClipboardItem.with_image(ClipboardType clipboard_type, Gdk.Pixbuf pixbuf) throws GLib.Error
+        public ImageClipboardItem.with_payload(ClipboardType clipboard_type, ByteArray payload, string? origin) throws GLib.Error
         {
             _clipboard_type = clipboard_type;
-            _path = save_pixbuf(pixbuf);
+            _origin = origin;
+            
+            Gdk.PixbufLoader loader = new Gdk.PixbufLoader();
+            loader.write(payload.data);
+            loader.close();
+            Gdk.Pixbuf pixbuf = loader.get_pixbuf();
             extract_pixbuf_info(pixbuf);
         }
     
@@ -83,9 +76,17 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-	    public string get_clipboard_data()
+	    public string get_text()
         {
-            return _path;
+            return _label; // label is representation of image
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+	    public string? get_origin()
+        {
+            return _origin;
         }
 
         /**
@@ -110,8 +111,15 @@ namespace Diodon
 	     */
         public Icon get_icon()
         {
-            FileIcon icon = new FileIcon(File.new_for_path(_path));
-            return icon;
+            try {
+                File file = save_tmp_pixbuf(_pixbuf);
+                FileIcon icon = new FileIcon(file);
+                return icon;
+            } catch(Error e) {
+                warning("Could not create icon for image %s. Fallback to content type",
+                    _checksum);
+                return ContentType.get_icon(get_mime_type());
+            }
         }
         
         /**
@@ -127,9 +135,20 @@ namespace Diodon
 	     */
         public Gtk.Image? get_image()
         {
-            return new Gtk.Image.from_pixbuf(_pixbuf_preview);
+            Gdk.Pixbuf pixbuf_preview = create_scaled_pixbuf(_pixbuf);
+            return new Gtk.Image.from_pixbuf(pixbuf_preview);
         }
-
+        
+        /**
+	     * {@inheritDoc}
+	     */
+        public ByteArray? get_payload() throws GLib.Error
+        {
+            uint8[] buffer;
+            _pixbuf.save_to_buffer(out buffer, "png");
+            return new ByteArray.take(buffer);
+        }
+        
         /**
          * {@inheritDoc}
          */
@@ -143,29 +162,8 @@ namespace Diodon
 	     */
         public void to_clipboard(Gtk.Clipboard clipboard)
         {
-            try {
-                 Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(_path);
-                 clipboard.set_image(pixbuf);
-                 clipboard.store();
-            } 
-            catch(Error e) {
-                warning("Loading of image %s failed. Cause: %s", _path, e.message);
-            }
-        }
-        
-        /**
-	     * {@inheritDoc}
-	     */
-	    public void remove()
-        {
-            debug("Removing image %s from storage", _path);
-            // remove temporarily stored image
-            File image = File.new_for_path(_path);
-            try {
-                image.delete();
-            } catch (Error e) {
-                warning ("removing of image file %s failed. Cause: %s", _path, e.message);
-            }
+             clipboard.set_image(_pixbuf);
+             clipboard.store();
         }
         
         /**
@@ -217,16 +215,14 @@ namespace Diodon
          */
         private void extract_pixbuf_info(Gdk.Pixbuf pixbuf)
         {
-            // create md5 sum of picture
-            Checksum checksum = new Checksum(ChecksumType.MD5);
+            // create checksum of picture
+            Checksum checksum = new Checksum(ChecksumType.SHA1);
             checksum.update(pixbuf.get_pixels(), pixbuf.height * pixbuf.rowstride);
             _checksum = checksum.get_string().dup();
             
-            debug("Build checksum %s for pic %s", _checksum, _path);
-            
             // label in format [{width}x{height}]
             _label ="[%dx%d]".printf(pixbuf.width, pixbuf.height); 
-            _pixbuf_preview = create_scaled_pixbuf(pixbuf);
+            _pixbuf = pixbuf;
         }
         
         /**
@@ -251,31 +247,22 @@ namespace Diodon
         }
         
         /**
-         * Store pixbuf to file system and return path to it.
+         * Store pixbuf in tmp folder but only if it does not exist
          *
          * @param pixbuf pixbuf to be stored
+         * @return file object of stored pixbuf
          */
-        private static string save_pixbuf(Gdk.Pixbuf pixbuf) throws GLib.Error
+        private File save_tmp_pixbuf(Gdk.Pixbuf pixbuf) throws GLib.Error
         {
-            // create a file name in the diodon user data dir images folder
-            string filename = "";
-            string data_dir = Utility.get_user_data_dir();
-            string image_data_dir = Path.build_filename(data_dir, "images");
+            string filename = Path.build_filename(Environment.get_tmp_dir(),
+                "diodon-" + _checksum + ".png");
             
-            if(Utility.make_directory_with_parents(image_data_dir)) {
-            
-                // image file name equal timestamp in seconds
-                // plus a random number in case when multiple images
-                // are copied to a clipboard in one second
-                int id = Random.int_range(1000, 9999);
-                DateTime now = new DateTime.now_local();
-                string name = now.format("%Y%m%d-%H%M%S") + "-%i.png".printf(id);
-                
-                filename = Path.build_filename(image_data_dir, name);
+            File file = File.new_for_path(filename);
+            if(!file.query_exists(null)) {
                 pixbuf.save(filename, "png");
             }
         
-            return filename;
+            return file;
         }
     }  
 }

@@ -1,7 +1,0 @@
-[Plugin]
-Module=zeitgeist
-_Name=Zeitgeist Data-Source
-_Description=Adds clipboard activities as events to the Zeitgeist daemon.
-Authors=Oliver Sauder <os@esite.ch>
-_Copyright=Copyright © 2012 Diodon Team
-

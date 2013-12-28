@@ -35,6 +35,7 @@ namespace Diodon
          * file paths separated with \n
          */
         private string _paths;
+        private string? _origin;
         private ClipboardType _clipboard_type;
        
         /**
@@ -42,11 +43,13 @@ namespace Diodon
          * 
          * @param clipboard_type clipboard type item is coming from
          * @param data paths separated with \n
+         * @param origin origin of clipboard item as application path
          */ 
-        public FileClipboardItem(ClipboardType clipboard_type, string data) throws FileError
+        public FileClipboardItem(ClipboardType clipboard_type, string data, string? origin) throws FileError
         {
             _clipboard_type = clipboard_type;
             _paths = data;
+            _origin = origin;
             
             // check if all paths are available
             string[] paths = convert_to_paths(_paths);
@@ -69,9 +72,17 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-	    public string get_clipboard_data()
+	    public string get_text()
         {
             return _paths;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+	    public string? get_origin()
+        {
+            return _origin;
         }
 
         /**
@@ -106,8 +117,8 @@ namespace Diodon
             string[] uris = convert_to_uris(_paths);
             File file = File.new_for_uri(uris[0]);
             try {
-                FileInfo file_info = file.query_info(FileAttribute.STANDARD_CONTENT_TYPE, 0, null);
-                mime_type = file_info.get_content_type();
+                FileInfo file_info = file.query_info(FileAttribute.STANDARD_FAST_CONTENT_TYPE, 0, null);
+                mime_type = file_info.get_attribute_as_string(FileAttribute.STANDARD_FAST_CONTENT_TYPE);
             } catch(GLib.Error e) {
                 warning("Could not determine mime type of file %s", uris[0]);
             }
@@ -137,7 +148,37 @@ namespace Diodon
 	     */
         public Icon get_icon()
         {
-            return ContentType.get_icon(get_mime_type());
+            const string FILE_ATTRS = 
+              FileAttribute.THUMBNAIL_PATH;
+
+            // icon of first file is used
+            string mime_type = get_mime_type();
+            string[] uris = convert_to_uris(_paths);
+            File file = File.new_for_uri(uris[0]);
+            try {
+                FileInfo info = file.query_info(FILE_ATTRS, 0);
+                Icon icon = info.get_icon();
+                string thumbnail_path = info.get_attribute_byte_string(FileAttribute.THUMBNAIL_PATH);
+                if(thumbnail_path != null) {
+                    return new FileIcon(File.new_for_path(thumbnail_path));
+                }
+                else if(icon != null) {
+                    return icon;
+                }
+            } catch(GLib.Error e) {
+                warning("Could not determine mime type of file %s", uris[0]);
+            }
+            
+            // default icon of mime type
+            return ContentType.get_icon(mime_type);
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+        public ByteArray? get_payload()
+        {
+            return null;
         }
         
         /**
@@ -145,7 +186,7 @@ namespace Diodon
 	     */
         public string get_checksum()
         {
-            return Checksum.compute_for_string(ChecksumType.MD5, _paths);
+            return Checksum.compute_for_string(ChecksumType.SHA1, _paths);
         }
         
         /**
@@ -175,14 +216,6 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-	    public void remove()
-        {
-            // no cleaning up needed
-        }
-        
-        /**
-	     * {@inheritDoc}
-	     */
         public bool matches(string search, ClipboardItemType type)
         {
             bool matches = false;
@@ -205,7 +238,7 @@ namespace Diodon
             bool equals = false;
             
             if(item is FileClipboardItem) {
-                equals = str_equal(_paths, item->get_clipboard_data());
+                equals = str_equal(_paths, item->get_text());
             }
             
             return equals;

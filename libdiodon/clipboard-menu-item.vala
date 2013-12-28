@@ -22,11 +22,12 @@
 namespace Diodon
 {
     /**
-     * A gtk menu item holding a clipboard item.
+     * A gtk menu item holding a checksum of a clipboard item. It only keeps
+     * the checksum as it would waste memory to keep the hole item available.
      */
     class ClipboardMenuItem : Gtk.ImageMenuItem
     {
-        private IClipboardItem _item;
+        private string _checksum;
         
         /**
          * Clipboard item constructor
@@ -35,11 +36,11 @@ namespace Diodon
          */
         public ClipboardMenuItem(IClipboardItem item)
         {
-            _item = item;
-            set_label(_item.get_label());
+            _checksum = item.get_checksum();
+            set_label(item.get_label());
             
             // check if image needs to be shown
-            Gtk.Image? image = _item.get_image();
+            Gtk.Image? image = item.get_image();
             if(image != null) {
                 set_image(image);
                 set_always_show_image(true);
@@ -47,24 +48,24 @@ namespace Diodon
         }
         
         /**
-         * Get encapsulated clipboard item
+         * Get encapsulated clipboard item checksum
          *
-         * @return clipboard item
+         * @return clipboard item checksum
          */
-        public IClipboardItem get_clipboard_item()
+        public string get_item_checksum()
         {
-            return _item;
+            return _checksum;
         }
         
         /**
          * Highlight item by changing label to bold
          * TODO: get this up and running
          */        
-        public void highlight_item()
+        /*public void highlight_item()
         {
-            /*Gtk.Label label = get_menu_label();
-            label.set_markup("<b>%s</b>".printf(get_label()));*/
-        }
+            Gtk.Label label = get_menu_label();
+            label.set_markup("<b>%s</b>".printf(get_label()));
+        }*/
         
         /**
          * Gets the child of Gtk.Bin base class which represents

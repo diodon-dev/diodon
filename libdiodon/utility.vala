@@ -60,6 +60,80 @@ namespace Diodon
             
             return result;
         }
+        
+        /**
+         * Get executable path of application which is currently running.
+         *
+         * @return path of currently active application or null if not possible to determine
+         */
+        public static string? get_path_of_active_application()
+        {
+            X.Window window = get_active_window();
+            if(window != X.None) {
+                ulong pid = get_pid(window);
+                
+                if(pid != 0) {
+                    File file = File.new_for_path("/proc/" + pid.to_string() + "/exe");
+                    try {
+                        FileInfo info = file.query_info(FileAttribute.STANDARD_SYMLINK_TARGET, 
+                            FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
+                        if(info != null) {
+                            string path = info.get_attribute_as_string(
+                                FileAttribute.STANDARD_SYMLINK_TARGET);
+                            debug("Path is %s", path);
+                            return path;
+                        }
+                    }
+                    catch(GLib.Error e) {
+                        debug("Error occured while reading %s: %s",
+                            file.get_path(), e.message);
+                    }
+                }
+            }
+            
+            return null;
+        }
+        
+        private static X.Window get_active_window()
+        {
+            unowned Gdk.Screen screen = Gdk.Screen.get_default();
+            Gdk.Window active_window = screen.get_active_window();
+            if(active_window != null) {
+                X.Window xactive_window = Gdk.X11Window.get_xid(active_window);
+                debug("Active window %#x", (int)xactive_window);
+                return xactive_window;
+            }
+            
+            return X.None;
+        }
+        
+        private static ulong get_pid(X.Window window)
+        {
+            unowned X.Display display = Gdk.x11_get_default_xdisplay();
+            X.Atom wm_pid = display.intern_atom("_NET_WM_PID", false);
+            
+            if(wm_pid != X.None) {
+                X.Atom actual_type_return;
+                int actual_format_return;
+                ulong nitems_return;
+                ulong bytes_after_return;
+                void* prop_return = null;
+
+                int status = display.get_window_property(window, wm_pid, 0,
+                    long.MAX, false, 0, out actual_type_return, out actual_format_return,
+                    out nitems_return, out bytes_after_return, out prop_return);
+                
+                if(status == X.Success) {
+                    if(prop_return != null) {
+                        ulong pid = *((ulong*)prop_return);
+                        debug("Copied by process with pid %lu", pid);
+                        return pid;
+                    }
+                }
+            }
+            
+            return 0;
+        }
     }
 }
 

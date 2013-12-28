@@ -24,6 +24,10 @@ namespace Diodon
     /**
      * Clipboard item interface to be implemented by various different
      * clipboard item types such as Text,File or Image.
+     *
+     * TODO
+     * interface IClipboardItem should extends Gee.Hashable which currently ends
+     * in a compliation error of classes implenting this interface.
      */
     public interface IClipboardItem : GLib.Object
     {
@@ -70,12 +74,16 @@ namespace Diodon
         public abstract Icon get_icon();
         
         /**
-         * A string representing all information to rebuild a clipboard
-         * item again.
+         * Retrieves any additional data needed to reconstruct clipboard content
+         */
+        public abstract ByteArray? get_payload() throws GLib.Error;
+        
+        /**
+         * A string representing clipboard item.
          *
          * @return data
          */
-        public abstract string get_clipboard_data();
+        public abstract string get_text();
         
         /**
          * Get unique checksum for clipboard content.
@@ -83,17 +91,19 @@ namespace Diodon
         public abstract string get_checksum();
         
         /**
+         * Get origin resp. path of application which has triggered copy event
+         * creating this clipboard item.
+         *
+         * @return origin as application path if available; otherwise null
+         */
+        public abstract string? get_origin();
+        
+        /**
          * Select the current item in the given gtk clipboard
          *
          * @param clipboard gtk clipboard
          */
         public abstract void to_clipboard(Gtk.Clipboard clipboard);
-        
-        /**
-         * Will be called when clipboard items gets removed from storage.
-         * Can be used for cleaning up functionality.
-         */
-        public abstract void remove();
         
         /**
          * Determine if given item matches search string and section
@@ -106,7 +116,6 @@ namespace Diodon
         
         /**
          * Check if given item is equal.
-         * TODO see todo equal_func
          *
          * @return true if equal; otherwise false.
          *
@@ -115,7 +124,6 @@ namespace Diodon
         
         /**
          * return hash code for implemented clipboard item
-         * TODO see todo hash_func
          *
          * @return hash code
          *
@@ -125,11 +133,6 @@ namespace Diodon
         /**
          * equal func helper comparing two clipboard items.
          *
-         * TODO:
-         * in future releases of libgee (currently in development version 0.7.0)
-         * there will be a interface called hashable which should be implemented
-         * instead of this inconvenient equal func method.
-         * 
          * @param item_a item to be compared
          * @param item_b other item to be compared
          * 
@@ -142,10 +145,6 @@ namespace Diodon
         
         /**
          * hash func helper creating hash code for clipboard item.
-         * 
-         * TODO in future releases of libgee (currently in development version 0.7.0)
-         * there will be a interface called hashable which should be implemented
-         * instead of this inconvenient hash func method.
          * 
          * @param item item to create hash from
          * 

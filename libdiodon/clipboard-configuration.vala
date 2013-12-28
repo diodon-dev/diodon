@@ -22,11 +22,11 @@
 namespace Diodon
 {
     /**
-     * The configuration model encapsulates the configuration state.
+     * Clipboard configuration encapsulating configuration state.
      */
-    public class ConfigurationModel : GLib.Object
+    public class ClipboardConfiguration : GLib.Object
     {
-        private int _clipboard_size = 25;
+        private int _recent_items_size = 25;
         private string _history_accelerator = "<Ctrl><Alt>V";
     
         /**
@@ -55,17 +55,17 @@ namespace Diodon
         public bool instant_paste { get; set; default = true; }
         
         /**
-         * size of clipboard history.
+         * number of recent items to be shown.
          * Value must be bigger than 0 and lower or equal than 100.
          */
-        public int clipboard_size
+        public int recent_items_size
         {
             get { 
-                return _clipboard_size;
+                return _recent_items_size;
             }
             set {
                 if(value > 0 && value <= 100) {
-                    _clipboard_size = value;
+                    _recent_items_size = value;
                 }
             }
         }

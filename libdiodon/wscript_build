@@ -10,12 +10,12 @@ lib = bld.shlib (
   name = 'libdiodon',
   vnum = '0.0.0',
   vapi_dirs = '../vapi',
-  uselib = 'GTK GEE XML X11 GDKX PEAS PEASGTK XTST GDK',
+  uselib = 'GTK GEE X11 GDKX PEAS PEASGTK XTST GDK ZEITGEIST',
   cflags = ['-include', 'config.h'],
   header_path = '${INCLUDEDIR}/diodon',
   gir = 'Diodon-1.0',
   packages = 'gtk+-3.0 gee-1.0',
-  packages_private = 'libxml-2.0 x11 gdk-x11-3.0 libpeas-gtk-1.0 libpeas-1.0 config xtst gdk-3.0',
+  packages_private = ' zeitgeist-2.0 x11 gdk-x11-3.0 libpeas-gtk-1.0 libpeas-1.0 config xtst gdk-3.0',
   source = bld.path.ant_glob (incl='**/*.vala'))
 
 lib_typelib = bld.new_task_gen(

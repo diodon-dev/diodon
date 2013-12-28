@@ -22,9 +22,19 @@
 namespace Diodon
 {
     /**
+     * collects all non-option arguments which would otherwise be left in argv.
+     */
+    private const string OPTION_REMAINING = "";
+    
+    /**
      * determine whether version information should be printed
      */
     private static bool show_version = false;
+    
+    /**
+     * checksums to be pasted. should only be one though
+     */
+    private static string[] checksums;
     
     /**
      * main clipboard controller
@@ -35,6 +45,7 @@ namespace Diodon
      * list of available command line options
      */
     private static const OptionEntry[] options = {
+        { OPTION_REMAINING, '\0', 0, OptionArg.STRING_ARRAY, ref checksums, null, "[CHECKSUM]" },
         { "version", 'v', 0, OptionArg.NONE, ref show_version, "Print version information", null },
         { null }
     };
@@ -51,6 +62,9 @@ namespace Diodon
             // diodon should only show up in gnome
             DesktopAppInfo.set_desktop_env("GNOME");
             
+            // init vars
+            checksums = new string[1];  // can only process one checksum max
+            
             // init option context
             OptionContext opt_context = new OptionContext("- GTK+ Clipboard Manager");
             opt_context.set_help_enabled(true);
@@ -62,27 +76,63 @@ namespace Diodon
                 return 0; // bail out
             }
             
+            // check whether there is a checksum of clipboard content to paste
+            string checksum = null;
+            if(checksums.length > 0 && checksums[0] != null) {
+                checksum = checksums[0];
+                
+                // it might be an uri so we have to remove uri first before
+                // TODO: 
+                // see ZeitgeistClipboardStorage.CLIPBOARD_URI why clipboard:
+                // is used staticly here
+                checksum = checksum.replace("clipboard:", "");
+            }
+            
             Gtk.init(ref args);
             Unique.App app = new Unique.App(Config.BUSNAME, null);
             
-            // when diodon is already running activate it
+            // when diodon is already running activate it or paste checksum if necessary
             if(app.is_running) {
+            
+                if(checksum != null) {
+                    debug("Try to paste content of checksum %s", checksum);
+                    Unique.MessageData checksum_data = new Unique.MessageData();
+                    checksum_data.set_text(checksum, checksum.length);
+                    
+                    if(app.send_message(Unique.Command.OPEN, checksum_data) == Unique.Response.OK) {
+                        return 0;
+                    } else {
+                        warning("Pasting checksum %s was unsucessful", checksum);
+                    }
+                }
+                
                 if(app.send_message(Unique.Command.ACTIVATE, null) == Unique.Response.OK) {
                     return 0;
                 }
-                else {
-                    critical("Diodon is already running but could not be actiaved.");
-                    return 1;
-                }
+                
+                critical("Diodon is already running but could not be actiaved.");
+                return 1;
             }
 
             // setup controller            
             controller = new Controller();
-            controller.init();
+            controller.init.begin();
             
-            // register app activate will open controller history
+            if(checksum != null) {
+                debug("Select checksum %s after starting up", checksum);
+                controller.select_item_by_checksum(checksum);
+            }
+            
+            // process message listener
             app.message_received.connect((command, message_data, time_) => {
                 switch(command) {
+                    // OPEN for pasting content of checksum
+                    case Unique.Command.OPEN:
+                        string checksum_recv = message_data.get_text();
+                        debug("Message OPEN received with checksum %s", checksum_recv);
+                        controller.select_item_by_checksum.begin(checksum_recv);
+                        return Unique.Response.OK;
+                    // ACTIVATE to open history
                     case Unique.Command.ACTIVATE:
                         controller.show_history();
                         return Unique.Response.OK;

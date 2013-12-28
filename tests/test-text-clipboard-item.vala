@@ -24,7 +24,7 @@ namespace Diodon
     /**
      * Testing of TextClipboardItem functionality
      */
-    class TestTextClipboardItem : TestCase
+    class TestTextClipboardItem : FsoFramework.Test.TestCase
     {
 	    public TestTextClipboardItem()
 	    {
@@ -35,7 +35,7 @@ namespace Diodon
 	    public void test_matches()
 	    {
 	        TextClipboardItem item = new TextClipboardItem(ClipboardType.NONE,
-	            "Test");
+	            "Test", null);
 	        
 		    assert(item.matches("TEST", ClipboardItemType.ALL));
 		    assert(item.matches("test", ClipboardItemType.TEXT));

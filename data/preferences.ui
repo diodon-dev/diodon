@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkAdjustment" id="adjustment_clipboard_size">
+  <object class="GtkAdjustment" id="adjustment_recent_items_size">
     <property name="lower">1</property>
     <property name="upper">100</property>
     <property name="value">25</property>
@@ -145,12 +145,12 @@
                   <object class="GtkHBox" id="hbox1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="tooltip_text" translatable="yes">Number of items in the clipboard history.</property>
+                    <property name="tooltip_text" translatable="yes">Number of recent clipboard items to be shown in clipboard menu.</property>
                     <child>
-                      <object class="GtkLabel" id="label_clipboard_size">
+                      <object class="GtkLabel" id="label_recent_items_size">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Clipboard size</property>
+                        <property name="label" translatable="yes">Number of recent items</property>
                         <property name="ellipsize">start</property>
                       </object>
                       <packing>
@@ -160,12 +160,12 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkSpinButton" id="spinbutton_clipboard_size">
+                      <object class="GtkSpinButton" id="spinbutton_recent_items_size">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
-                        <property name="adjustment">adjustment_clipboard_size</property>
+                        <property name="adjustment">adjustment_recent_items_size</property>
                         <property name="numeric">True</property>
                       </object>
                       <packing>
@@ -201,7 +201,7 @@
                   <object class="GtkHBox" id="hbox2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="tooltip_text" translatable="yes">Hotkey to quickly allow you to access the clipboard history.</property>
+                    <property name="tooltip_text" translatable="yes">Hotkey to quickly allow you to access menu with recent clipboard items.</property>
                     <child>
                       <object class="GtkLabel" id="label_history_key">
                         <property name="visible">True</property>
