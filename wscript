@@ -117,8 +117,9 @@ def build(ctx):
     
     if not Options.options.skiptests:
         ctx.add_subdirs('tests')
-        ctx.add_pre_fun(setup_tests)
-        ctx.add_post_fun(teardown_tests)
+        if ctx.cmd == 'build':
+            ctx.add_pre_fun(setup_tests)
+            ctx.add_post_fun(teardown_tests)
         
     if ctx.env['VALADOC']:
     	ctx.add_subdirs('doc')
