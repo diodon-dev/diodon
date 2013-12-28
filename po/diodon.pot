@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-24 21:43+0200\n"
+"POT-Creation-Date: 2013-12-28 20:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../data/diodon.desktop.in.h:1 ../plugins/unitylens/diodon.lens.in.in.h:1
+#: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
 msgstr ""
 
-#: ../data/diodon.desktop.in.h:2 ../plugins/unitylens/diodon.lens.in.in.h:2
+#: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
 msgstr ""
 
@@ -83,13 +83,11 @@ msgid ""
 msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
-#: ../data/preferences.ui.h:13
-msgid "Clipboard size"
+msgid "Number of recent clipboard items"
 msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
-#: ../data/preferences.ui.h:12
-msgid "Number of items in the clipboard history."
+msgid "Number of recent clipboard items shown in clipboard menu."
 msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
@@ -99,7 +97,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 #: ../data/preferences.ui.h:15
-msgid "Hotkey to quickly allow you to access the clipboard history."
+msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
@@ -134,7 +132,16 @@ msgstr ""
 msgid "_Automatically paste selected item"
 msgstr ""
 
+#: ../data/preferences.ui.h:12
+msgid "Number of recent clipboard items to be shown in clipboard menu."
+msgstr ""
+
+#: ../data/preferences.ui.h:13
+msgid "Number of recent items"
+msgstr ""
+
 #: ../data/preferences.ui.h:14
+#: ../plugins/unityscope/unity-scope-plugin.vala:74
 msgid "Clipboard"
 msgstr ""
 
@@ -146,7 +153,7 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
-#: ../libdiodon/clipboard-menu.vala:42
+#: ../libdiodon/clipboard-menu.vala:36
 msgid "<Empty>"
 msgstr ""
 
@@ -159,61 +166,39 @@ msgid "Access clipboard history with an application indicator."
 msgstr ""
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
-#: ../plugins/unitylens/unitylens.plugin.in.h:3
 msgid "Copyright © 2011 Diodon Team"
 msgstr ""
 
-#: ../plugins/unitylens/diodon.lens.in.in.h:3
+#: ../plugins/unityscope/diodon.scope.in.in.h:1
+msgid "Clipboard History"
+msgstr ""
+
+#: ../plugins/unityscope/diodon.scope.in.in.h:2
+msgid ""
+"This is an Ubuntu search plugin that enables information from Diodon to be "
+"searched and displayed in the Dash underneath the Clipboard header."
+msgstr ""
+
+#: ../plugins/unityscope/diodon.scope.in.in.h:3
 msgid "Search clipboard"
 msgstr ""
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:95
-msgid "Search Clipboard"
+#: ../plugins/unityscope/unity-scope-plugin.vala:161
+msgid "Paste"
 msgstr ""
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:147
-#: ../plugins/unitylens/unity-lens-plugin.vala:171
-msgid "Text"
+#: ../plugins/unityscope/unity-scope-plugin.vala:169
+msgid "Origin"
 msgstr ""
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:151
-#: ../plugins/unitylens/unity-lens-plugin.vala:172
-msgid "Files"
+#: ../plugins/unityscope/unityscope.plugin.in.h:1
+msgid "Unity Scope"
 msgstr ""
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:155
-#: ../plugins/unitylens/unity-lens-plugin.vala:173
-msgid "Images"
-msgstr ""
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:169
-msgid "Type"
-msgstr ""
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:202
-msgid "Sorry, there is no clipboard content that matches your search."
-msgstr ""
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:269
-msgid "Copy to clipboard"
-msgstr ""
-
-#: ../plugins/unitylens/unitylens.plugin.in.h:1
-msgid "Unity Lens"
-msgstr ""
-
-#: ../plugins/unitylens/unitylens.plugin.in.h:2
+#: ../plugins/unityscope/unityscope.plugin.in.h:2
 msgid "Access clipboard history with the unity dash."
 msgstr ""
 
-#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:1
-msgid "Zeitgeist Data-Source"
-msgstr ""
-
-#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:2
-msgid "Adds clipboard activities as events to the Zeitgeist daemon."
-msgstr ""
-
-#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:3
-msgid "Copyright © 2012 Diodon Team"
+#: ../plugins/unityscope/unityscope.plugin.in.h:3
+msgid "Copyright © 2013 Diodon Team"
 msgstr ""

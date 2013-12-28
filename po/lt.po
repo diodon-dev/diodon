@@ -7,22 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-24 21:43+0200\n"
+"POT-Creation-Date: 2013-12-28 20:44+0300\n"
 "PO-Revision-Date: 2012-09-15 12:08+0000\n"
 "Last-Translator: Aurimas Fišeras <Unknown>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
+"Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-10-25 05:53+0000\n"
 "X-Generator: Launchpad (build 16179)\n"
-"Language: lt\n"
 
-#: ../data/diodon.desktop.in.h:1 ../plugins/unitylens/diodon.lens.in.in.h:1
+#: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
 msgstr "Iškarpinės tvarkytuvė"
 
-#: ../data/diodon.desktop.in.h:2 ../plugins/unitylens/diodon.lens.in.in.h:2
+#: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
 msgstr "GTK+ iškarpinės tvarkytuvė"
 
@@ -94,13 +94,13 @@ msgstr ""
 "Automatiškai įdėti pažymėtą elementą vietoje tik nukopijavimo į iškarpinę."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
-#: ../data/preferences.ui.h:13
-msgid "Clipboard size"
-msgstr "Iškarpinės dydis"
+#, fuzzy
+msgid "Number of recent clipboard items"
+msgstr "Iškarpinės istorijoje saugomų elementų skaičius."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
-#: ../data/preferences.ui.h:12
-msgid "Number of items in the clipboard history."
+#, fuzzy
+msgid "Number of recent clipboard items shown in clipboard menu."
 msgstr "Iškarpinės istorijoje saugomų elementų skaičius."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
@@ -110,7 +110,8 @@ msgstr "Istorijos klavišas"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 #: ../data/preferences.ui.h:15
-msgid "Hotkey to quickly allow you to access the clipboard history."
+#, fuzzy
+msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr "Spartusis klavišas greitam priėjimui prie iškarpinės istorijos."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
@@ -145,7 +146,16 @@ msgstr "Iš_laikyti iškarpinės turinį"
 msgid "_Automatically paste selected item"
 msgstr "_Automatiškai įdėti parinktą iškarpinės elementą"
 
+#: ../data/preferences.ui.h:12
+msgid "Number of recent clipboard items to be shown in clipboard menu."
+msgstr ""
+
+#: ../data/preferences.ui.h:13
+msgid "Number of recent items"
+msgstr ""
+
 #: ../data/preferences.ui.h:14
+#: ../plugins/unityscope/unity-scope-plugin.vala:74
 msgid "Clipboard"
 msgstr "Iškarpinė"
 
@@ -157,7 +167,7 @@ msgstr "Spartieji klavišai"
 msgid "Plugins"
 msgstr "Papildiniai"
 
-#: ../libdiodon/clipboard-menu.vala:42
+#: ../libdiodon/clipboard-menu.vala:36
 msgid "<Empty>"
 msgstr "<Tuščia>"
 
@@ -170,61 +180,61 @@ msgid "Access clipboard history with an application indicator."
 msgstr ""
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
-#: ../plugins/unitylens/unitylens.plugin.in.h:3
 msgid "Copyright © 2011 Diodon Team"
 msgstr ""
 
-#: ../plugins/unitylens/diodon.lens.in.in.h:3
+#: ../plugins/unityscope/diodon.scope.in.in.h:1
+#, fuzzy
+msgid "Clipboard History"
+msgstr "Iškarpinės dydis"
+
+#: ../plugins/unityscope/diodon.scope.in.in.h:2
+msgid ""
+"This is an Ubuntu search plugin that enables information from Diodon to be "
+"searched and displayed in the Dash underneath the Clipboard header."
+msgstr ""
+
+#: ../plugins/unityscope/diodon.scope.in.in.h:3
 msgid "Search clipboard"
 msgstr ""
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:95
-msgid "Search Clipboard"
-msgstr "Ieškoti iškarpinėje"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:147
-#: ../plugins/unitylens/unity-lens-plugin.vala:171
-msgid "Text"
-msgstr "Tekstas"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:151
-#: ../plugins/unitylens/unity-lens-plugin.vala:172
-msgid "Files"
-msgstr "Failai"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:155
-#: ../plugins/unitylens/unity-lens-plugin.vala:173
-msgid "Images"
-msgstr "Paveikslai"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:169
-msgid "Type"
-msgstr "Tipas"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:202
-msgid "Sorry, there is no clipboard content that matches your search."
-msgstr "Atsiprašome, nėra iškarpinės turinio, kuris atitinka paiešką."
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:269
-msgid "Copy to clipboard"
-msgstr "Kopijuoti į iškarpinę"
-
-#: ../plugins/unitylens/unitylens.plugin.in.h:1
-msgid "Unity Lens"
+#: ../plugins/unityscope/unity-scope-plugin.vala:161
+msgid "Paste"
 msgstr ""
 
-#: ../plugins/unitylens/unitylens.plugin.in.h:2
+#: ../plugins/unityscope/unity-scope-plugin.vala:169
+msgid "Origin"
+msgstr ""
+
+#: ../plugins/unityscope/unityscope.plugin.in.h:1
+msgid "Unity Scope"
+msgstr ""
+
+#: ../plugins/unityscope/unityscope.plugin.in.h:2
 msgid "Access clipboard history with the unity dash."
 msgstr ""
 
-#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:1
-msgid "Zeitgeist Data-Source"
+#: ../plugins/unityscope/unityscope.plugin.in.h:3
+msgid "Copyright © 2013 Diodon Team"
 msgstr ""
 
-#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:2
-msgid "Adds clipboard activities as events to the Zeitgeist daemon."
-msgstr ""
+#~ msgid "Search Clipboard"
+#~ msgstr "Ieškoti iškarpinėje"
 
-#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:3
-msgid "Copyright © 2012 Diodon Team"
-msgstr ""
+#~ msgid "Text"
+#~ msgstr "Tekstas"
+
+#~ msgid "Files"
+#~ msgstr "Failai"
+
+#~ msgid "Images"
+#~ msgstr "Paveikslai"
+
+#~ msgid "Type"
+#~ msgstr "Tipas"
+
+#~ msgid "Sorry, there is no clipboard content that matches your search."
+#~ msgstr "Atsiprašome, nėra iškarpinės turinio, kuris atitinka paiešką."
+
+#~ msgid "Copy to clipboard"
+#~ msgstr "Kopijuoti į iškarpinę"

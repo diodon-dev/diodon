@@ -7,22 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-24 21:43+0200\n"
+"POT-Creation-Date: 2013-12-28 20:44+0300\n"
 "PO-Revision-Date: 2012-02-16 16:43+0000\n"
 "Last-Translator: Hriostat <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-10-25 05:53+0000\n"
 "X-Generator: Launchpad (build 16179)\n"
-"Language: pt_BR\n"
 
-#: ../data/diodon.desktop.in.h:1 ../plugins/unitylens/diodon.lens.in.in.h:1
+#: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
 msgstr "Gerenciador de área de transferência"
 
-#: ../data/diodon.desktop.in.h:2 ../plugins/unitylens/diodon.lens.in.in.h:2
+#: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
 msgstr "Gerenciador de área de transferência em GTK+"
 
@@ -95,13 +95,13 @@ msgstr ""
 "transferência."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
-#: ../data/preferences.ui.h:13
-msgid "Clipboard size"
-msgstr "Tamanho da área de transferência"
+#, fuzzy
+msgid "Number of recent clipboard items"
+msgstr "Número de itens no histórico da área de transferênica."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
-#: ../data/preferences.ui.h:12
-msgid "Number of items in the clipboard history."
+#, fuzzy
+msgid "Number of recent clipboard items shown in clipboard menu."
 msgstr "Número de itens no histórico da área de transferênica."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
@@ -111,7 +111,8 @@ msgstr "Chave do histórico"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 #: ../data/preferences.ui.h:15
-msgid "Hotkey to quickly allow you to access the clipboard history."
+#, fuzzy
+msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr "Atalho para o acesso rápido ao histórico da área de transferência."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
@@ -146,7 +147,16 @@ msgstr "_Manter conteúdo da área de transferência"
 msgid "_Automatically paste selected item"
 msgstr "Colar _automaticamente item selecionado"
 
+#: ../data/preferences.ui.h:12
+msgid "Number of recent clipboard items to be shown in clipboard menu."
+msgstr ""
+
+#: ../data/preferences.ui.h:13
+msgid "Number of recent items"
+msgstr ""
+
 #: ../data/preferences.ui.h:14
+#: ../plugins/unityscope/unity-scope-plugin.vala:74
 msgid "Clipboard"
 msgstr "Área de transferência"
 
@@ -158,7 +168,7 @@ msgstr "Teclas de atalho"
 msgid "Plugins"
 msgstr "Plug-ins"
 
-#: ../libdiodon/clipboard-menu.vala:42
+#: ../libdiodon/clipboard-menu.vala:36
 msgid "<Empty>"
 msgstr "<Vazio>"
 
@@ -171,61 +181,58 @@ msgid "Access clipboard history with an application indicator."
 msgstr ""
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
-#: ../plugins/unitylens/unitylens.plugin.in.h:3
 msgid "Copyright © 2011 Diodon Team"
 msgstr ""
 
-#: ../plugins/unitylens/diodon.lens.in.in.h:3
+#: ../plugins/unityscope/diodon.scope.in.in.h:1
+#, fuzzy
+msgid "Clipboard History"
+msgstr "Tamanho da área de transferência"
+
+#: ../plugins/unityscope/diodon.scope.in.in.h:2
+msgid ""
+"This is an Ubuntu search plugin that enables information from Diodon to be "
+"searched and displayed in the Dash underneath the Clipboard header."
+msgstr ""
+
+#: ../plugins/unityscope/diodon.scope.in.in.h:3
 msgid "Search clipboard"
 msgstr ""
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:95
-msgid "Search Clipboard"
-msgstr "Procurar Área de Transferência"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:147
-#: ../plugins/unitylens/unity-lens-plugin.vala:171
-msgid "Text"
-msgstr "Texto"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:151
-#: ../plugins/unitylens/unity-lens-plugin.vala:172
-msgid "Files"
-msgstr "Arquívos"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:155
-#: ../plugins/unitylens/unity-lens-plugin.vala:173
-msgid "Images"
-msgstr "Imagens"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:169
-msgid "Type"
-msgstr "Tipo"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:202
-msgid "Sorry, there is no clipboard content that matches your search."
+#: ../plugins/unityscope/unity-scope-plugin.vala:161
+msgid "Paste"
 msgstr ""
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:269
-msgid "Copy to clipboard"
-msgstr "Copiar para a área de transferência"
-
-#: ../plugins/unitylens/unitylens.plugin.in.h:1
-msgid "Unity Lens"
+#: ../plugins/unityscope/unity-scope-plugin.vala:169
+msgid "Origin"
 msgstr ""
 
-#: ../plugins/unitylens/unitylens.plugin.in.h:2
+#: ../plugins/unityscope/unityscope.plugin.in.h:1
+msgid "Unity Scope"
+msgstr ""
+
+#: ../plugins/unityscope/unityscope.plugin.in.h:2
 msgid "Access clipboard history with the unity dash."
 msgstr ""
 
-#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:1
-msgid "Zeitgeist Data-Source"
+#: ../plugins/unityscope/unityscope.plugin.in.h:3
+msgid "Copyright © 2013 Diodon Team"
 msgstr ""
 
-#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:2
-msgid "Adds clipboard activities as events to the Zeitgeist daemon."
-msgstr ""
+#~ msgid "Search Clipboard"
+#~ msgstr "Procurar Área de Transferência"
 
-#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:3
-msgid "Copyright © 2012 Diodon Team"
-msgstr ""
+#~ msgid "Text"
+#~ msgstr "Texto"
+
+#~ msgid "Files"
+#~ msgstr "Arquívos"
+
+#~ msgid "Images"
+#~ msgstr "Imagens"
+
+#~ msgid "Type"
+#~ msgstr "Tipo"
+
+#~ msgid "Copy to clipboard"
+#~ msgstr "Copiar para a área de transferência"

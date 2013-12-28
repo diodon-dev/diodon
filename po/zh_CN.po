@@ -7,22 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-24 21:43+0200\n"
+"POT-Creation-Date: 2013-12-28 20:44+0300\n"
 "PO-Revision-Date: 2012-05-05 06:26+0000\n"
 "Last-Translator: Wang Dianjin <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-10-25 05:53+0000\n"
 "X-Generator: Launchpad (build 16179)\n"
-"Language: \n"
 
-#: ../data/diodon.desktop.in.h:1 ../plugins/unitylens/diodon.lens.in.in.h:1
+#: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
 msgstr "剪贴板管理器"
 
-#: ../data/diodon.desktop.in.h:2 ../plugins/unitylens/diodon.lens.in.in.h:2
+#: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
 msgstr "GTK+ 剪贴板管理器"
 
@@ -84,13 +84,13 @@ msgid ""
 msgstr "自动粘贴已选条目，不只是复制到剪贴板。"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
-#: ../data/preferences.ui.h:13
-msgid "Clipboard size"
-msgstr "剪贴板大小"
+#, fuzzy
+msgid "Number of recent clipboard items"
+msgstr "剪贴板历史条目数。"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
-#: ../data/preferences.ui.h:12
-msgid "Number of items in the clipboard history."
+#, fuzzy
+msgid "Number of recent clipboard items shown in clipboard menu."
 msgstr "剪贴板历史条目数。"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
@@ -100,7 +100,8 @@ msgstr "历史按键"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 #: ../data/preferences.ui.h:15
-msgid "Hotkey to quickly allow you to access the clipboard history."
+#, fuzzy
+msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr "快速访问剪贴板历史的热键。"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
@@ -135,7 +136,16 @@ msgstr "保留剪贴板内容(_K)"
 msgid "_Automatically paste selected item"
 msgstr "自动粘贴所选条目(_A)"
 
+#: ../data/preferences.ui.h:12
+msgid "Number of recent clipboard items to be shown in clipboard menu."
+msgstr ""
+
+#: ../data/preferences.ui.h:13
+msgid "Number of recent items"
+msgstr ""
+
 #: ../data/preferences.ui.h:14
+#: ../plugins/unityscope/unity-scope-plugin.vala:74
 msgid "Clipboard"
 msgstr "剪贴板"
 
@@ -147,7 +157,7 @@ msgstr "热键"
 msgid "Plugins"
 msgstr "插件"
 
-#: ../libdiodon/clipboard-menu.vala:42
+#: ../libdiodon/clipboard-menu.vala:36
 msgid "<Empty>"
 msgstr "<空>"
 
@@ -160,61 +170,61 @@ msgid "Access clipboard history with an application indicator."
 msgstr ""
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
-#: ../plugins/unitylens/unitylens.plugin.in.h:3
 msgid "Copyright © 2011 Diodon Team"
 msgstr ""
 
-#: ../plugins/unitylens/diodon.lens.in.in.h:3
+#: ../plugins/unityscope/diodon.scope.in.in.h:1
+#, fuzzy
+msgid "Clipboard History"
+msgstr "剪贴板大小"
+
+#: ../plugins/unityscope/diodon.scope.in.in.h:2
+msgid ""
+"This is an Ubuntu search plugin that enables information from Diodon to be "
+"searched and displayed in the Dash underneath the Clipboard header."
+msgstr ""
+
+#: ../plugins/unityscope/diodon.scope.in.in.h:3
 msgid "Search clipboard"
 msgstr ""
 
-#: ../plugins/unitylens/unity-lens-plugin.vala:95
-msgid "Search Clipboard"
-msgstr "搜索剪贴板"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:147
-#: ../plugins/unitylens/unity-lens-plugin.vala:171
-msgid "Text"
-msgstr "文本"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:151
-#: ../plugins/unitylens/unity-lens-plugin.vala:172
-msgid "Files"
-msgstr "文件"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:155
-#: ../plugins/unitylens/unity-lens-plugin.vala:173
-msgid "Images"
-msgstr "图片"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:169
-msgid "Type"
-msgstr "类型"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:202
-msgid "Sorry, there is no clipboard content that matches your search."
-msgstr "对不起，没有与您搜索匹配的剪贴板内容。"
-
-#: ../plugins/unitylens/unity-lens-plugin.vala:269
-msgid "Copy to clipboard"
-msgstr "复制到剪贴板"
-
-#: ../plugins/unitylens/unitylens.plugin.in.h:1
-msgid "Unity Lens"
+#: ../plugins/unityscope/unity-scope-plugin.vala:161
+msgid "Paste"
 msgstr ""
 
-#: ../plugins/unitylens/unitylens.plugin.in.h:2
+#: ../plugins/unityscope/unity-scope-plugin.vala:169
+msgid "Origin"
+msgstr ""
+
+#: ../plugins/unityscope/unityscope.plugin.in.h:1
+msgid "Unity Scope"
+msgstr ""
+
+#: ../plugins/unityscope/unityscope.plugin.in.h:2
 msgid "Access clipboard history with the unity dash."
 msgstr ""
 
-#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:1
-msgid "Zeitgeist Data-Source"
+#: ../plugins/unityscope/unityscope.plugin.in.h:3
+msgid "Copyright © 2013 Diodon Team"
 msgstr ""
 
-#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:2
-msgid "Adds clipboard activities as events to the Zeitgeist daemon."
-msgstr ""
+#~ msgid "Search Clipboard"
+#~ msgstr "搜索剪贴板"
 
-#: ../plugins/zeitgeist/zeitgeist.plugin.in.h:3
-msgid "Copyright © 2012 Diodon Team"
-msgstr ""
+#~ msgid "Text"
+#~ msgstr "文本"
+
+#~ msgid "Files"
+#~ msgstr "文件"
+
+#~ msgid "Images"
+#~ msgstr "图片"
+
+#~ msgid "Type"
+#~ msgstr "类型"
+
+#~ msgid "Sorry, there is no clipboard content that matches your search."
+#~ msgstr "对不起，没有与您搜索匹配的剪贴板内容。"
+
+#~ msgid "Copy to clipboard"
+#~ msgstr "复制到剪贴板"
