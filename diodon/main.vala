@@ -120,7 +120,7 @@ namespace Diodon
             
             if(checksum != null) {
                 debug("Select checksum %s after starting up", checksum);
-                controller.select_item_by_checksum(checksum);
+                controller.select_item_by_checksum.begin(checksum);
             }
             
             // process message listener

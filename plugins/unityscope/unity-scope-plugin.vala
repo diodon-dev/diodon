@@ -145,10 +145,18 @@ namespace Diodon.Plugins
         {
             Unity.ScopeResult result = previewer.result;
         
+            Icon hint_icon = null;
+            try {
+                hint_icon = Icon.new_for_string(result.icon_hint);
+            } catch(Error error) {
+                warning("Could not convert icon_hint to an icon': %s",
+                    error.message);
+                hint_icon = ContentType.get_icon("text/plain");
+            }
+                
             debug("Show preview for %s", result.title);
             Unity.Preview preview = new Unity.GenericPreview(result.title,
-                result.comment, Icon.new_for_string(result.icon_hint));
-            
+                result.comment, hint_icon);
             Unity.PreviewAction copy_action = new Unity.PreviewAction.with_uri(result.uri,
                 _("Paste"), null);
             preview.add_action(copy_action);
