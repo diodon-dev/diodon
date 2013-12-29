@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-28 20:44+0300\n"
-"PO-Revision-Date: 2012-05-18 14:24+0000\n"
-"Last-Translator: Alex Vykalyuk <Unknown>\n"
+"PO-Revision-Date: 2013-12-29 00:11+0000\n"
+"Last-Translator: Oliver Sauder <os@esite.ch>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-10-25 05:53+0000\n"
-"X-Generator: Launchpad (build 16179)\n"
+"X-Launchpad-Export-Date: 2013-12-29 05:27+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
+"Language: uk\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -95,14 +95,12 @@ msgstr ""
 "буфер обміну."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
-#, fuzzy
 msgid "Number of recent clipboard items"
-msgstr "Кількість записів в історії буферу обміну."
+msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
-#, fuzzy
 msgid "Number of recent clipboard items shown in clipboard menu."
-msgstr "Кількість записів в історії буферу обміну."
+msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 #: ../data/preferences.ui.h:16
@@ -111,9 +109,9 @@ msgstr "Показати історію"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 #: ../data/preferences.ui.h:15
-#, fuzzy
-msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
-msgstr "Гаряча клавіша для швидкого доступу до історії буферу обміну."
+msgid ""
+"Hotkey to quickly allow you to access menu with recent clipboard items."
+msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Active plugins"
@@ -185,9 +183,8 @@ msgid "Copyright © 2011 Diodon Team"
 msgstr ""
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:1
-#, fuzzy
 msgid "Clipboard History"
-msgstr "Розмір буферу"
+msgstr ""
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:2
 msgid ""

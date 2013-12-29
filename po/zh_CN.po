@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-28 20:44+0300\n"
-"PO-Revision-Date: 2012-05-05 06:26+0000\n"
-"Last-Translator: Wang Dianjin <Unknown>\n"
+"PO-Revision-Date: 2013-12-29 00:12+0000\n"
+"Last-Translator: Oliver Sauder <os@esite.ch>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-10-25 05:53+0000\n"
-"X-Generator: Launchpad (build 16179)\n"
+"X-Launchpad-Export-Date: 2013-12-29 05:27+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
+"Language: \n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -84,14 +84,12 @@ msgid ""
 msgstr "自动粘贴已选条目，不只是复制到剪贴板。"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
-#, fuzzy
 msgid "Number of recent clipboard items"
-msgstr "剪贴板历史条目数。"
+msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
-#, fuzzy
 msgid "Number of recent clipboard items shown in clipboard menu."
-msgstr "剪贴板历史条目数。"
+msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 #: ../data/preferences.ui.h:16
@@ -100,9 +98,9 @@ msgstr "历史按键"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 #: ../data/preferences.ui.h:15
-#, fuzzy
-msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
-msgstr "快速访问剪贴板历史的热键。"
+msgid ""
+"Hotkey to quickly allow you to access menu with recent clipboard items."
+msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Active plugins"
@@ -174,9 +172,8 @@ msgid "Copyright © 2011 Diodon Team"
 msgstr ""
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:1
-#, fuzzy
 msgid "Clipboard History"
-msgstr "剪贴板大小"
+msgstr ""
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:2
 msgid ""
