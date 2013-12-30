@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-12-29 05:27+0000\n"
+"X-Launchpad-Export-Date: 2013-12-30 04:45+0000\n"
 "X-Generator: Launchpad (build 16877)\n"
 "Language: \n"
 "X-Poedit-Language: German\n"
@@ -213,36 +213,3 @@ msgstr "Auf den Verlauf der Zwischenablage mit dem Unity Dash zugreifen."
 #: ../plugins/unityscope/unityscope.plugin.in.h:3
 msgid "Copyright © 2013 Diodon Team"
 msgstr ""
-
-#~ msgid "Search Clipboard"
-#~ msgstr "Zwischenablage durchsuchen"
-
-#~ msgid "Text"
-#~ msgstr "Text"
-
-#~ msgid "Files"
-#~ msgstr "Dateien"
-
-#~ msgid "Images"
-#~ msgstr "Bilder"
-
-#~ msgid "Type"
-#~ msgstr "Typ"
-
-#~ msgid "Sorry, there is no clipboard content that matches your search."
-#~ msgstr ""
-#~ "Es wurde kein Item in der Zwischenablage gefunden, welches zu der eingegeben "
-#~ "Suchanfrage passt."
-
-#~ msgid "Copy to clipboard"
-#~ msgstr "Kopiert in die Zwischenablage."
-
-#~ msgid "Zeitgeist Data-Source"
-#~ msgstr "Zeitgeist Date-Source"
-
-#~ msgid "Adds clipboard activities as events to the Zeitgeist daemon."
-#~ msgstr ""
-#~ "Fügt Zwischenablage-Aktivitäten als Events dem Zeitgeist Daemon hinzu."
-
-#~ msgid "Copyright © 2012 Diodon Team"
-#~ msgstr "Copyright © 2012 Diodon Team"

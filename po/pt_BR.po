@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-12-29 05:27+0000\n"
+"X-Launchpad-Export-Date: 2013-12-30 04:45+0000\n"
 "X-Generator: Launchpad (build 16877)\n"
 "Language: pt_BR\n"
 
@@ -215,21 +215,3 @@ msgstr ""
 #: ../plugins/unityscope/unityscope.plugin.in.h:3
 msgid "Copyright © 2013 Diodon Team"
 msgstr ""
-
-#~ msgid "Search Clipboard"
-#~ msgstr "Procurar Área de Transferência"
-
-#~ msgid "Text"
-#~ msgstr "Texto"
-
-#~ msgid "Files"
-#~ msgstr "Arquívos"
-
-#~ msgid "Images"
-#~ msgstr "Imagens"
-
-#~ msgid "Type"
-#~ msgstr "Tipo"
-
-#~ msgid "Copy to clipboard"
-#~ msgstr "Copiar para a área de transferência"

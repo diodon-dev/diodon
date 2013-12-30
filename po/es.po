@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-12-29 05:27+0000\n"
+"X-Launchpad-Export-Date: 2013-12-30 04:45+0000\n"
 "X-Generator: Launchpad (build 16877)\n"
 "Language: es\n"
 
@@ -217,34 +217,3 @@ msgstr "Acceder al historial del portapapeles mediante el tablero de Unity"
 #: ../plugins/unityscope/unityscope.plugin.in.h:3
 msgid "Copyright © 2013 Diodon Team"
 msgstr ""
-
-#~ msgid "Search Clipboard"
-#~ msgstr "Buscar en el portapapeles"
-
-#~ msgid "Text"
-#~ msgstr "Texto"
-
-#~ msgid "Files"
-#~ msgstr "Archivos"
-
-#~ msgid "Images"
-#~ msgstr "Imágenes:"
-
-#~ msgid "Type"
-#~ msgstr "Tipo"
-
-#~ msgid "Sorry, there is no clipboard content that matches your search."
-#~ msgstr "No hay contenido del portapapeles que coincida con su búsqueda."
-
-#~ msgid "Copy to clipboard"
-#~ msgstr "Copiar al portapapeles"
-
-#~ msgid "Zeitgeist Data-Source"
-#~ msgstr "Fuente de datos de Zeitgeist"
-
-#~ msgid "Adds clipboard activities as events to the Zeitgeist daemon."
-#~ msgstr ""
-#~ "Añade las actividades del portapapeles como eventos al demonio de Zeitgeist."
-
-#~ msgid "Copyright © 2012 Diodon Team"
-#~ msgstr "Copyright © 2012 Equipo de Diodon"

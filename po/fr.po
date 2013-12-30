@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-12-29 05:27+0000\n"
+"X-Launchpad-Export-Date: 2013-12-30 04:45+0000\n"
 "X-Generator: Launchpad (build 16877)\n"
 "Language: fr\n"
 
@@ -216,36 +216,3 @@ msgstr "Accéder au presse-papier par le tableau de bord Unity"
 #: ../plugins/unityscope/unityscope.plugin.in.h:3
 msgid "Copyright © 2013 Diodon Team"
 msgstr ""
-
-#~ msgid "Search Clipboard"
-#~ msgstr "Chercher dans le presse-papier"
-
-#~ msgid "Text"
-#~ msgstr "Texte"
-
-#~ msgid "Files"
-#~ msgstr "Fichiers"
-
-#~ msgid "Images"
-#~ msgstr "Images"
-
-#~ msgid "Type"
-#~ msgstr "Type"
-
-#~ msgid "Sorry, there is no clipboard content that matches your search."
-#~ msgstr ""
-#~ "Désolé, il n'y a rien dans le contenu du presse-papier qui correspond à "
-#~ "votre recherche."
-
-#~ msgid "Copy to clipboard"
-#~ msgstr "Copier vers le presse-papier"
-
-#~ msgid "Zeitgeist Data-Source"
-#~ msgstr "Sources de données Zeitgeist"
-
-#~ msgid "Adds clipboard activities as events to the Zeitgeist daemon."
-#~ msgstr ""
-#~ "Ajoute les activités du presse-papier comme des événements du démon Zeitgeist"
-
-#~ msgid "Copyright © 2012 Diodon Team"
-#~ msgstr "Copyright © 2012 Équipe Diodon"

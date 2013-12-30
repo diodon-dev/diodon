@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-12-29 05:27+0000\n"
+"X-Launchpad-Export-Date: 2013-12-30 04:45+0000\n"
 "X-Generator: Launchpad (build 16877)\n"
 "Language: pl\n"
 
@@ -210,35 +210,3 @@ msgstr "Dostęp do schowka systemowego po przez panel wyszukiwania Unity"
 #: ../plugins/unityscope/unityscope.plugin.in.h:3
 msgid "Copyright © 2013 Diodon Team"
 msgstr ""
-
-#~ msgid "Search Clipboard"
-#~ msgstr "Przeszukaj schowek systemowy"
-
-#~ msgid "Text"
-#~ msgstr "Tylko etykiety"
-
-#~ msgid "Files"
-#~ msgstr "Pliki"
-
-#~ msgid "Images"
-#~ msgstr "Grafiki"
-
-#~ msgid "Type"
-#~ msgstr "Typ"
-
-#~ msgid "Sorry, there is no clipboard content that matches your search."
-#~ msgstr ""
-#~ "Przepraszamy, nie ma aktualnie zawartości w schowku, która odpowiadałaby "
-#~ "kryteriom wyszukiwania."
-
-#~ msgid "Copy to clipboard"
-#~ msgstr "Skopiuj do schowka."
-
-#~ msgid "Zeitgeist Data-Source"
-#~ msgstr "Zeitgeist Data-Source"
-
-#~ msgid "Adds clipboard activities as events to the Zeitgeist daemon."
-#~ msgstr "Dodaje aktywność schowka do demona Zeitgeist, jako zdarzenia"
-
-#~ msgid "Copyright © 2012 Diodon Team"
-#~ msgstr "Prawa autorskie © 2012 Diodon Team"

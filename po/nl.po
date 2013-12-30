@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-12-29 05:27+0000\n"
+"X-Launchpad-Export-Date: 2013-12-30 04:45+0000\n"
 "X-Generator: Launchpad (build 16877)\n"
 "Language: nl\n"
 
@@ -216,36 +216,3 @@ msgstr "Toegang tot de klembordgeschiedenis via de Unity-Snelzoeker."
 #: ../plugins/unityscope/unityscope.plugin.in.h:3
 msgid "Copyright © 2013 Diodon Team"
 msgstr ""
-
-#~ msgid "Search Clipboard"
-#~ msgstr "Klembord doorzoeken"
-
-#~ msgid "Text"
-#~ msgstr "Tekst"
-
-#~ msgid "Files"
-#~ msgstr "Bestanden"
-
-#~ msgid "Images"
-#~ msgstr "Afbeeldingen"
-
-#~ msgid "Type"
-#~ msgstr "Type"
-
-#~ msgid "Sorry, there is no clipboard content that matches your search."
-#~ msgstr ""
-#~ "Sorry, er is geen klembordinhoud gevonden die overeenkomt met uw "
-#~ "zoekopdracht."
-
-#~ msgid "Copy to clipboard"
-#~ msgstr "Kopiëren naar klembord"
-
-#~ msgid "Zeitgeist Data-Source"
-#~ msgstr "Zeitgeist-databron"
-
-#~ msgid "Adds clipboard activities as events to the Zeitgeist daemon."
-#~ msgstr ""
-#~ "Voegt klembordactiviteiten toe als gebeurtenissen aan de Zeitgeist-daemon."
-
-#~ msgid "Copyright © 2012 Diodon Team"
-#~ msgstr "Copyright © 2012 Diodon-team"
