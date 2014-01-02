@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-28 20:44+0300\n"
-"PO-Revision-Date: 2013-12-29 00:13+0000\n"
+"PO-Revision-Date: 2014-01-01 11:35+0000\n"
 "Last-Translator: rob <linuxned@gmail.com>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-12-30 04:45+0000\n"
+"X-Launchpad-Export-Date: 2014-01-02 05:21+0000\n"
 "X-Generator: Launchpad (build 16877)\n"
 "Language: nl\n"
 
@@ -97,11 +97,11 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 msgid "Number of recent clipboard items"
-msgstr ""
+msgstr "Aantal recente klemborditems"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
 msgid "Number of recent clipboard items shown in clipboard menu."
-msgstr ""
+msgstr "Aantal getoonde recente klemborditems in het klembordmenu."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 #: ../data/preferences.ui.h:16
@@ -112,7 +112,7 @@ msgstr "Sneltoets klembordgeschiedenis"
 #: ../data/preferences.ui.h:15
 msgid ""
 "Hotkey to quickly allow you to access menu with recent clipboard items."
-msgstr ""
+msgstr "Sneltoets om snel toegang te krijgen tot het menu met recente items."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Active plugins"
@@ -148,11 +148,11 @@ msgstr "Geselecteerde onderdeel _automatisch plakken"
 
 #: ../data/preferences.ui.h:12
 msgid "Number of recent clipboard items to be shown in clipboard menu."
-msgstr ""
+msgstr "Aantal recente klemborditems om te tonen in het klembordmenu."
 
 #: ../data/preferences.ui.h:13
 msgid "Number of recent items"
-msgstr ""
+msgstr "Aantal recente items"
 
 #: ../data/preferences.ui.h:14
 #: ../plugins/unityscope/unity-scope-plugin.vala:74
@@ -185,13 +185,15 @@ msgstr "Copyright © 2011 Diodon-team"
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:1
 msgid "Clipboard History"
-msgstr ""
+msgstr "Klembordgeschiedenis"
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:2
 msgid ""
 "This is an Ubuntu search plugin that enables information from Diodon to be "
 "searched and displayed in the Dash underneath the Clipboard header."
 msgstr ""
+"Dit is een Ubuntu-zoekplug-in waarmee naar informatie van Diodon gezocht kan "
+"worden en getoond kan worden in de Snelzoeker onder de Klembord-header."
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:3
 msgid "Search clipboard"
@@ -199,7 +201,7 @@ msgstr "Klembord doorzoeken"
 
 #: ../plugins/unityscope/unity-scope-plugin.vala:161
 msgid "Paste"
-msgstr ""
+msgstr "Plakken"
 
 #: ../plugins/unityscope/unity-scope-plugin.vala:169
 msgid "Origin"
@@ -207,7 +209,7 @@ msgstr ""
 
 #: ../plugins/unityscope/unityscope.plugin.in.h:1
 msgid "Unity Scope"
-msgstr ""
+msgstr "Unity-bron"
 
 #: ../plugins/unityscope/unityscope.plugin.in.h:2
 msgid "Access clipboard history with the unity dash."
