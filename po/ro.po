@@ -1,34 +1,33 @@
-# Swedish translation for diodon
-# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# Romanian translation for diodon
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
 # This file is distributed under the same license as the diodon package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-12-28 20:44+0300\n"
-"PO-Revision-Date: 2014-02-09 01:48+0000\n"
-"Last-Translator: Karl Thorén <Unknown>\n"
-"Language-Team: Swedish <sv@li.org>\n"
+"PO-Revision-Date: 2014-02-26 18:39+0000\n"
+"Last-Translator: Marian Vasile <marianvasile1972@gmail.com>\n"
+"Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-02-10 05:38+0000\n"
-"X-Generator: Launchpad (build 16916)\n"
-"Language: sv\n"
+"X-Launchpad-Export-Date: 2014-02-27 05:53+0000\n"
+"X-Generator: Launchpad (build 16935)\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
-msgstr "Urklipphanterare"
+msgstr "Administrator clipboard"
 
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
-msgstr "GTK+ Urklipphanterare"
+msgstr "Administrator clipboard pentru mediul GTK+"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"
-msgstr "Använd urklipp (Ctrl-C)"
+msgstr "Utilizează clipboard  (Ctrl+C)"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:3
@@ -36,12 +35,12 @@ msgid ""
 "Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
-"Lägger texten som är kopierad till urklipp med Ctrl + C till "
-"urklippshistoriken"
+"Adaugă textul care este copiat în clipboard cu de exemplu Ctrl + C în "
+"istoricul clipboard-ului."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
-msgstr "Använd den primära markeringen"
+msgstr "Utilizează selecția primară"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
 #: ../data/preferences.ui.h:5
@@ -49,12 +48,12 @@ msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
 "mouse) to the clipboard history."
 msgstr ""
-"Lägger till den primära markeringen (arean av skärmen som är vald med musen) "
-"till urklippshistoriken."
+"Adaugă selecția primară (o zonă a ecranului care este selectată cu mouse-ul) "
+"în istoricul clipboard-ului."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Synchronize clipboards"
-msgstr "Synkronisera urklippen"
+msgstr "Sincronizează clipboard-urile"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
@@ -64,13 +63,14 @@ msgid ""
 "available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
 "the middle mouse button."
 msgstr ""
-"Synkroniserar markeringen (arean av skärmen som är vald med musen) och "
-"urklippen så att allt i markeringen är direkt inlagt i urklippet samt tvärt "
-"om. Dvs för inklistring med Ctrl + V samt med musens mittknapp."
+"Sincronizează selecția (o zonă a ecranului care este selectată cu mouse-ul) "
+"și clipboard-ul astfel încât orice lucru din selecție este disponibil "
+"imediat în clipboard și vice versa, de exemplu lipirea cu Ctrl + V și "
+"butonul din mijloc al mouse-ului."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Keep clipboard content"
-msgstr "Spara urklippets innehåll"
+msgstr "Păstrează conținutul clipboard-ului"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
 #: ../data/preferences.ui.h:9
@@ -78,140 +78,144 @@ msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
 msgstr ""
-"Förhindrar ett tomt urklipp. Vanligtvis när ett program avslutas så töms "
-"urklippet."
+"Nu permite un clipboard golit. De exemplu la închiderea unei aplicații, de "
+"regulă clipboard-ul este golit."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Automatically paste selected item"
-msgstr "Klistra in vald del automatiskt"
+msgstr "Lipește automat elementul selectat"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 #: ../data/preferences.ui.h:11
 msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
-msgstr ""
-"Klistra in vald del automatisk istället för att bara kopiera det till "
-"urklippet."
+msgstr "Lipește automat elementul selectat în loc de a-l copia în clipboard."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 msgid "Number of recent clipboard items"
-msgstr ""
+msgstr "Numărul elementelor recente din clipboard"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
 msgid "Number of recent clipboard items shown in clipboard menu."
 msgstr ""
+"Numărul elementelor recente din clipboard arătat în meniul clipboard-ului."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 #: ../data/preferences.ui.h:16
 msgid "History key"
-msgstr "Historietangent"
+msgstr "Tasta pentru istoric"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 #: ../data/preferences.ui.h:15
 msgid ""
 "Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr ""
+"Acceleratorul de tastatură care permite accesarea rapidă a meniului cu "
+"elemente recente din clipboard."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Active plugins"
-msgstr "Aktiva insticksmoduler"
+msgstr "Module active"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid "List of active plugins."
-msgstr "Lista av aktiva insticksprogram."
+msgstr "Lista modulelor active."
 
 #: ../data/preferences.ui.h:1
 msgid "Diodon Preferences"
-msgstr "Diodons inställningar"
+msgstr "Preferințe Diodon"
 
 #: ../data/preferences.ui.h:2
 msgid "_Use clipboard (Ctrl+C)"
-msgstr "_Använd urklipp(Ctrl+C)"
+msgstr "_Utilizează clipboard-ul"
 
 #: ../data/preferences.ui.h:4
 msgid "Use _primary selection"
-msgstr "Använd _primära markeringen"
+msgstr "Utilizează selecția _primară"
 
 #: ../data/preferences.ui.h:6
 msgid "S_ynchronize clipboards"
-msgstr "S_ynkronisera urklippen"
+msgstr "Sincroni_zează clipboard-urile"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
-msgstr "_Spara urklippets innehåll"
+msgstr "_Păstrează conținutul clipboard-ului"
 
 #: ../data/preferences.ui.h:10
 msgid "_Automatically paste selected item"
-msgstr "_Automatiskt klistra in vald del"
+msgstr "Lipește _automat elementul selectat"
 
 #: ../data/preferences.ui.h:12
 msgid "Number of recent clipboard items to be shown in clipboard menu."
-msgstr ""
+msgstr "Numărul elementelor recente arătate în meniul clipboard-ului."
 
 #: ../data/preferences.ui.h:13
 msgid "Number of recent items"
-msgstr ""
+msgstr "Numărul elementelor recente"
 
 #: ../data/preferences.ui.h:14
 #: ../plugins/unityscope/unity-scope-plugin.vala:74
 msgid "Clipboard"
-msgstr "Urklipp"
+msgstr "Clipboard"
 
 #: ../data/preferences.ui.h:17
 msgid "Hotkeys"
-msgstr "Snabbknappar"
+msgstr "Taste comenzi rapide"
 
 #: ../data/preferences.ui.h:18
 msgid "Plugins"
-msgstr "Insticksmoduler"
+msgstr "Module"
 
 #: ../libdiodon/clipboard-menu.vala:36
 msgid "<Empty>"
-msgstr "<Tom>"
+msgstr "<Gol>"
 
 #: ../plugins/indicator/indicator.plugin.in.h:1
 msgid "Application Indicator"
-msgstr "Programindikator"
+msgstr "Indicator aplicație"
 
 #: ../plugins/indicator/indicator.plugin.in.h:2
 msgid "Access clipboard history with an application indicator."
-msgstr "Använd urklippet via en programindikator."
+msgstr "Accesați istoricul clipboard-ului printr-un indicator al aplicației."
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
 msgid "Copyright © 2011 Diodon Team"
-msgstr "Copyright © 2011 Diodon Team"
+msgstr "Drepturi de autor © 2011 Diodon Team"
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:1
 msgid "Clipboard History"
-msgstr ""
+msgstr "Istoric clipboard"
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:2
 msgid ""
 "This is an Ubuntu search plugin that enables information from Diodon to be "
 "searched and displayed in the Dash underneath the Clipboard header."
 msgstr ""
+"Acesta este un modul de căutare Ubuntu care permite căutarea de informații "
+"în Diodon și afișarea rezultatelor în Panoul principal, în cuprinsul "
+"antetului Clipboard."
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:3
 msgid "Search clipboard"
-msgstr "Sök urklipp"
+msgstr "Caută în clipboard"
 
 #: ../plugins/unityscope/unity-scope-plugin.vala:161
 msgid "Paste"
-msgstr "Klistra in"
+msgstr "Lipire"
 
 #: ../plugins/unityscope/unity-scope-plugin.vala:169
 msgid "Origin"
-msgstr "Ursprung"
+msgstr "Origine"
 
 #: ../plugins/unityscope/unityscope.plugin.in.h:1
 msgid "Unity Scope"
-msgstr ""
+msgstr "Lentilă Unity"
 
 #: ../plugins/unityscope/unityscope.plugin.in.h:2
 msgid "Access clipboard history with the unity dash."
-msgstr "Accessa urklippshistoriken ifrån unity dash."
+msgstr "Accesați istoricul clipboard-ului în panoul principal al Unity."
 
 #: ../plugins/unityscope/unityscope.plugin.in.h:3
 msgid "Copyright © 2013 Diodon Team"
-msgstr ""
+msgstr "Drepturi de autor © 2013 Diodon Team"

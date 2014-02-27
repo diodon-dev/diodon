@@ -3,20 +3,20 @@ msgstr ""
 "Project-Id-Version: Diodon 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-28 20:44+0300\n"
-"PO-Revision-Date: 2014-01-04 13:49+0000\n"
-"Last-Translator: Oliver Sauder <os@esite.ch>\n"
+"PO-Revision-Date: 2014-02-26 16:23+0000\n"
+"Last-Translator: Jasper Nalbach <jasper.nalbach@gmx.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-05 05:33+0000\n"
-"X-Generator: Launchpad (build 16877)\n"
+"X-Launchpad-Export-Date: 2014-02-27 05:53+0000\n"
+"X-Generator: Launchpad (build 16935)\n"
 "Language: \n"
 "X-Poedit-Language: German\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
-msgstr "Zwischenablage-Manager"
+msgstr "Verwaltung der Zwischenablage"
 
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
@@ -93,11 +93,11 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 msgid "Number of recent clipboard items"
-msgstr ""
+msgstr "Anzahl der aktuellen Einträge"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
 msgid "Number of recent clipboard items shown in clipboard menu."
-msgstr ""
+msgstr "Anzahl der aktuellen Einträge, die im Menü angezeigt werden."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 #: ../data/preferences.ui.h:16
@@ -109,6 +109,8 @@ msgstr "Verlauf-Tastenkombination"
 msgid ""
 "Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr ""
+"Tastenkombination zum schnellen Zugriff auf aktuelle Einträge der "
+"Zwischenablage"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Active plugins"
@@ -144,11 +146,11 @@ msgstr "Automatisches einfügen des ausgewählten Items"
 
 #: ../data/preferences.ui.h:12
 msgid "Number of recent clipboard items to be shown in clipboard menu."
-msgstr ""
+msgstr "Anzahl der aktuellen Einträge, die im Menü angezeigt werden."
 
 #: ../data/preferences.ui.h:13
 msgid "Number of recent items"
-msgstr ""
+msgstr "Anzahl der aktuellen Einträge"
 
 #: ../data/preferences.ui.h:14
 #: ../plugins/unityscope/unity-scope-plugin.vala:74
@@ -182,13 +184,16 @@ msgstr "Copyright © 2011 Diodon Team"
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:1
 msgid "Clipboard History"
-msgstr ""
+msgstr "Zwischenablagen-Chronik"
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:2
 msgid ""
 "This is an Ubuntu search plugin that enables information from Diodon to be "
 "searched and displayed in the Dash underneath the Clipboard header."
 msgstr ""
+"Dies ist ein Ubuntu Such-Erweiterung, die das Suchen und Anzeigen von "
+"Informationen aus Diodon im Dash unter der Zwischenablagen-Kopfzeile "
+"ermöglicht."
 
 #: ../plugins/unityscope/diodon.scope.in.in.h:3
 msgid "Search clipboard"
@@ -204,7 +209,7 @@ msgstr "Herkunft"
 
 #: ../plugins/unityscope/unityscope.plugin.in.h:1
 msgid "Unity Scope"
-msgstr ""
+msgstr "Unity Scope"
 
 #: ../plugins/unityscope/unityscope.plugin.in.h:2
 msgid "Access clipboard history with the unity dash."
@@ -212,4 +217,4 @@ msgstr "Auf den Verlauf der Zwischenablage mit dem Unity Dash zugreifen."
 
 #: ../plugins/unityscope/unityscope.plugin.in.h:3
 msgid "Copyright © 2013 Diodon Team"
-msgstr ""
+msgstr "Copyright © 2013 Diodon Team"
