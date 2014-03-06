@@ -26,6 +26,13 @@ namespace Diodon
     const string UNIQUE_NAME = Config.BUSOBJECTPATH + "/unity/scope/clipboard";
     const string ICON_PATH = "/usr/share/icons/unity-icon-theme/places/svg/";
     
+    private const string[] ALL_TYPES =
+    {
+      "text",
+      "files",
+      "images",
+    };
+    
     /**
      * This is the main function providing access to clipboard history through
      * a unity scope; the scope is defined and exported, a DBUS connector is
@@ -42,8 +49,10 @@ namespace Diodon
         scope.group_name = GROUP_NAME;
         scope.unique_name = UNIQUE_NAME;
         scope.set_search_async_func(search_async);
+        scope.search_hint = _("Search Clipboard");
         scope.set_preview_func(preview);
         scope.category_set = populate_categories();
+        scope.filter_set = populate_filters();
         
         Unity.ScopeDBusConnector connector = new Unity.ScopeDBusConnector(scope);
         try {
@@ -93,6 +102,22 @@ namespace Diodon
         return cats;
     }
     
+    private static Unity.FilterSet populate_filters()
+    {
+        Unity.FilterSet filters = new Unity.FilterSet();
+        
+        Unity.CheckOptionFilter type = new Unity.CheckOptionFilter("type", _("Type"));
+        type.sort_type = Unity.OptionsFilter.SortType.DISPLAY_NAME;
+        
+        type.add_option("text", _("Text"));
+        type.add_option("files", _("Files"));
+        type.add_option("images", _("Images"));
+        
+        filters.add(type);
+        
+        return filters;
+    }
+    
     private static void search_async(Unity.ScopeSearchBase search, Unity.ScopeSearchBaseCallback callback)
     {
        Diodon.search.begin(search, () => { callback(search); });
@@ -100,7 +125,9 @@ namespace Diodon
     
     private static async void search(Unity.ScopeSearchBase search)
     {
-        Gee.List<IClipboardItem> items = yield storage.get_items_by_search_query(search.search_context.search_query);
+        string[]? types = get_current_types(search.search_context.filter_state);
+        Gee.List<IClipboardItem> items = yield storage.get_items_by_search_query(
+            search.search_context.search_query, types);
         
         foreach(IClipboardItem item in items) {
             Unity.ScopeResult result = Unity.ScopeResult();
@@ -126,6 +153,31 @@ namespace Diodon
             
             search.search_context.result_set.add_result(result);
         }
+    }
+    
+    /**
+     * Get currently set type filters. Return null if none or all are set.
+     */
+    private static string[]? get_current_types(Unity.FilterSet filter_state)
+    {
+        /* returns null if the filter is disabled / all options selected */
+        Unity.CheckOptionFilter filter = filter_state.get_filter_by_id("type") as Unity.CheckOptionFilter;
+        
+        if (filter == null || !filter.filtering) return null;
+      
+        string[] types = {};
+
+        foreach (unowned string type_id in ALL_TYPES)
+        {
+            var option = filter.get_option(type_id);
+            if (option == null || !option.active) continue;
+
+            types += type_id; 
+        }
+
+        if (types.length == ALL_TYPES.length) return null;
+
+        return types;
     }
     
     private static Unity.AbstractPreview? preview(Unity.ResultPreviewer previewer)

@@ -40,6 +40,7 @@ namespace Diodon
         private Monitor monitor;
         
         private Gee.HashMap<ClipboardType, IClipboardItem> current_items;
+        private HashTable<string, Event> type_templates;
         
         /**
          * Called when a item has been inserted.
@@ -53,8 +54,11 @@ namespace Diodon
         
         public ZeitgeistClipboardStorage()
         {
+            this.type_templates = new HashTable<string, Event>(str_hash, str_equal);
+            prepare_type_templates(this.type_templates);
+            
             this.monitor = new Monitor(new TimeRange.from_now(),
-                create_all_items_event_templates());
+                get_items_event_templates());
             this.monitor.events_inserted.connect(() => { on_items_inserted(); } );   
             this.monitor.events_deleted.connect(() => { on_items_deleted(); } );
             
@@ -173,13 +177,13 @@ namespace Diodon
          * Get clipboard items which match given search query
          *
          * @param search_query query to search items for
+         * @param types types of search query or null if all types
          * @return clipboard items matching given search query
          */
-        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query)
+        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query, string[]? types = null)
         {
-            
             TimeRange time_range = new TimeRange.anytime();
-            GenericArray<Event> templates = create_all_items_event_templates();
+            GenericArray<Event> templates = get_items_event_templates(types);
             
             string query = prepare_search_string(search_query);
             if(query != "") {
@@ -224,7 +228,7 @@ namespace Diodon
             debug("Get recent %u items", num_items);
             
             TimeRange time_range = new TimeRange.anytime();
-            GenericArray<Event> templates = create_all_items_event_templates();
+            GenericArray<Event> templates = get_items_event_templates();
             
             try {
 	            ResultSet events = yield log.find_events(
@@ -341,7 +345,7 @@ namespace Diodon
         {
             debug("Clear clipboard history");
             
-            GenericArray<Event> templates = create_all_items_event_templates();
+            GenericArray<Event> templates = get_items_event_templates();
 	        TimeRange time_range = new TimeRange.anytime();
             
             try {
@@ -363,6 +367,66 @@ namespace Diodon
             }
             
             current_items.clear();
+        }
+        
+        private static void prepare_type_templates(HashTable<string, Event> templates)
+        {
+            // match all
+            templates["clipboard"] = new Event.full(
+                                            ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
+                                            null,
+                                            // origin events only added by diodon
+                                            "application://diodon.desktop",
+                                            new Subject.full(
+                                                            CLIPBOARD_URI + "*",
+                                                            null,
+                                                            NFO.DATA_CONTAINER,
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            null)); 
+            
+            templates["text"] = new Event.full(
+                                            ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
+                                            null,
+                                            // origin events only added by diodon
+                                            "application://diodon.desktop",
+                                            new Subject.full(
+                                                            CLIPBOARD_URI + "*",
+                                                            NFO.PLAIN_TEXT_DOCUMENT,
+                                                            NFO.DATA_CONTAINER,
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            null));
+                                                            
+            templates["files"] = new Event.full(
+                                            ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
+                                            null,
+                                            // origin events only added by diodon
+                                            "application://diodon.desktop",
+                                            new Subject.full(
+                                                            CLIPBOARD_URI + "*",
+                                                            NFO.FILE_DATA_OBJECT,
+                                                            NFO.DATA_CONTAINER,
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            null));
+                                    
+            templates["images"] = new Event.full(
+                                            ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
+                                            null,
+                                            // origin events only added by diodon
+                                            "application://diodon.desktop",
+                                            new Subject.full(
+                                                            CLIPBOARD_URI + "*",
+                                                            NFO.IMAGE,
+                                                            NFO.DATA_CONTAINER,
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            null)); 
         }
         
         private static IClipboardItem? create_clipboard_item(Event event, Subject subject)
@@ -437,24 +501,22 @@ namespace Diodon
         }
         
         /**
-         * Create array of event templates which matches all clipboard items.
+         * Get array of event templates which matches clipboard items with
+         * given types.
+         *
+         * @param types list of clipboard item types or null if all
          */
-        private static GenericArray<Event> create_all_items_event_templates()
+        private GenericArray<Event> get_items_event_templates(string[]? types = null)
         {
             GenericArray<Event> templates = new GenericArray<Event>();
-            Event template = new Event.full (
-                            ZG.CREATE_EVENT,
-                            ZG.USER_ACTIVITY,
-                            null,
-                            "application://diodon.desktop", // origin events only added by diodon
-                            new Subject.full (CLIPBOARD_URI + "*",
-                                               null,
-                                               NFO.DATA_CONTAINER,
-                                               null,
-                                               null,
-                                               null,
-                                               null));
-            templates.add (template);
+            
+            if(types == null) {
+                templates.add(type_templates["clipboard"]);
+            } else {
+                foreach(unowned string type in types) {
+                    templates.add(type_templates[type]);
+                }
+            }
             
             return templates;
         }

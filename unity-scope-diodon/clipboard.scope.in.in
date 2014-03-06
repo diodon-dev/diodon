@@ -38,3 +38,10 @@ _Name=Images
 Icon=/usr/share/icons/unity-icon-theme/places/svg/group-photos.svg
 DedupField=uri
 
+[Filter type]
+_Name=Type
+Type=filter-checkoption
+SortType=display-name
+OptionIDs=text;files;images
+_OptionNames=Text;Files;Images
+
