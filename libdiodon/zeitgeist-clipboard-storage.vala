@@ -509,7 +509,7 @@ namespace Diodon
         {
             GenericArray<Event> templates = new GenericArray<Event>();
             
-            if(types == null) {
+            if(types == null || types.length == 0) {
                 templates.add(type_templates["clipboard"]);
             } else {
                 foreach(unowned string type in types) {
