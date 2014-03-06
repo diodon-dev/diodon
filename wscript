@@ -35,7 +35,7 @@ def options(opt):
     opt.add_option('--update-po',                action='store_true', default=False, dest='update_po', help='Update localization files')
     opt.add_option('--debug',                    action='store_true', default=False, dest='debug',     help='Debug mode')
     opt.add_option('--disable-indicator-plugin', action='store_true', default=False, dest='disable_indicator', help='Disable build of indicator plugin')
-    opt.add_option('--enable-unityscope-plugin', action='store_true', default=False, dest='enable_unityscope', help='Enable build of unity scope plugin')
+    opt.add_option('--enable-unityscope',        action='store_true', default=False, dest='enable_unityscope', help='Enable build of unity scope')
     opt.add_option('--build-doc',                action='store_true', default=False, dest='doc', help='Build the api documentation')
     opt.add_option('--skiptests',                action='store_true', default=False, dest='skiptests', help='Skip unit tests')
 
@@ -74,7 +74,7 @@ def configure(conf):
     # check if unity scope plugin should be built
     conf.env['UNITYSCOPE'] = Options.options.enable_unityscope
     if Options.options.enable_unityscope:
-        conf.check_cfg(package='unity',   uselib_store='UNITY', atleast_version='7.1.0',  mandatory=1, args='--cflags --libs')
+        conf.check_cfg(package='unity', uselib_store='UNITY', atleast_version='7.1.0',mandatory=1, args='--cflags --libs')
 
     # FIXME: conf.env and conf.define should not both be needed?
     conf.define('PACKAGE_NAME', APPNAME)
@@ -93,7 +93,8 @@ def configure(conf):
     conf.define('BUSOBJECTPATH', BUSOBJECTPATH)
     conf.env['BUSOBJECTPATH'] = BUSOBJECTPATH
     conf.define('SHAREDIR', os.path.join(conf.env['DATADIR'], APPNAME))
-    conf.define('LIBDIR', os.path.join(conf.env['LIBDIR'], APPNAME))
+    conf.define('LIBDIR_DIODON', os.path.join(conf.env['LIBDIR'], APPNAME))
+    conf.env['LIBDIR_DIODON'] = os.path.join(conf.env['LIBDIR'], APPNAME)
     conf.define('PLUGINS_DIR', os.path.join(conf.env['LIBDIR'], APPNAME, 'plugins'))
     conf.env['PLUGINS_DIR'] = os.path.join(conf.env['LIBDIR'], APPNAME, 'plugins')
     conf.define('PLUGINS_DATA_DIR', os.path.join(conf.env['DATADIR'], APPNAME, 'plugins'))
@@ -115,6 +116,9 @@ def configure(conf):
 def build(ctx):
     ctx.add_subdirs('po data libdiodon plugins diodon')
     
+    if ctx.env['UNITYSCOPE']:
+        ctx.add_subdirs('unity-scope-diodon')
+        
     if not Options.options.skiptests:
         ctx.add_subdirs('tests')
         if ctx.cmd == 'build':

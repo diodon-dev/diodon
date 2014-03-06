@@ -1,0 +1,40 @@
+#! /usr/bin/env python
+# encoding: utf-8
+# Oliver Sauder, 2010
+
+import Options
+
+prog = bld.new_task_gen (
+  features = 'c cprogram',
+  target = 'unity-scope-diodon',
+  vapi_dirs = '../vapi ../libdiodon',
+  uselib = 'GTK UNITY GEE',
+  use = 'libdiodon',
+  cflags = ['-include', 'config.h'],
+  packages = 'gtk+-3.0 unity config gee-1.0',
+  source = 'unity-scope-diodon.vala')
+  
+prog.install_path = os.path.join(bld.env['LIBDIR_DIODON'], prog.target)
+
+bld.new_task_gen (
+  features = "subst",
+  source= "diodon.scope.in.in",
+  target= "diodon.scope.in",
+  BUSNAME = bld.env['BUSNAME'],
+  BUSOBJECTPATH = bld.env['BUSOBJECTPATH'])
+
+bld.new_task_gen (
+  features = 'intltool_in',
+  podir = '../po',
+  source = 'diodon.scope.in',
+  flags = ["-d", "-q", "-u", "-c"],
+  install_path = "${DATADIR}/unity/scopes/info")
+  
+bld.new_task_gen (
+  features = "subst",
+  source= "unity-scope-diodon.service.in",
+  target= "unity-scope-diodon.service",
+  BUSNAME = bld.env['BUSNAME'],
+  LIBDIR_DIODON = bld.env['LIBDIR_DIODON'],
+  install_path = "${DATADIR}/dbus-1/services")
+
