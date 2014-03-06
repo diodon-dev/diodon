@@ -24,6 +24,7 @@ namespace Diodon
     private static ZeitgeistClipboardStorage storage;
     const string GROUP_NAME = Config.BUSNAME + ".Unity.Scope.Clipboard";
     const string UNIQUE_NAME = Config.BUSOBJECTPATH + "/unity/scope/clipboard";
+    const string ICON_PATH = "/usr/share/icons/unity-icon-theme/places/svg/";
     
     /**
      * This is the main function providing access to clipboard history through
@@ -36,20 +37,13 @@ namespace Diodon
         
         storage = new ZeitgeistClipboardStorage();
         
-        // Create and set up clipboard category for the scope, including an icon
-        Icon catIcon = new ThemedIcon("diodon-panel");
-        Unity.Category cat = new Unity.Category("global", _("Clipboard"),
-            catIcon, Unity.CategoryRenderer.HORIZONTAL_TILE);
-        Unity.CategorySet cats = new Unity.CategorySet();
-        cats.add(cat);
-        
         // Create and setup the scope
         Unity.SimpleScope scope = new Unity.SimpleScope();
         scope.group_name = GROUP_NAME;
         scope.unique_name = UNIQUE_NAME;
         scope.set_search_async_func(search_async);
         scope.set_preview_func(preview);
-        scope.category_set = cats;
+        scope.category_set = populate_categories();
         
         Unity.ScopeDBusConnector connector = new Unity.ScopeDBusConnector(scope);
         try {
@@ -64,6 +58,39 @@ namespace Diodon
         }
         
         return 0;
+    }
+    
+    private static Unity.CategorySet populate_categories()
+    {
+        File icon_dir = File.new_for_path (ICON_PATH);
+        Icon catIcon = new ThemedIcon("diodon-panel");
+        Unity.CategorySet cats = new Unity.CategorySet();
+        
+        Unity.Category clipboard = new Unity.Category("global", _("Clipboard"),
+            catIcon, Unity.CategoryRenderer.HORIZONTAL_TILE);
+        cats.add(clipboard);
+        
+        Unity.Category recent = new Unity.Category("recent", _("Recent"),
+             new FileIcon(icon_dir.get_child("group-recent.svg")),
+             Unity.CategoryRenderer.HORIZONTAL_TILE);
+        cats.add(recent);
+        
+        Unity.Category text = new Unity.Category("text", _("Text"),
+             new FileIcon(icon_dir.get_child("group-notes.svg")),
+             Unity.CategoryRenderer.HORIZONTAL_TILE);
+        cats.add(text);
+        
+        Unity.Category files = new Unity.Category("files", _("Files"),
+             new FileIcon(icon_dir.get_child("group-files.svg")),
+             Unity.CategoryRenderer.HORIZONTAL_TILE);
+        cats.add(files);
+        
+        Unity.Category images = new Unity.Category("images", _("Images"),
+             new FileIcon(icon_dir.get_child("group-photos.svg")),
+             Unity.CategoryRenderer.HORIZONTAL_TILE);
+        cats.add(images);
+        
+        return cats;
     }
     
     private static void search_async(Unity.ScopeSearchBase search, Unity.ScopeSearchBaseCallback callback)
@@ -85,7 +112,7 @@ namespace Diodon
             //result.uri = ZeitgeistClipboardStorage.CLIPBOARD_URI + item.get_checksum();
             result.title = item.get_label();
             result.icon_hint = item.get_icon().to_string();
-            result.category = 0;
+            result.category = item.get_category();
             result.result_type = Unity.ResultType.DEFAULT; 
             result.mimetype = item.get_mime_type();
             result.comment = item.get_text();

@@ -87,6 +87,8 @@ namespace Diodon
     
     public enum ClipboardCategory
     {
+        CLIPBOARD,
+        RECENT,
         TEXT,
         FILES,
         IMAGES

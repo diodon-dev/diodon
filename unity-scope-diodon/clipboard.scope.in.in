@@ -7,7 +7,9 @@ Keywords=clipboard;diodon;
 _Name=Clipboard History
 _Description=This is an Ubuntu search plugin that enables information from Diodon to be searched and displayed in the Dash underneath the Clipboard header.
 _SearchHint=Search clipboard
-Type=info
+Type=clipboard
+IsMaster=true
+Shortcut=b
 Icon=@DATADIR@/icons/ubuntu-mono-dark/status/16/diodon-panel.svg
 
 #
@@ -15,4 +17,24 @@ Icon=@DATADIR@/icons/ubuntu-mono-dark/status/16/diodon-panel.svg
 #
 [Desktop Entry]
 X-Ubuntu-Gettext-Domain=@GETTEXT_PACKAGE@
+
+[Category recent]
+_Name=Recent
+Icon=/usr/share/icons/unity-icon-theme/places/svg/group-recent.svg
+DedupField=uri
+
+[Category text]
+_Name=Text
+Icon=/usr/share/icons/unity-icon-theme/places/svg/group-notes.svg
+DedupField=uri
+
+[Category Files]
+_Name=Files
+Icon=/usr/share/icons/unity-icon-theme/places/svg/group-files.svg
+DedupField=uri
+
+[Category Images]
+_Name=Images
+Icon=/usr/share/icons/unity-icon-theme/places/svg/group-photos.svg
+DedupField=uri
 
