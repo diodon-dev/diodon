@@ -14,7 +14,7 @@ prog = bld.new_task_gen (
   packages = 'gtk+-3.0 unity config gee-1.0',
   source = 'unity-scope-diodon.vala')
   
-prog.install_path = os.path.join(bld.env['LIBDIR_DIODON'], prog.target)
+prog.install_path = bld.env['LIBDIR_DIODON']
 
 bld.new_task_gen (
   features = "subst",
