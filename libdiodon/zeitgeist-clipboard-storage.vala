@@ -205,11 +205,9 @@ namespace Diodon
                     warning("Get items by search query '%s' not successful, error: %s",
                         search_query, e.message);
                 }
-            // TODO: we do not have a master scope to filter search results
-            // therefore images can never be found. This is a workaround for 
-            // now that there are always results
+            // when there is no search query show last 100 items
             } else {
-                return yield get_recent_items(100);
+                return yield get_recent_items(100, types);
             }
             
             return new Gee.ArrayList<IClipboardItem>();;
@@ -221,14 +219,15 @@ namespace Diodon
          * Most recent item will be on the top.
          *
          * @param num_items number of recent items
+         * @param types types of recent items to get; null for all
          * @return list of recent clipboard items
          */
-        public async Gee.List<IClipboardItem> get_recent_items(uint32 num_items)
+        public async Gee.List<IClipboardItem> get_recent_items(uint32 num_items, string[]? types = null)
         {
             debug("Get recent %u items", num_items);
             
             TimeRange time_range = new TimeRange.anytime();
-            GenericArray<Event> templates = get_items_event_templates();
+            GenericArray<Event> templates = get_items_event_templates(types);
             
             try {
 	            ResultSet events = yield log.find_events(
