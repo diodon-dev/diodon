@@ -54,6 +54,10 @@ namespace Diodon
         scope.category_set = populate_categories();
         scope.filter_set = populate_filters();
         
+        // result needs to be invalidated whenever clipboard history changes
+        storage.on_items_deleted.connect(() => { scope.results_invalidated(Unity.SearchType.DEFAULT); });
+        storage.on_items_inserted.connect(() => { scope.results_invalidated(Unity.SearchType.DEFAULT); });
+        
         Unity.ScopeDBusConnector connector = new Unity.ScopeDBusConnector(scope);
         try {
             connector.export();
