@@ -91,7 +91,7 @@ namespace Diodon
          *
          * @param clipboard item to be removed
          */
-        public async void remove_item(IClipboardItem item)
+        public async void remove_item(IClipboardItem item, Cancellable? cancellable = null)
         {
             debug("Remove item with given checksum %s", item.get_checksum());
             
@@ -103,12 +103,12 @@ namespace Diodon
                     StorageState.ANY,
                     uint32.MAX,
                     ResultType.MOST_RECENT_EVENTS, // all events
-                    null);
+                    cancellable);
                 
                 Array<uint32> events = new Array<uint32>();
                 events.append_vals(ids, ids.length);
+                yield log.delete_events(events, cancellable);
                 
-                yield log.delete_events(events, null);
             } catch(GLib.Error e) {
                 warning("Remove item %s not successful, error: %s",
                     item.get_text(), e.message);
@@ -121,7 +121,7 @@ namespace Diodon
          * @param checksum checksum of clipboard item
          * @return clipboard item of given checksum; othterwise null if not available
          */
-        public async IClipboardItem? get_item_by_checksum(string checksum)
+        public async IClipboardItem? get_item_by_checksum(string checksum, Cancellable? cancellable = null)
         {
             debug("Get item with given checksum %s", checksum);
             
@@ -150,7 +150,7 @@ namespace Diodon
                     1,
                     // this will filter duplicates according to their uri
                     ResultType.MOST_RECENT_SUBJECTS,
-                    null
+                    cancellable
                 );
                 
                 foreach(Event event in events) {
@@ -180,7 +180,7 @@ namespace Diodon
          * @param types types of search query or null if all types
          * @return clipboard items matching given search query
          */
-        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query, string[]? types = null)
+        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query, string[]? types = null, Cancellable? cancellable = null)
         {
             TimeRange time_range = new TimeRange.anytime();
             GenericArray<Event> templates = get_items_event_templates(types);
@@ -197,7 +197,7 @@ namespace Diodon
                         100, // setting limit to 100 for now, for memory reasons
                         // this will filter duplicates according to their uri
                         ResultType.MOST_RECENT_SUBJECTS,
-                        null); 
+                        cancellable); 
                         
                     return create_clipboard_items(events);
                     
@@ -207,7 +207,7 @@ namespace Diodon
                 }
             // when there is no search query show last 100 items
             } else {
-                return yield get_recent_items(100, types);
+                return yield get_recent_items(100, types, cancellable);
             }
             
             return new Gee.ArrayList<IClipboardItem>();;
@@ -222,7 +222,7 @@ namespace Diodon
          * @param types types of recent items to get; null for all
          * @return list of recent clipboard items
          */
-        public async Gee.List<IClipboardItem> get_recent_items(uint32 num_items, string[]? types = null)
+        public async Gee.List<IClipboardItem> get_recent_items(uint32 num_items, string[]? types = null, Cancellable? cancellable = null)
         {
             debug("Get recent %u items", num_items);
             
@@ -237,7 +237,7 @@ namespace Diodon
                     num_items,
                     // this will filter duplicates according to their uri
                     ResultType.MOST_RECENT_SUBJECTS,
-                    null
+                    cancellable
                 );
                 
                 return create_clipboard_items(events);
@@ -253,7 +253,7 @@ namespace Diodon
         /**
          * Add clipboard item as Zeitgeist event and subject to zeitgeist log.
          */
-        public async void add_item(IClipboardItem item)
+        public async void add_item(IClipboardItem item, Cancellable? cancellable = null)
         {
             debug("Add item %s to clipboard", item.get_label());
             
@@ -306,7 +306,7 @@ namespace Diodon
                 GenericArray<Event> events = new GenericArray<Event>();
                 events.add(event);
                 
-                yield log.insert_events(events);
+                yield log.insert_events(events, cancellable);
             } catch(GLib.Error e) {
                 warning("Add item %s not successful, error: %s",
                     item.get_text(), e.message);
@@ -322,11 +322,11 @@ namespace Diodon
          * @param use_clipboard whether item gets selected for clipboard
          * @param use_primary whether item gets selected for primary selection
          */         
-        public async void select_item(IClipboardItem item, bool use_clipboard, bool use_primary)
+        public async void select_item(IClipboardItem item, bool use_clipboard, bool use_primary, Cancellable? cancellable = null)
         {  
             // selected item is always at the end of history, so we need to
             // add it again
-            yield add_item(item);
+            yield add_item(item, cancellable);
             
             // verify that current items are selected correctly
             if(use_clipboard) {
@@ -340,7 +340,7 @@ namespace Diodon
         /**
          * Clear all clipboard items in zeitgeist storage
          */
-        public async void clear()
+        public async void clear(Cancellable? cancellable = null)
         {
             debug("Clear clipboard history");
             
@@ -354,12 +354,12 @@ namespace Diodon
                     StorageState.ANY,
                     uint32.MAX,
                     ResultType.MOST_RECENT_EVENTS,
-                    null
+                    cancellable
                 );
                 
                 Array<uint32> events = new Array<uint32>();
                 events.append_vals(ids, ids.length);
-                yield log.delete_events(events);
+                yield log.delete_events(events, cancellable);
                 
             } catch(GLib.Error e) {
                 warning("Failed to clear items: %s", e.message);

@@ -129,33 +129,36 @@ namespace Diodon
     
     private static async void search(Unity.ScopeSearchBase search)
     {
+        Cancellable? cancellable = search.search_context.cancellable.get_gcancellable();
         string[]? types = get_current_types(search.search_context.filter_state);
         Gee.List<IClipboardItem> items = yield storage.get_items_by_search_query(
-            search.search_context.search_query, types);
+            search.search_context.search_query, types, cancellable);
         
-        foreach(IClipboardItem item in items) {
-            Unity.ScopeResult result = Unity.ScopeResult();
-            string? origin = item.get_origin();
-            
-            result.uri = "clipboard:" + item.get_checksum();
-            // TODO see comment ZeitgeistClipboardStorage.CLIPBOARD_URI but
-            // here we actually need clipboard:// uri
-            //result.uri = ZeitgeistClipboardStorage.CLIPBOARD_URI + item.get_checksum();
-            result.title = item.get_label();
-            result.icon_hint = item.get_icon().to_string();
-            result.category = item.get_category();
-            result.result_type = Unity.ResultType.DEFAULT; 
-            result.mimetype = item.get_mime_type();
-            result.comment = item.get_text();
-            result.dnd_uri = result.uri;
-            
-            result.metadata = new HashTable<string, Variant>(str_hash, str_equal);
-            if(origin != null) {
-                result.metadata.insert("origin", new Variant.string(origin));
+        if(!search.search_context.cancellable.is_cancelled()) {
+            foreach(IClipboardItem item in items) {
+                Unity.ScopeResult result = Unity.ScopeResult();
+                string? origin = item.get_origin();
+                
+                result.uri = "clipboard:" + item.get_checksum();
+                // TODO see comment ZeitgeistClipboardStorage.CLIPBOARD_URI but
+                // here we actually need clipboard:// uri
+                //result.uri = ZeitgeistClipboardStorage.CLIPBOARD_URI + item.get_checksum();
+                result.title = item.get_label();
+                result.icon_hint = item.get_icon().to_string();
+                result.category = item.get_category();
+                result.result_type = Unity.ResultType.DEFAULT; 
+                result.mimetype = item.get_mime_type();
+                result.comment = item.get_text();
+                result.dnd_uri = result.uri;
+                
+                result.metadata = new HashTable<string, Variant>(str_hash, str_equal);
+                if(origin != null) {
+                    result.metadata.insert("origin", new Variant.string(origin));
+                }
+                // TODO: add more metadata e.g. timestamp
+                
+                search.search_context.result_set.add_result(result);
             }
-            // TODO: add more metadata e.g. timestamp
-            
-            search.search_context.result_set.add_result(result);
         }
     }
     
@@ -173,7 +176,7 @@ namespace Diodon
 
         foreach (unowned string type_id in ALL_TYPES)
         {
-            var option = filter.get_option(type_id);
+            Unity.FilterOption? option = filter.get_option(type_id);
             if (option == null || !option.active) continue;
 
             types += type_id; 

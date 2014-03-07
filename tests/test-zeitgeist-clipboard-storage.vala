@@ -214,7 +214,7 @@ namespace Diodon
 	    {
 	        try {
 	            FsoFramework.Test.wait_for_async(1000,
-	                cb => this.storage.clear.begin(cb),
+	                cb => this.storage.clear.begin(null, cb),
 	                res => this.storage.clear.end(res));
 	        } catch(GLib.Error e) {
                 warning(e.message);
