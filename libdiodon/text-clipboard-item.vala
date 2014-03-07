@@ -29,6 +29,7 @@ namespace Diodon
         private string _text;
         private string? _origin;
         private ClipboardType _clipboard_type;
+        private DateTime _date_copied;
        
         /**
          * Default data constructor needed for reflection.
@@ -37,11 +38,12 @@ namespace Diodon
          * @param data simple text
          * @param origin origin of clipboard item as application path
          */ 
-        public TextClipboardItem(ClipboardType clipboard_type, string data, string? origin)
+        public TextClipboardItem(ClipboardType clipboard_type, string data, string? origin, DateTime date_copied)
         {
             _clipboard_type = clipboard_type;
             _text = data;
             _origin = origin;
+            _date_copied = date_copied;
         }
     
         /**
@@ -50,6 +52,14 @@ namespace Diodon
         public ClipboardType get_clipboard_type()
         {
             return _clipboard_type;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+	    public DateTime get_date_copied()
+        {
+            return _date_copied;
         }
         
         /**

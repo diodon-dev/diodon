@@ -37,6 +37,7 @@ namespace Diodon
         private string _paths;
         private string? _origin;
         private ClipboardType _clipboard_type;
+        private DateTime _date_copied;
        
         /**
          * Default data constructor needed for reflection.
@@ -45,11 +46,12 @@ namespace Diodon
          * @param data paths separated with \n
          * @param origin origin of clipboard item as application path
          */ 
-        public FileClipboardItem(ClipboardType clipboard_type, string data, string? origin) throws FileError
+        public FileClipboardItem(ClipboardType clipboard_type, string data, string? origin, DateTime date_copied) throws FileError
         {
             _clipboard_type = clipboard_type;
             _paths = data;
             _origin = origin;
+            _date_copied = date_copied;
             
             // check if all paths are available
             string[] paths = convert_to_paths(_paths);
@@ -67,6 +69,14 @@ namespace Diodon
         public ClipboardType get_clipboard_type()
         {
             return _clipboard_type;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+	    public DateTime get_date_copied()
+        {
+            return _date_copied;
         }
         
         /**

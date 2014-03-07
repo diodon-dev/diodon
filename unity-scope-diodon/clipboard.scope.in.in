@@ -1,7 +1,7 @@
 [Scope]
 DBusName=@BUSNAME@.Unity.Scope.Clipboard
 DBusPath=@BUSOBJECTPATH@/unity/scope/clipboard
-RequiredMetadata=
+RequiredMetadata=date_copied[s];
 OptionalMetadata=origin[s];
 Keywords=clipboard;diodon;
 _Name=Clipboard History

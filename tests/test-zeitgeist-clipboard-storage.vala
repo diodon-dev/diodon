@@ -78,7 +78,7 @@ namespace Diodon
 	    public async void test_add_text_item() throws FsoFramework.Test.AssertError
 	    {
 	        TextClipboardItem text_item = new TextClipboardItem(
-	            ClipboardType.CLIPBOARD, "test_add_text_item", "/path/to/app");
+	            ClipboardType.CLIPBOARD, "test_add_text_item", "/path/to/app", new DateTime.now_utc());
  	        yield this.storage.add_item(text_item);
  	        yield assert_text_item("test_add_text_item", 1);
 	    }
@@ -87,7 +87,7 @@ namespace Diodon
 	    {
 	        string test_text =  "test_remove_text_item";
 	        TextClipboardItem text_item = new TextClipboardItem(
-	            ClipboardType.CLIPBOARD, test_text, "/path/to/app");
+	            ClipboardType.CLIPBOARD, test_text, "/path/to/app", new DateTime.now_utc());
 	        // add first item
 	        yield this.storage.add_item(text_item);
 	        yield assert_text_item(test_text, 1);
@@ -109,11 +109,11 @@ namespace Diodon
 	        // add some items
 	        for(int i=1; i<=ITEMS; ++i) {
 	            yield this.storage.add_item(
-	                new TextClipboardItem(ClipboardType.CLIPBOARD, i.to_string(), "/path/to/app"));
+	                new TextClipboardItem(ClipboardType.CLIPBOARD, i.to_string(), "/path/to/app", new DateTime.now_utc()));
 	        }
 	        // add a duplicate to test that duplicates are being ignored
 	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD,
-	            ITEMS.to_string(), "/path/to/app"));
+	            ITEMS.to_string(), "/path/to/app", new DateTime.now_utc()));
 	        
 	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(RECENT_ITEMS);
 	        FsoFramework.Test.Assert.are_equal(items.size, RECENT_ITEMS,
@@ -138,12 +138,12 @@ namespace Diodon
 	    public async void test_get_recent_items_by_type() throws FsoFramework.Test.AssertError, GLib.Error
 	    {
 	        // add test data
-	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD, "1", "/path/to/app"));
+	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD, "1", "/path/to/app", new DateTime.now_utc()));
 	        yield this.storage.add_item(new FileClipboardItem(ClipboardType.CLIPBOARD,
-	            Config.TEST_DATA_DIR + "Diodon-64x64.png", "/path/to/app"));
+	            Config.TEST_DATA_DIR + "Diodon-64x64.png", "/path/to/app", new DateTime.now_utc()));
 	        Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Config.TEST_DATA_DIR + "Diodon-64x64.png");
 	        yield this.storage.add_item(new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD,
-	            pixbuf, "/path/to/app"));
+	            pixbuf, "/path/to/app", new DateTime.now_utc()));
 	       
             Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(3, new string[]{"images"});
 	        FsoFramework.Test.Assert.are_equal(items.size, 1, "Invalid number of recent items");
@@ -156,7 +156,7 @@ namespace Diodon
 	        // add image item
             Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Config.TEST_DATA_DIR + "Diodon-64x64.png");
 	        yield this.storage.add_item(new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD,
-	            pixbuf, "/path/to/app"));
+	            pixbuf, "/path/to/app", new DateTime.now_utc()));
 	                
 	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(100);
 	        FsoFramework.Test.Assert.are_equal(items.size, 1, "Invalid number of recent items");
@@ -167,7 +167,7 @@ namespace Diodon
 	    public async void test_get_item_by_checksum() throws FsoFramework.Test.AssertError
 	    {
 	        // add test item
-	        TextClipboardItem text_item = new TextClipboardItem(ClipboardType.CLIPBOARD, "checksum", "/path/to/app");
+	        TextClipboardItem text_item = new TextClipboardItem(ClipboardType.CLIPBOARD, "checksum", "/path/to/app", new DateTime.now_utc());
 	        yield this.storage.add_item(text_item);
 	        
 	        // check item availability
@@ -183,12 +183,12 @@ namespace Diodon
 	    public async void test_clear() throws FsoFramework.Test.AssertError, GLib.Error
 	    {
 	        // add test data
-	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD, "1", "/path/to/app"));
+	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD, "1", "/path/to/app", new DateTime.now_utc()));
 	        yield this.storage.add_item(new FileClipboardItem(ClipboardType.CLIPBOARD,
-	            Config.TEST_DATA_DIR + "Diodon-64x64.png", "/path/to/app"));
+	            Config.TEST_DATA_DIR + "Diodon-64x64.png", "/path/to/app", new DateTime.now_utc()));
 	        Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Config.TEST_DATA_DIR + "Diodon-64x64.png");
 	        yield this.storage.add_item(new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD,
-	            pixbuf, "/path/to/app"));
+	            pixbuf, "/path/to/app", new DateTime.now_utc()));
 	        
 	        yield this.storage.clear();
 	        

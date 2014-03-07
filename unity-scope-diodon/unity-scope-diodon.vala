@@ -155,7 +155,8 @@ namespace Diodon
                 if(origin != null) {
                     result.metadata.insert("origin", new Variant.string(origin));
                 }
-                // TODO: add more metadata e.g. timestamp
+                DateTime local_date_copied = item.get_date_copied().to_local();
+                result.metadata.insert("date_copied", new Variant.string(local_date_copied.format("%Y-%m-%d %H:%M:%S")));
                 
                 search.search_context.result_set.add_result(result);
             }
@@ -207,13 +208,20 @@ namespace Diodon
             _("Paste"), null);
         preview.add_action(copy_action);
         
-        // add metadata if available
+        // add metadata
         if(result.metadata != null) {
             Variant? orign_variant = result.metadata.lookup("origin");
             if(orign_variant != null) {
                 Unity.InfoHint origin_info = new Unity.InfoHint.with_variant(
                     "origin", _("Origin"), null, orign_variant);
                 preview.add_info(origin_info);
+            }
+            
+            Variant? date_copied_variant = result.metadata.lookup("date_copied");
+            if(date_copied_variant != null) {
+                Unity.InfoHint date_copied_info = new Unity.InfoHint.with_variant(
+                    "date_copied", _("Date copied"), null, date_copied_variant);
+                preview.add_info(date_copied_info);
             }
         }
         

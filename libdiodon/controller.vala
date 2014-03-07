@@ -274,7 +274,7 @@ namespace Diodon
          */
         public async void add_text_item(ClipboardType type, string text, string? origin)
         {
-            IClipboardItem item = new TextClipboardItem(type, text, origin);
+            IClipboardItem item = new TextClipboardItem(type, text, origin, new DateTime.now_utc());
             yield add_item(item);
         }
         
@@ -288,7 +288,7 @@ namespace Diodon
         public async void add_file_item(ClipboardType type, string paths, string? origin)
         {
             try {
-                IClipboardItem item = new FileClipboardItem(type, paths, origin);
+                IClipboardItem item = new FileClipboardItem(type, paths, origin, new DateTime.now_utc());
                 yield add_item(item);
             } catch(FileError e) {
                 warning("Adding file(s) to history failed: " + e.message);
@@ -304,7 +304,7 @@ namespace Diodon
         public async void add_image_item(ClipboardType type, Gdk.Pixbuf pixbuf, string? origin)
         {
             try {
-                IClipboardItem item = new ImageClipboardItem.with_image(type, pixbuf, origin);
+                IClipboardItem item = new ImageClipboardItem.with_image(type, pixbuf, origin, new DateTime.now_utc());
                 yield add_item(item);
             } catch(GLib.Error e) {
                 warning("Adding image to history failed: " + e.message);

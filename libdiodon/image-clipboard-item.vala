@@ -31,6 +31,7 @@ namespace Diodon
         private Gdk.Pixbuf _pixbuf;
         private string _label;
         private string? _origin;
+        private DateTime _date_copied;
         
         /**
          * Create image clipboard item by a pixbuf.
@@ -39,10 +40,11 @@ namespace Diodon
          * @param pixbuf image from clipboard
          * @param origin origin of clipboard item as application path
          */
-        public ImageClipboardItem.with_image(ClipboardType clipboard_type, Gdk.Pixbuf pixbuf, string? origin) throws GLib.Error
+        public ImageClipboardItem.with_image(ClipboardType clipboard_type, Gdk.Pixbuf pixbuf, string? origin, DateTime date_copied) throws GLib.Error
         {
             _clipboard_type = clipboard_type;
             _origin = origin;
+            _date_copied = date_copied;
             extract_pixbuf_info(pixbuf);
         }
         
@@ -53,10 +55,11 @@ namespace Diodon
          * @param pixbuf image from clipboard
          * @param origin origin of clipboard item as application path
          */
-        public ImageClipboardItem.with_payload(ClipboardType clipboard_type, ByteArray payload, string? origin) throws GLib.Error
+        public ImageClipboardItem.with_payload(ClipboardType clipboard_type, ByteArray payload, string? origin, DateTime date_copied) throws GLib.Error
         {
             _clipboard_type = clipboard_type;
             _origin = origin;
+            _date_copied = date_copied;
             
             Gdk.PixbufLoader loader = new Gdk.PixbufLoader();
             loader.write(payload.data);
@@ -71,6 +74,14 @@ namespace Diodon
         public ClipboardType get_clipboard_type()
         {
             return _clipboard_type;
+        }
+        
+        /**
+	     * {@inheritDoc}
+	     */
+	    public DateTime get_date_copied()
+        {
+            return _date_copied;
         }
         
         /**

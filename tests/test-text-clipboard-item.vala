@@ -35,7 +35,7 @@ namespace Diodon
 	    public void test_matches()
 	    {
 	        TextClipboardItem item = new TextClipboardItem(ClipboardType.NONE,
-	            "Test", null);
+	            "Test", null, new DateTime.now_utc());
 	        
 		    assert(item.matches("TEST", ClipboardItemType.ALL));
 		    assert(item.matches("test", ClipboardItemType.TEXT));

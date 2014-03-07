@@ -79,6 +79,13 @@ namespace Diodon
         public abstract ByteArray? get_payload() throws GLib.Error;
         
         /**
+         * Date of when clipboard item has been copied
+         *
+         * @return date
+         */
+        public abstract DateTime get_date_copied();
+        
+        /**
          * A string representing clipboard item.
          *
          * @return data

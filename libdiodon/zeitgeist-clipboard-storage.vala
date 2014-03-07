@@ -435,18 +435,20 @@ namespace Diodon
             string text = subject.text;
             string? origin = subject.origin;
             unowned ByteArray payload = event.payload;
+            DateTime date_copied = new DateTime.from_timeval_utc(Zeitgeist.Timestamp.to_timeval(event.timestamp));
+            debug(date_copied.to_string());
             
             try {
                 if(strcmp(NFO.PLAIN_TEXT_DOCUMENT, interpretation) == 0) {
-                   item = new TextClipboardItem(ClipboardType.NONE, text, origin); 
+                   item = new TextClipboardItem(ClipboardType.NONE, text, origin, date_copied); 
                 }
                 
                 else if(strcmp(NFO.FILE_DATA_OBJECT, interpretation) == 0) {
-                    item = new FileClipboardItem(ClipboardType.NONE, text, origin);
+                    item = new FileClipboardItem(ClipboardType.NONE, text, origin, date_copied);
                 }
                     
                 else if(strcmp(NFO.IMAGE, interpretation) == 0) {
-                    item = new ImageClipboardItem.with_payload(ClipboardType.NONE, payload, origin);
+                    item = new ImageClipboardItem.with_payload(ClipboardType.NONE, payload, origin, date_copied);
                 }
                 
                 else {
