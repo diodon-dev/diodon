@@ -40,7 +40,7 @@ namespace Diodon
         private Monitor monitor;
         
         private Gee.HashMap<ClipboardType, IClipboardItem> current_items;
-        private HashTable<string, Event> type_templates;
+        private HashTable<int?, Event> cat_templates;
         
         /**
          * Called when a item has been inserted.
@@ -54,8 +54,8 @@ namespace Diodon
         
         public ZeitgeistClipboardStorage()
         {
-            this.type_templates = new HashTable<string, Event>(str_hash, str_equal);
-            prepare_type_templates(this.type_templates);
+            this.cat_templates = new HashTable<int?, Event>(int_hash, int_equal);
+            prepare_category_templates(this.cat_templates);
             
             this.monitor = new Monitor(new TimeRange.from_now(),
                 get_items_event_templates());
@@ -177,13 +177,14 @@ namespace Diodon
          * Get clipboard items which match given search query
          *
          * @param search_query query to search items for
-         * @param types types of search query or null if all types
+         * @param cats categories for search query or null for all
          * @return clipboard items matching given search query
          */
-        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query, string[]? types = null, Cancellable? cancellable = null)
+        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query, ClipboardCategory[]? cats = null,
+            Cancellable? cancellable = null)
         {
             TimeRange time_range = new TimeRange.anytime();
-            GenericArray<Event> templates = get_items_event_templates(types);
+            GenericArray<Event> templates = get_items_event_templates(cats);
             
             string query = prepare_search_string(search_query);
             if(query != "") {
@@ -207,7 +208,7 @@ namespace Diodon
                 }
             // when there is no search query show last 100 items
             } else {
-                return yield get_recent_items(100, types, cancellable);
+                return yield get_recent_items(100, cats, cancellable);
             }
             
             return new Gee.ArrayList<IClipboardItem>();;
@@ -219,15 +220,15 @@ namespace Diodon
          * Most recent item will be on the top.
          *
          * @param num_items number of recent items
-         * @param types types of recent items to get; null for all
+         * @param cats categories of recent items to get; null for all
          * @return list of recent clipboard items
          */
-        public async Gee.List<IClipboardItem> get_recent_items(uint32 num_items, string[]? types = null, Cancellable? cancellable = null)
+        public async Gee.List<IClipboardItem> get_recent_items(uint32 num_items, ClipboardCategory[]? cats = null, Cancellable? cancellable = null)
         {
             debug("Get recent %u items", num_items);
             
             TimeRange time_range = new TimeRange.anytime();
-            GenericArray<Event> templates = get_items_event_templates(types);
+            GenericArray<Event> templates = get_items_event_templates(cats);
             
             try {
 	            ResultSet events = yield log.find_events(
@@ -368,10 +369,10 @@ namespace Diodon
             current_items.clear();
         }
         
-        private static void prepare_type_templates(HashTable<string, Event> templates)
+        private static void prepare_category_templates(HashTable<int?, Event> templates)
         {
             // match all
-            templates["clipboard"] = new Event.full(
+            templates[ClipboardCategory.CLIPBOARD] = new Event.full(
                                             ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
                                             null,
                                             // origin events only added by diodon
@@ -385,7 +386,7 @@ namespace Diodon
                                                             null,
                                                             null)); 
             
-            templates["text"] = new Event.full(
+            templates[ClipboardCategory.TEXT] = new Event.full(
                                             ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
                                             null,
                                             // origin events only added by diodon
@@ -399,7 +400,7 @@ namespace Diodon
                                                             null,
                                                             null));
                                                             
-            templates["files"] = new Event.full(
+            templates[ClipboardCategory.FILES] = new Event.full(
                                             ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
                                             null,
                                             // origin events only added by diodon
@@ -413,7 +414,7 @@ namespace Diodon
                                                             null,
                                                             null));
                                     
-            templates["images"] = new Event.full(
+            templates[ClipboardCategory.IMAGES] = new Event.full(
                                             ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
                                             null,
                                             // origin events only added by diodon
@@ -436,7 +437,6 @@ namespace Diodon
             string? origin = subject.origin;
             unowned ByteArray payload = event.payload;
             DateTime date_copied = new DateTime.from_timeval_utc(Zeitgeist.Timestamp.to_timeval(event.timestamp));
-            debug(date_copied.to_string());
             
             try {
                 if(strcmp(NFO.PLAIN_TEXT_DOCUMENT, interpretation) == 0) {
@@ -503,19 +503,19 @@ namespace Diodon
         
         /**
          * Get array of event templates which matches clipboard items with
-         * given types.
+         * given categories.
          *
-         * @param types list of clipboard item types or null if all
+         * @param cats list of clipboard item cats or null if all
          */
-        private GenericArray<Event> get_items_event_templates(string[]? types = null)
+        private GenericArray<Event> get_items_event_templates(ClipboardCategory[]? cats = null)
         {
             GenericArray<Event> templates = new GenericArray<Event>();
             
-            if(types == null || types.length == 0) {
-                templates.add(type_templates["clipboard"]);
+            if(cats == null || cats.length == 0) {
+                templates.add(cat_templates[ClipboardCategory.CLIPBOARD]);
             } else {
-                foreach(unowned string type in types) {
-                    templates.add(type_templates[type]);
+                foreach(unowned ClipboardCategory cat in cats) {
+                    templates.add(cat_templates[cat]);
                 }
             }
             

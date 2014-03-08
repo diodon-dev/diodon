@@ -226,23 +226,6 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public bool matches(string search, ClipboardItemType type)
-        {
-            bool matches = false;
-            
-            if(type == ClipboardItemType.ALL
-                || type == ClipboardItemType.FILES) {
-                
-                // ignore case
-                matches = _paths.down().contains(search.down());
-            }
-            
-            return matches;
-        }
-        
-        /**
-	     * {@inheritDoc}
-	     */
 	    public bool equals(IClipboardItem* item)
         {
             bool equals = false;

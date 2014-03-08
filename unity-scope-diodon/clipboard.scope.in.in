@@ -18,30 +18,31 @@ Icon=@DATADIR@/icons/ubuntu-mono-dark/status/16/diodon-panel.svg
 [Desktop Entry]
 X-Ubuntu-Gettext-Domain=@GETTEXT_PACKAGE@
 
-[Category recent]
-_Name=Recent
-Icon=/usr/share/icons/unity-icon-theme/places/svg/group-recent.svg
-DedupField=uri
-
 [Category text]
 _Name=Text
 Icon=/usr/share/icons/unity-icon-theme/places/svg/group-notes.svg
 DedupField=uri
 
-[Category Files]
+[Category files]
 _Name=Files
 Icon=/usr/share/icons/unity-icon-theme/places/svg/group-files.svg
 DedupField=uri
 
-[Category Images]
+[Category images]
 _Name=Images
 Icon=/usr/share/icons/unity-icon-theme/places/svg/group-photos.svg
 DedupField=uri
 
-[Filter type]
-_Name=Type
+[Filter category]
+_Name=Category
 Type=filter-checkoption
 SortType=display-name
 OptionIDs=text;files;images
 _OptionNames=Text;Files;Images
+
+[Filter date_copied]
+Name=Date copied
+Type=filter-radiooption
+OptionIDs=last-24-hours;last-7-days;last-30-days;last-year;
+_OptionNames=Last 24 hours;Last 7 days;Last 30 days;Last year;
 

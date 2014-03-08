@@ -145,7 +145,7 @@ namespace Diodon
 	        yield this.storage.add_item(new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD,
 	            pixbuf, "/path/to/app", new DateTime.now_utc()));
 	       
-            Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(3, new string[]{"images"});
+            Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(3, new ClipboardCategory[]{ClipboardCategory.IMAGES});
 	        FsoFramework.Test.Assert.are_equal(items.size, 1, "Invalid number of recent items");
 	        IClipboardItem item = items.get(0);
 	        FsoFramework.Test.Assert.are_equal_string(item.get_label(), "[64x64]", "Invalid image label");

@@ -26,13 +26,6 @@ namespace Diodon
     const string UNIQUE_NAME = Config.BUSOBJECTPATH + "/unity/scope/clipboard";
     const string ICON_PATH = "/usr/share/icons/unity-icon-theme/places/svg/";
     
-    private const string[] ALL_TYPES =
-    {
-      "text",
-      "files",
-      "images",
-    };
-    
     /**
      * This is the main function providing access to clipboard history through
      * a unity scope; the scope is defined and exported, a DBUS connector is
@@ -83,11 +76,6 @@ namespace Diodon
             catIcon, Unity.CategoryRenderer.HORIZONTAL_TILE);
         cats.add(clipboard);
         
-        Unity.Category recent = new Unity.Category("recent", _("Recent"),
-             new FileIcon(icon_dir.get_child("group-recent.svg")),
-             Unity.CategoryRenderer.HORIZONTAL_TILE);
-        cats.add(recent);
-        
         Unity.Category text = new Unity.Category("text", _("Text"),
              new FileIcon(icon_dir.get_child("group-notes.svg")),
              Unity.CategoryRenderer.HORIZONTAL_TILE);
@@ -110,14 +98,24 @@ namespace Diodon
     {
         Unity.FilterSet filters = new Unity.FilterSet();
         
-        Unity.CheckOptionFilter type = new Unity.CheckOptionFilter("type", _("Type"));
-        type.sort_type = Unity.OptionsFilter.SortType.DISPLAY_NAME;
+        Unity.CheckOptionFilter category = new Unity.CheckOptionFilter("category", _("Category"));
+        category.sort_type = Unity.OptionsFilter.SortType.DISPLAY_NAME;
         
-        type.add_option("text", _("Text"));
-        type.add_option("files", _("Files"));
-        type.add_option("images", _("Images"));
+        category.add_option("text", _("Text"));
+        category.add_option("files", _("Files"));
+        category.add_option("images", _("Images"));
         
-        filters.add(type);
+        filters.add(category);
+        
+        Unity.RadioOptionFilter date_copied = new Unity.RadioOptionFilter("date_copied", _("Date copied"));
+
+        date_copied.add_option("last-24-hours", _("Last 24 hours"));
+        date_copied.add_option("last-7-days", _("Last 7 days"));
+        date_copied.add_option("last-7-days", _("Last 7 days"));
+        date_copied.add_option("last-30-days", _("Last 30 days"));
+        date_copied.add_option("last-year", _("Last year"));
+
+        filters.add(date_copied);
         
         return filters;
     }
@@ -130,9 +128,9 @@ namespace Diodon
     private static async void search(Unity.ScopeSearchBase search)
     {
         Cancellable? cancellable = search.search_context.cancellable.get_gcancellable();
-        string[]? types = get_current_types(search.search_context.filter_state);
+        ClipboardCategory[]? cats = get_current_categories(search.search_context.filter_state);
         Gee.List<IClipboardItem> items = yield storage.get_items_by_search_query(
-            search.search_context.search_query, types, cancellable);
+            search.search_context.search_query, cats, cancellable);
         
         if(!search.search_context.cancellable.is_cancelled()) {
             foreach(IClipboardItem item in items) {
@@ -164,29 +162,49 @@ namespace Diodon
     }
     
     /**
-     * Get currently set type filters. Return null if none or all are set.
+     * Get currently set cateogry filters. Return null if none or all are set.
      */
-    private static string[]? get_current_types(Unity.FilterSet filter_state)
+    private static ClipboardCategory[]? get_current_categories(Unity.FilterSet filter_state)
     {
         /* returns null if the filter is disabled / all options selected */
-        Unity.CheckOptionFilter filter = filter_state.get_filter_by_id("type") as Unity.CheckOptionFilter;
+        Unity.CheckOptionFilter filter = filter_state.get_filter_by_id("category") as Unity.CheckOptionFilter;
         
         if (filter == null || !filter.filtering) return null;
       
-        string[] types = {};
+        ClipboardCategory[] cats = {};
 
-        foreach (unowned string type_id in ALL_TYPES)
+        foreach (ClipboardCategory cat in ClipboardCategory.all())
         {
-            Unity.FilterOption? option = filter.get_option(type_id);
+            Unity.FilterOption? option = filter.get_option(cat.to_string());
             if (option == null || !option.active) continue;
 
-            types += type_id; 
+            cats += cat;
         }
 
-        if (types.length == ALL_TYPES.length) return null;
+        if (cats.length == ClipboardCategory.all().length) return null;
 
-        return types;
+        return cats;
     }
+    
+    /*private static TimeRange get_current_timerange(Unity.FilterSet filter_state)
+    {
+        Unity.RadioOptionFilter filter = filter_state.get_filter_by_id("date_copied") as Unity.RadioOptionFilter;
+        Unity.FilterOption? option = filter.get_active_option();
+
+        string date = option == null ? "all" : option.id;
+
+        if(date == "last-24-hours") {
+            return new TimeRange(Zeitgeist.Timestamp.from_now() - (Zeitgeist.Timestamp.HOUR * 24), Timestamp.from_now());
+        } else if(date == "last-7-days") {
+            return new TimeRange(Timestamp.from_now() - Timestamp.WEEK, Timestamp.from_now());
+        } else if (date == "last-30-days") {
+            return new TimeRange(Timestamp.from_now() - (Timestamp.WEEK * 4), Timestamp.from_now());
+        } else if (date == "last-year") {
+            return new TimeRange(Timestamp.from_now() - Timestamp.YEAR, Timestamp.from_now());
+        } else {
+            return new TimeRange.anytime ();
+        }
+    }*/
     
     private static Unity.AbstractPreview? preview(Unity.ResultPreviewer previewer)
     {

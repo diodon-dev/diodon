@@ -41,18 +41,25 @@ namespace Diodon
         PRIMARY;
     }
     
-    public enum ClipboardItemType
+    public enum ClipboardCategory
     {
-        ALL = 0,    
+        // resp. all items
+        CLIPBOARD = 0,
         TEXT,
         FILES,
         IMAGES;
         
+        public static ClipboardCategory[] all()
+        {
+            // all categories excluding clipboard as it is a placeholder for all
+            return { TEXT, FILES, IMAGES };
+        }
+        
         public string to_string()
         {
             switch (this) {
-                case ALL:
-                    return "all";
+                case CLIPBOARD:
+                    return "clipboard";
 
                 case TEXT:
                     return "text";
@@ -68,11 +75,11 @@ namespace Diodon
             }
         }
         
-        public static ClipboardItemType from_string(string type)
+        public static ClipboardCategory from_string(string type)
         {
             switch(type) {
-                case "all":
-                    return ALL;
+                case "clipboard":
+                    return CLIPBOARD;
                 case "text":
                     return TEXT;
                 case "files":
@@ -83,15 +90,6 @@ namespace Diodon
                     assert_not_reached();
             }
         }
-    }
-    
-    public enum ClipboardCategory
-    {
-        CLIPBOARD,
-        RECENT,
-        TEXT,
-        FILES,
-        IMAGES
     }
 }
 

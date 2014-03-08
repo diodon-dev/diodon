@@ -180,23 +180,6 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
-        public bool matches(string search, ClipboardItemType type)
-        {
-            bool matches = false;
-            
-            if(type == ClipboardItemType.ALL
-                || type == ClipboardItemType.IMAGES) {
-                // we do not have any search to be matched
-                // therefore only an empty search string matches
-                matches = search.length == 0; 
-            }
-            
-            return matches;
-        }
-        
-        /**
-	     * {@inheritDoc}
-	     */
 	    public bool equals(IClipboardItem* item)
         {
             bool equals = false;

@@ -113,15 +113,6 @@ namespace Diodon
         public abstract void to_clipboard(Gtk.Clipboard clipboard);
         
         /**
-         * Determine if given item matches search string and section
-         *
-         * @param search search string
-         * @param type clipboard item type to filter by
-         * @return true when match; otherwise false.
-         */
-        public abstract bool matches(string search, ClipboardItemType type);
-        
-        /**
          * Check if given item is equal.
          *
          * @return true if equal; otherwise false.
