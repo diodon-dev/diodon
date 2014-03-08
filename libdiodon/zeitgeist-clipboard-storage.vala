@@ -178,12 +178,13 @@ namespace Diodon
          *
          * @param search_query query to search items for
          * @param cats categories for search query or null for all
+         * @param date_copied filter results by given timerange; all per default
          * @return clipboard items matching given search query
          */
         public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query, ClipboardCategory[]? cats = null,
-            Cancellable? cancellable = null)
+            ClipboardTimerange date_copied = ClipboardTimerange.ALL, Cancellable? cancellable = null)
         {
-            TimeRange time_range = new TimeRange.anytime();
+            TimeRange time_range = create_timerange(date_copied);
             GenericArray<Event> templates = get_items_event_templates(cats);
             
             string query = prepare_search_string(search_query);
@@ -208,7 +209,7 @@ namespace Diodon
                 }
             // when there is no search query show last 100 items
             } else {
-                return yield get_recent_items(100, cats, cancellable);
+                return yield get_recent_items(100, cats, date_copied, cancellable);
             }
             
             return new Gee.ArrayList<IClipboardItem>();;
@@ -221,13 +222,15 @@ namespace Diodon
          *
          * @param num_items number of recent items
          * @param cats categories of recent items to get; null for all
+         * @param date_copied filter results by given timerange; all per default
          * @return list of recent clipboard items
          */
-        public async Gee.List<IClipboardItem> get_recent_items(uint32 num_items, ClipboardCategory[]? cats = null, Cancellable? cancellable = null)
+        public async Gee.List<IClipboardItem> get_recent_items(uint32 num_items, ClipboardCategory[]? cats = null,
+            ClipboardTimerange date_copied = ClipboardTimerange.ALL, Cancellable? cancellable = null)
         {
             debug("Get recent %u items", num_items);
             
-            TimeRange time_range = new TimeRange.anytime();
+            TimeRange time_range = create_timerange(date_copied);
             GenericArray<Event> templates = get_items_event_templates(cats);
             
             try {
@@ -427,6 +430,23 @@ namespace Diodon
                                                             null,
                                                             null,
                                                             null)); 
+        }
+        
+        private static TimeRange create_timerange(ClipboardTimerange timerange)
+        {
+            switch(timerange)
+            {
+                case ClipboardTimerange.LAST_24_HOURS:
+                    return new TimeRange(Timestamp.from_now() - Timestamp.HOUR * 24, Timestamp.from_now());
+                case ClipboardTimerange.LAST_7_DAYS:
+                    return new TimeRange (Timestamp.from_now() - Timestamp.WEEK, Timestamp.from_now());
+                case ClipboardTimerange.LAST_30_DAYS:
+                    return new TimeRange (Timestamp.from_now() - (Timestamp.WEEK * 4), Timestamp.from_now());
+                case ClipboardTimerange.LAST_YEAR:
+                    return new TimeRange (Timestamp.from_now() - Timestamp.YEAR, Timestamp.from_now ());
+                default:
+                    return new TimeRange.anytime();
+            }
         }
         
         private static IClipboardItem? create_clipboard_item(Event event, Subject subject)

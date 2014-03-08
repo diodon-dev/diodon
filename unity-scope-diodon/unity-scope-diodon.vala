@@ -128,9 +128,10 @@ namespace Diodon
     private static async void search(Unity.ScopeSearchBase search)
     {
         Cancellable? cancellable = search.search_context.cancellable.get_gcancellable();
-        ClipboardCategory[]? cats = get_current_categories(search.search_context.filter_state);
+        ClipboardCategory[]? cats = get_filter_categories(search.search_context.filter_state);
+        ClipboardTimerange date_copied = get_filter_datecopied(search.search_context.filter_state);
         Gee.List<IClipboardItem> items = yield storage.get_items_by_search_query(
-            search.search_context.search_query, cats, cancellable);
+            search.search_context.search_query, cats, date_copied, cancellable);
         
         if(!search.search_context.cancellable.is_cancelled()) {
             foreach(IClipboardItem item in items) {
@@ -164,7 +165,7 @@ namespace Diodon
     /**
      * Get currently set cateogry filters. Return null if none or all are set.
      */
-    private static ClipboardCategory[]? get_current_categories(Unity.FilterSet filter_state)
+    private static ClipboardCategory[]? get_filter_categories(Unity.FilterSet filter_state)
     {
         /* returns null if the filter is disabled / all options selected */
         Unity.CheckOptionFilter filter = filter_state.get_filter_by_id("category") as Unity.CheckOptionFilter;
@@ -186,25 +187,15 @@ namespace Diodon
         return cats;
     }
     
-    /*private static TimeRange get_current_timerange(Unity.FilterSet filter_state)
+    private static ClipboardTimerange get_filter_datecopied(Unity.FilterSet filter_state)
     {
         Unity.RadioOptionFilter filter = filter_state.get_filter_by_id("date_copied") as Unity.RadioOptionFilter;
         Unity.FilterOption? option = filter.get_active_option();
 
-        string date = option == null ? "all" : option.id;
+        string date_copied = option == null ? "all" : option.id;
 
-        if(date == "last-24-hours") {
-            return new TimeRange(Zeitgeist.Timestamp.from_now() - (Zeitgeist.Timestamp.HOUR * 24), Timestamp.from_now());
-        } else if(date == "last-7-days") {
-            return new TimeRange(Timestamp.from_now() - Timestamp.WEEK, Timestamp.from_now());
-        } else if (date == "last-30-days") {
-            return new TimeRange(Timestamp.from_now() - (Timestamp.WEEK * 4), Timestamp.from_now());
-        } else if (date == "last-year") {
-            return new TimeRange(Timestamp.from_now() - Timestamp.YEAR, Timestamp.from_now());
-        } else {
-            return new TimeRange.anytime ();
-        }
-    }*/
+        return ClipboardTimerange.from_string(date_copied);
+    }
     
     private static Unity.AbstractPreview? preview(Unity.ResultPreviewer previewer)
     {
