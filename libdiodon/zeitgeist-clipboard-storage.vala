@@ -179,6 +179,7 @@ namespace Diodon
          * @param search_query query to search items for
          * @param cats categories for search query or null for all
          * @param date_copied filter results by given timerange; all per default
+         * @param cancellable optional cancellable handler
          * @return clipboard items matching given search query
          */
         public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query, ClipboardCategory[]? cats = null,
@@ -223,6 +224,7 @@ namespace Diodon
          * @param num_items number of recent items
          * @param cats categories of recent items to get; null for all
          * @param date_copied filter results by given timerange; all per default
+         * @param cancellable optional cancellable handler
          * @return list of recent clipboard items
          */
         public async Gee.List<IClipboardItem> get_recent_items(uint32 num_items, ClipboardCategory[]? cats = null,

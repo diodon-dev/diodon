@@ -341,22 +341,31 @@ namespace Diodon
          * Get recent items whereas size is not bigger than configured recent
          * item size 
          * 
-         * @return list recent items
+         * @param cats categories of recent items to get; null for all
+         * @param date_copied filter results by given timerange; all per default
+         * @param cancellable optional cancellable handler
+         * @return list of recent clipboard items
          */ 
-        public async Gee.List<IClipboardItem> get_recent_items()
+        public async Gee.List<IClipboardItem> get_recent_items(ClipboardCategory[]? cats = null,
+            ClipboardTimerange date_copied = ClipboardTimerange.ALL, Cancellable? cancellable = null)
         {
-            return yield storage.get_recent_items(configuration.recent_items_size);
+            return yield storage.get_recent_items(configuration.recent_items_size, cats, date_copied, cancellable);
         }
         
         /**
          * Get clipboard items which match given search query
          *
          * @param search_query query to search items for
+         * @param cats categories for search query or null for all
+         * @param date_copied filter results by given timerange; all per default
+         * @param cancellable optional cancellable handler
          * @return clipboard items matching given search query
          */
-        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query)
+        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query,
+            ClipboardCategory[]? cats = null, ClipboardTimerange date_copied = ClipboardTimerange.ALL,
+            Cancellable? cancellable = null)
         {
-            return yield storage.get_items_by_search_query(search_query);
+            return yield storage.get_items_by_search_query(search_query, cats, date_copied, cancellable);
         }
         
         /**
