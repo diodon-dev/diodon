@@ -6,6 +6,5 @@ data/net.launchpad.Diodon.gschema.xml.in.in
 [type: gettext/glade]data/preferences.ui
 libdiodon/clipboard-menu.vala
 [type: gettext/ini]plugins/indicator/indicator.plugin.in
-[type: gettext/ini]plugins/unityscope/diodon.scope.in.in
-plugins/unityscope/unity-scope-plugin.vala
-[type: gettext/ini]plugins/unityscope/unityscope.plugin.in
+[type: gettext/ini]unity-scope-diodon/diodon.scope.in.in
+unity-scope-diodon/unity-scope-diodon.vala

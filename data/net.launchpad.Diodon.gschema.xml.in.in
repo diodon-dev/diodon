@@ -6,7 +6,7 @@
       <_description>Adds the text which is copied to the clipboard with e.g. Ctrl + C to the clipboard history.</_description>
     </key>
     <key name="use-primary" type="b">
-      <default>true</default>
+      <default>false</default>
       <_summary>Use primary selection</_summary>
       <_description>Adds the primary selection (an area of the screen which is selected with the mouse) to the clipboard history.</_description>
     </key>

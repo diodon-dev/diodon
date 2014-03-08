@@ -274,7 +274,7 @@ namespace Diodon
          */
         public async void add_text_item(ClipboardType type, string text, string? origin)
         {
-            IClipboardItem item = new TextClipboardItem(type, text, origin);
+            IClipboardItem item = new TextClipboardItem(type, text, origin, new DateTime.now_utc());
             yield add_item(item);
         }
         
@@ -288,7 +288,7 @@ namespace Diodon
         public async void add_file_item(ClipboardType type, string paths, string? origin)
         {
             try {
-                IClipboardItem item = new FileClipboardItem(type, paths, origin);
+                IClipboardItem item = new FileClipboardItem(type, paths, origin, new DateTime.now_utc());
                 yield add_item(item);
             } catch(FileError e) {
                 warning("Adding file(s) to history failed: " + e.message);
@@ -304,7 +304,7 @@ namespace Diodon
         public async void add_image_item(ClipboardType type, Gdk.Pixbuf pixbuf, string? origin)
         {
             try {
-                IClipboardItem item = new ImageClipboardItem.with_image(type, pixbuf, origin);
+                IClipboardItem item = new ImageClipboardItem.with_image(type, pixbuf, origin, new DateTime.now_utc());
                 yield add_item(item);
             } catch(GLib.Error e) {
                 warning("Adding image to history failed: " + e.message);
@@ -341,22 +341,31 @@ namespace Diodon
          * Get recent items whereas size is not bigger than configured recent
          * item size 
          * 
-         * @return list recent items
+         * @param cats categories of recent items to get; null for all
+         * @param date_copied filter results by given timerange; all per default
+         * @param cancellable optional cancellable handler
+         * @return list of recent clipboard items
          */ 
-        public async Gee.List<IClipboardItem> get_recent_items()
+        public async Gee.List<IClipboardItem> get_recent_items(ClipboardCategory[]? cats = null,
+            ClipboardTimerange date_copied = ClipboardTimerange.ALL, Cancellable? cancellable = null)
         {
-            return yield storage.get_recent_items(configuration.recent_items_size);
+            return yield storage.get_recent_items(configuration.recent_items_size, cats, date_copied, cancellable);
         }
         
         /**
          * Get clipboard items which match given search query
          *
          * @param search_query query to search items for
+         * @param cats categories for search query or null for all
+         * @param date_copied filter results by given timerange; all per default
+         * @param cancellable optional cancellable handler
          * @return clipboard items matching given search query
          */
-        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query)
+        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query,
+            ClipboardCategory[]? cats = null, ClipboardTimerange date_copied = ClipboardTimerange.ALL,
+            Cancellable? cancellable = null)
         {
-            return yield storage.get_items_by_search_query(search_query);
+            return yield storage.get_items_by_search_query(search_query, cats, date_copied, cancellable);
         }
         
         /**

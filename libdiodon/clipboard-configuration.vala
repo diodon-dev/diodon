@@ -32,7 +32,7 @@ namespace Diodon
         /**
          * flag whether primary selection is enabled
          */
-        public bool use_primary { get; set; default = true; }
+        public bool use_primary { get; set; default = false; }
             
         /**
          * flag whether clipboard is enabled

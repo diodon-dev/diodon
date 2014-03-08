@@ -79,6 +79,13 @@ namespace Diodon
         public abstract ByteArray? get_payload() throws GLib.Error;
         
         /**
+         * Date of when clipboard item has been copied
+         *
+         * @return date
+         */
+        public abstract DateTime get_date_copied();
+        
+        /**
          * A string representing clipboard item.
          *
          * @return data
@@ -104,15 +111,6 @@ namespace Diodon
          * @param clipboard gtk clipboard
          */
         public abstract void to_clipboard(Gtk.Clipboard clipboard);
-        
-        /**
-         * Determine if given item matches search string and section
-         *
-         * @param search search string
-         * @param type clipboard item type to filter by
-         * @return true when match; otherwise false.
-         */
-        public abstract bool matches(string search, ClipboardItemType type);
         
         /**
          * Check if given item is equal.

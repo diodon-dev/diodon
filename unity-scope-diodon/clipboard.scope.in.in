@@ -1,0 +1,48 @@
+[Scope]
+DBusName=@BUSNAME@.Unity.Scope.Clipboard
+DBusPath=@BUSOBJECTPATH@/unity/scope/clipboard
+RequiredMetadata=date_copied[s];
+OptionalMetadata=origin[s];
+Keywords=clipboard;diodon;
+_Name=Clipboard History
+_Description=This is an Ubuntu search plugin that enables information from Diodon to be searched and displayed in the Dash underneath the Clipboard header.
+_SearchHint=Search clipboard
+Type=clipboard
+IsMaster=true
+Shortcut=b
+Icon=@DATADIR@/icons/ubuntu-mono-dark/status/16/diodon-panel.svg
+
+#
+# Make translation work with Ubuntu's special handling of keyfiles
+#
+[Desktop Entry]
+X-Ubuntu-Gettext-Domain=@GETTEXT_PACKAGE@
+
+[Category text]
+_Name=Text
+Icon=/usr/share/icons/unity-icon-theme/places/svg/group-notes.svg
+DedupField=uri
+
+[Category files]
+_Name=Files
+Icon=/usr/share/icons/unity-icon-theme/places/svg/group-files.svg
+DedupField=uri
+
+[Category images]
+_Name=Images
+Icon=/usr/share/icons/unity-icon-theme/places/svg/group-photos.svg
+DedupField=uri
+
+[Filter category]
+_Name=Category
+Type=filter-checkoption
+SortType=display-name
+OptionIDs=text;files;images
+_OptionNames=Text;Files;Images
+
+[Filter date_copied]
+Name=Date copied
+Type=filter-radiooption
+OptionIDs=last-24-hours;last-7-days;last-30-days;last-year;
+_OptionNames=Last 24 hours;Last 7 days;Last 30 days;Last year;
+

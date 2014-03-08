@@ -41,18 +41,25 @@ namespace Diodon
         PRIMARY;
     }
     
-    public enum ClipboardItemType
+    public enum ClipboardCategory
     {
-        ALL = 0,    
+        // resp. all items
+        CLIPBOARD = 0,
         TEXT,
         FILES,
         IMAGES;
         
+        public static ClipboardCategory[] all()
+        {
+            // all categories excluding clipboard as it is a placeholder for all
+            return { TEXT, FILES, IMAGES };
+        }
+        
         public string to_string()
         {
             switch (this) {
-                case ALL:
-                    return "all";
+                case CLIPBOARD:
+                    return "clipboard";
 
                 case TEXT:
                     return "text";
@@ -68,11 +75,11 @@ namespace Diodon
             }
         }
         
-        public static ClipboardItemType from_string(string type)
+        public static ClipboardCategory from_string(string type)
         {
             switch(type) {
-                case "all":
-                    return ALL;
+                case "clipboard":
+                    return CLIPBOARD;
                 case "text":
                     return TEXT;
                 case "files":
@@ -84,12 +91,64 @@ namespace Diodon
             }
         }
     }
-    
-    public enum ClipboardCategory
+
+    /**
+     * Clipboard time range to filter results according to when it has been copied
+     */
+    public enum ClipboardTimerange
     {
-        TEXT,
-        FILES,
-        IMAGES
+        ALL = 0,
+        LAST_24_HOURS,
+        LAST_7_DAYS,
+        LAST_30_DAYS,
+        LAST_YEAR;
+        
+        public static ClipboardTimerange[] all()
+        {
+            // all time ranges excluding all as it represents all
+            return { LAST_24_HOURS, LAST_7_DAYS, LAST_30_DAYS, LAST_YEAR };
+        }
+        
+        public string to_string()
+        {
+            switch (this) {
+                case ALL:
+                    return "all";
+                
+                case LAST_24_HOURS:
+                    return "last-24-hours";
+
+                case LAST_7_DAYS:
+                    return "last-7-days";
+
+                case LAST_30_DAYS:
+                    return "last-30-days";
+
+                case LAST_YEAR:
+                    return "last-year";
+
+                default:
+                    assert_not_reached();
+            }
+        }
+        
+        public static ClipboardTimerange from_string(string type)
+        {
+            switch(type) {
+                case "all":
+                    return ALL;
+                case "last-24-hours":
+                    return LAST_24_HOURS;
+                case "last-7-days":
+                    return LAST_7_DAYS;
+                case "last-30-days":
+                    return LAST_30_DAYS;
+                case "last-year":
+                     return LAST_YEAR;
+                default:
+                    assert_not_reached();
+            }
+        }
     }
 }
 

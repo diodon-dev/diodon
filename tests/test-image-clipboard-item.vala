@@ -36,10 +36,10 @@ namespace Diodon
 	    {
             Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Config.TEST_DATA_DIR + "Diodon-64x64.png");
             
-            ImageClipboardItem item1 = new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD, pixbuf, null);
+            ImageClipboardItem item1 = new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD, pixbuf, null, new DateTime.now_utc());
             string checksum1 = item1.get_checksum();
             
-            ImageClipboardItem item2 = new ImageClipboardItem.with_payload(ClipboardType.CLIPBOARD, item1.get_payload(), null);
+            ImageClipboardItem item2 = new ImageClipboardItem.with_payload(ClipboardType.CLIPBOARD, item1.get_payload(), null, new DateTime.now_utc());
             string checksum2 = item2.get_checksum();
             
             FsoFramework.Test.Assert.are_equal_string(checksum1, checksum2, "Images are not the same");
