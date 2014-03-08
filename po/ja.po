@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-28 20:44+0300\n"
+"POT-Creation-Date: 2014-03-08 15:09+0300\n"
 "PO-Revision-Date: 2013-12-29 00:12+0000\n"
 "Last-Translator: ub <xenolith0bytetestcomgreen@gmail.com>\n"
 "Language-Team: Japanese <ja@li.org>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2013-12-30 04:45+0000\n"
 "X-Generator: Launchpad (build 16877)\n"
-"Language: ja\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -98,8 +98,7 @@ msgstr "履歴を表示するキー"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 #: ../data/preferences.ui.h:15
-msgid ""
-"Hotkey to quickly allow you to access menu with recent clipboard items."
+msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
@@ -143,7 +142,7 @@ msgid "Number of recent items"
 msgstr ""
 
 #: ../data/preferences.ui.h:14
-#: ../plugins/unityscope/unity-scope-plugin.vala:74
+#: ../unity-scope-diodon/unity-scope-diodon.vala:75
 msgid "Clipboard"
 msgstr "クリップボード"
 
@@ -171,36 +170,85 @@ msgstr "クリップボードのアクセスにアプリケーションインジ
 msgid "Copyright © 2011 Diodon Team"
 msgstr "Copyright © 2011 Diodon Team"
 
-#: ../plugins/unityscope/diodon.scope.in.in.h:1
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:1
 msgid "Clipboard History"
 msgstr ""
 
-#: ../plugins/unityscope/diodon.scope.in.in.h:2
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:2
 msgid ""
 "This is an Ubuntu search plugin that enables information from Diodon to be "
 "searched and displayed in the Dash underneath the Clipboard header."
 msgstr ""
 
-#: ../plugins/unityscope/diodon.scope.in.in.h:3
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:3
 msgid "Search clipboard"
 msgstr "クリップボード検索"
 
-#: ../plugins/unityscope/unity-scope-plugin.vala:161
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:4
+#: ../unity-scope-diodon/unity-scope-diodon.vala:79
+#: ../unity-scope-diodon/unity-scope-diodon.vala:104
+msgid "Text"
+msgstr ""
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:5
+#: ../unity-scope-diodon/unity-scope-diodon.vala:84
+#: ../unity-scope-diodon/unity-scope-diodon.vala:105
+msgid "Files"
+msgstr ""
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:6
+#: ../unity-scope-diodon/unity-scope-diodon.vala:89
+#: ../unity-scope-diodon/unity-scope-diodon.vala:106
+msgid "Images"
+msgstr ""
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:7
+#: ../unity-scope-diodon/unity-scope-diodon.vala:101
+msgid "Category"
+msgstr ""
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:8
+msgid "Text;Files;Images"
+msgstr ""
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:9
+msgid "Last 24 hours;Last 7 days;Last 30 days;Last year;"
+msgstr ""
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:45
+#, fuzzy
+msgid "Search Clipboard"
+msgstr "クリップボード検索"
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:110
+#: ../unity-scope-diodon/unity-scope-diodon.vala:232
+msgid "Date copied"
+msgstr ""
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:112
+msgid "Last 24 hours"
+msgstr ""
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:113
+#: ../unity-scope-diodon/unity-scope-diodon.vala:114
+msgid "Last 7 days"
+msgstr ""
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:115
+msgid "Last 30 days"
+msgstr ""
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:116
+msgid "Last year"
+msgstr ""
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:217
 msgid "Paste"
 msgstr ""
 
-#: ../plugins/unityscope/unity-scope-plugin.vala:169
+#: ../unity-scope-diodon/unity-scope-diodon.vala:225
 msgid "Origin"
 msgstr ""
 
-#: ../plugins/unityscope/unityscope.plugin.in.h:1
-msgid "Unity Scope"
-msgstr ""
-
-#: ../plugins/unityscope/unityscope.plugin.in.h:2
-msgid "Access clipboard history with the unity dash."
-msgstr "Unity Dash からクリップボードの履歴にアクセスします。"
-
-#: ../plugins/unityscope/unityscope.plugin.in.h:3
-msgid "Copyright © 2013 Diodon Team"
-msgstr ""
+#~ msgid "Access clipboard history with the unity dash."
+#~ msgstr "Unity Dash からクリップボードの履歴にアクセスします。"
