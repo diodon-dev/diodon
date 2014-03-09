@@ -111,7 +111,6 @@ namespace Diodon
 
         date_copied.add_option("last-24-hours", _("Last 24 hours"));
         date_copied.add_option("last-7-days", _("Last 7 days"));
-        date_copied.add_option("last-7-days", _("Last 7 days"));
         date_copied.add_option("last-30-days", _("Last 30 days"));
         date_copied.add_option("last-year", _("Last year"));
 
