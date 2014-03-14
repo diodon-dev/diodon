@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-08 15:09+0300\n"
+"POT-Creation-Date: 2014-03-14 17:06+0300\n"
 "PO-Revision-Date: 2014-03-13 06:02+0000\n"
 "Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-03-13 06:23+0000\n"
 "X-Generator: Launchpad (build 16963)\n"
-"Language: fi\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -32,8 +32,9 @@ msgstr "Käytä leikepöytää (Ctrl+C)"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:3
+#, fuzzy
 msgid ""
-"Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
+"Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
 "Lisää leikepöydälle kopioidun tekstin (esim. Ctrl + C -yhdistelmällä) "
@@ -45,19 +46,36 @@ msgstr "Käytä ensisijaista valintaa"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
 #: ../data/preferences.ui.h:5
+#, fuzzy
 msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
-"mouse) to the clipboard history."
+"mouse) to the clipboard history. Enabling will start process which "
+"continually checks what is selected. This might discharge your battery "
+"quicker."
 msgstr ""
 "Lisää ensisijaisen valinnan (alue näytöltä, joka on hiirellä valittu) "
 "leikepöydän historiaan."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
-msgid "Synchronize clipboards"
-msgstr "Synkronoi leikepöydät"
+#, fuzzy
+msgid "Add images to clipboard history"
+msgstr "Leikepöydän historia"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
+msgid ""
+"Add images copied to clipboard to clipboard history (e.g. when you right "
+"click on an image in your browser and choose copy image). Enabling this "
+"option will increase memory consumption. Images already added to clipboard "
+"history will remain even when disabled."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
+msgid "Synchronize clipboards"
+msgstr "Synkronoi leikepöydät"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#: ../data/preferences.ui.h:11
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
 "mouse) and the clipboard so that anything in the selection is immediately "
@@ -65,11 +83,11 @@ msgid ""
 "the middle mouse button."
 msgstr ""
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Keep clipboard content"
 msgstr "Pidä leikepöydän sisältö"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 #: ../data/preferences.ui.h:9
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
@@ -78,12 +96,12 @@ msgstr ""
 "Estää tyhjän leikepöydän. Esimerkkitapaus: kun sovellus sulkeutuu, "
 "leikepöytä saattaisi yleensä tyhjentyä."
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 msgid "Automatically paste selected item"
 msgstr "Liitä valittu kohde automaattisesti"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
-#: ../data/preferences.ui.h:11
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#: ../data/preferences.ui.h:13
 msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
@@ -91,30 +109,29 @@ msgstr ""
 "Liitä valittu kohde automaattisesti sen sijaan, että kohde vain kopioidaan "
 "leikepöydälle."
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Number of recent clipboard items"
 msgstr ""
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 msgid "Number of recent clipboard items shown in clipboard menu."
 msgstr ""
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
-#: ../data/preferences.ui.h:16
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+#: ../data/preferences.ui.h:18
 msgid "History key"
 msgstr "Historianäppäin"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
-#: ../data/preferences.ui.h:15
-msgid ""
-"Hotkey to quickly allow you to access menu with recent clipboard items."
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+#: ../data/preferences.ui.h:17
+msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr ""
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 msgid "Active plugins"
 msgstr "Käytössä olevat liitännäiset"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 msgid "List of active plugins."
 msgstr "Luettelo käytössä olevista liitännäisistä."
 
@@ -131,35 +148,40 @@ msgid "Use _primary selection"
 msgstr "Käytä _ensisijaista valintaa"
 
 #: ../data/preferences.ui.h:6
-msgid "S_ynchronize clipboards"
-msgstr "S_ynkronoi leikepöydät"
+#, fuzzy
+msgid "Add _images to clipboard history"
+msgstr "Leikepöydän historia"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
 msgstr "_Säilytä leikepöydän sisältö"
 
 #: ../data/preferences.ui.h:10
+msgid "S_ynchronize clipboards"
+msgstr "S_ynkronoi leikepöydät"
+
+#: ../data/preferences.ui.h:12
 msgid "_Automatically paste selected item"
 msgstr "_Liitä valittu kohde automaattisesti"
 
-#: ../data/preferences.ui.h:12
+#: ../data/preferences.ui.h:14
 msgid "Number of recent clipboard items to be shown in clipboard menu."
 msgstr "Leikepöytävalikossa näytettävien kohteiden lukumäärä."
 
-#: ../data/preferences.ui.h:13
+#: ../data/preferences.ui.h:15
 msgid "Number of recent items"
 msgstr "Kohteiden lukumäärä"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:16
 #: ../unity-scope-diodon/unity-scope-diodon.vala:75
 msgid "Clipboard"
 msgstr "Leikepöytä"
 
-#: ../data/preferences.ui.h:17
+#: ../data/preferences.ui.h:19
 msgid "Hotkeys"
 msgstr "Pikanäppäimet"
 
-#: ../data/preferences.ui.h:18
+#: ../data/preferences.ui.h:20
 msgid "Plugins"
 msgstr "Liitännäiset"
 
@@ -230,7 +252,7 @@ msgid "Search Clipboard"
 msgstr "Etsi leikepöydältä"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:110
-#: ../unity-scope-diodon/unity-scope-diodon.vala:232
+#: ../unity-scope-diodon/unity-scope-diodon.vala:231
 msgid "Date copied"
 msgstr "Kopioimispäivä"
 
@@ -239,22 +261,21 @@ msgid "Last 24 hours"
 msgstr "Viimeiset 24 tuntia"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:113
-#: ../unity-scope-diodon/unity-scope-diodon.vala:114
 msgid "Last 7 days"
 msgstr "Viimeiset 7 päivää"
 
-#: ../unity-scope-diodon/unity-scope-diodon.vala:115
+#: ../unity-scope-diodon/unity-scope-diodon.vala:114
 msgid "Last 30 days"
 msgstr "Viimeiset 30 päivää"
 
-#: ../unity-scope-diodon/unity-scope-diodon.vala:116
+#: ../unity-scope-diodon/unity-scope-diodon.vala:115
 msgid "Last year"
 msgstr "Viime vuonna"
 
-#: ../unity-scope-diodon/unity-scope-diodon.vala:217
+#: ../unity-scope-diodon/unity-scope-diodon.vala:216
 msgid "Paste"
 msgstr "Liitä"
 
-#: ../unity-scope-diodon/unity-scope-diodon.vala:225
+#: ../unity-scope-diodon/unity-scope-diodon.vala:224
 msgid "Origin"
 msgstr "Alkuperä"

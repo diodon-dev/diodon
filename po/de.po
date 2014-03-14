@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Diodon 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-08 15:09+0300\n"
+"POT-Creation-Date: 2014-03-14 17:06+0300\n"
 "PO-Revision-Date: 2014-03-09 07:58+0000\n"
 "Last-Translator: Jasper Nalbach <jasper.nalbach@gmx.net>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-03-10 05:54+0000\n"
 "X-Generator: Launchpad (build 16948)\n"
-"Language: \n"
 "X-Poedit-Language: German\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -28,8 +28,9 @@ msgstr "Zwischenablage verwenden (Strg+C)"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:3
+#, fuzzy
 msgid ""
-"Adds the text which is copied to the clipboard with e.g. Ctrl + C to the "
+"Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
 "Den Text, welcher in die Zwischenablage kopiert wurde, einfügen z.B. Strg + "
@@ -41,19 +42,36 @@ msgstr "Primärauswahl benutzen"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
 #: ../data/preferences.ui.h:5
+#, fuzzy
 msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
-"mouse) to the clipboard history."
+"mouse) to the clipboard history. Enabling will start process which "
+"continually checks what is selected. This might discharge your battery "
+"quicker."
 msgstr ""
 "Eine Auswahl (einen mit der Maus ausgewählten Bereich des Bildschirms) zum "
 "Zwischenablage-Verlauf hinzufügen."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
-msgid "Synchronize clipboards"
-msgstr "Zwischenablagen abgleichen"
+#, fuzzy
+msgid "Add images to clipboard history"
+msgstr "Zwischenablagen-Chronik"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
+msgid ""
+"Add images copied to clipboard to clipboard history (e.g. when you right "
+"click on an image in your browser and choose copy image). Enabling this "
+"option will increase memory consumption. Images already added to clipboard "
+"history will remain even when disabled."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
+msgid "Synchronize clipboards"
+msgstr "Zwischenablagen abgleichen"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#: ../data/preferences.ui.h:11
 msgid ""
 "Synchronizes the selection (an area of the screen which is selected with the "
 "mouse) and the clipboard so that anything in the selection is immediately "
@@ -65,11 +83,11 @@ msgstr ""
 "verfügbar ist und andersherum z.B. zum Einfügen mit Strg + V oder mit der "
 "mittleren Maustaste."
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Keep clipboard content"
 msgstr "Leere Zwischenablage verhindern"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 #: ../data/preferences.ui.h:9
 msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
@@ -78,12 +96,12 @@ msgstr ""
 "Verhindert eine leere Zwischenablage. Beim Schließen eines Programms wird "
 "der Inhalt der Zwischenablage gewöhnlich gelöscht."
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 msgid "Automatically paste selected item"
 msgstr "Automatisches einfügen des ausgewählten Items"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
-#: ../data/preferences.ui.h:11
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#: ../data/preferences.ui.h:13
 msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
@@ -91,32 +109,31 @@ msgstr ""
 "Automatisches einfügen des ausgewählten Items anstatt dies in die "
 "Zwischenablage zu kopieren."
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Number of recent clipboard items"
 msgstr "Anzahl der aktuellen Einträge"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 msgid "Number of recent clipboard items shown in clipboard menu."
 msgstr "Anzahl der aktuellen Einträge, die im Menü angezeigt werden."
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
-#: ../data/preferences.ui.h:16
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+#: ../data/preferences.ui.h:18
 msgid "History key"
 msgstr "Verlauf-Tastenkombination"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
-#: ../data/preferences.ui.h:15
-msgid ""
-"Hotkey to quickly allow you to access menu with recent clipboard items."
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+#: ../data/preferences.ui.h:17
+msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr ""
 "Tastenkombination zum schnellen Zugriff auf aktuelle Einträge der "
 "Zwischenablage"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 msgid "Active plugins"
 msgstr "Aktive Plugins"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 msgid "List of active plugins."
 msgstr "Liste von aktiven Plugins"
 
@@ -133,35 +150,40 @@ msgid "Use _primary selection"
 msgstr "Nutze die Auswahl Zwischenablage"
 
 #: ../data/preferences.ui.h:6
-msgid "S_ynchronize clipboards"
-msgstr "Synchonisiere die Zwischenablagen"
+#, fuzzy
+msgid "Add _images to clipboard history"
+msgstr "Zwischenablagen-Chronik"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
 msgstr "Sichere den Inhalt der Zwischenablage"
 
 #: ../data/preferences.ui.h:10
+msgid "S_ynchronize clipboards"
+msgstr "Synchonisiere die Zwischenablagen"
+
+#: ../data/preferences.ui.h:12
 msgid "_Automatically paste selected item"
 msgstr "Automatisches einfügen des ausgewählten Items"
 
-#: ../data/preferences.ui.h:12
+#: ../data/preferences.ui.h:14
 msgid "Number of recent clipboard items to be shown in clipboard menu."
 msgstr "Anzahl der aktuellen Einträge, die im Menü angezeigt werden."
 
-#: ../data/preferences.ui.h:13
+#: ../data/preferences.ui.h:15
 msgid "Number of recent items"
 msgstr "Anzahl der aktuellen Einträge"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:16
 #: ../unity-scope-diodon/unity-scope-diodon.vala:75
 msgid "Clipboard"
 msgstr "Zwischenablage"
 
-#: ../data/preferences.ui.h:17
+#: ../data/preferences.ui.h:19
 msgid "Hotkeys"
 msgstr "Tastenkombinationen"
 
-#: ../data/preferences.ui.h:18
+#: ../data/preferences.ui.h:20
 msgid "Plugins"
 msgstr "Plugins"
 
@@ -235,7 +257,7 @@ msgid "Search Clipboard"
 msgstr ""
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:110
-#: ../unity-scope-diodon/unity-scope-diodon.vala:232
+#: ../unity-scope-diodon/unity-scope-diodon.vala:231
 msgid "Date copied"
 msgstr ""
 
@@ -244,22 +266,21 @@ msgid "Last 24 hours"
 msgstr ""
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:113
-#: ../unity-scope-diodon/unity-scope-diodon.vala:114
 msgid "Last 7 days"
 msgstr ""
 
-#: ../unity-scope-diodon/unity-scope-diodon.vala:115
+#: ../unity-scope-diodon/unity-scope-diodon.vala:114
 msgid "Last 30 days"
 msgstr ""
 
-#: ../unity-scope-diodon/unity-scope-diodon.vala:116
+#: ../unity-scope-diodon/unity-scope-diodon.vala:115
 msgid "Last year"
 msgstr ""
 
-#: ../unity-scope-diodon/unity-scope-diodon.vala:217
+#: ../unity-scope-diodon/unity-scope-diodon.vala:216
 msgid "Paste"
 msgstr "Einfügen"
 
-#: ../unity-scope-diodon/unity-scope-diodon.vala:225
+#: ../unity-scope-diodon/unity-scope-diodon.vala:224
 msgid "Origin"
 msgstr "Herkunft"
