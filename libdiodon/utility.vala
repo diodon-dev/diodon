@@ -127,6 +127,7 @@ namespace Diodon
                     if(prop_return != null) {
                         ulong pid = *((ulong*)prop_return);
                         debug("Copied by process with pid %lu", pid);
+                        X.free(prop_return);
                         return pid;
                     }
                 }
