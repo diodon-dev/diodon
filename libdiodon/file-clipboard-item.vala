@@ -55,7 +55,7 @@ namespace Diodon
             
             // check if all paths are available
             string[] paths = convert_to_paths(_paths);
-            foreach(string path in paths) {
+            foreach(unowned string path in paths) {
                 File file = File.new_for_path(path);
                 if(!file.query_exists()) {
                     throw new FileError.NOENT("No such file or directory " + path);
