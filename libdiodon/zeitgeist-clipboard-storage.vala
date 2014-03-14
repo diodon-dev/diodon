@@ -108,10 +108,12 @@ namespace Diodon
                 Array<uint32> events = new Array<uint32>();
                 events.append_vals(ids, ids.length);
                 yield log.delete_events(events, cancellable);
-                
+            } catch (IOError.CANCELLED ioe) {
+                debug("Remove item %s got cancelled, error: %s",
+                    item.get_checksum(), ioe.message);
             } catch(GLib.Error e) {
                 warning("Remove item %s not successful, error: %s",
-                    item.get_text(), e.message);
+                    item.get_checksum(), e.message);
             }
         }
         
@@ -160,7 +162,9 @@ namespace Diodon
                         break;
                     }
                 }
-                
+            } catch (IOError.CANCELLED ioe) {
+                debug("Get item by checksum '%s' got cancelled, error: %s",
+                    checksum, ioe.message);               
             } catch(GLib.Error e) {
                 warning("Get item by checksum not successful, error: %s",
                     e.message);
@@ -203,7 +207,9 @@ namespace Diodon
                         cancellable); 
                         
                     return create_clipboard_items(events);
-                    
+                } catch (IOError.CANCELLED ioe) {
+                    debug("Get items with search query '%s' got cancelled, error: %s",
+                        search_query, ioe.message);
                 } catch(GLib.Error e) {
                     warning("Get items by search query '%s' not successful, error: %s",
                         search_query, e.message);
@@ -247,7 +253,8 @@ namespace Diodon
                 );
                 
                 return create_clipboard_items(events);
-                
+            } catch (IOError.CANCELLED ioe) {
+                    debug("Get recent items got cancelled, error: %s", ioe.message); 
             } catch(GLib.Error e) {
                 warning("Get recent items not successful, error: %s",
                     e.message);
@@ -313,6 +320,8 @@ namespace Diodon
                 events.add(event);
                 
                 yield log.insert_events(events, cancellable);
+            } catch (IOError.CANCELLED ioe) {
+                debug("Add item got cancelled, error: %s", ioe.message); 
             } catch(GLib.Error e) {
                 warning("Add item %s not successful, error: %s",
                     item.get_text(), e.message);
@@ -366,7 +375,9 @@ namespace Diodon
                 Array<uint32> events = new Array<uint32>();
                 events.append_vals(ids, ids.length);
                 yield log.delete_events(events, cancellable);
-                
+             
+            } catch (IOError.CANCELLED ioe) {
+                debug("Clear items got cancelled, error: %s", ioe.message);   
             } catch(GLib.Error e) {
                 warning("Failed to clear items: %s", e.message);
             }
