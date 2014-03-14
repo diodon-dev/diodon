@@ -3,12 +3,17 @@
     <key name="use-clipboard" type="b">
       <default>true</default>
       <_summary>Use clipboard (Ctrl+C)</_summary>
-      <_description>Adds the text which is copied to the clipboard with e.g. Ctrl + C to the clipboard history.</_description>
+      <_description>Adds content which is copied to the clipboard with e.g. Ctrl + C to the clipboard history.</_description>
     </key>
     <key name="use-primary" type="b">
       <default>false</default>
       <_summary>Use primary selection</_summary>
       <_description>Adds the primary selection (an area of the screen which is selected with the mouse) to the clipboard history.</_description>
+    </key>
+    <key name="add-images" type="b">
+      <default>false</default>
+      <_summary>Add images to clipboard history</_summary>
+      <_description>Add images copied to clipboard to clipboard history (e.g. when you right click on an image in your browser and choose copy image). Enabling this option will increase memory consumption. Images already added to clipboard history will remain even when disabled.</_description>
     </key>
     <key name="synchronize-clipboards" type="b">
       <default>false</default>

@@ -33,6 +33,11 @@ namespace Diodon
          * flag whether primary selection is enabled
          */
         public bool use_primary { get; set; default = false; }
+        
+        /**
+         * flag whether images should be aded to clipboard history
+         */
+        public bool add_images { get; set; default = false; }
             
         /**
          * flag whether clipboard is enabled

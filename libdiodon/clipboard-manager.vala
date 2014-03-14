@@ -30,6 +30,7 @@ namespace Diodon
     {
         protected ClipboardType type;
         protected Gtk.Clipboard _clipboard = null;
+        protected ClipboardConfiguration _configuration;
         
         /**
          * Called when text from the clipboard has been received
@@ -73,9 +74,10 @@ namespace Diodon
          * Constructor
          *
          * @param clipboard clipboard to be managed
+         * @param configuration access to clipboard configuration
          * @param type of clipboard
          */
-        public ClipboardManager(ClipboardType type)
+        public ClipboardManager(ClipboardType type, ClipboardConfiguration configuration)
         {
             // TODO: might consider this block to be replaced with a HashMap
             if(type == ClipboardType.CLIPBOARD) {
@@ -85,6 +87,7 @@ namespace Diodon
             }
             
             this.type = type;
+            this._configuration = configuration;
         }
         
         /**
@@ -139,7 +142,7 @@ namespace Diodon
             // false even when some text is available
             string? text = request_text();
             bool text_available = (text != null && text != "") || _clipboard.wait_is_text_available();
-            bool image_available = _clipboard.wait_is_image_available();
+            bool image_available = _configuration.add_images && _clipboard.wait_is_image_available();
             bool uris_available = _clipboard.wait_is_uris_available();
             
             // checking if any content known is available

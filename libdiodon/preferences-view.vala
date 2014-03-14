@@ -62,6 +62,13 @@ namespace Diodon
                         configuration.use_primary = !configuration.use_primary;
                     } );
                     
+                    // add images
+                    Gtk.ToggleButton add_images = builder.get_object("checkbutton_add_images") as Gtk.ToggleButton;
+                    add_images.active = configuration.add_images;
+                    add_images.toggled.connect(() => {
+                        configuration.add_images = !configuration.add_images;
+                    } );
+                    
                     // synchronize_clipboards
                     Gtk.ToggleButton synchronize_clipboards = 
                         builder.get_object("checkbutton_synchronize_clipboards") as Gtk.ToggleButton;

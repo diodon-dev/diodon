@@ -62,7 +62,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="tooltip_text" translatable="yes">Adds the text which is copied to the clipboard with e.g. Ctrl + C to the clipboard history.</property>
+                    <property name="tooltip_text" translatable="yes">Adds content which is copied to the clipboard with e.g. Ctrl + C to the clipboard history.</property>
                     <property name="use_underline">True</property>
                     <property name="xalign">0.5</property>
                     <property name="draw_indicator">True</property>
@@ -91,12 +91,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="checkbutton_synchronize_clipboards">
-                    <property name="label" translatable="yes">S_ynchronize clipboards</property>
+                  <object class="GtkCheckButton" id="checkbutton_add_images">
+                    <property name="label" translatable="yes">Add _images to clipboard history</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="tooltip_text" translatable="yes">Synchronizes the selection (an area of the screen which is selected with the mouse) and the clipboard so that anything in the selection is immediately available in the clipboard and vice versa e.g. for pasting with Ctrl + V and the middle mouse button.</property>
+                    <property name="tooltip_text" translatable="yes">Add images copied to clipboard to clipboard history (e.g. when you right click on an image in your browser and choose copy image). Enabling this option will increase memory consumption. Images already added to clipboard history will remain even when disabled.</property>
                     <property name="use_underline">True</property>
                     <property name="xalign">0.5</property>
                     <property name="draw_indicator">True</property>
@@ -125,6 +125,23 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkCheckButton" id="checkbutton_synchronize_clipboards">
+                    <property name="label" translatable="yes">S_ynchronize clipboards</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="tooltip_text" translatable="yes">Synchronizes the selection (an area of the screen which is selected with the mouse) and the clipboard so that anything in the selection is immediately available in the clipboard and vice versa e.g. for pasting with Ctrl + V and the middle mouse button.</property>
+                    <property name="use_underline">True</property>
+                    <property name="xalign">0.5</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkCheckButton" id="checkbutton_instant_paste">
                     <property name="label" translatable="yes">_Automatically paste selected item</property>
                     <property name="visible">True</property>
@@ -138,7 +155,7 @@
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">4</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
                 <child>
@@ -178,7 +195,7 @@
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">5</property>
+                    <property name="position">6</property>
                   </packing>
                 </child>
               </object>

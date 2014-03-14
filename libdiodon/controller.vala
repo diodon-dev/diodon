@@ -70,9 +70,6 @@ namespace Diodon
             string diodon_dir = Utility.get_user_data_dir();
             clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
             
-            clipboard_managers.set(ClipboardType.CLIPBOARD, new ClipboardManager(ClipboardType.CLIPBOARD));
-            clipboard_managers.set(ClipboardType.PRIMARY, new PrimaryClipboardManager());
-            
             keybinding_manager = new KeybindingManager();
             
             settings_clipboard = new Settings("net.launchpad.Diodon.clipboard");
@@ -87,7 +84,10 @@ namespace Diodon
             
             storage = new ZeitgeistClipboardStorage();
             
-            configuration = new ClipboardConfiguration();   
+            configuration = new ClipboardConfiguration(); 
+            
+            clipboard_managers.set(ClipboardType.CLIPBOARD, new ClipboardManager(ClipboardType.CLIPBOARD, configuration));
+            clipboard_managers.set(ClipboardType.PRIMARY, new PrimaryClipboardManager(configuration));  
             
             preferences_view = new PreferencesView();                  
         }

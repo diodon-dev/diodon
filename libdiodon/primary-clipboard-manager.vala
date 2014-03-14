@@ -35,9 +35,9 @@ namespace Diodon
          * Type is alwawys ClipboardType.PRIMARY for this specific primary
          * selection manager.
          */
-        public PrimaryClipboardManager()
+        public PrimaryClipboardManager(ClipboardConfiguration configuration)
         {
-            base(ClipboardType.PRIMARY);
+            base(ClipboardType.PRIMARY, configuration);
         }
         
         /**
