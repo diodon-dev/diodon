@@ -11,12 +11,12 @@ msgstr ""
 "PO-Revision-Date: 2011-05-12 14:07+0000\n"
 "Last-Translator: kamannen <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
-"Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-09 05:49+0000\n"
-"X-Generator: Launchpad (build 16948)\n"
+"X-Launchpad-Export-Date: 2014-03-15 07:08+0000\n"
+"X-Generator: Launchpad (build 16963)\n"
+"Language: nb\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -32,13 +32,10 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
 #: ../data/preferences.ui.h:3
-#, fuzzy
 msgid ""
 "Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
-"Legger til teksten som er kopiert til utklippstavlen med f.eks Ctrl + C til "
-"utklippstavlens historie."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
@@ -46,15 +43,12 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
 #: ../data/preferences.ui.h:5
-#, fuzzy
 msgid ""
 "Adds the primary selection (an area of the screen which is selected with the "
 "mouse) to the clipboard history. Enabling will start process which "
 "continually checks what is selected. This might discharge your battery "
 "quicker."
 msgstr ""
-"Legger til hovedseksjonen (et område på skjermen som er valgt med musen) i "
-"utklippstavlens historie."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Add images to clipboard history"
@@ -125,7 +119,8 @@ msgstr "Historietast"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 #: ../data/preferences.ui.h:17
-msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
+msgid ""
+"Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
