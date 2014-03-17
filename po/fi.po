@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-14 17:06+0300\n"
-"PO-Revision-Date: 2014-03-13 06:02+0000\n"
+"PO-Revision-Date: 2014-03-15 14:43+0000\n"
 "Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-15 07:08+0000\n"
+"X-Launchpad-Export-Date: 2014-03-16 05:51+0000\n"
 "X-Generator: Launchpad (build 16963)\n"
 "Language: fi\n"
 
@@ -143,7 +143,7 @@ msgstr "Käytä _ensisijaista valintaa"
 
 #: ../data/preferences.ui.h:6
 msgid "Add _images to clipboard history"
-msgstr ""
+msgstr "Lisää ku_vat leikepöydän historiaan"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
