@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-14 17:06+0300\n"
-"PO-Revision-Date: 2014-03-11 10:38+0000\n"
+"PO-Revision-Date: 2014-03-18 12:12+0000\n"
 "Last-Translator: rob <linuxned@gmail.com>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-15 07:08+0000\n"
+"X-Launchpad-Export-Date: 2014-03-19 06:15+0000\n"
 "X-Generator: Launchpad (build 16963)\n"
 "Language: nl\n"
 
@@ -36,6 +36,8 @@ msgid ""
 "Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
+"Voegt items die gekopieerd zijn naar het klembord met bijvoorbeeld Ctrl + C, "
+"toe aan de klembordgeschiedenis."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
@@ -49,10 +51,14 @@ msgid ""
 "continually checks what is selected. This might discharge your battery "
 "quicker."
 msgstr ""
+"Voegt de primaire selectie (een gebied van het scherm dat geselecteerd is "
+"met de muis) toe aan de klembordgeschiedenis. Wanneer u dit inschakelt zal "
+"er een proces gestart worden dat voortdurend controleert wat er geselecteerd "
+"is. Hierdoor kan uw accu mogelijk sneller leeg raken."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Add images to clipboard history"
-msgstr ""
+msgstr "Afbeeldingen toevoegen aan de klembordgeschiedenis"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
@@ -147,7 +153,7 @@ msgstr "_Primaire selectie gebruiken"
 
 #: ../data/preferences.ui.h:6
 msgid "Add _images to clipboard history"
-msgstr ""
+msgstr "Afbeeld_ingen toevoegen aan klembordgeschiedenis"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
