@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-14 17:06+0300\n"
-"PO-Revision-Date: 2014-03-09 07:57+0000\n"
+"PO-Revision-Date: 2014-03-21 00:52+0000\n"
 "Last-Translator: ub <xenolith0bytetestcomgreen@gmail.com>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-15 07:08+0000\n"
-"X-Generator: Launchpad (build 16963)\n"
+"X-Launchpad-Export-Date: 2014-03-21 06:35+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 "Language: ja\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -35,7 +35,7 @@ msgstr "クリップボードを使用 (Ctrl+C)"
 msgid ""
 "Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
-msgstr ""
+msgstr "Ctrl + C でクリップボードにコピーした内容をクリップボード履歴に追加。"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
@@ -52,7 +52,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Add images to clipboard history"
-msgstr ""
+msgstr "クリップボード履歴に画像を追加"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
@@ -62,6 +62,8 @@ msgid ""
 "option will increase memory consumption. Images already added to clipboard "
 "history will remain even when disabled."
 msgstr ""
+"クリップボードにコピーした画像をクリップボード履歴に追加します(ブラウザで画像を右クリックしてコピーを選択したとき)。このオプションを有効にするとメモリ消"
+"費が多くなります。クリップボード履歴に追加した画像はこの機能を無効にしても残ります。"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Synchronize clipboards"
@@ -100,11 +102,11 @@ msgstr "選択したアイテムをクリップボードに送らず自動的に
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Number of recent clipboard items"
-msgstr ""
+msgstr "最近のクリップボードアイテムの数"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 msgid "Number of recent clipboard items shown in clipboard menu."
-msgstr ""
+msgstr "クリップボードメニューで表示される最近のクリップボードアイテムの数。"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 #: ../data/preferences.ui.h:18
@@ -139,7 +141,7 @@ msgstr "選択を使用(_P)"
 
 #: ../data/preferences.ui.h:6
 msgid "Add _images to clipboard history"
-msgstr ""
+msgstr "クリップボード履歴に画像を追加_(I)"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
@@ -155,7 +157,7 @@ msgstr "選択したアイテムを自動ペースト(_A)"
 
 #: ../data/preferences.ui.h:14
 msgid "Number of recent clipboard items to be shown in clipboard menu."
-msgstr ""
+msgstr "クリップボードメニューで表示される最近のクリップボードアイテムの数。"
 
 #: ../data/preferences.ui.h:15
 msgid "Number of recent items"
