@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-14 17:06+0300\n"
-"PO-Revision-Date: 2014-03-25 20:42+0200\n"
-"Last-Translator: Recep Chakan <gecegezen@mail.ru>\n"
+"PO-Revision-Date: 2014-03-27 08:54+0000\n"
+"Last-Translator: gecegezen <Unknown>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-19 22:56+0000\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Launchpad-Export-Date: 2014-03-28 06:03+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 "X-Language: tr_TR\n"
 "X-Source-Language: en\n"
 
@@ -123,7 +123,8 @@ msgstr "Geçmiş Kısayollu"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 #: ../data/preferences.ui.h:17
-msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
+msgid ""
+"Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr "Kısayol kolayca pano geçmişine ulaşmanızı yardımcı olur."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
