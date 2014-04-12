@@ -12,7 +12,7 @@ NAME = 'Diodon'
 VERSION = '1.1.0'
 APPNAME = 'diodon'
 WEBSITE = 'https://launchpad.net/diodon'
-COPYRIGHT = 'Copyright \xc2\xa9 2010-2013 Diodon Team'
+COPYRIGHT = 'Copyright \xc2\xa9 2010-2014 Diodon Team'
 BUSNAME = 'net.launchpad.Diodon'
 BUSOBJECTPATH = '/net/launchpad/diodon'
 
