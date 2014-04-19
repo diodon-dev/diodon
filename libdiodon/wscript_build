@@ -24,5 +24,5 @@ lib_typelib = bld.new_task_gen(
   source = 'Diodon-1.0.gir',
   target = 'Diodon-1.0.typelib',
   install_path = '${LIBDIR}/girepository-1.0',
-  rule='g-ir-compiler ${SRC} -o ${TGT}')
+  rule='g-ir-compiler --shared-library=libdiodon -o ${TGT} ${SRC}')
 
