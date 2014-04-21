@@ -55,6 +55,27 @@ namespace Diodon
         public DiodonApplication()
         {
             Object(application_id: Config.BUSNAME, flags: ApplicationFlags.FLAGS_NONE);
+            
+            // add supported actions
+            SimpleAction paste_action = new SimpleAction("paste-action", VariantType.STRING);
+            paste_action.activate.connect(activate_paste_action);
+            add_action(paste_action);
+        }
+        
+        public void activate_paste_action(GLib.Variant? parameter)
+        {
+            hold();
+            
+            debug("paste-action before safe checks. Is remote: %s Controller: %s Param: %s",
+                is_remote.to_string(), (controller != null).to_string(), (parameter != null).to_string());
+                
+            if(parameter != null && controller != null) {
+                string checksum = parameter.get_string();
+                debug("Execute paste-action with checksum %s", checksum);
+                controller.select_item_by_checksum.begin(checksum);
+            }
+            
+            release();
         }
         
         public override void activate()
@@ -73,22 +94,6 @@ namespace Diodon
             }
         }
         
-        public void activate_action(string action_name, GLib.Variant? parameter)
-        {
-            switch(action_name) {
-                case "paste-action":
-                    if(parameter != null && controller != null) {
-                        string checksum = parameter.get_string();
-                        debug("Execute paste-action with checksum %s", checksum);
-                        controller.select_item_by_checksum.begin(checksum);
-                    }
-                    break;
-                default:
-                    warning("Unknown action %s", action_name);
-                    break;
-            }
-        }
-
         public static int main(string[] args)
         {
             try {
@@ -129,8 +134,10 @@ namespace Diodon
                 }
                 
                 DiodonApplication app = new DiodonApplication();
-                app.add_action(new SimpleAction("paste-action", VariantType.STRING));
+                
                 if(checksum != null) {
+                    debug("activate paste-action with checksum %s", checksum);
+                    app.register();
                     app.activate_action("paste-action", new Variant.string(checksum));
                     return 0;
                 }
@@ -138,8 +145,11 @@ namespace Diodon
                 return app.run(args);
             } catch(OptionError e) {
                 stdout.printf("Option parsing failed: %s\n", e.message);
-                return 1;
+            } catch(Error e) {
+                stdout.printf("Unexpected error occured: %s\n", e.message);
             }
+            
+            return 1;
         }
     }
 }
