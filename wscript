@@ -135,14 +135,11 @@ def build(ctx):
 
 def setup_tests(ctx):
     ctx.dbus = DBusPrivateMessageBus()
-    error = ctx.dbus.run(ignore_errors=True)
-    if error:
-        error = "Failed to setup private bus, error was %s" %error
-        raise RuntimeError(error)
-    else:
-        Logs.info("Testsuite is running using a private dbus bus")
-        config = ctx.dbus.dbus_config.copy()
-        config.update({"DISPLAY": ctx.dbus.DISPLAY, "pid.Xvfb": ctx.dbus.display.pid})
+    error = ctx.dbus.run()
+
+    Logs.info("Testsuite is running using a private dbus bus")
+    config = ctx.dbus.dbus_config.copy()
+    config.update({"DISPLAY": ctx.dbus.DISPLAY, "pid.Xvfb": ctx.dbus.display.pid})
         
     ctx.zeitgeist_process = start_zeitgeist_daemon()
     
