@@ -66,9 +66,6 @@ namespace Diodon
         {
             hold();
             
-            debug("paste-action before safe checks. Is remote: %s Controller: %s Param: %s",
-                is_remote.to_string(), (controller != null).to_string(), (parameter != null).to_string());
-                
             if(parameter != null && controller != null) {
                 string checksum = parameter.get_string();
                 debug("Execute paste-action with checksum %s", checksum);
