@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-14 17:06+0300\n"
-"PO-Revision-Date: 2014-03-09 22:21+0000\n"
+"PO-Revision-Date: 2014-04-22 06:04+0000\n"
 "Last-Translator: Marian Vasile <marianvasile1972@gmail.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-15 07:08+0000\n"
-"X-Generator: Launchpad (build 16963)\n"
+"X-Launchpad-Export-Date: 2014-04-23 06:05+0000\n"
+"X-Generator: Launchpad (build 16985)\n"
 "Language: ro\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -36,6 +36,8 @@ msgid ""
 "Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
+"Adaugă conținutul care este copiat în clipboard cu de ex. Ctrl + C la "
+"istoricul acțiunilor."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
@@ -49,10 +51,14 @@ msgid ""
 "continually checks what is selected. This might discharge your battery "
 "quicker."
 msgstr ""
+"Adaugă selecția primară (o zonă a ecranului care este selectată cu mouse-ul) "
+"la istoricul clipboard-ului. La activare se va porni un proces care verifică "
+"continuu dacă există ceva selectat. Din această cauză este posibil ca "
+"bateria să se descarce mai repede."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Add images to clipboard history"
-msgstr ""
+msgstr "Adaugă imagini la istoricul clipboard-ului."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
@@ -62,6 +68,11 @@ msgid ""
 "option will increase memory consumption. Images already added to clipboard "
 "history will remain even when disabled."
 msgstr ""
+"Adaugă imaginile copiate în clipboard la istoricul acțiunilor (de ex. la "
+"efectuarea unui clic dreapta pe o imagine în navigatorul de Internet urmată "
+"de selectarea opțiunii copiere imagine). La activarea acestei opțiuni crește "
+"consumul de memorie. Imaginile adăugate la istoricul acțiunilor vor rămâne "
+"și după dezactivarea funcției."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Synchronize clipboards"
@@ -148,7 +159,7 @@ msgstr "Utilizează selecția _primară"
 
 #: ../data/preferences.ui.h:6
 msgid "Add _images to clipboard history"
-msgstr ""
+msgstr "Adaugă _imagini la istoricul clipboard-ului"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
