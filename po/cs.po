@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-14 17:06+0300\n"
-"PO-Revision-Date: 2013-12-29 00:09+0000\n"
-"Last-Translator: Oliver Sauder <os@esite.ch>\n"
+"PO-Revision-Date: 2014-05-04 19:57+0000\n"
+"Last-Translator: Vojta Staněk <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-15 07:08+0000\n"
-"X-Generator: Launchpad (build 16963)\n"
+"X-Launchpad-Export-Date: 2014-05-05 05:44+0000\n"
+"X-Generator: Launchpad (build 16985)\n"
 "Language: cs\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -36,6 +36,8 @@ msgid ""
 "Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
+"Přidává obsah, který je zkopírovaný do schránky pomocí např. Ctrl + C, do "
+"historie schránky"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
@@ -52,7 +54,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Add images to clipboard history"
-msgstr ""
+msgstr "Přidává obrázky do historie schránky"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
@@ -106,11 +108,11 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Number of recent clipboard items"
-msgstr ""
+msgstr "Počet posledních zkopírovaných položek"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 msgid "Number of recent clipboard items shown in clipboard menu."
-msgstr ""
+msgstr "Počet posledních zkopírovaných položek zobrazený v menu schránky."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 #: ../data/preferences.ui.h:18
@@ -161,11 +163,11 @@ msgstr "_Automaticky vložit vybranou položku"
 
 #: ../data/preferences.ui.h:14
 msgid "Number of recent clipboard items to be shown in clipboard menu."
-msgstr ""
+msgstr "Počet posledních zkopírovaných položek k zobrazení v menu schránky."
 
 #: ../data/preferences.ui.h:15
 msgid "Number of recent items"
-msgstr ""
+msgstr "Počet posledních položek"
 
 #: ../data/preferences.ui.h:16
 #: ../unity-scope-diodon/unity-scope-diodon.vala:75
@@ -186,11 +188,11 @@ msgstr "<Prázdná>"
 
 #: ../plugins/indicator/indicator.plugin.in.h:1
 msgid "Application Indicator"
-msgstr ""
+msgstr "Indikátor aplikace"
 
 #: ../plugins/indicator/indicator.plugin.in.h:2
 msgid "Access clipboard history with an application indicator."
-msgstr ""
+msgstr "Přistupujte k historii schránky přes indikátor aplikací."
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
 msgid "Copyright © 2011 Diodon Team"
@@ -198,7 +200,7 @@ msgstr ""
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:1
 msgid "Clipboard History"
-msgstr ""
+msgstr "Historie schránky"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:2
 msgid ""
@@ -208,30 +210,30 @@ msgstr ""
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:3
 msgid "Search clipboard"
-msgstr ""
+msgstr "Hledat ve schránce"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:4
 #: ../unity-scope-diodon/unity-scope-diodon.vala:79
 #: ../unity-scope-diodon/unity-scope-diodon.vala:104
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:5
 #: ../unity-scope-diodon/unity-scope-diodon.vala:84
 #: ../unity-scope-diodon/unity-scope-diodon.vala:105
 msgid "Files"
-msgstr ""
+msgstr "Soubory"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:6
 #: ../unity-scope-diodon/unity-scope-diodon.vala:89
 #: ../unity-scope-diodon/unity-scope-diodon.vala:106
 msgid "Images"
-msgstr ""
+msgstr "Obrázky"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:7
 #: ../unity-scope-diodon/unity-scope-diodon.vala:101
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:8
 msgid "Text;Files;Images"
