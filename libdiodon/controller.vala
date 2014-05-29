@@ -452,7 +452,7 @@ namespace Diodon
         /**
          * Create clipboard menu with current recent items.
          */
-        private async void rebuild_recent_menu()
+        public async void rebuild_recent_menu()
         {
             Gee.List<IClipboardItem> items = yield get_recent_items();
             
