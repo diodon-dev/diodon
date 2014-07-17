@@ -1,0 +1,289 @@
+# Hungarian translation for diodon
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the diodon package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: diodon\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2014-03-14 17:06+0300\n"
+"PO-Revision-Date: 2014-07-16 22:54+0000\n"
+"Last-Translator: mktiti <markuskrisztian1@gmail.com>\n"
+"Language-Team: Hungarian <hu@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-07-17 06:09+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
+
+#: ../data/diodon.desktop.in.h:1
+msgid "Clipboard Manager"
+msgstr "Vágólapkezelő"
+
+#: ../data/diodon.desktop.in.h:2
+msgid "GTK+ Clipboard Manager"
+msgstr "GTK+ Vágólapkezelő"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
+msgid "Use clipboard (Ctrl+C)"
+msgstr "Vágólap használata (Ctrl+C)"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:2
+#: ../data/preferences.ui.h:3
+msgid ""
+"Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
+"clipboard history."
+msgstr ""
+"A vágólap előzményekhez adja a vágólapra (például Ctrl+C-vel) másolt "
+"tartalmat."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
+msgid "Use primary selection"
+msgstr "Elsődleges kijelölés használata"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
+#: ../data/preferences.ui.h:5
+msgid ""
+"Adds the primary selection (an area of the screen which is selected with the "
+"mouse) to the clipboard history. Enabling will start process which "
+"continually checks what is selected. This might discharge your battery "
+"quicker."
+msgstr ""
+"Hozzáadja az elsődleges kijelölés tartalmát (a kijelző egérrel kijelölt "
+"részét) a vágólap előzményekhez. Engedélyezése olyan folyamatot fog "
+"elindítani, ami folyamatosan figyeli, hogy mi van kijelölve. Ez könnyebben "
+"lemerítheti az akkumulátort."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
+msgid "Add images to clipboard history"
+msgstr "Képek hozzáadása a vágólap előzményekhez"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
+#: ../data/preferences.ui.h:7
+msgid ""
+"Add images copied to clipboard to clipboard history (e.g. when you right "
+"click on an image in your browser and choose copy image). Enabling this "
+"option will increase memory consumption. Images already added to clipboard "
+"history will remain even when disabled."
+msgstr ""
+"Hozzáadja a vágólapra másolt képeket a vágólap előzményekhez (például amikor "
+"jobb egérgombbal kattint egy képre a böngészőjében és a \"kép másolásá\"-t "
+"választja). Ezen opció engedélyezése megnöveli a memóriahasználatot. A már a "
+"vágólap előzményekhez adott képek letiltása után is ott maradnak."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
+msgid "Synchronize clipboards"
+msgstr "Vágólapok szinkronizálása"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
+#: ../data/preferences.ui.h:11
+msgid ""
+"Synchronizes the selection (an area of the screen which is selected with the "
+"mouse) and the clipboard so that anything in the selection is immediately "
+"available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
+"the middle mouse button."
+msgstr ""
+"Szinkronizálja a kijelölést (a kijelző egérrel kijelölt részét) és a "
+"vágólapot, így a kijelölésből bármi azonnal elérhető a vágólapon és "
+"fordítva, például Ctrl+V-vel vagy a középső egérgombbal való beszúrásra."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
+msgid "Keep clipboard content"
+msgstr "A vágólap tartalmának megtartása"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
+#: ../data/preferences.ui.h:9
+msgid ""
+"Prevents an empty clipboard. For instance when an application exits, the "
+"clipboard would usually be emptied."
+msgstr ""
+"Megakadályozza, hogy a vágólap kiürüljön. Például amikor egy alkalmazás "
+"bezárul, a vágólap tartalma általában kitörlődne."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
+msgid "Automatically paste selected item"
+msgstr "A kiválasztott elem automatikus beillesztése"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
+#: ../data/preferences.ui.h:13
+msgid ""
+"Automatically paste selected item instead of just copying it to the "
+"clipboard."
+msgstr ""
+"A kiválasztott elem automatikus beillesztése az egyszerű vágólapra való "
+"másolás helyett."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
+msgid "Number of recent clipboard items"
+msgstr "A vágólapon lévő friss elemek száma"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
+msgid "Number of recent clipboard items shown in clipboard menu."
+msgstr "A vágólapon lévő, vágólap menüben megjelenő friss elemek száma"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+#: ../data/preferences.ui.h:18
+msgid "History key"
+msgstr "Előzmények billentyűkód"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+#: ../data/preferences.ui.h:17
+msgid ""
+"Hotkey to quickly allow you to access menu with recent clipboard items."
+msgstr ""
+"Gyorsbillentyű, melynek segítségével gyorsan elérheti a friss vágólapi "
+"elemeket tartalmazó menüt."
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
+msgid "Active plugins"
+msgstr "Aktív bővítmények"
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
+msgid "List of active plugins."
+msgstr "Az aktív bővítmények listája"
+
+#: ../data/preferences.ui.h:1
+msgid "Diodon Preferences"
+msgstr "Diodon Beállítások"
+
+#: ../data/preferences.ui.h:2
+msgid "_Use clipboard (Ctrl+C)"
+msgstr "Vágólap _használata (Ctrl+C)"
+
+#: ../data/preferences.ui.h:4
+msgid "Use _primary selection"
+msgstr "_Elsődleges kijelölés használata"
+
+#: ../data/preferences.ui.h:6
+msgid "Add _images to clipboard history"
+msgstr "_Képek hozzáadása a vágólap előzményekhez"
+
+#: ../data/preferences.ui.h:8
+msgid "_Keep clipboard content"
+msgstr "Vágólap tartalom _megtartása"
+
+#: ../data/preferences.ui.h:10
+msgid "S_ynchronize clipboards"
+msgstr "Vágólapok _szinkronizálása"
+
+#: ../data/preferences.ui.h:12
+msgid "_Automatically paste selected item"
+msgstr "A kijelölt elemek _automatikus beillesztése"
+
+#: ../data/preferences.ui.h:14
+msgid "Number of recent clipboard items to be shown in clipboard menu."
+msgstr "A vágólap menüben megjelenítendő friss vágólapi elemek száma."
+
+#: ../data/preferences.ui.h:15
+msgid "Number of recent items"
+msgstr "Friss elemek száma"
+
+#: ../data/preferences.ui.h:16
+#: ../unity-scope-diodon/unity-scope-diodon.vala:75
+msgid "Clipboard"
+msgstr "Vágólap"
+
+#: ../data/preferences.ui.h:19
+msgid "Hotkeys"
+msgstr "Gyorsbillentyűk"
+
+#: ../data/preferences.ui.h:20
+msgid "Plugins"
+msgstr "Bővítmények"
+
+#: ../libdiodon/clipboard-menu.vala:36
+msgid "<Empty>"
+msgstr "<Üres>"
+
+#: ../plugins/indicator/indicator.plugin.in.h:1
+msgid "Application Indicator"
+msgstr "Alkalmazás Indikátor"
+
+#: ../plugins/indicator/indicator.plugin.in.h:2
+msgid "Access clipboard history with an application indicator."
+msgstr "Vágólap előzmények elérése alkalmazás indikátorral."
+
+#: ../plugins/indicator/indicator.plugin.in.h:3
+msgid "Copyright © 2011 Diodon Team"
+msgstr "Copyright @ 2011 Diodon Team"
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:1
+msgid "Clipboard History"
+msgstr "Vágólap Előzmények"
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:2
+msgid ""
+"This is an Ubuntu search plugin that enables information from Diodon to be "
+"searched and displayed in the Dash underneath the Clipboard header."
+msgstr ""
+"Ez egy Ubuntu kereső bővítmény, amivel a Diodonból származó információk "
+"kereshetők és megjeleníthetők a Dashben, a Vágólap fejléc alatt."
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:3
+msgid "Search clipboard"
+msgstr "Keresés a vágólapon"
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:4
+#: ../unity-scope-diodon/unity-scope-diodon.vala:79
+#: ../unity-scope-diodon/unity-scope-diodon.vala:104
+msgid "Text"
+msgstr "Szöveg"
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:5
+#: ../unity-scope-diodon/unity-scope-diodon.vala:84
+#: ../unity-scope-diodon/unity-scope-diodon.vala:105
+msgid "Files"
+msgstr "Fájlok"
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:6
+#: ../unity-scope-diodon/unity-scope-diodon.vala:89
+#: ../unity-scope-diodon/unity-scope-diodon.vala:106
+msgid "Images"
+msgstr "Képek"
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:7
+#: ../unity-scope-diodon/unity-scope-diodon.vala:101
+msgid "Category"
+msgstr "Kategória"
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:8
+msgid "Text;Files;Images"
+msgstr "Szöveg;Fájlok;Képek"
+
+#: ../unity-scope-diodon/clipboard.scope.in.in.h:9
+msgid "Last 24 hours;Last 7 days;Last 30 days;Last year;"
+msgstr "Elmúlt 24 óra;Elmúlt 7 nap;Elmúlt 30 nap;Elmúlt év;"
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:45
+msgid "Search Clipboard"
+msgstr "Keresés a Vágólapon"
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:110
+#: ../unity-scope-diodon/unity-scope-diodon.vala:231
+msgid "Date copied"
+msgstr "A másolás dátuma"
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:112
+msgid "Last 24 hours"
+msgstr "Elmúlt 24 óra"
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:113
+msgid "Last 7 days"
+msgstr "Elmúlt 7 nap"
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:114
+msgid "Last 30 days"
+msgstr "Elmúlt 30 nap"
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:115
+msgid "Last year"
+msgstr "Tavaly"
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:216
+msgid "Paste"
+msgstr "Beillesztés"
+
+#: ../unity-scope-diodon/unity-scope-diodon.vala:224
+msgid "Origin"
+msgstr "Származás"
