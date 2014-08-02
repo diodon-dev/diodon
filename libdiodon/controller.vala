@@ -39,6 +39,7 @@ namespace Diodon
         private Peas.ExtensionSet extension_set;
         private Peas.Engine peas_engine;
         private ClipboardMenu recent_menu = null;
+        private Gee.List<Gtk.MenuItem> static_recent_menu_items;
         
         /**
          * Called when a item has been selected.
@@ -460,8 +461,42 @@ namespace Diodon
                 recent_menu.destroy_menu();
             }
             
-            recent_menu = new ClipboardMenu(this, items);
+            recent_menu = new ClipboardMenu(this, items, static_recent_menu_items);
             on_recent_menu_changed(recent_menu);
+        }
+        
+        /**
+         * Add a static recent menu item which will always be shown below separator
+         * even after recent menu has been rebuilt.
+         *
+         * @param menu_item menu item to be added
+         */
+        public async void add_static_recent_menu_item(Gtk.MenuItem menu_item)
+        {
+            if(static_recent_menu_items == null) {
+                static_recent_menu_items = new Gee.ArrayList<Gtk.MenuItem>();
+            }
+            
+            static_recent_menu_items.add(menu_item);
+            yield rebuild_recent_menu();
+        }
+        
+        /**
+         * Remove static recent menu item so it won't appear on the recent menu 
+         * anymore. This method doesn't dispose the menu item - caller
+         * needs to take care of this in case menu item should be destroyed.
+         *
+         * @param menu_item item to be removed
+         */
+        public async void remove_static_recent_menu_item(Gtk.MenuItem menu_item)
+        {
+            if(static_recent_menu_items == null) {
+                warning("Remove recent menu item has been called but no registered static recent menu items are available");
+                return;
+            }
+            
+            static_recent_menu_items.remove(menu_item);
+            yield rebuild_recent_menu();
         }
 
         /**

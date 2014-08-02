@@ -27,10 +27,19 @@ namespace Diodon
     class ClipboardMenu : Gtk.Menu
     {
         private Controller controller;
+        private Gee.List<Gtk.Widget> static_menu_items;
         
-        public ClipboardMenu(Controller controller, Gee.List<IClipboardItem> items)
+        /**
+         * Create clipboard menu
+         *
+         * @param controller reference to controller
+         * @param items clipboard items to be shown
+         * @param menu_items additional menu items to be added after separator
+         */
+        public ClipboardMenu(Controller controller, Gee.List<IClipboardItem> items, Gee.List<Gtk.MenuItem> static_menu_items)
         {
             this.controller = controller;
+            this.static_menu_items = static_menu_items;
             
             if(items.size <= 0) {
                 Gtk.MenuItem empty_item = new Gtk.MenuItem.with_label(_("<Empty>"));
@@ -44,6 +53,12 @@ namespace Diodon
             
             Gtk.SeparatorMenuItem sep_item = new Gtk.SeparatorMenuItem();
             append(sep_item);
+            
+            if(static_menu_items != null) {
+                foreach(Gtk.MenuItem menu_item in static_menu_items) {
+                    append(menu_item);
+                }
+            }
             
             Gtk.MenuItem clear_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.CLEAR, null);
             clear_item.activate.connect(on_clicked_clear);
@@ -89,8 +104,12 @@ namespace Diodon
             foreach(Gtk.Widget item in get_children()) {
                 remove(item);
                 
-                item.destroy();
-                item.dispose();
+                // make sure that static items do not get destroyed
+                if(static_menu_items == null || !static_menu_items.contains(item))
+                {
+                    item.destroy();
+                    item.dispose();
+                }
             }
             
             destroy();
