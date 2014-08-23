@@ -121,6 +121,7 @@ namespace Diodon
                 
                 // wait until all X request have been processed
                 Gdk.flush();
+                Gdk.error_trap_pop_ignored();
                 
                 // store binding
                 Keybinding binding = new Keybinding(accelerator, keycode, modifiers, handler);
@@ -142,6 +143,10 @@ namespace Diodon
             unowned X.Display display = Gdk.x11_get_default_xdisplay();
             X.Window root_window = Gdk.x11_get_default_root_xwindow();
             
+            // trap XErrors to avoid closing of application
+            // even when grabing of key fails
+            Gdk.error_trap_push();
+            
             // unbind all keys with given accelerator
             Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
             foreach(Keybinding binding in bindings) {
@@ -152,6 +157,10 @@ namespace Diodon
                     remove_bindings.add(binding);                    
                 }
             }
+            
+            // wait until all X request have been processed
+            Gdk.flush();
+            Gdk.error_trap_pop_ignored();
             
             // remove unbinded keys
             bindings.remove_all(remove_bindings);
@@ -248,6 +257,18 @@ namespace Diodon
         private Gdk.FilterReturn event_filter(Gdk.XEvent gdk_xevent, Gdk.Event gdk_event)
         {
             X.Event* xevent = (X.Event*) gdk_xevent;
+            
+            // ungrab keyboard device so no more events are passed on
+            // and interrupt following events till keyboard is grabbed again
+            unowned Gdk.Display display = Gdk.Display.get_default();
+            unowned Gdk.DeviceManager dm = display.get_device_manager();
+            foreach(Gdk.Device device in dm.list_devices(Gdk.DeviceType.MASTER)) {
+                if(device.get_source() == Gdk.InputSource.KEYBOARD) {
+                    device.ungrab(Gtk.get_current_event_time());
+                }
+            }
+            
+            Gdk.flush();
             
             if(xevent->type == X.EventType.KeyPress) {
                 debug("Key pressed, keycode: %u, modifiers: %u",

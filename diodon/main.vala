@@ -87,7 +87,7 @@ namespace Diodon
                 Gtk.main();
             } else {
                 // Diodon running already, let's show history
-                controller.show_history();
+                controller.show_history(null);
             }
         }
         

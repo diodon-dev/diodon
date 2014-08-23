@@ -502,12 +502,12 @@ namespace Diodon
         /**
          * Open menu to view history
          */        
-        public void show_history()
+        public void show_history(Gdk.Event gdk_event)
         {
             // execute show_menu in main loop
             // to avoid dead lock
             Timeout.add(100, () => {
-                recent_menu.show_menu();
+                recent_menu.show_menu(gdk_event);
                 return false; // stop timer
             });
         }

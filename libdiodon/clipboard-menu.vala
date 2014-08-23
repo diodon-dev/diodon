@@ -91,9 +91,16 @@ namespace Diodon
             append(menu_item);
         }
         
-        public void show_menu()
+        public void show_menu(Gdk.Event gdk_event)
         {
-            popup(null, null, null, 0, Gtk.get_current_event_time());
+            uint button = 0;
+            uint32 event_time = Gtk.get_current_event_time();
+            if(gdk_event != null) {
+                gdk_event.get_button(out button);
+                event_time = gdk_event.get_time();
+            }
+            
+            popup(null, null, null, button, event_time);
         }
         
         /**
