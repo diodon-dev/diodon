@@ -1,6 +1,6 @@
 /*
  * Diodon - GTK+ clipboard manager.
- * Copyright (C) 2010-2011 Diodon Team <diodon-team@lists.launchpad.net>
+ * Copyright (C) 2010-2014 Diodon Team <diodon-team@lists.launchpad.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -28,6 +28,8 @@ namespace Diodon
      */
     public class KeybindingManager : GLib.Object
     {
+        private ShellKeyGrabber key_grabber;
+        
         /**
          * list of binded keybindings
          */
@@ -61,10 +63,18 @@ namespace Diodon
                 this.modifiers = modifiers;
                 this.handler = handler;
             }
+            
+            public Keybinding.with_action(string accelerator, uint action, KeybindingHandlerFunc handler)
+            {
+                this.accelerator = accelerator;
+                this.action = action;
+                this.handler = handler;
+            }
         
             public string accelerator { get; set; }
             public int keycode { get; set; }
             public Gdk.ModifierType modifiers { get; set; }
+            public uint action { get; set; }
             public unowned KeybindingHandlerFunc handler { get; set; }
         }
         
@@ -73,18 +83,29 @@ namespace Diodon
          * 
          * @param event passing on gdk event
          */
-        public delegate void KeybindingHandlerFunc(Gdk.Event event);
+        public delegate void KeybindingHandlerFunc();
     
-        /**
-         * initialize keybinding
-         */
-        public void init()
+        public KeybindingManager()
         {
             // init filter to retrieve X.Events
-            Gdk.Window rootwin = Gdk.get_default_root_window();
+            /*Gdk.Window rootwin = Gdk.get_default_root_window();
             if(rootwin != null) {
                 rootwin.add_filter(event_filter);
+            }*/
+            
+            try {
+                key_grabber = Bus.get_proxy_sync(BusType.SESSION, "org.gnome.Shell", "/org/gnome/Shell");
+                key_grabber.accelerator_activated.connect(on_accelerator_activated);
+            } catch(GLib.IOError e) {
+                debug("org.gnome.Shell not avaialble. Cause: %s. Falling back to legacy mode", e.message);
+                // TODO fall back to legacy mode
             }
+        }
+        
+        ~KeybindingManager() {
+            // keybindings always have to be unbinded otherwise there are lost
+            // for the whole session
+            unbind_all();
         }
         
         /**
@@ -93,12 +114,17 @@ namespace Diodon
          * @param accelerator accelerator parsable by Gtk.accelerator_parse
          * @param handler handler called when given accelerator is pressed
          */
-        public void bind(string accelerator, KeybindingHandlerFunc handler)
+        public void bind(string accelerator, KeybindingHandlerFunc handler) throws IOError
         {
             debug("Binding key " + accelerator);
             
+            uint action = key_grabber.grab_accelerator(accelerator, 0);
+            debug("Key %s binded to action id %u", accelerator, action);
+            Keybinding binding = new Keybinding.with_action(accelerator, action, handler);
+            bindings.add(binding);
+            
             // convert accelerator
-            uint keysym;
+            /*uint keysym;
             Gdk.ModifierType modifiers;
             Gtk.accelerator_parse(accelerator, out keysym, out modifiers);
 
@@ -128,7 +154,20 @@ namespace Diodon
                 bindings.add(binding);
                 
                 debug("Successfully binded key " + accelerator);
+            }*/
+        }
+        
+        /**
+         * Unbind all registered accelerator
+         */
+        public void unbind_all() throws IOError
+        {
+            foreach(Keybinding binding in bindings) {
+                debug("Unbinding key %s", binding.accelerator);
+                key_grabber.ungrab_accelerator(binding.action);
             }
+            
+            bindings.clear();
         }
         
         /**
@@ -136,31 +175,33 @@ namespace Diodon
          *
          * @param accelerator accelerator parsable by Gtk.accelerator_parse
          */
-        public void unbind(string accelerator)
+        public void unbind(string accelerator) throws IOError
         {
             debug("Unbinding key " + accelerator);
             
-            unowned X.Display display = Gdk.x11_get_default_xdisplay();
+            /*unowned X.Display display = Gdk.x11_get_default_xdisplay();
             X.Window root_window = Gdk.x11_get_default_root_xwindow();
             
             // trap XErrors to avoid closing of application
             // even when grabing of key fails
-            Gdk.error_trap_push();
+            Gdk.error_trap_push();*/
             
             // unbind all keys with given accelerator
             Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
             foreach(Keybinding binding in bindings) {
                 if(str_equal(accelerator, binding.accelerator)) {
-                    foreach(uint lock_modifier in lock_modifiers) {
+                    /*foreach(uint lock_modifier in lock_modifiers) {
                         display.ungrab_key(binding.keycode, binding.modifiers, root_window);
+                    }*/
+                    if(key_grabber.ungrab_accelerator(binding.action)) {
+                        remove_bindings.add(binding);
                     }
-                    remove_bindings.add(binding);                    
                 }
             }
             
             // wait until all X request have been processed
-            Gdk.flush();
-            Gdk.error_trap_pop_ignored();
+            /*Gdk.flush();
+            Gdk.error_trap_pop_ignored();*/
             
             // remove unbinded keys
             bindings.remove_all(remove_bindings);
@@ -252,6 +293,20 @@ namespace Diodon
         }
         
         /**
+         * Triggered when ShellKeyGrabber detected pressed accelerator
+         */
+        private void on_accelerator_activated(uint action, uint device)
+        {
+            foreach(Keybinding binding in bindings) {
+                if(binding.action == action) {
+                    debug("Keybinding hit with action id %u and accelerator %s",
+                        action, binding.accelerator);
+                    binding.handler();
+                }
+            }
+        }
+        
+        /**
          * Event filter method needed to fetch X.Events
          */
         private Gdk.FilterReturn event_filter(Gdk.XEvent gdk_xevent, Gdk.Event gdk_event)
@@ -281,7 +336,7 @@ namespace Diodon
                             binding.accelerator);
                         
                         // call all handlers with pressed key and modifiers
-                        binding.handler(gdk_event);
+                        binding.handler();
                         return Gdk.FilterReturn.REMOVE;
                     }
                 }

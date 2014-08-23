@@ -118,8 +118,6 @@ namespace Diodon
             storage.on_items_deleted.connect(() => { rebuild_recent_menu.begin(); } );
             storage.on_items_inserted.connect(() => { rebuild_recent_menu.begin(); } );
             
-            keybinding_manager.init();
-            
             // init peas plugin system
             extension_set = new Peas.ExtensionSet(peas_engine, typeof(Peas.Activatable),
                 "object", this);
@@ -441,13 +439,17 @@ namespace Diodon
          */        
         private void change_history_accelerator(string accelerator)
         {
-            // check if there is a previos accelerator to unbind
-            if(configuration.previous_history_accelerator != null) {
-                keybinding_manager.unbind(configuration.previous_history_accelerator);
+            try {
+                // check if there is a previos accelerator to unbind
+                if(configuration.previous_history_accelerator != null) {
+                    keybinding_manager.unbind(configuration.previous_history_accelerator);
+                }
+                
+                // let's bind new one
+                keybinding_manager.bind(accelerator, show_history);
+            } catch(IOError e) {
+                warning("Changing of history accelerator failed. Cause: %s", e.message);
             }
-            
-            // let's bind new one
-            keybinding_manager.bind(accelerator, show_history);
         }
         
         /**
@@ -502,14 +504,14 @@ namespace Diodon
         /**
          * Open menu to view history
          */        
-        public void show_history(Gdk.Event gdk_event)
+        public void show_history()
         {
             // execute show_menu in main loop
             // to avoid dead lock
-            Timeout.add(100, () => {
-                recent_menu.show_menu(gdk_event);
-                return false; // stop timer
-            });
+            //Timeout.add(100, () => {
+                recent_menu.show_menu();
+            //    return false; // stop timer
+            //});
         }
         
         /**
@@ -592,6 +594,7 @@ namespace Diodon
         {
             // shutdown all plugins first
             extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_removed);
+            keybinding_manager.unbind_all();
             
             Gtk.main_quit();
         }
