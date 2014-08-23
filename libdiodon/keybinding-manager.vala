@@ -22,9 +22,9 @@
 namespace Diodon
 {
     /**
-     * This class is in charge to grab keybindings on the X11 display
-     * and filter X11-events and passing on such events to the registed
-     * handler methods.
+     * This class is in charge to grab keybindings first trying to use
+     * ShellKeyGrabber to do so. As ShellKeyGrabber is at this point only available
+     * on Unity and GNOME is a legacy mode for X11 still implemented.
      */
     public class KeybindingManager : GLib.Object
     {
@@ -87,25 +87,21 @@ namespace Diodon
     
         public KeybindingManager()
         {
-            // init filter to retrieve X.Events
-            /*Gdk.Window rootwin = Gdk.get_default_root_window();
-            if(rootwin != null) {
-                rootwin.add_filter(event_filter);
-            }*/
-            
             try {
                 key_grabber = Bus.get_proxy_sync(BusType.SESSION, "org.gnome.Shell", "/org/gnome/Shell");
                 key_grabber.accelerator_activated.connect(on_accelerator_activated);
             } catch(GLib.IOError e) {
                 debug("org.gnome.Shell not avaialble. Cause: %s. Falling back to legacy mode", e.message);
-                // TODO fall back to legacy mode
+                key_grabber = null;
+                
+                // at this point only GNOME and Unity support the ShellKeyGrabber
+                // so we have to remain with legacy X11 code for now for all
+                // other DEs
+                Gdk.Window rootwin = Gdk.get_default_root_window();
+                if(rootwin != null) {
+                    rootwin.add_filter(event_filter_legacy);
+                }
             }
-        }
-        
-        ~KeybindingManager() {
-            // keybindings always have to be unbinded otherwise there are lost
-            // for the whole session
-            unbind_all();
         }
         
         /**
@@ -118,13 +114,26 @@ namespace Diodon
         {
             debug("Binding key " + accelerator);
             
-            uint action = key_grabber.grab_accelerator(accelerator, 0);
-            debug("Key %s binded to action id %u", accelerator, action);
-            Keybinding binding = new Keybinding.with_action(accelerator, action, handler);
-            bindings.add(binding);
-            
+            if(key_grabber != null) {
+                uint action = key_grabber.grab_accelerator(accelerator, 0);
+                debug("Key %s binded to action id %u", accelerator, action);
+                Keybinding binding = new Keybinding.with_action(accelerator, action, handler);
+                bindings.add(binding);
+            } else {
+                bind_legacy(accelerator, handler);
+            }
+        }
+        
+        /**
+         * Legacy X11 mod to bind accelerator
+         *
+         * @param accelerator accelerator parsable by Gtk.accelerator_parse
+         * @param handler handler called when given accelerator is pressed
+         */
+        private void bind_legacy(string accelerator, KeybindingHandlerFunc handler) throws IOError
+        {
             // convert accelerator
-            /*uint keysym;
+            uint keysym;
             Gdk.ModifierType modifiers;
             Gtk.accelerator_parse(accelerator, out keysym, out modifiers);
 
@@ -153,21 +162,8 @@ namespace Diodon
                 Keybinding binding = new Keybinding(accelerator, keycode, modifiers, handler);
                 bindings.add(binding);
                 
-                debug("Successfully binded key " + accelerator);
-            }*/
-        }
-        
-        /**
-         * Unbind all registered accelerator
-         */
-        public void unbind_all() throws IOError
-        {
-            foreach(Keybinding binding in bindings) {
-                debug("Unbinding key %s", binding.accelerator);
-                key_grabber.ungrab_accelerator(binding.action);
+                debug("Successfully binded key %s in legacy mode.", accelerator);
             }
-            
-            bindings.clear();
         }
         
         /**
@@ -179,29 +175,72 @@ namespace Diodon
         {
             debug("Unbinding key " + accelerator);
             
-            /*unowned X.Display display = Gdk.x11_get_default_xdisplay();
+            if(key_grabber != null) {
+                // unbind all keys with given accelerator
+                Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
+                foreach(Keybinding binding in bindings) {
+                    if(str_equal(accelerator, binding.accelerator)) {
+                        if(key_grabber.ungrab_accelerator(binding.action)) {
+                            debug("Unbinding key %s successful", accelerator);
+                            remove_bindings.add(binding);
+                        }
+                    }
+                }
+                
+                // remove unbinded keys
+                bindings.remove_all(remove_bindings);
+            } else {
+                unbind_legacy(accelerator);
+            }
+        }
+        
+        public override void dispose()
+        {
+            if(key_grabber != null) {
+                foreach(Keybinding binding in bindings) {
+                    debug("Unbinding key %s", binding.accelerator);
+                    try {
+                        key_grabber.ungrab_accelerator(binding.action);
+                    } catch(IOError e) {
+                        debug("During clean up unbinding key failed: %s", e.message);
+                    }
+                }
+                
+                bindings.clear();
+            }
+            
+            base.dispose();
+        }
+        
+        /**
+         * Legacy X11 mode to unbind accelerator
+         *
+         * @param accelerator accelerator parsable by Gtk.accelerator_parse
+         */
+        private void unbind_legacy(string accelerator)
+        {
+            unowned X.Display display = Gdk.x11_get_default_xdisplay();
             X.Window root_window = Gdk.x11_get_default_root_xwindow();
             
             // trap XErrors to avoid closing of application
             // even when grabing of key fails
-            Gdk.error_trap_push();*/
+            Gdk.error_trap_push();
             
             // unbind all keys with given accelerator
             Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
             foreach(Keybinding binding in bindings) {
                 if(str_equal(accelerator, binding.accelerator)) {
-                    /*foreach(uint lock_modifier in lock_modifiers) {
+                    foreach(uint lock_modifier in lock_modifiers) {
                         display.ungrab_key(binding.keycode, binding.modifiers, root_window);
-                    }*/
-                    if(key_grabber.ungrab_accelerator(binding.action)) {
-                        remove_bindings.add(binding);
                     }
+                    debug("Unbinding key %s successful in legacy mode", accelerator);
+                    remove_bindings.add(binding);
                 }
             }
             
             // wait until all X request have been processed
-            /*Gdk.flush();
-            Gdk.error_trap_pop_ignored();*/
+            Gdk.flush();
+            Gdk.error_trap_pop_ignored();
             
             // remove unbinded keys
             bindings.remove_all(remove_bindings);
@@ -307,9 +346,9 @@ namespace Diodon
         }
         
         /**
-         * Event filter method needed to fetch X.Events
+         * Event filter method needed to fetch X.Events in legacy mode
          */
-        private Gdk.FilterReturn event_filter(Gdk.XEvent gdk_xevent, Gdk.Event gdk_event)
+        private Gdk.FilterReturn event_filter_legacy(Gdk.XEvent gdk_xevent, Gdk.Event gdk_event)
         {
             X.Event* xevent = (X.Event*) gdk_xevent;
             

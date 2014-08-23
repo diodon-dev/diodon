@@ -595,11 +595,11 @@ namespace Diodon
             Gtk.main_quit();
         }
         
-        public void dispose()
+        public override void dispose()
         {
             // shutdown all plugins
             extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_removed);
-            keybinding_manager.unbind_all();
+            keybinding_manager.dispose();
             
             base.dispose();
         }
