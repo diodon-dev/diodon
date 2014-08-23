@@ -592,11 +592,16 @@ namespace Diodon
          */
         public void quit()
         {
-            // shutdown all plugins first
+            Gtk.main_quit();
+        }
+        
+        public void dispose()
+        {
+            // shutdown all plugins
             extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_removed);
             keybinding_manager.unbind_all();
             
-            Gtk.main_quit();
+            base.dispose();
         }
     }  
 }

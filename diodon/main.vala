@@ -54,7 +54,7 @@ namespace Diodon
         
         public DiodonApplication()
         {
-            Object(application_id: Config.BUSNAME, flags: ApplicationFlags.FLAGS_NONE);
+            Object(application_id: Config.BUSNAME, flags: ApplicationFlags.FLAGS_NONE, register_session: true);
             
             // add supported actions
             SimpleAction paste_action = new SimpleAction("paste-action", VariantType.STRING);
@@ -88,6 +88,16 @@ namespace Diodon
             } else {
                 // Diodon running already, let's show history
                 controller.show_history();
+            }
+        }
+        
+        public override void shutdown()
+        {
+            base.shutdown();
+            
+            if(controller != null) {
+                controller.dispose();
+                controller = null;
             }
         }
         
@@ -131,6 +141,11 @@ namespace Diodon
                 }
                 
                 DiodonApplication app = new DiodonApplication();
+                
+                // application has to be terminiated gracefully
+                Unix.signal_add(ProcessSignal.INT, () => { app.controller.quit(); return true; });
+                Unix.signal_add(ProcessSignal.TERM, () => { app.controller.quit(); return true; });
+                Unix.signal_add(ProcessSignal.HUP, () => { app.controller.quit(); return true; });
                 
                 if(checksum != null) {
                     debug("activate paste-action with checksum %s", checksum);
