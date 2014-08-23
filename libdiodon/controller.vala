@@ -506,12 +506,7 @@ namespace Diodon
          */        
         public void show_history()
         {
-            // execute show_menu in main loop
-            // to avoid dead lock
-            //Timeout.add(100, () => {
-                recent_menu.show_menu();
-            //    return false; // stop timer
-            //});
+            recent_menu.show_menu();
         }
         
         /**

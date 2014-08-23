@@ -375,7 +375,13 @@ namespace Diodon
                             binding.accelerator);
                         
                         // call all handlers with pressed key and modifiers
-                        binding.handler();
+                        // execute handler in main loop
+                        // to avoid dead lock
+                        Timeout.add(100, () => {
+                            binding.handler();
+                            return false; // stop timer
+                        });
+                        
                         return Gdk.FilterReturn.REMOVE;
                     }
                 }
