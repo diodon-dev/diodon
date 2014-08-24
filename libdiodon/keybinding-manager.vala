@@ -90,7 +90,7 @@ namespace Diodon
             try {
                 key_grabber = Bus.get_proxy_sync(BusType.SESSION, "org.gnome.Shell", "/org/gnome/Shell");
                 key_grabber.accelerator_activated.connect(on_accelerator_activated);
-            } catch(GLib.IOError e) {
+            } catch(GLib.Error e) {
                 debug("org.gnome.Shell not avaialble. Cause: %s. Falling back to legacy mode", e.message);
                 key_grabber = null;
                 
