@@ -87,19 +87,28 @@ namespace Diodon
     
         public KeybindingManager()
         {
+            unowned string session = Environment.get_variable("DESKTOP_SESSION");
             try {
-                key_grabber = Bus.get_proxy_sync(BusType.SESSION, "org.gnome.Shell", "/org/gnome/Shell");
-                key_grabber.accelerator_activated.connect(on_accelerator_activated);
+                if(str_equal(session, "gnome") || str_equal(session, "ubuntu")) {
+                    key_grabber = Bus.get_proxy_sync(BusType.SESSION, "org.gnome.Shell", "/org/gnome/Shell");
+                    key_grabber.accelerator_activated.connect(on_accelerator_activated);
+                }
             } catch(GLib.Error e) {
-                debug("org.gnome.Shell not avaialble. Cause: %s. Falling back to legacy mode", e.message);
+                warning("org.gnome.Shell not avaialble. Cause: %s. Falling back to legacy mode", e.message);
                 key_grabber = null;
-                
-                // at this point only GNOME and Unity support the ShellKeyGrabber
-                // so we have to remain with legacy X11 code for now for all
-                // other DEs
-                Gdk.Window rootwin = Gdk.get_default_root_window();
-                if(rootwin != null) {
-                    rootwin.add_filter(event_filter_legacy);
+            }
+            finally
+            {
+                if(key_grabber == null) {
+                    debug("Unknown desktop session %s. Falling back to legacy keybinder", session);
+                    
+                    // at this point only GNOME and Unity support the ShellKeyGrabber
+                    // so we have to remain with legacy X11 code for now for all
+                    // other DEs
+                    Gdk.Window rootwin = Gdk.get_default_root_window();
+                    if(rootwin != null) {
+                        rootwin.add_filter(event_filter_legacy);
+                    }
                 }
             }
         }
