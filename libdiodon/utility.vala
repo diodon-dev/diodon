@@ -68,6 +68,9 @@ namespace Diodon
          */
         public static string? get_path_of_active_application()
         {
+            Gdk.error_trap_push();
+            string? path = null;
+            
             X.Window window = get_active_window();
             if(window != X.None) {
                 ulong pid = get_pid(window);
@@ -78,10 +81,9 @@ namespace Diodon
                         FileInfo info = file.query_info(FileAttribute.STANDARD_SYMLINK_TARGET, 
                             FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
                         if(info != null) {
-                            string path = info.get_attribute_as_string(
+                            path = info.get_attribute_as_string(
                                 FileAttribute.STANDARD_SYMLINK_TARGET);
                             debug("Path is %s", path);
-                            return path;
                         }
                     }
                     catch(GLib.Error e) {
@@ -91,7 +93,8 @@ namespace Diodon
                 }
             }
             
-            return null;
+            Gdk.error_trap_pop_ignored();
+            return path;
         }
         
         private static X.Window get_active_window()
