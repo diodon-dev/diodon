@@ -118,6 +118,8 @@ namespace Diodon
             storage.on_items_deleted.connect(() => { rebuild_recent_menu.begin(); } );
             storage.on_items_inserted.connect(() => { rebuild_recent_menu.begin(); } );
             
+            keybinding_manager.init();
+            
             // init peas plugin system
             extension_set = new Peas.ExtensionSet(peas_engine, typeof(Peas.Activatable),
                 "object", this);

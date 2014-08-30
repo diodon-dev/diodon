@@ -29,11 +29,13 @@ namespace Diodon
     public class KeybindingManager : GLib.Object
     {
         private ShellKeyGrabber key_grabber;
+        private uint shell_owner_id = 0;
         
         /**
          * list of binded keybindings
          */
         private Gee.List<Keybinding> bindings = new Gee.ArrayList<Keybinding>();
+        private Gee.List<Keybinding> unregistered_bindings = new Gee.ArrayList<Keybinding>();
         
         /**
          * locked modifiers used to grab all keys whatever lock key
@@ -85,32 +87,57 @@ namespace Diodon
          */
         public delegate void KeybindingHandlerFunc();
     
-        public KeybindingManager()
+        public void init()
         {
-            unowned string session = Environment.get_variable("DESKTOP_SESSION");
-            try {
-                if(str_equal(session, "gnome") || str_equal(session, "ubuntu")) {
-                    key_grabber = Bus.get_proxy_sync(BusType.SESSION, "org.gnome.Shell", "/org/gnome/Shell");
+            if(session_has_key_grabber()) {
+                shell_owner_id = Bus.watch_name(BusType.SESSION, "org.gnome.Shell",
+                    BusNameWatcherFlags.NONE, on_shell_appeared, on_shell_vanished);
+            } else {
+                debug("Falling back to legacy keybinder");
+                
+                // at this point only GNOME and Unity support the ShellKeyGrabber
+                // so we have to remain with legacy X11 code for now for all
+                // other DEs
+                Gdk.Window rootwin = Gdk.get_default_root_window();
+                if(rootwin != null) {
+                    rootwin.add_filter(event_filter_legacy);
+                }
+            }
+        }
+        
+        private void on_shell_appeared(GLib.DBusConnection connection, string name, string name_owner)
+        {
+            debug("Key grabber shell %s has appeared", name);
+            // we just want to make sure that we really have a key grabber available
+            if(session_has_key_grabber()) {
+                
+                try {
+                    key_grabber = Bus.get_proxy_sync(BusType.SESSION, name, "/org/gnome/Shell");
                     key_grabber.accelerator_activated.connect(on_accelerator_activated);
-                }
-            } catch(GLib.Error e) {
-                warning("org.gnome.Shell not avaialble. Cause: %s. Falling back to legacy mode", e.message);
-                key_grabber = null;
-            }
-            finally
-            {
-                if(key_grabber == null) {
-                    debug("Unknown desktop session %s. Falling back to legacy keybinder", session);
                     
-                    // at this point only GNOME and Unity support the ShellKeyGrabber
-                    // so we have to remain with legacy X11 code for now for all
-                    // other DEs
-                    Gdk.Window rootwin = Gdk.get_default_root_window();
-                    if(rootwin != null) {
-                        rootwin.add_filter(event_filter_legacy);
+                    foreach(Keybinding binding in unregistered_bindings)
+                    {
+                        debug("Process unregistered binding %s", binding.accelerator);
+                        bind_key_grabber(binding);
                     }
+                    
+                    unregistered_bindings.clear();
+                } catch(IOError e) {
+                    warning("Get ShellKeyGrabber proxy failed with error %s", e.message);
                 }
             }
+        }
+        
+        private void on_shell_vanished(GLib.DBusConnection connection, string name)
+        {
+            debug("Key grabber shell %s has vanished", name);
+            
+            if(session_has_key_grabber()) {
+                unregistered_bindings.add_all(bindings);
+                bindings.clear();
+            }
+            
+            key_grabber = null;
         }
         
         /**
@@ -119,18 +146,38 @@ namespace Diodon
          * @param accelerator accelerator parsable by Gtk.accelerator_parse
          * @param handler handler called when given accelerator is pressed
          */
-        public void bind(string accelerator, KeybindingHandlerFunc handler) throws IOError
+        public void bind(string accelerator, KeybindingHandlerFunc handler)
         {
             debug("Binding key " + accelerator);
             
-            if(key_grabber != null) {
-                uint action = key_grabber.grab_accelerator(accelerator, 0);
-                debug("Key %s binded to action id %u", accelerator, action);
-                Keybinding binding = new Keybinding.with_action(accelerator, action, handler);
-                bindings.add(binding);
+            if(session_has_key_grabber()) {
+                Keybinding binding = new Keybinding.with_action(accelerator, 0, handler);
+                if(!bind_key_grabber(binding))
+                {
+                    debug("Key grabber is not ready yet to bind %s", accelerator);
+                    unregistered_bindings.add(binding);
+                }
             } else {
                 bind_legacy(accelerator, handler);
             }
+        }
+        
+        private bool bind_key_grabber(Keybinding binding)
+        {
+            try {
+                if(key_grabber != null) {
+                    uint action = key_grabber.grab_accelerator(binding.accelerator, 0);
+                    debug("Key %s binded to action id %u", binding.accelerator, binding.action);
+                    binding.action = action;
+                    bindings.add(binding);
+                    return true;
+                }
+            } catch(IOError e) {
+                warning("Binding of accelerator %s failed with error %s",
+                    binding.accelerator, e.message);
+            }
+            
+            return false;
         }
         
         /**
@@ -139,7 +186,7 @@ namespace Diodon
          * @param accelerator accelerator parsable by Gtk.accelerator_parse
          * @param handler handler called when given accelerator is pressed
          */
-        private void bind_legacy(string accelerator, KeybindingHandlerFunc handler) throws IOError
+        private void bind_legacy(string accelerator, KeybindingHandlerFunc handler)
         {
             // convert accelerator
             uint keysym;
@@ -184,20 +231,34 @@ namespace Diodon
         {
             debug("Unbinding key " + accelerator);
             
-            if(key_grabber != null) {
+            if(session_has_key_grabber()) {
                 // unbind all keys with given accelerator
                 Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
                 foreach(Keybinding binding in bindings) {
                     if(str_equal(accelerator, binding.accelerator)) {
-                        if(key_grabber.ungrab_accelerator(binding.action)) {
+                        // if key grabber is not available, unbinding has already been done
+                        bool unbind_successful = true;
+                        if(key_grabber != null) {
+                            unbind_successful = key_grabber.ungrab_accelerator(binding.action);
+                        }
+                        
+                        if(unbind_successful) {
                             debug("Unbinding key %s successful", accelerator);
                             remove_bindings.add(binding);
                         }
                     }
                 }
-                
                 // remove unbinded keys
-                bindings.remove_all(remove_bindings);
+                bindings.remove_all(remove_bindings);   
+
+                // remove all unregistered binding with given accelerator as well                
+                remove_bindings.clear();             
+                foreach(Keybinding binding in unregistered_bindings) {
+                    if(str_equal(accelerator, binding.accelerator)) {
+                        remove_bindings.add(binding);
+                    }
+                }
+                unregistered_bindings.remove_all(remove_bindings);
             } else {
                 unbind_legacy(accelerator);
             }
@@ -216,6 +277,10 @@ namespace Diodon
                 }
                 
                 bindings.clear();
+            }
+            
+            if(shell_owner_id > 0) {
+                Bus.unwatch_name(shell_owner_id);
             }
             
             base.dispose();
@@ -338,6 +403,17 @@ namespace Diodon
             }
             
             return false;
+        }
+        
+        /**
+         * Check whether current session as shell key grabber. Such is currently
+         * only supported in Gnome and Unity.
+         */
+        private bool session_has_key_grabber()
+        {
+            unowned string session = Environment.get_variable("DESKTOP_SESSION");
+            debug("Current session: %s", session);
+            return str_equal(session, "gnome") || str_equal(session, "ubuntu");
         }
         
         /**
