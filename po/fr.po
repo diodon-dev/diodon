@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-14 17:06+0300\n"
-"PO-Revision-Date: 2014-03-09 07:57+0000\n"
-"Last-Translator: Olivier Febwin <febwin@free.fr>\n"
+"PO-Revision-Date: 2014-09-07 09:56+0000\n"
+"Last-Translator: Vincèn PUJOL <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-15 07:08+0000\n"
-"X-Generator: Launchpad (build 16963)\n"
+"X-Launchpad-Export-Date: 2014-09-08 06:38+0000\n"
+"X-Generator: Launchpad (build 17196)\n"
 "Language: fr\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -36,6 +36,8 @@ msgid ""
 "Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
+"Ajouter du contenu déja dans le presse-papiers à l'historique du presse-"
+"papiers en faisant par exemple Ctrl + C."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
@@ -52,7 +54,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Add images to clipboard history"
-msgstr ""
+msgstr "Ajouter les images à l'historique du presse-papiers"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
@@ -108,7 +110,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Number of recent clipboard items"
-msgstr ""
+msgstr "Nombre d'éléments récents dans le presse-papiers"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 msgid "Number of recent clipboard items shown in clipboard menu."
@@ -123,7 +125,7 @@ msgstr "Raccourci clavier pour l'historique"
 #: ../data/preferences.ui.h:17
 msgid ""
 "Hotkey to quickly allow you to access menu with recent clipboard items."
-msgstr ""
+msgstr "Raccourci clavier pour un accès direct au menu des éléments récents."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 msgid "Active plugins"
@@ -147,7 +149,7 @@ msgstr "Utiliser la sélection primaire"
 
 #: ../data/preferences.ui.h:6
 msgid "Add _images to clipboard history"
-msgstr ""
+msgstr "Ajouter les _images à l'historique"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
@@ -163,11 +165,11 @@ msgstr "_Coller automatiquement l'élément sélectionné"
 
 #: ../data/preferences.ui.h:14
 msgid "Number of recent clipboard items to be shown in clipboard menu."
-msgstr ""
+msgstr "Nombre d'éléments récents à afficher dans le menu."
 
 #: ../data/preferences.ui.h:15
 msgid "Number of recent items"
-msgstr ""
+msgstr "Nombre d'éléments récents"
 
 #: ../data/preferences.ui.h:16
 #: ../unity-scope-diodon/unity-scope-diodon.vala:75
@@ -200,13 +202,16 @@ msgstr "Copyright © 2011 Équipe Diodon"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:1
 msgid "Clipboard History"
-msgstr ""
+msgstr "Historique du presse-papiers"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:2
 msgid ""
 "This is an Ubuntu search plugin that enables information from Diodon to be "
 "searched and displayed in the Dash underneath the Clipboard header."
 msgstr ""
+"Il s'agit d'une extension de recherche Ubuntu qui permet depuis le tableau "
+"de bord dans la section Presse-Papiers de rechercher parmi les éléments de "
+"Diodon."
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:3
 msgid "Search clipboard"
@@ -216,19 +221,19 @@ msgstr "Rechercher dans le presse-papier"
 #: ../unity-scope-diodon/unity-scope-diodon.vala:79
 #: ../unity-scope-diodon/unity-scope-diodon.vala:104
 msgid "Text"
-msgstr ""
+msgstr "Texte"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:5
 #: ../unity-scope-diodon/unity-scope-diodon.vala:84
 #: ../unity-scope-diodon/unity-scope-diodon.vala:105
 msgid "Files"
-msgstr ""
+msgstr "Fichiers"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:6
 #: ../unity-scope-diodon/unity-scope-diodon.vala:89
 #: ../unity-scope-diodon/unity-scope-diodon.vala:106
 msgid "Images"
-msgstr ""
+msgstr "Images"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:7
 #: ../unity-scope-diodon/unity-scope-diodon.vala:101
