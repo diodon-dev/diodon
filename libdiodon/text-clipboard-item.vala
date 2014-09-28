@@ -158,7 +158,7 @@ namespace Diodon
             bool equals = false;
             
             if(item is TextClipboardItem) {
-                equals = str_equal(_text, item->get_text());
+                equals = strcmp(_text, item->get_text()) == 0;
             }
             
             return equals;

@@ -115,7 +115,7 @@ namespace Diodon
                         // we are in a timer here and because of performance
                         // reasons we want to make sure that this is not the same
                         // content again before we check path_of_active_application
-                        if(_last_received == null || !str_equal(text, _last_received)) {
+                        if(_last_received == null || strcmp(text, _last_received) != 0) {
                             string? origin = Utility.get_path_of_active_application();
                             _last_received = text;
                             on_text_received(type, text, origin);

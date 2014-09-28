@@ -235,7 +235,7 @@ namespace Diodon
                 // unbind all keys with given accelerator
                 Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
                 foreach(Keybinding binding in bindings) {
-                    if(str_equal(accelerator, binding.accelerator)) {
+                    if(strcmp(accelerator, binding.accelerator) == 0) {
                         // if key grabber is not available, unbinding has already been done
                         bool unbind_successful = true;
                         if(key_grabber != null) {
@@ -254,7 +254,7 @@ namespace Diodon
                 // remove all unregistered binding with given accelerator as well                
                 remove_bindings.clear();             
                 foreach(Keybinding binding in unregistered_bindings) {
-                    if(str_equal(accelerator, binding.accelerator)) {
+                    if(strcmp(accelerator, binding.accelerator) == 0) {
                         remove_bindings.add(binding);
                     }
                 }
@@ -303,7 +303,7 @@ namespace Diodon
             // unbind all keys with given accelerator
             Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
             foreach(Keybinding binding in bindings) {
-                if(str_equal(accelerator, binding.accelerator)) {
+                if(strcmp(accelerator, binding.accelerator) == 0) {
                     foreach(uint lock_modifier in lock_modifiers) {
                         display.ungrab_key(binding.keycode, binding.modifiers, root_window);
                     }
@@ -413,7 +413,7 @@ namespace Diodon
         {
             unowned string session = Environment.get_variable("DESKTOP_SESSION");
             debug("Current session: %s", session);
-            return str_equal(session, "gnome") || str_equal(session, "ubuntu");
+            return strcmp(session, "gnome") == 0 || strcmp(session, "ubuntu") == 0;
         }
         
         /**

@@ -186,7 +186,7 @@ namespace Diodon
             
             if(item is ImageClipboardItem) {
                 ImageClipboardItem* image_item = (ImageClipboardItem*)item;
-                equals = str_equal(_checksum, image_item->_checksum);
+                equals = strcmp(_checksum, image_item->_checksum) == 0;
             }
             
             return equals;

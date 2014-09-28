@@ -231,7 +231,7 @@ namespace Diodon
             bool equals = false;
             
             if(item is FileClipboardItem) {
-                equals = str_equal(_paths, item->get_text());
+                equals = strcmp(_paths, item->get_text()) == 0;
             }
             
             return equals;
