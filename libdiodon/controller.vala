@@ -143,6 +143,8 @@ namespace Diodon
         {
             settings_clipboard.bind("synchronize-clipboards", configuration,
                 "synchronize-clipboards", SettingsBindFlags.DEFAULT);
+            settings_clipboard.bind("add-images", configuration,
+                "add-images", SettingsBindFlags.DEFAULT);
 
             settings_clipboard.bind("keep-clipboard-content", configuration,
                 "keep-clipboard-content", SettingsBindFlags.DEFAULT);
