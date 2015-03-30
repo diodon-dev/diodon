@@ -77,7 +77,7 @@ namespace Diodon
         
         public override void activate()
         {
-            debug("Activate DiodonApplication");
+            debug("Activate DiodonApplication (Version %s)", Config.VERSION);
             
             if(controller == null) {
                 // setup controller            
