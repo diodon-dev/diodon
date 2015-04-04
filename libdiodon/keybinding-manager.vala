@@ -409,11 +409,12 @@ namespace Diodon
          * Check whether current session as shell key grabber. Such is currently
          * only supported in Gnome and Unity.
          */
-        private bool session_has_key_grabber()
+        public static bool session_has_key_grabber()
         {
-            unowned string session = Environment.get_variable("DESKTOP_SESSION");
-            debug("Current session: %s", session);
-            return strcmp(session, "gnome") == 0 || strcmp(session, "ubuntu") == 0;
+            unowned string desktop = Environment.get_variable("XDG_CURRENT_DESKTOP");
+            debug("Current desktop: %s", desktop);
+            
+            return (desktop != null) && (strcmp(desktop.down(), "unity") == 0 || strcmp(desktop.down(), "gnome") == 0);
         }
         
         /**

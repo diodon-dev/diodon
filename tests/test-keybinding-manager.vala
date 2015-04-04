@@ -30,6 +30,10 @@ namespace Diodon
 	    {
 		    base("TestKeybindingManager");
 		    add_test("remove_lockmodifiers", test_remove_lockmodifiers);
+		    add_test("session_has_key_grabber_unity", test_session_has_key_grabber_unity);
+		    add_test("session_has_key_grabber_gnome", test_session_has_key_grabber_gnome);
+		    add_test("session_has_key_grabber_xfce", test_session_has_key_grabber_xfce);
+		    add_test("session_has_key_grabber_null", test_session_has_key_grabber_null);
 	    }
 
 	    public void test_remove_lockmodifiers()
@@ -42,6 +46,32 @@ namespace Diodon
 	        uint result = KeybindingManager.remove_lockmodifiers(ctrl_alt_lockmodifiers);
 	        
 	        assert(result == ctrl_alt);
+	    }
+	    
+	    public void test_session_has_key_grabber_unity()
+	    {
+	        Environment.set_variable("XDG_CURRENT_DESKTOP", "Unity", true);
+	        assert(KeybindingManager.session_has_key_grabber());
+	    }
+	    
+	    public void test_session_has_key_grabber_gnome()
+	    {
+	        Environment.set_variable("XDG_CURRENT_DESKTOP", "GNOME", true);
+	        assert(KeybindingManager.session_has_key_grabber());
+	    }
+	    
+	    public void test_session_has_key_grabber_xfce()
+	    {
+	        Environment.set_variable("XDG_CURRENT_DESKTOP", "XFCE", true);
+	        // XFCE currently doesn't have a key grabber
+	        assert(!KeybindingManager.session_has_key_grabber());
+	    }
+	    
+	    public void test_session_has_key_grabber_null()
+	    {
+	        Environment.unset_variable("XDG_CURRENT_DESKTOP");
+	        // if XDG_CURRENT_DESKTOP is not set there is no key grabber
+	        assert(!KeybindingManager.session_has_key_grabber());
 	    }
 	}
 }
