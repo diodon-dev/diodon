@@ -61,6 +61,7 @@ def configure(conf):
     conf.check_cfg(package='zeitgeist-2.0',     uselib_store='ZEITGEIST',    atleast_version='0.9.14', mandatory=1, args='--cflags --libs')    
 
     conf.find_program('Xvfb', var='XVFB')
+    conf.find_program('zeitgeist-daemon', var='XVFB')
     
     # FIXME: waf throws up when assigning an empty string
     # we need a better way of configuring plugins which are enabled
