@@ -35,6 +35,11 @@
       <_summary>Number of recent clipboard items</_summary>
       <_description>Number of recent clipboard items shown in clipboard menu.</_description>
     </key>
+    <key name="filter-pattern" type="s">
+      <default>'^\\s+$'</default>
+      <_summary>Clipboard content filter pattern</_summary>
+      <_description>Regex filter pattern whereas all clipboard items matching this pattern will be filtered and not added to clipboard history.</_description>
+    </key>
   </schema>
   <schema gettext-domain="@GETTEXT_PACKAGE@" id="net.launchpad.Diodon.keybindings" path="/net/launchpad/diodon/keybindings/">
     <key name="history-accelerator" type="s">

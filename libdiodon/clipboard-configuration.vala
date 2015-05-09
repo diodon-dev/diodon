@@ -60,6 +60,12 @@ namespace Diodon
         public bool instant_paste { get; set; default = true; }
         
         /**
+         * regex pattern so all clipboard items matching this pattern will
+         * be filtered and not added to clipboard history.
+         */
+        public string filter_pattern { get; set; default = "^\\s+$"; }
+        
+        /**
          * number of recent items to be shown.
          * Value must be bigger than 0 and lower or equal than 100.
          */

@@ -40,6 +40,7 @@ namespace Diodon
         private Peas.Engine peas_engine;
         private ClipboardMenu recent_menu = null;
         private Gee.List<Gtk.MenuItem> static_recent_menu_items;
+        private GLib.Regex _filter_pattern = null;
         
         /**
          * Called when a item has been selected.
@@ -91,6 +92,18 @@ namespace Diodon
             clipboard_managers.set(ClipboardType.PRIMARY, new PrimaryClipboardManager(configuration));  
             
             preferences_view = new PreferencesView();                  
+        }
+        
+        public Controller.with_configuration(ClipboardConfiguration configuration)
+        {
+            this();
+            
+            this.configuration = configuration;
+            create_filter_pattern_regex(configuration.filter_pattern);
+            enable_clipboard_manager(ClipboardType.CLIPBOARD, configuration.use_clipboard);
+            enable_clipboard_manager(ClipboardType.PRIMARY, configuration.use_primary);
+            enable_keep_clipboard_content(configuration.keep_clipboard_content);
+            change_history_accelerator(configuration.history_accelerator);
         }
         
         private static void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
@@ -167,6 +180,15 @@ namespace Diodon
                     rebuild_recent_menu.begin();
                 }
             );
+            
+            settings_clipboard.bind("filter-pattern", configuration,
+                "filter-pattern", SettingsBindFlags.DEFAULT);
+            settings_keybindings.changed["filter-pattern"].connect(
+                (key) => {
+                    create_filter_pattern_regex(configuration.filter_pattern);
+                }
+            );
+            create_filter_pattern_regex(configuration.filter_pattern);
             
             settings_keybindings.bind("history-accelerator", configuration,
                 "history-accelerator", SettingsBindFlags.DEFAULT);
@@ -328,16 +350,37 @@ namespace Diodon
             
             // check if received item is different from last item
             if(current_item == null || !IClipboardItem.equal_func(current_item, item)) {
-                debug("received item of type %s from clipboard %d with label %s",
-                    item.get_type().name(), type, label);
-                
-                yield storage.add_item(item);
-                on_add_item(item);
+                // check whether item needs to be filtered
+                if(!filter_item(item)) {
+                    debug("received item of type %s from clipboard %d with label %s",
+                        item.get_type().name(), type, label);
+                    
+                    yield storage.add_item(item);
+                    on_add_item(item);
 
-                if(configuration.synchronize_clipboards) {
-                    synchronize(item);
+                    if(configuration.synchronize_clipboards) {
+                        synchronize(item);
+                    }
                 }
             }
+        }
+        
+        /**
+         * Verify whether given clipbiard item is filtered and should not be added
+         * to clipboard history
+         */
+        public bool filter_item(IClipboardItem item)
+        {
+            try {
+                if(this._filter_pattern != null) {
+                    return this._filter_pattern.match_full(item.get_text());
+                }
+            } catch(RegexError e) {
+                warning("Error occorued while matching item with filter pattern, item not being filter: %s", e.message);
+            }
+            
+            // do not filter if there is an error
+            return false;
         }
        
         /**
@@ -434,6 +477,17 @@ namespace Diodon
                 ClipboardManager manager = clipboard_managers.get(type);
                 manager.select_item(item);
             }
+        }
+        
+        private void create_filter_pattern_regex(string filter_pattern)
+        {
+            try {
+                debug("Creating filter pattern %s", filter_pattern);
+                this._filter_pattern = new GLib.Regex(filter_pattern, RegexCompileFlags.DOLLAR_ENDONLY);
+            } catch(RegexError e) {
+                this._filter_pattern = null;
+                warning("Invalid regex pattern %s, Error: %s", filter_pattern, e.message);
+            }            
         }
         
         /**
@@ -597,8 +651,10 @@ namespace Diodon
         public override void dispose()
         {
             // shutdown all plugins
-            extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_removed);
-            keybinding_manager.dispose();
+            if(extension_set != null) {
+                extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_removed);
+                keybinding_manager.dispose();
+            }
             
             base.dispose();
         }
