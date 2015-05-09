@@ -651,7 +651,7 @@ namespace Diodon
             // Bug #1383013:
             // in some rare circumstances doesn't the recent menu get refreshed
             // when clear is executed; therefore forcing it here as a workaround
-            rebuild_recent_menu();
+            yield rebuild_recent_menu();
         }
         
         /**
