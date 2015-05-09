@@ -183,7 +183,7 @@ namespace Diodon
             
             settings_clipboard.bind("filter-pattern", configuration,
                 "filter-pattern", SettingsBindFlags.DEFAULT);
-            settings_keybindings.changed["filter-pattern"].connect(
+            settings_clipboard.changed["filter-pattern"].connect(
                 (key) => {
                     create_filter_pattern_regex(configuration.filter_pattern);
                 }
@@ -482,12 +482,16 @@ namespace Diodon
         private void create_filter_pattern_regex(string filter_pattern)
         {
             try {
-                debug("Creating filter pattern %s", filter_pattern);
-                this._filter_pattern = new GLib.Regex(filter_pattern, RegexCompileFlags.DOLLAR_ENDONLY);
+                if(filter_pattern != null && filter_pattern != "") {
+                    debug("Creating filter pattern %s", filter_pattern);
+                    this._filter_pattern = new GLib.Regex(filter_pattern, RegexCompileFlags.DOLLAR_ENDONLY);
+                    return;
+                }
             } catch(RegexError e) {
-                this._filter_pattern = null;
                 warning("Invalid regex pattern %s, Error: %s", filter_pattern, e.message);
-            }            
+            }
+            
+            this._filter_pattern = null;
         }
         
         /**
