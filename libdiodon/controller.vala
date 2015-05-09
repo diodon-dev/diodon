@@ -96,9 +96,14 @@ namespace Diodon
         
         public Controller.with_configuration(ClipboardConfiguration configuration)
         {
-            this();
-            
+            clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
+            storage = new ZeitgeistClipboardStorage();
+            keybinding_manager = new KeybindingManager();
+            clipboard_managers.set(ClipboardType.CLIPBOARD, new ClipboardManager(ClipboardType.CLIPBOARD, configuration));
+            clipboard_managers.set(ClipboardType.PRIMARY, new PrimaryClipboardManager(configuration));
+            preferences_view = new PreferencesView();                  
             this.configuration = configuration;
+            
             create_filter_pattern_regex(configuration.filter_pattern);
             enable_clipboard_manager(ClipboardType.CLIPBOARD, configuration.use_clipboard);
             enable_clipboard_manager(ClipboardType.PRIMARY, configuration.use_primary);
