@@ -36,7 +36,7 @@ namespace Diodon
          * @param items clipboard items to be shown
          * @param menu_items additional menu items to be added after separator
          */
-        public ClipboardMenu(Controller controller, Gee.List<IClipboardItem> items, Gee.List<Gtk.MenuItem> static_menu_items)
+        public ClipboardMenu(Controller controller, Gee.List<IClipboardItem> items, Gee.List<Gtk.MenuItem>? static_menu_items)
         {
             this.controller = controller;
             this.static_menu_items = static_menu_items;
