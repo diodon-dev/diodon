@@ -422,6 +422,7 @@ namespace Diodon
          */
         private void on_accelerator_activated(uint action, uint device)
         {
+            debug("Accelerator activated with action id %u", action);
             foreach(Keybinding binding in bindings) {
                 if(binding.action == action) {
                     debug("Keybinding hit with action id %u and accelerator %s",
