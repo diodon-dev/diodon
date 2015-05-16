@@ -507,7 +507,7 @@ namespace Diodon
         private void change_history_accelerator(string accelerator)
         {
             try {
-                // check if there is a previos accelerator to unbind
+                // check if there is a previous accelerator to unbind
                 if(configuration.previous_history_accelerator != null) {
                     keybinding_manager.unbind(configuration.previous_history_accelerator);
                 }
