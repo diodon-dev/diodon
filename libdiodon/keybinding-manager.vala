@@ -167,7 +167,7 @@ namespace Diodon
             try {
                 if(key_grabber != null) {
                     uint action = key_grabber.grab_accelerator(binding.accelerator, 0);
-                    debug("Key %s binded to action id %u", binding.accelerator, binding.action);
+                    debug("Key %s binded to action id %u", binding.accelerator, action);
                     binding.action = action;
                     bindings.add(binding);
                     return true;
