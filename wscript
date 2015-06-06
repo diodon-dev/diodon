@@ -104,7 +104,11 @@ def configure(conf):
       
     # set 'default' variant
     conf.define ('DEBUG', 0)
-    conf.env['CFLAGS'] = ['-O2', '-w']
+    # honor preset CFLAGS env vars
+    if not conf.env['CFLAGS']:
+        conf.env['CFLAGS'] += ['-O2']
+    # in any case we need to ignore warnings as C-code is generated
+    conf.env['CFLAGS'] += ['-w']
     conf.env['VALAFLAGS'] = ['--disable-assert']
     
     # set some debug relevant config values
