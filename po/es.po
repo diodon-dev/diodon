@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-20 14:30+0300\n"
+"POT-Creation-Date: 2015-06-20 15:03+0300\n"
 "PO-Revision-Date: 2015-02-17 05:20+0000\n"
 "Last-Translator: Adolfo Jayme <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -132,20 +132,10 @@ msgid ""
 msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
-#: ../data/preferences.ui.h:18
-msgid "History key"
-msgstr "Tecla de historial"
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
-#: ../data/preferences.ui.h:17
-msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
-msgstr ""
-
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:19
 msgid "Active plugins"
 msgstr "Complementos activos"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:20
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 msgid "List of active plugins."
 msgstr "Lista de complementos activos."
 
@@ -190,11 +180,7 @@ msgstr "N.º de elementos recientes"
 msgid "Clipboard"
 msgstr "Portapapeles"
 
-#: ../data/preferences.ui.h:19
-msgid "Hotkeys"
-msgstr "Atajos de teclado"
-
-#: ../data/preferences.ui.h:20
+#: ../data/preferences.ui.h:17
 msgid "Plugins"
 msgstr "Complementos"
 
@@ -294,3 +280,9 @@ msgstr "Pegar"
 #: ../unity-scope-diodon/unity-scope-diodon.vala:224
 msgid "Origin"
 msgstr "Origen"
+
+#~ msgid "History key"
+#~ msgstr "Tecla de historial"
+
+#~ msgid "Hotkeys"
+#~ msgstr "Atajos de teclado"
