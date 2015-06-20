@@ -114,7 +114,7 @@ def configure(conf):
     # set some debug relevant config values
     if Options.options.debug:
         conf.define ('DEBUG', 1)
-        conf.env['CFLAGS'] = ['-O0', '-g3', '-w']
+        conf.env['CFLAGS'] += ['-O0', '-g3', '-w']
         conf.env['VALAFLAGS'] = ['-g', '-v', '--enable-checking']
 
     conf.write_config_header ('config.h', remove=False)
