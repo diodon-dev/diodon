@@ -1,0 +1,2 @@
+[com.canonical.Unity.Dash]
+scopes=['home.scope', 'applications.scope', 'files.scope', 'video.scope', 'music.scope', 'photos.scope', 'social.scope', 'clipboard.scope']

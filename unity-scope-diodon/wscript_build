@@ -38,3 +38,6 @@ bld.new_task_gen (
   LIBDIR_DIODON = bld.env['LIBDIR_DIODON'],
   install_path = "${DATADIR}/dbus-1/services")
 
+task = bld.new_task_gen (
+    features = 'glib2')    
+task.add_settings_schemas ('unity-scope-diodon.gsettings-override')
