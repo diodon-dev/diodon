@@ -1,7 +1,7 @@
 [org.gnome.settings-daemon.plugins.media-keys]
 custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/diodon/']
 
-[org.gnome.settings-daemon.plugins.media-keys.custom-keybinding.diodon]
+[org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/diodon/]
 _name='Diodon Clipboard Manager'
 command='diodon'
 binding='<Ctrl><Alt>v'
