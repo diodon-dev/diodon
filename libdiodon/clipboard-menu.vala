@@ -73,9 +73,6 @@ namespace Diodon
             append(quit_item);
             
             show_all();
-            
-            this.key_press_event.connect(on_key_pressed);
-            this.key_release_event.connect(on_key_released);
         }
         
         /**
@@ -114,56 +111,6 @@ namespace Diodon
             
             destroy();
             dispose();
-        }
-        
-        /**
-         * select next item when history accelerator is pressed multiple times
-         */
-        private bool on_key_pressed(Gdk.EventKey event)
-        {
-            uint keyval;
-            Gdk.ModifierType state;
-            ClipboardConfiguration cfg = controller.get_configuration();
-            Gtk.accelerator_parse(cfg.history_accelerator,
-                out keyval, out state);
-            uint event_state = KeybindingManager.remove_lockmodifiers(event.state);
-            
-            if(event.keyval == keyval && event_state == state) {
-            
-                if(get_selected_item() == null) {
-                    select_first(false);
-                }
-                else {
-                    move_selected(1);
-                }
-                
-                return true;
-            }
-            
-            return false;
-        }
-
-        /**
-         * activate item when modifier of history accelerator are
-         * released and a item is selected.
-         */
-        private bool on_key_released(Gdk.EventKey event)
-        {
-            uint keyval;
-            Gdk.ModifierType state;
-            ClipboardConfiguration cfg = controller.get_configuration();
-            Gtk.accelerator_parse(cfg.history_accelerator,
-                out keyval, out state);
-            uint event_state = KeybindingManager.remove_lockmodifiers(event.state);
-              
-            if(event_state == state && event.is_modifier == 1) {
-                if(get_selected_item() != null) {
-                    activate_item(get_selected_item(), false);
-                    return true;
-                }
-            }
-                
-            return false;
         }
         
         /**

@@ -29,13 +29,11 @@ namespace Diodon
     public class Controller : GLib.Object
     {
         private Settings settings_clipboard;
-        private Settings settings_keybindings;
         private Settings settings_plugins;
         private Gee.Map<ClipboardType, ClipboardManager> clipboard_managers;
         private ZeitgeistClipboardStorage storage;
         private ClipboardConfiguration configuration;
         private PreferencesView preferences_view;
-        private KeybindingManager keybinding_manager;
         private Peas.ExtensionSet extension_set;
         private Peas.Engine peas_engine;
         private ClipboardMenu recent_menu = null;
@@ -72,10 +70,7 @@ namespace Diodon
             string diodon_dir = Utility.get_user_data_dir();
             clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
             
-            keybinding_manager = new KeybindingManager();
-            
             settings_clipboard = new Settings("net.launchpad.Diodon.clipboard");
-            settings_keybindings = new Settings("net.launchpad.Diodon.keybindings");
             settings_plugins = new Settings("net.launchpad.Diodon.plugins");
             
             peas_engine = Peas.Engine.get_default();
@@ -98,7 +93,6 @@ namespace Diodon
         {
             clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
             storage = new ZeitgeistClipboardStorage();
-            keybinding_manager = new KeybindingManager();
             clipboard_managers.set(ClipboardType.CLIPBOARD, new ClipboardManager(ClipboardType.CLIPBOARD, configuration));
             clipboard_managers.set(ClipboardType.PRIMARY, new PrimaryClipboardManager(configuration));
             preferences_view = new PreferencesView();                  
@@ -108,7 +102,6 @@ namespace Diodon
             enable_clipboard_manager(ClipboardType.CLIPBOARD, configuration.use_clipboard);
             enable_clipboard_manager(ClipboardType.PRIMARY, configuration.use_primary);
             enable_keep_clipboard_content(configuration.keep_clipboard_content);
-            change_history_accelerator(configuration.history_accelerator);
         }
         
         private static void on_extension_added(Peas.ExtensionSet set, Peas.PluginInfo info, 
@@ -135,8 +128,6 @@ namespace Diodon
             
             storage.on_items_deleted.connect(() => { rebuild_recent_menu.begin(); } );
             storage.on_items_inserted.connect(() => { rebuild_recent_menu.begin(); } );
-            
-            keybinding_manager.init();
             
             // init peas plugin system
             extension_set = new Peas.ExtensionSet(peas_engine, typeof(Peas.Activatable),
@@ -194,15 +185,6 @@ namespace Diodon
                 }
             );
             create_filter_pattern_regex(configuration.filter_pattern);
-            
-            settings_keybindings.bind("history-accelerator", configuration,
-                "history-accelerator", SettingsBindFlags.DEFAULT);
-            settings_keybindings.changed["history-accelerator"].connect(
-                (key) => {
-                    change_history_accelerator(configuration.history_accelerator);
-                }
-            );
-            change_history_accelerator(configuration.history_accelerator);
             
             // use clipboard and use primary needs to be initialized last as this
             // will start the polling of clipboard process
@@ -279,8 +261,8 @@ namespace Diodon
             }
             
             if(key != null) {
-                keybinding_manager.press(key);
-                keybinding_manager.release(key);
+                Utility.perform_key_event(key, true, 100);
+                Utility.perform_key_event(key, false, 0);
             }
         }
         
@@ -439,14 +421,6 @@ namespace Diodon
         }
         
         /**
-         * access to current keybinding manager
-         */
-        public KeybindingManager get_keybinding_manager()
-        {
-            return keybinding_manager;
-        }
-        
-        /**
          * Set text on all other clipboards then current type
          */
         private void synchronize(IClipboardItem item)
@@ -497,26 +471,6 @@ namespace Diodon
             }
             
             this._filter_pattern = null;
-        }
-        
-        /**
-         * change history accelerator key and bind new key to open_history.
-         *
-         * @param accelerator accelerator parseable by Gtk.accelerator_parse
-         */        
-        private void change_history_accelerator(string accelerator)
-        {
-            try {
-                // check if there is a previous accelerator to unbind
-                if(configuration.previous_history_accelerator != null) {
-                    keybinding_manager.unbind(configuration.previous_history_accelerator);
-                }
-                
-                // let's bind new one
-                keybinding_manager.bind(accelerator, show_history);
-            } catch(IOError e) {
-                warning("Changing of history accelerator failed. Cause: %s", e.message);
-            }
         }
         
         /**
@@ -667,7 +621,6 @@ namespace Diodon
             // shutdown all plugins
             if(extension_set != null) {
                 extension_set.@foreach((Peas.ExtensionSetForeachFunc)on_extension_removed);
-                keybinding_manager.dispose();
             }
             
             base.dispose();

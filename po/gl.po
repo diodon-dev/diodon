@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-14 17:06+0300\n"
+"POT-Creation-Date: 2015-06-20 14:30+0300\n"
 "PO-Revision-Date: 2014-08-02 02:19+0000\n"
 "Last-Translator: Manuel Xosé Lemos <Unknown>\n"
 "Language-Team: Galician <gl@li.org>\n"
+"Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-08-03 05:50+0000\n"
 "X-Generator: Launchpad (build 17147)\n"
-"Language: gl\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -25,6 +25,11 @@ msgstr "Xestor do portapapeis"
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
 msgstr "Xestor do portapapeis en GTK+"
+
+#: ../data/diodon.gschema.override.in.h:1
+#, fuzzy
+msgid "'Diodon Clipboard Manager'"
+msgstr "Xestor do portapapeis"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"
@@ -126,22 +131,31 @@ msgid "Number of recent clipboard items shown in clipboard menu."
 msgstr "Número de elementos recentes que se mostrarán no menú do portapapeis"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+msgid "Clipboard content filter pattern"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+msgid ""
+"Regex filter pattern whereas all clipboard items matching this pattern will "
+"be filtered and not added to clipboard history."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 #: ../data/preferences.ui.h:18
 msgid "History key"
 msgstr "Historial"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 #: ../data/preferences.ui.h:17
-msgid ""
-"Hotkey to quickly allow you to access menu with recent clipboard items."
+msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr ""
 "Atallo para o acceso rápido ao menú de elementos recentes do portapapeis."
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:19
 msgid "Active plugins"
 msgstr "Engadidos activos"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:20
 msgid "List of active plugins."
 msgstr "LIsta de engadidos activos."
 
@@ -196,7 +210,7 @@ msgstr "Atallos"
 msgid "Plugins"
 msgstr "Complementos"
 
-#: ../libdiodon/clipboard-menu.vala:36
+#: ../libdiodon/clipboard-menu.vala:45
 msgid "<Empty>"
 msgstr "<Baleiro>"
 

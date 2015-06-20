@@ -27,8 +27,6 @@ namespace Diodon
     public class ClipboardConfiguration : GLib.Object
     {
         private int _recent_items_size = 25;
-        private string _history_accelerator = "<Ctrl><Alt>V";
-    
         /**
          * flag whether primary selection is enabled
          */
@@ -78,25 +76,6 @@ namespace Diodon
                 if(value > 0 && value <= 100) {
                     _recent_items_size = value;
                 }
-            }
-        }
-        
-        /**
-         * previous clipboard history accelerator
-         */
-        public string previous_history_accelerator { get; set; }
-        
-        /**
-         * clipboard history accelerator
-         */
-        public string history_accelerator
-        {
-            get {
-                return _history_accelerator;
-            }
-            set {
-                previous_history_accelerator = _history_accelerator;
-                _history_accelerator = value;
             }
         }
     }

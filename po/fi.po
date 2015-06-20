@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-14 17:06+0300\n"
+"POT-Creation-Date: 2015-06-20 14:30+0300\n"
 "PO-Revision-Date: 2014-04-16 14:31+0000\n"
 "Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-04-17 06:03+0000\n"
 "X-Generator: Launchpad (build 16985)\n"
-"Language: fi\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -25,6 +25,11 @@ msgstr "Leikepöydän hallinta"
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
 msgstr "GTK+-pohjainen leikepöydän hallinta"
+
+#: ../data/diodon.gschema.override.in.h:1
+#, fuzzy
+msgid "'Diodon Clipboard Manager'"
+msgstr "Leikepöydän hallinta"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"
@@ -111,21 +116,30 @@ msgid "Number of recent clipboard items shown in clipboard menu."
 msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
+msgid "Clipboard content filter pattern"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+msgid ""
+"Regex filter pattern whereas all clipboard items matching this pattern will "
+"be filtered and not added to clipboard history."
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 #: ../data/preferences.ui.h:18
 msgid "History key"
 msgstr "Historianäppäin"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 #: ../data/preferences.ui.h:17
-msgid ""
-"Hotkey to quickly allow you to access menu with recent clipboard items."
+msgid "Hotkey to quickly allow you to access menu with recent clipboard items."
 msgstr ""
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:19
 msgid "Active plugins"
 msgstr "Käytössä olevat liitännäiset"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:20
 msgid "List of active plugins."
 msgstr "Luettelo käytössä olevista liitännäisistä."
 
@@ -178,7 +192,7 @@ msgstr "Pikanäppäimet"
 msgid "Plugins"
 msgstr "Liitännäiset"
 
-#: ../libdiodon/clipboard-menu.vala:36
+#: ../libdiodon/clipboard-menu.vala:45
 msgid "<Empty>"
 msgstr "<Tyhjä>"
 

@@ -97,6 +97,54 @@ namespace Diodon
             return path;
         }
         
+        /**
+         * Helper method performing given accelerator on current active
+         * window.
+         *
+         * @param accelerator accelerator parsable by Gtk.accelerator_parse
+         * @param press true for press key; false for releasing
+         * @param delay delay in milli seconds
+         * @return true if creation was successful; otherwise false.
+         */
+        public static bool perform_key_event(string accelerator, bool press, ulong delay)
+        {
+            // convert accelerator
+            uint keysym;
+            Gdk.ModifierType modifiers;
+            Gtk.accelerator_parse(accelerator, out keysym, out modifiers);
+            unowned X.Display display = Gdk.x11_get_default_xdisplay();
+            int keycode = display.keysym_to_keycode(keysym);
+            
+            // FIXME: there must be an easier way
+            int modifierykey = 0;
+            switch(modifiers) {
+                case Gdk.ModifierType.CONTROL_MASK:
+                    // currently missing in the gdk binding
+                    //modifierykey = Gdk.Key.Control_L;
+                    modifierykey = 0xffe3;
+                    break;
+                case Gdk.ModifierType.SHIFT_MASK:
+                    // currently missing in the gdk binding
+                    //modifierykey = Gdk.Key.Shift_L;
+                    modifierykey = 0xffe1;
+                    break;
+            }
+            int modifiercode = display.keysym_to_keycode(modifierykey);
+            
+            if(keycode != 0) {
+                
+                if(modifiercode != 0) {
+                    XTest.fake_key_event(display, modifiercode, press, delay);                
+                }
+                
+                XTest.fake_key_event(display, keycode, press, delay);                
+                
+                return true;
+            }
+            
+            return false;
+        }
+        
         private static X.Window get_active_window()
         {
             unowned Gdk.Screen screen = Gdk.Screen.get_default();

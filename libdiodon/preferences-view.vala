@@ -104,14 +104,6 @@ namespace Diodon
                         configuration.recent_items_size = recent_items_size.get_value_as_int();
                     });
                     
-                    // history_accelerator
-                    Gtk.Entry history_accelerator = 
-                        builder.get_object("entry_history_accelerator") as Gtk.Entry;
-                    history_accelerator.text = configuration.history_accelerator;
-                    history_accelerator.changed.connect(() => {
-                        configuration.history_accelerator = history_accelerator.get_text();
-                    });
-                    
                     // plugins
                     PeasGtk.PluginManager manager = new PeasGtk.PluginManager(
                         Peas.Engine.get_default());

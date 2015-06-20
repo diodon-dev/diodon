@@ -27,7 +27,6 @@ namespace Diodon
         Gtk.init(ref args);
         
 	    TestSuite.get_root().add_suite(new TestImageClipboardItem().get_suite());
-	    TestSuite.get_root().add_suite(new TestKeybindingManager().get_suite());
 	    TestSuite.get_root().add_suite(new TestZeitgeistClipboardStorage().get_suite());
 	    TestSuite.get_root().add_suite(new TestController().get_suite());
 	    
