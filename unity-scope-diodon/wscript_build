@@ -40,4 +40,4 @@ bld.new_task_gen (
 
 task = bld.new_task_gen (
     features = 'glib2')    
-task.add_settings_schemas ('unity-scope-diodon.gsettings-override')
+task.add_settings_schemas ('10_unity-scope-diodon.gschema.override')
