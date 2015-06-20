@@ -15,7 +15,7 @@ lib = bld.shlib (
   header_path = '${INCLUDEDIR}/diodon',
   gir = 'Diodon-1.0',
   packages = 'gtk+-3.0 gee-0.8',
-  packages_private = 'zeitgeist-2.0 x11 gdk-x11-3.0 libpeas-gtk-1.0 libpeas-1.0 config xtst gdk-3.0',
+  packages_private = 'zeitgeist-2.0 gdk-x11-3.0 libpeas-gtk-1.0 libpeas-1.0 config xtst gdk-3.0',
   source = bld.path.ant_glob (incl='**/*.vala'))
 
 lib_typelib = bld.new_task_gen(
