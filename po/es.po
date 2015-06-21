@@ -11,12 +11,12 @@ msgstr ""
 "PO-Revision-Date: 2015-02-17 05:20+0000\n"
 "Last-Translator: Adolfo Jayme <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
-"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-02-19 05:20+0000\n"
-"X-Generator: Launchpad (build 17341)\n"
+"X-Launchpad-Export-Date: 2015-06-21 05:15+0000\n"
+"X-Generator: Launchpad (build 17572)\n"
+"Language: es\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -27,9 +27,8 @@ msgid "GTK+ Clipboard Manager"
 msgstr "Gestor del portapapeles GTK+"
 
 #: ../data/diodon.gschema.override.in.h:1
-#, fuzzy
 msgid "'Diodon Clipboard Manager'"
-msgstr "Gestor del portapapeles"
+msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"
@@ -280,9 +279,3 @@ msgstr "Pegar"
 #: ../unity-scope-diodon/unity-scope-diodon.vala:224
 msgid "Origin"
 msgstr "Origen"
-
-#~ msgid "History key"
-#~ msgstr "Tecla de historial"
-
-#~ msgid "Hotkeys"
-#~ msgstr "Atajos de teclado"

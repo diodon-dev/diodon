@@ -11,12 +11,12 @@ msgstr ""
 "PO-Revision-Date: 2014-04-16 14:31+0000\n"
 "Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
-"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-04-17 06:03+0000\n"
-"X-Generator: Launchpad (build 16985)\n"
+"X-Launchpad-Export-Date: 2015-06-21 05:15+0000\n"
+"X-Generator: Launchpad (build 17572)\n"
+"Language: fi\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -27,9 +27,8 @@ msgid "GTK+ Clipboard Manager"
 msgstr "GTK+-pohjainen leikepöydän hallinta"
 
 #: ../data/diodon.gschema.override.in.h:1
-#, fuzzy
 msgid "'Diodon Clipboard Manager'"
-msgstr "Leikepöydän hallinta"
+msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"
@@ -274,9 +273,3 @@ msgstr "Liitä"
 #: ../unity-scope-diodon/unity-scope-diodon.vala:224
 msgid "Origin"
 msgstr "Alkuperä"
-
-#~ msgid "History key"
-#~ msgstr "Historianäppäin"
-
-#~ msgid "Hotkeys"
-#~ msgstr "Pikanäppäimet"

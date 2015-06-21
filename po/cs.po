@@ -11,12 +11,12 @@ msgstr ""
 "PO-Revision-Date: 2014-05-04 19:57+0000\n"
 "Last-Translator: Vojta Staněk <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-05 05:44+0000\n"
-"X-Generator: Launchpad (build 16985)\n"
+"X-Launchpad-Export-Date: 2015-06-21 05:15+0000\n"
+"X-Generator: Launchpad (build 17572)\n"
+"Language: cs\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -27,9 +27,8 @@ msgid "GTK+ Clipboard Manager"
 msgstr "GTK+ Správce schránky"
 
 #: ../data/diodon.gschema.override.in.h:1
-#, fuzzy
 msgid "'Diodon Clipboard Manager'"
-msgstr "Správce schránky"
+msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"
@@ -275,9 +274,3 @@ msgstr ""
 #: ../unity-scope-diodon/unity-scope-diodon.vala:224
 msgid "Origin"
 msgstr ""
-
-#~ msgid "History key"
-#~ msgstr "Zobrazit historii"
-
-#~ msgid "Hotkeys"
-#~ msgstr "Klávesové zkratky"
