@@ -115,28 +115,17 @@ namespace Diodon
             unowned X.Display display = Gdk.x11_get_default_xdisplay();
             int keycode = display.keysym_to_keycode(keysym);
             
-            // FIXME: there must be an easier way
-            int modifierykey = 0;
-            switch(modifiers) {
-                case Gdk.ModifierType.CONTROL_MASK:
-                    // currently missing in the gdk binding
-                    //modifierykey = Gdk.Key.Control_L;
-                    modifierykey = 0xffe3;
-                    break;
-                case Gdk.ModifierType.SHIFT_MASK:
-                    // currently missing in the gdk binding
-                    //modifierykey = Gdk.Key.Shift_L;
-                    modifierykey = 0xffe1;
-                    break;
-            }
-            int modifiercode = display.keysym_to_keycode(modifierykey);
-            
             if(keycode != 0) {
                 
-                if(modifiercode != 0) {
-                    XTest.fake_key_event(display, modifiercode, press, delay);                
+                if(Gdk.ModifierType.CONTROL_MASK in modifiers) {
+                    int modcode = display.keysym_to_keycode(Gdk.Key.Control_L);
+                    XTest.fake_key_event(display, modcode, press, delay);  
                 }
-                
+                if(Gdk.ModifierType.SHIFT_MASK in modifiers) {
+                    int modcode = display.keysym_to_keycode(Gdk.Key.Shift_L);
+                    XTest.fake_key_event(display, modcode, press, delay);
+                }
+            
                 XTest.fake_key_event(display, keycode, press, delay);                
                 
                 return true;

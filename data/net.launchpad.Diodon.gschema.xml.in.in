@@ -40,6 +40,11 @@
       <_summary>Clipboard content filter pattern</_summary>
       <_description>Regex filter pattern whereas all clipboard items matching this pattern will be filtered and not added to clipboard history.</_description>
     </key>
+    <key name="app-paste-keybindings" type="as">
+      <default>['/usr/bin/gnome-terminal|&lt;Shift&gt;&lt;Ctrl&gt;V']</default>
+      <_summary>Lookup dictionary for application using different paste keybindings</_summary>
+      <_description>A lookup dictionary for applications using different paste keybindings than Ctrl + V. Pattern of each string in this array is path-of-app|keybinding</_description>
+    </key>
   </schema>
   <schema gettext-domain="@GETTEXT_PACKAGE@" id="net.launchpad.Diodon.plugins" path="/net/launchpad/diodon/plugins/">
     <key name="active-plugins" type="as">

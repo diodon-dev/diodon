@@ -29,6 +29,7 @@ namespace Diodon
 	    TestSuite.get_root().add_suite(new TestImageClipboardItem().get_suite());
 	    TestSuite.get_root().add_suite(new TestZeitgeistClipboardStorage().get_suite());
 	    TestSuite.get_root().add_suite(new TestController().get_suite());
+	    TestSuite.get_root().add_suite(new TestClipboardConfiguration().get_suite());
 	    
 	    return Test.run ();
     }

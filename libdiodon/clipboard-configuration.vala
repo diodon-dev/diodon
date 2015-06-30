@@ -64,6 +64,37 @@ namespace Diodon
         public string filter_pattern { get; set; default = "^\\s+$"; }
         
         /**
+         * a lookup dictionary for application using different paste keybindings
+         * than <Ctrl>V.
+         * pattern of each string in this array is path-app|<keybinding>
+         * e.g. /usr/bin/gnome-terminal|<Ctrl><Shift>V
+         */
+        public string[] app_paste_keybindings { get; set; }
+        
+        /**
+         * Lookup whether app paste keybinding
+         *
+         * @return app paste keybinding or null if not available
+         */
+        public string? lookup_app_paste_keybinding(string? apppath)
+        {
+            string? key = null;
+            
+            if(app_paste_keybindings != null && apppath != null) {
+                foreach(string keybinding in app_paste_keybindings) {
+                    string[] path_keybinding = keybinding.split("|");
+                    if(path_keybinding.length == 2) {
+                        if(strcmp(apppath, path_keybinding[0]) == 0) {
+                            return path_keybinding[1];
+                        }
+                    }
+                }
+            }
+            
+            return key;
+        }
+        
+        /**
          * number of recent items to be shown.
          * Value must be bigger than 0 and lower or equal than 100.
          */

@@ -69,7 +69,7 @@ namespace Diodon
         {            
             string diodon_dir = Utility.get_user_data_dir();
             clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
-            
+
             settings_clipboard = new Settings("net.launchpad.Diodon.clipboard");
             settings_plugins = new Settings("net.launchpad.Diodon.plugins");
             
@@ -154,6 +154,8 @@ namespace Diodon
                 "synchronize-clipboards", SettingsBindFlags.DEFAULT);
             settings_clipboard.bind("add-images", configuration,
                 "add-images", SettingsBindFlags.DEFAULT);
+            settings_clipboard.bind("app-paste-keybindings", configuration,
+                "app-paste-keybindings", SettingsBindFlags.DEFAULT);
 
             settings_clipboard.bind("keep-clipboard-content", configuration,
                 "keep-clipboard-content", SettingsBindFlags.DEFAULT);
@@ -251,6 +253,12 @@ namespace Diodon
             string key = null;
             if(configuration.use_clipboard) {
                 key = "<Ctrl>V";
+                
+                string? origin = Utility.get_path_of_active_application();
+                string? app_key = configuration.lookup_app_paste_keybinding(origin);
+                if(app_key != null) {
+                    key = app_key;
+                }
             }
             
             // prefer primary selection paste as such works
@@ -261,6 +269,7 @@ namespace Diodon
             }
             
             if(key != null) {
+                debug("Execute paste with keybinding %s", key);
                 Utility.perform_key_event(key, true, 100);
                 Utility.perform_key_event(key, false, 0);
             }
