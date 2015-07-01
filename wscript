@@ -60,7 +60,7 @@ def configure(conf):
     conf.check_cfg(package='zeitgeist-2.0',     uselib_store='ZEITGEIST',    atleast_version='0.9.14', mandatory=1, args='--cflags --libs')    
 
     conf.find_program('Xvfb', var='XVFB')
-    conf.find_program('zeitgeist-daemon', var='XVFB')
+    conf.find_program('zeitgeist-daemon', var='ZEITGEIST_DAEMON')
     
     # FIXME: waf throws up when assigning an empty string
     # we need a better way of configuring plugins which are enabled
@@ -141,16 +141,16 @@ def build(ctx):
 
 def setup_tests(ctx):
     ctx.dbus = DBusPrivateMessageBus()
-    error = ctx.dbus.run()
+    error = ctx.dbus.run(ctx)
 
     Logs.info("Testsuite is running using a private dbus bus")
     config = ctx.dbus.dbus_config.copy()
     config.update({"DISPLAY": ctx.dbus.DISPLAY, "pid.Xvfb": ctx.dbus.display.pid})
         
-    ctx.zeitgeist_process = start_zeitgeist_daemon()
+    ctx.zeitgeist_process = start_zeitgeist_daemon(ctx)
     
 # TODO: is this really the best spot to start the zeitgeist daemon?
-def start_zeitgeist_daemon():
+def start_zeitgeist_daemon(ctx):
     """
     start zeitgeist daemon writing to temporary data path
     """
@@ -164,7 +164,7 @@ def start_zeitgeist_daemon():
     args = { 'env': zg_env }
     args['stderr'] = PIPE
     args['stdout'] = PIPE
-    zeitgeist_process = Popen(('/usr/bin/zeitgeist-daemon', '--replace', '--no-datahub'), **args)
+    zeitgeist_process = Popen((ctx.env.get_flat('ZEITGEIST_DAEMON'), '--replace', '--no-datahub'), **args)
     
     # give the process some time to wake up
     time.sleep(1)
@@ -240,11 +240,11 @@ class DBusPrivateMessageBus(object):
 	# one test running at once.
 	DISPLAY = ":%d" % random.randint(20, 100)
 
-	def _run(self):
+	def _run(self, ctx):
 		os.environ.update({"DISPLAY": self.DISPLAY})
 		devnull = file("/dev/null", "w")
 		self.display = Popen(
-			["Xvfb", self.DISPLAY, "-screen", "0", "1024x768x8"],
+			[ctx.env.get_flat('XVFB'), self.DISPLAY, "-screen", "0", "1024x768x8"],
 			stderr=devnull, stdout=devnull
 		)
 		# give the display some time to wake up
@@ -257,9 +257,9 @@ class DBusPrivateMessageBus(object):
 		self.dbus_config = dict(l.split("=", 1) for l in dbus.communicate()[0].split("\n") if l)
 		os.environ.update(self.dbus_config)
 		
-	def run(self, ignore_errors=False):
+	def run(self, ctx, ignore_errors=False):
 		try:
-			return self._run()
+			return self._run(ctx)
 		except Exception, e:
 			if ignore_errors:
 				return e
