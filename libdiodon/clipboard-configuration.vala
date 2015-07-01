@@ -78,8 +78,6 @@ namespace Diodon
          */
         public string? lookup_app_paste_keybinding(string? apppath)
         {
-            string? key = null;
-            
             if(app_paste_keybindings != null && apppath != null) {
                 foreach(string keybinding in app_paste_keybindings) {
                     string[] path_keybinding = keybinding.split("|");
@@ -91,7 +89,7 @@ namespace Diodon
                 }
             }
             
-            return key;
+            return null;
         }
         
         /**
