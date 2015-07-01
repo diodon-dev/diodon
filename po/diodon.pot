@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-20 15:03+0300\n"
+"POT-Creation-Date: 2015-07-01 09:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -120,10 +120,20 @@ msgid ""
 msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
-msgid "Active plugins"
+msgid "Lookup dictionary for application using different paste keybindings"
 msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
+msgid ""
+"A lookup dictionary for applications using different paste keybindings than "
+"Ctrl + V. Pattern of each string in this array is path-of-app|keybinding"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:19
+msgid "Active plugins"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:20
 msgid "List of active plugins."
 msgstr ""
 

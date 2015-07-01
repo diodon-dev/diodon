@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-20 15:03+0300\n"
+"POT-Creation-Date: 2015-07-01 09:12+0300\n"
 "PO-Revision-Date: 2014-10-08 16:29+0000\n"
 "Last-Translator: JBP <jeanbaptiste.pham@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2015-06-21 05:15+0000\n"
 "X-Generator: Launchpad (build 17572)\n"
-"Language: fr\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -138,10 +138,20 @@ msgid ""
 msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
+msgid "Lookup dictionary for application using different paste keybindings"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
+msgid ""
+"A lookup dictionary for applications using different paste keybindings than "
+"Ctrl + V. Pattern of each string in this array is path-of-app|keybinding"
+msgstr ""
+
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:19
 msgid "Active plugins"
 msgstr "Greffons actifs"
 
-#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
+#: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:20
 msgid "List of active plugins."
 msgstr "Liste des greffons actifs"
 
@@ -252,8 +262,7 @@ msgstr "Textes;Fichiers;Images"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:9
 msgid "Last 24 hours;Last 7 days;Last 30 days;Last year;"
-msgstr ""
-"Dernières 24h;7 jours précédents;30 jours précédents; dernière année;"
+msgstr "Dernières 24h;7 jours précédents;30 jours précédents; dernière année;"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:45
 msgid "Search Clipboard"
