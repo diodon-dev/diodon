@@ -3,7 +3,7 @@
 # Oliver Sauder, 2010
 
 from subprocess import Popen, PIPE
-import os, traceback, waflib, tempfile, time, signal, subprocess
+import os, traceback, waflib, tempfile, time, signal, subprocess, random
 import Options, Logs
 from waflib.Build import BuildContext
 from waflib.Tools import waf_unit_test
@@ -23,6 +23,7 @@ out = '_build_'
 
 class CustomBuildContext(BuildContext):
     zeitgeist_process = None
+    display_process = None
 
 def options(opt):
     opt.tool_options('compiler_c')
@@ -57,6 +58,8 @@ def configure(conf):
     conf.check_cfg(package='gtk+-3.0',          uselib_store='GTK',          atleast_version='3.10.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='xtst',              uselib_store='XTST',         atleast_version='1.2.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='zeitgeist-2.0',     uselib_store='ZEITGEIST',    atleast_version='0.9.14', mandatory=1, args='--cflags --libs')    
+
+    conf.find_program('Xvfb', var='XVFB')
     
     # FIXME: waf throws up when assigning an empty string
     # we need a better way of configuring plugins which are enabled
@@ -136,12 +139,16 @@ def build(ctx):
     ctx.options.all_tests = True
     
 def setup_tests(ctx):
+    ctx.display_process = start_display(ctx)
+
     # only when integration tests are run does the zeitgeist service
     # need to be started
     if getattr(Options.options, 'testcmd', False):
         ctx.zeitgeist_process = start_zeitgeist_daemon(ctx)
 
 def teardown_tests(ctx):
+    stop_display(ctx)
+
     if ctx.zeitgeist_process:
         stop_zeitgeist_daemon(ctx.zeitgeist_process)
     
@@ -158,6 +165,23 @@ def teardown_tests(ctx):
                 Logs.warn(stderr)
                 
             ctx.fatal("Some test failed.")
+
+def start_display(ctx):
+    devnull = file("/dev/null", "w")
+    display = ":%d" % random.randint(20, 100)
+    display_process = Popen([ctx.env.get_flat('XVFB'), display, "-screen", "0", "1024x768x8"], stderr=devnull, stdout=devnull)
+    # give the display some time to wake up
+    time.sleep(1)
+    err = display_process.poll()
+    if err:
+        raise RuntimeError("Could not start Xvfb on display %s, got err=%i" %(display, err))
+
+    os.environ.update({"DISPLAY": display})
+    return display_process
+
+def stop_display(ctx):
+    os.kill(ctx.display_process.pid, signal.SIGKILL)
+    ctx.display_process.wait()
 
 # TODO: is this really the best spot to start the zeitgeist daemon?
 def start_zeitgeist_daemon(ctx):
