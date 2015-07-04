@@ -23,7 +23,6 @@ out = '_build_'
 
 class CustomBuildContext(BuildContext):
     zeitgeist_process = None
-    dbus = None
 
 def options(opt):
     opt.tool_options('compiler_c')
@@ -58,9 +57,6 @@ def configure(conf):
     conf.check_cfg(package='gtk+-3.0',          uselib_store='GTK',          atleast_version='3.10.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='xtst',              uselib_store='XTST',         atleast_version='1.2.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='zeitgeist-2.0',     uselib_store='ZEITGEIST',    atleast_version='0.9.14', mandatory=1, args='--cflags --libs')    
-
-    conf.find_program('Xvfb', var='XVFB')
-    conf.find_program('zeitgeist-daemon', var='ZEITGEIST_DAEMON')
     
     # FIXME: waf throws up when assigning an empty string
     # we need a better way of configuring plugins which are enabled
@@ -178,7 +174,7 @@ def start_zeitgeist_daemon(ctx):
     args = { 'env': zg_env }
     args['stderr'] = PIPE
     args['stdout'] = PIPE
-    zeitgeist_process = Popen((ctx.env.get_flat('ZEITGEIST_DAEMON'), '--replace', '--no-datahub'), **args)
+    zeitgeist_process = Popen(('zeitgeist-daemon', '--replace', '--no-datahub'), **args)
     
     # give the process some time to wake up
     time.sleep(1)
