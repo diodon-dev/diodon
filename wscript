@@ -3,7 +3,7 @@
 # Oliver Sauder, 2010
 
 from subprocess import Popen, PIPE
-import os, traceback, waflib, tempfile, time, signal, random, dbus, subprocess
+import os, traceback, waflib, tempfile, time, signal, subprocess
 import Options, Logs
 from waflib.Build import BuildContext
 from waflib.Tools import waf_unit_test
