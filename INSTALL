@@ -20,3 +20,7 @@ For uninstalling type this:
 
     sudo ./waf uninstall
 
+For developers who also want to run integration tests the following
+command build can be run:
+
+    ./waf build --testcmd='%s --integration'

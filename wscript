@@ -138,17 +138,31 @@ def build(ctx):
 	# $ waf --alltests
 	# to set this behaviour permanenly:    
     ctx.options.all_tests = True
-
-def setup_tests(ctx):
-    ctx.dbus = DBusPrivateMessageBus()
-    error = ctx.dbus.run(ctx)
-
-    Logs.info("Testsuite is running using a private dbus bus")
-    config = ctx.dbus.dbus_config.copy()
-    config.update({"DISPLAY": ctx.dbus.DISPLAY, "pid.Xvfb": ctx.dbus.display.pid})
-        
-    ctx.zeitgeist_process = start_zeitgeist_daemon(ctx)
     
+def setup_tests(ctx):
+    # only when integration tests are run does the zeitgeist service
+    # need to be started
+    if getattr(Options.options, 'testcmd', False):
+        ctx.zeitgeist_process = start_zeitgeist_daemon(ctx)
+
+def teardown_tests(ctx):
+    if ctx.zeitgeist_process:
+        stop_zeitgeist_daemon(ctx.zeitgeist_process)
+    
+    # write test summary
+    waf_unit_test.summary(ctx)
+
+    # Ensure that all tests have passed, if not log errors
+    lst = getattr(ctx, 'utest_results', [])
+    if lst:
+        tfail = len([x for x in lst if x[1]])
+        if tfail:
+            for (filename, returncode, stdout, stderr) in lst:
+                Logs.warn(stdout)
+                Logs.warn(stderr)
+                
+            ctx.fatal("Some test failed.")
+
 # TODO: is this really the best spot to start the zeitgeist daemon?
 def start_zeitgeist_daemon(ctx):
     """
@@ -175,33 +189,17 @@ def start_zeitgeist_daemon(ctx):
         error = "zeitgeist-daemon exits with error %i." %(error)
         raise RuntimeError(error)
     
+    Logs.info("Started Zeitgeist Daemon with pid %u" % zeitgeist_process.pid);
     return zeitgeist_process
-    
-def teardown_tests(ctx):
-    stop_zeitgeist_daemon(ctx.zeitgeist_process)
-    ctx.dbus.quit(ignore_errors=True)
-    
-    # write test summary
-    waf_unit_test.summary(ctx)
 
-    # Ensure that all tests have passed, if not log errors
-    lst = getattr(ctx, 'utest_results', [])
-    if lst:
-        tfail = len([x for x in lst if x[1]])
-        if tfail:
-            for (filename, returncode, stdout, stderr) in lst:
-                Logs.warn(stdout)
-                Logs.warn(stderr)
-                
-            ctx.fatal("Some test failed.")
-   
 def stop_zeitgeist_daemon(zeitgeist_process):
     """
     Kill started test zeitgeist daemon
     """
     os.kill(zeitgeist_process.pid, signal.SIGKILL)
     zeitgeist_process.wait()
-
+    Logs.info("Stopped Zeitgeist Daemon with pid %u" % zeitgeist_process.pid);
+    
 def post(ctx):
     if ctx.cmd == 'install':
         ctx.exec_command('/sbin/ldconfig')
@@ -233,53 +231,3 @@ def shutdown(self):
             Logs.error("Failed to generate po template.")
             Logs.errors("Make sure intltool is installed.")
         os.chdir ('..')
-
-# TODO class needs to be moved elsewhere, waf task might be considered
-class DBusPrivateMessageBus(object):
-	# Choose a random number so it's possible to have more than
-	# one test running at once.
-	DISPLAY = ":%d" % random.randint(20, 100)
-
-	def _run(self, ctx):
-		os.environ.update({"DISPLAY": self.DISPLAY})
-		devnull = file("/dev/null", "w")
-		self.display = Popen(
-			[ctx.env.get_flat('XVFB'), self.DISPLAY, "-screen", "0", "1024x768x8"],
-			stderr=devnull, stdout=devnull
-		)
-		# give the display some time to wake up
-		time.sleep(1)
-		err = self.display.poll()
-		if err:
-			raise RuntimeError("Could not start Xvfb on display %s, got err=%i" %(self.DISPLAY, err))
-		dbus = Popen(["dbus-launch"], stdout=PIPE)
-		time.sleep(1)
-		self.dbus_config = dict(l.split("=", 1) for l in dbus.communicate()[0].split("\n") if l)
-		os.environ.update(self.dbus_config)
-		
-	def run(self, ctx, ignore_errors=False):
-		try:
-			return self._run(ctx)
-		except Exception, e:
-			if ignore_errors:
-				return e
-			raise
-
-	def _quit(self):
-		os.kill(self.display.pid, signal.SIGKILL)
-		self.display.wait()
-		pid = int(self.dbus_config["DBUS_SESSION_BUS_PID"])
-		os.kill(pid, signal.SIGKILL)
-		try:
-			os.waitpid(pid, 0)
-		except OSError:
-			pass
-			
-	def quit(self, ignore_errors=False):
-		try:
-			return self._quit()
-		except Exception, e:
-			if ignore_errors:
-				return e
-			raise
-
