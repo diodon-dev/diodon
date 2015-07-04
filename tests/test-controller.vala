@@ -38,7 +38,7 @@ namespace Diodon
 	    public override void set_up()
 	    {
 	        ClipboardConfiguration cfg = new ClipboardConfiguration();
-	        this.controller = new Controller.with_configuration(cfg);
+	        this.controller = new Controller.with_configuration(cfg, false);
         }
         
 	    public void test_filter_item_whitespace()

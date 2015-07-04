@@ -89,10 +89,12 @@ namespace Diodon
             preferences_view = new PreferencesView();                  
         }
         
-        public Controller.with_configuration(ClipboardConfiguration configuration)
+        public Controller.with_configuration(ClipboardConfiguration configuration, bool with_zeitgeist=true)
         {
             clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
-            storage = new ZeitgeistClipboardStorage();
+            if(with_zeitgeist) {
+                storage = new ZeitgeistClipboardStorage();
+            }
             clipboard_managers.set(ClipboardType.CLIPBOARD, new ClipboardManager(ClipboardType.CLIPBOARD, configuration));
             clipboard_managers.set(ClipboardType.PRIMARY, new PrimaryClipboardManager(configuration));
             preferences_view = new PreferencesView();                  
