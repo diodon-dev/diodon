@@ -142,11 +142,6 @@ namespace Diodon
                 
                 DiodonApplication app = new DiodonApplication();
                 
-                // application has to be terminiated gracefully
-                Unix.signal_add(ProcessSignal.INT, () => { app.controller.quit(); return true; });
-                Unix.signal_add(ProcessSignal.TERM, () => { app.controller.quit(); return true; });
-                Unix.signal_add(ProcessSignal.HUP, () => { app.controller.quit(); return true; });
-                
                 if(checksum != null) {
                     debug("activate paste-action with checksum %s", checksum);
                     app.register();
