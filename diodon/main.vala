@@ -91,16 +91,6 @@ namespace Diodon
             }
         }
         
-        public override void shutdown()
-        {
-            base.shutdown();
-            
-            if(controller != null) {
-                controller.dispose();
-                controller = null;
-            }
-        }
-        
         public static int main(string[] args)
         {
             try {
