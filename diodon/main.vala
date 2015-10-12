@@ -54,7 +54,7 @@ namespace Diodon
         
         public DiodonApplication()
         {
-            Object(application_id: Config.BUSNAME, flags: ApplicationFlags.FLAGS_NONE, register_session: true);
+            Object(application_id: Config.BUSNAME, flags: ApplicationFlags.FLAGS_NONE);
             
             // add supported actions
             SimpleAction paste_action = new SimpleAction("paste-action", VariantType.STRING);
