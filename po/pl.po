@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-14 17:33+0100\n"
+"POT-Creation-Date: 2016-01-14 21:18+0100\n"
 "PO-Revision-Date: 2014-03-09 07:57+0000\n"
 "Last-Translator: Michał Olber <michal.olber@osworld.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -25,10 +25,6 @@ msgstr "Menadżer Schowka"
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
 msgstr "Menadżer schowka GTK+"
-
-#: ../data/diodon.gschema.override.in.h:1
-msgid "'Diodon Clipboard Manager'"
-msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"

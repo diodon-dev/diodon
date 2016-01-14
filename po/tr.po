@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-14 17:33+0100\n"
+"POT-Creation-Date: 2016-01-14 21:18+0100\n"
 "PO-Revision-Date: 2014-03-27 08:54+0000\n"
 "Last-Translator: gecegezen <Unknown>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -27,10 +27,6 @@ msgstr "Pano Yöneticisi"
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
 msgstr "GTK+ Pano Yöneticisi"
-
-#: ../data/diodon.gschema.override.in.h:1
-msgid "'Diodon Clipboard Manager'"
-msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"

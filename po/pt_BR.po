@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-14 17:33+0100\n"
+"POT-Creation-Date: 2016-01-14 21:18+0100\n"
 "PO-Revision-Date: 2013-12-29 00:09+0000\n"
 "Last-Translator: Oliver Sauder <os@esite.ch>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -25,10 +25,6 @@ msgstr "Gerenciador de área de transferência"
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
 msgstr "Gerenciador de área de transferência em GTK+"
-
-#: ../data/diodon.gschema.override.in.h:1
-msgid "'Diodon Clipboard Manager'"
-msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"

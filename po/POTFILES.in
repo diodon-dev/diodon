@@ -2,7 +2,6 @@
 # Please keep this file sorted alphabetically.
 
 data/diodon.desktop.in
-[type: gettext/ini]data/diodon.gschema.override.in
 data/net.launchpad.Diodon.gschema.xml.in.in
 [type: gettext/glade]data/preferences.ui
 libdiodon/clipboard-menu.vala

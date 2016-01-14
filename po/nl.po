@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-14 17:33+0100\n"
+"POT-Creation-Date: 2016-01-14 21:18+0100\n"
 "PO-Revision-Date: 2015-10-01 11:11+0000\n"
 "Last-Translator: rob <linuxned@gmail.com>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -25,10 +25,6 @@ msgstr "Klembordbeheer"
 #: ../data/diodon.desktop.in.h:2
 msgid "GTK+ Clipboard Manager"
 msgstr "GTK+-klembordbeheer"
-
-#: ../data/diodon.gschema.override.in.h:1
-msgid "'Diodon Clipboard Manager'"
-msgstr "'Diodon-klembordbeheer'"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:1
 msgid "Use clipboard (Ctrl+C)"
@@ -315,3 +311,6 @@ msgstr "Plakken"
 #: ../unity-scope-diodon/unity-scope-diodon.vala:224
 msgid "Origin"
 msgstr "Vindplaats:"
+
+#~ msgid "'Diodon Clipboard Manager'"
+#~ msgstr "'Diodon-klembordbeheer'"
