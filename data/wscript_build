@@ -25,13 +25,6 @@ task.add_settings_schemas ('net.launchpad.Diodon.gschema.xml')
 bld.new_task_gen (
     features = 'intltool_in',
     podir = '../po',
-    source = 'diodon.gschema.override.in',
-    install_path = "${DATADIR}/glib-2.0/schemas",
-    flags = ["-d", "-q", "-u", "-c"])
-    
-bld.new_task_gen (
-    features = 'intltool_in',
-    podir = '../po',
     source = 'diodon.desktop.in',
     flags = ["-d", "-q", "-u", "-c"],
     install_path = "${DATADIR}/applications")
