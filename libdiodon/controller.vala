@@ -413,6 +413,17 @@ namespace Diodon
         }
         
         /**
+         * Get clipboard item by its given checksum
+         *
+         * @param checksum checksum of clipboard item
+         * @return clipboard item of given checksum; othterwise null if not available
+         */
+        public async IClipboardItem? get_item_by_checksum(string checksum, Cancellable? cancellable = null)
+        {
+            return yield storage.get_item_by_checksum(checksum, cancellable);
+        }
+        
+        /**
          * Get currently selected item for given clipboard type
          * 
          * @param type clipboard type
