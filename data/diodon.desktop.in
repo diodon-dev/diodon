@@ -5,10 +5,10 @@ Name=Diodon
 _GenericName=Clipboard Manager
 _Comment=GTK+ Clipboard Manager
 Icon=diodon
-NotShowIn=KDE
+NotShowIn=KDE;
 Exec=diodon %u
 Terminal=false
-Categories=GTK;GNOME;Application;Utility;
+Categories=GTK;GNOME;Utility;
 StartupNotify=false
 MimeType=x-scheme-handler/clipboard;
 
