@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: Diodon 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-14 21:18+0100\n"
-"PO-Revision-Date: 2016-01-25 20:42+0000\n"
-"Last-Translator: Oliver Sauder <os@esite.ch>\n"
+"PO-Revision-Date: 2016-05-07 14:06+0000\n"
+"Last-Translator: UweS <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-01-26 05:18+0000\n"
-"X-Generator: Launchpad (build 17902)\n"
+"X-Launchpad-Export-Date: 2016-05-08 04:38+0000\n"
+"X-Generator: Launchpad (build 18025)\n"
 "Language: de\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -123,31 +123,38 @@ msgstr "Anzahl der im Zwischenablage-Menü angezeigten Einträge"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Clipboard content filter pattern"
-msgstr ""
+msgstr "Filterregel für Zwischenablageninhalte"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid ""
 "Regex filter pattern whereas all clipboard items matching this pattern will "
 "be filtered and not added to clipboard history."
 msgstr ""
+"Regex-Filterregel; Zwischenablageninhalte, die dieser Regel entsprechen, "
+"werden ausgefiltert und nicht in die Zwischenablagen-Chronik aufgenommen"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 msgid "Lookup dictionary for application using different paste keybindings"
 msgstr ""
+"Verzeichnis mit Anwendungen, die abweichende Tastenbelegungen für das "
+"Einfügen nutzen"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 msgid ""
 "A lookup dictionary for applications using different paste keybindings than "
 "Ctrl + V. Pattern of each string in this array is path-of-app|keybinding"
 msgstr ""
+"Verzeichnis von Anwendungen, die andere Tastenbelegungen als Strg + V für "
+"das Einfügen nutzen. Die Zeichenketten dieses Arrays sind nach dem Muster "
+"pfad-zur-anwendung|tastenbelegung aufgebaut"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:19
 msgid "Active plugins"
-msgstr "Aktive Plugins"
+msgstr "Aktive Erweiterungen"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:20
 msgid "List of active plugins."
-msgstr "Liste der aktiven Plugins"
+msgstr "Liste der aktiven Erweiterungen"
 
 #: ../data/preferences.ui.h:1
 msgid "Diodon Preferences"
@@ -196,10 +203,13 @@ msgid ""
 "your desktop environment.\n"
 "Use /usr/bin/diodon as command."
 msgstr ""
+"Tragen Sie das selbst gewählte Tastenkürzel \n"
+"in Ihrer Desktop-Umgebung ein.\n"
+"Verwenden Sie den Befehl /usr/bin/diodon."
 
 #: ../data/preferences.ui.h:20
 msgid "More information"
-msgstr "Mehr Informationen"
+msgstr "Weitere Informationen"
 
 #: ../data/preferences.ui.h:21
 msgid "Hotkeys"
@@ -207,7 +217,7 @@ msgstr "Tastenkürzel"
 
 #: ../data/preferences.ui.h:22
 msgid "Plugins"
-msgstr "Plugins"
+msgstr "Erweiterungen"
 
 #: ../libdiodon/clipboard-menu.vala:45
 msgid "<Empty>"
@@ -234,7 +244,7 @@ msgid ""
 "This is an Ubuntu search plugin that enables information from Diodon to be "
 "searched and displayed in the Dash underneath the Clipboard header."
 msgstr ""
-"Dies ist ein Ubuntu-Such-Plugin, die das Suchen und Anzeigen von "
+"Dies ist ein Ubuntu-Such-Erweiterung, die das Suchen und Anzeigen von "
 "Informationen aus Diodon im Dash unter der Zwischenablage-Kopfzeile "
 "ermöglicht."
 
