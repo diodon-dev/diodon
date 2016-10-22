@@ -6,13 +6,13 @@ import os
 
 # FIXME: there must be an easier way to install a directory recursively
 # best option would be to add an install option to valadoc task itself
-def signature_task(task):    
-    bld = task.generator.bld 
-    
+def signature_task(task):
+    bld = task.generator.bld
+
     path = bld.path.find_or_declare('../_build_/doc/html')
-    for x in path.ant_glob('**/*', remove=False): 
+    for x in path.ant_glob('**/*', remove=False):
         x.sig = Utils.h_file(x.abspath())
-    
+
 doc = bld.new_task_gen (
     features = 'valadoc',
     output_dir = '../doc/html',
@@ -21,7 +21,7 @@ doc = bld.new_task_gen (
     packages = 'gtk+-3.0 gee-0.8 gdk-x11-3.0 libpeas-gtk-1.0 libpeas-1.0 config xtst gdk-3.0',
     vapi_dirs = '../vapi',
     force = True)
-    
+
 path = bld.path.find_dir ('../libdiodon')
 doc.files = path.ant_glob (incl='**/*.vala')
 

@@ -13,7 +13,7 @@ prog = bld.new_task_gen (
   cflags = ['-include', 'config.h'],
   packages = 'gtk+-3.0 unity config gee-0.8',
   source = 'unity-scope-diodon.vala')
-  
+
 prog.install_path = bld.env['LIBDIR_DIODON']
 
 bld.new_task_gen (
@@ -29,7 +29,7 @@ bld.new_task_gen (
   source = 'clipboard.scope.in',
   flags = ["-d", "-q", "-u", "-c"],
   install_path = "${DATADIR}/unity/scopes")
-  
+
 bld.new_task_gen (
   features = "subst",
   source= "unity-scope-diodon.service.in",
