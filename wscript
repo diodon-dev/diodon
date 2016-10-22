@@ -43,10 +43,10 @@ def configure(conf):
     conf.load('compiler_c intltool gnu_dirs glib2 waf_unit_test')
     if Options.options.doc:
     	conf.load('valadoc')
-    
+
     conf.load('vala', funs='')
     conf.check_vala(min_version=(0,20,0))
-    
+
     conf.check_cfg(package='gdk-3.0',           uselib_store='GDK',          atleast_version='3.0.8',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gdk-x11-3.0',       uselib_store='GDKX',         atleast_version='3.0.8',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gee-0.8',           uselib_store='GEE',          atleast_version='0.10.5',  mandatory=1, args='--cflags --libs')
@@ -57,10 +57,10 @@ def configure(conf):
     conf.check_cfg(package='glib-2.0',          uselib_store='GLIB',         atleast_version='2.32.0', mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='gtk+-3.0',          uselib_store='GTK',          atleast_version='3.10.0',  mandatory=1, args='--cflags --libs')
     conf.check_cfg(package='xtst',              uselib_store='XTST',         atleast_version='1.2.0',  mandatory=1, args='--cflags --libs')
-    conf.check_cfg(package='zeitgeist-2.0',     uselib_store='ZEITGEIST',    atleast_version='0.9.14', mandatory=1, args='--cflags --libs')    
+    conf.check_cfg(package='zeitgeist-2.0',     uselib_store='ZEITGEIST',    atleast_version='0.9.14', mandatory=1, args='--cflags --libs')
 
     conf.find_program('Xvfb', var='XVFB')
-    
+
     # FIXME: waf throws up when assigning an empty string
     # we need a better way of configuring plugins which are enabled
     # by default anyway
@@ -70,7 +70,7 @@ def configure(conf):
     if not(Options.options.disable_indicator):
         conf.check_cfg(package='appindicator3-0.1', uselib_store='APPINDICATOR', atleast_version='0.3.0',  mandatory=1, args='--cflags --libs')
         ACTIVE_PLUGINS = "'indicator'"
-        
+
     # check if unity scope plugin should be built
     conf.env['UNITYSCOPE'] = Options.options.enable_unityscope
     if Options.options.enable_unityscope:
@@ -99,7 +99,7 @@ def configure(conf):
     conf.env['PLUGINS_DIR'] = os.path.join(conf.env['LIBDIR'], APPNAME, 'plugins')
     conf.define('PLUGINS_DATA_DIR', os.path.join(conf.env['DATADIR'], APPNAME, 'plugins'))
     conf.define('TEST_DATA_DIR', conf.path.abspath() + '/tests/data/')
-      
+
     # set 'default' variant
     conf.define ('DEBUG', 0)
     # honor preset CFLAGS env vars
@@ -108,7 +108,7 @@ def configure(conf):
     # in any case we need to ignore warnings as C-code is generated
     conf.env['CFLAGS'] += ['-w']
     conf.env['VALAFLAGS'] = ['--disable-assert']
-    
+
     # set some debug relevant config values
     if Options.options.debug:
         conf.define ('DEBUG', 1)
@@ -119,25 +119,25 @@ def configure(conf):
 
 def build(ctx):
     ctx.add_subdirs('po data libdiodon plugins diodon')
-    
+
     if ctx.env['UNITYSCOPE']:
         ctx.add_subdirs('unity-scope-diodon')
-        
+
     if not Options.options.skiptests:
         ctx.add_subdirs('tests')
         if ctx.cmd == 'build':
             ctx.add_pre_fun(setup_tests)
             ctx.add_post_fun(teardown_tests)
-        
+
     if ctx.env['VALADOC']:
     	ctx.add_subdirs('doc')
     ctx.add_post_fun(post)
-    
+
     # to execute all tests:
 	# $ waf --alltests
-	# to set this behaviour permanenly:    
+	# to set this behaviour permanenly:
     ctx.options.all_tests = True
-    
+
 def setup_tests(ctx):
     ctx.display_process = start_display(ctx)
 
@@ -151,7 +151,7 @@ def teardown_tests(ctx):
 
     if ctx.zeitgeist_process:
         stop_zeitgeist_daemon(ctx.zeitgeist_process)
-    
+
     # write test summary
     waf_unit_test.summary(ctx)
 
@@ -163,7 +163,7 @@ def teardown_tests(ctx):
             for (filename, returncode, stdout, stderr) in lst:
                 Logs.warn(stdout)
                 Logs.warn(stderr)
-                
+
             ctx.fatal("Some test failed.")
 
 def start_display(ctx):
@@ -199,16 +199,16 @@ def start_zeitgeist_daemon(ctx):
     args['stderr'] = PIPE
     args['stdout'] = PIPE
     zeitgeist_process = Popen(('zeitgeist-daemon', '--replace', '--no-datahub'), **args)
-    
+
     # give the process some time to wake up
     time.sleep(1)
-    
+
     # raise runtime error if process failed to start
     error = zeitgeist_process.poll()
     if error:
         error = "zeitgeist-daemon exits with error %i." %(error)
         raise RuntimeError(error)
-    
+
     Logs.info("Started Zeitgeist Daemon with pid %u" % zeitgeist_process.pid);
     return zeitgeist_process
 
@@ -219,7 +219,7 @@ def stop_zeitgeist_daemon(zeitgeist_process):
     os.kill(zeitgeist_process.pid, signal.SIGKILL)
     zeitgeist_process.wait()
     Logs.info("Stopped Zeitgeist Daemon with pid %u" % zeitgeist_process.pid);
-    
+
 def post(ctx):
     if ctx.cmd == 'install':
         ctx.exec_command('/sbin/ldconfig')
@@ -227,7 +227,7 @@ def post(ctx):
 def dist(ctx):
     # set the compression type to gzip (default is bz2)
     ctx.algo = "tar.gz"
-  
+
 def shutdown(self):
     if Options.options.update_po:
         os.chdir('./po')
