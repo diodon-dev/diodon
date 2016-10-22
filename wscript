@@ -9,7 +9,7 @@ from waflib.Build import BuildContext
 from waflib.Tools import waf_unit_test
 
 NAME = 'Diodon'
-VERSION = '1.5.0'
+VERSION = '1.6.0-daily'
 APPNAME = 'diodon'
 WEBSITE = 'https://launchpad.net/diodon'
 COPYRIGHT = 'Copyright \xc2\xa9 2010-2014 Diodon Team'
