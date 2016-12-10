@@ -18,7 +18,7 @@
  * Author:
  *  Oliver Sauder <os@esite.ch>
  */
- 
+
 using FsoFramework.Test;
 
 namespace Diodon
@@ -29,13 +29,13 @@ namespace Diodon
     class TestClipboardConfiguration : FsoFramework.Test.TestCase
     {
         private ClipboardConfiguration configuration;
-        
+
 	    public TestClipboardConfiguration()
 	    {
 		    base("TestClipboardConfiguration");
 		    add_test("test_lookup_app_paste_keybinding", test_lookup_app_paste_keybinding);
 	    }
-	    
+
 	    public override void set_up()
 	    {
 	        this.configuration = new ClipboardConfiguration();
@@ -48,13 +48,13 @@ namespace Diodon
 	    {
 	        string? key = configuration.lookup_app_paste_keybinding(null);
 	        assert(key==null);
-	        
+
 	        key = configuration.lookup_app_paste_keybinding("/path/not/available");
 	        assert(key==null);
-	        
+
 	        key = configuration.lookup_app_paste_keybinding("/usr/bin/gnome-terminal");
 	        Assert.are_equal_string(key, "<Ctrl><Shift>v", "Invalid keybinding");
-	        
+
 	        uint keyacc;
 	        Gdk.ModifierType mods;
 	        Gtk.accelerator_parse("<Shift><Ctrl>V", out keyacc, out mods);

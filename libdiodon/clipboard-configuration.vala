@@ -31,38 +31,38 @@ namespace Diodon
          * flag whether primary selection is enabled
          */
         public bool use_primary { get; set; default = false; }
-        
+
         /**
          * flag whether images should be aded to clipboard history
          */
         public bool add_images { get; set; default = false; }
-            
+
         /**
          * flag whether clipboard is enabled
          */
         public bool use_clipboard { get; set; default = true; }
-        
+
         /**
          * flag whether clipboards should be in sync
          */
         public bool synchronize_clipboards { get; set; default = false; }
-                
+
         /**
          * flag whether clipboard content should be restored when lost.
          */
         public bool keep_clipboard_content { get; set; default = true; }
-                
+
         /**
          * flag whether clipboard content should be automatically pasted
          */
         public bool instant_paste { get; set; default = true; }
-        
+
         /**
          * regex pattern so all clipboard items matching this pattern will
          * be filtered and not added to clipboard history.
          */
         public string filter_pattern { get; set; default = "^\\s+$"; }
-        
+
         /**
          * a lookup dictionary for application using different paste keybindings
          * than <Ctrl>V.
@@ -70,7 +70,7 @@ namespace Diodon
          * e.g. /usr/bin/gnome-terminal|<Ctrl><Shift>V
          */
         public string[] app_paste_keybindings { get; set; }
-        
+
         /**
          * Lookup whether app paste keybinding
          *
@@ -88,17 +88,17 @@ namespace Diodon
                     }
                 }
             }
-            
+
             return null;
         }
-        
+
         /**
          * number of recent items to be shown.
          * Value must be bigger than 0 and lower or equal than 100.
          */
         public int recent_items_size
         {
-            get { 
+            get {
                 return _recent_items_size;
             }
             set {

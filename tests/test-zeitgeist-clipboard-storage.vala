@@ -20,7 +20,7 @@
  */
 
 using Zeitgeist;
- 
+
 namespace Diodon
 {
     /**
@@ -30,7 +30,7 @@ namespace Diodon
     {
         private ZeitgeistClipboardStorage storage;
         private Zeitgeist.Log log;
-        
+
 	    public TestZeitgeistClipboardStorage()
 	    {
 		    base("TestZeitgeistClipboardStorage");
@@ -43,11 +43,11 @@ namespace Diodon
 		        res => test_remove_text_item.end(res)
 		    );
 		    add_async_test("test_get_recent_items",
-		        cb => test_get_recent_items.begin(cb),        
+		        cb => test_get_recent_items.begin(cb),
 		        res => test_get_recent_items.end(res)
 		    );
 		    add_async_test("test_get_recent_items_by_type",
-		        cb => test_get_recent_items_by_type.begin(cb),        
+		        cb => test_get_recent_items_by_type.begin(cb),
 		        res => test_get_recent_items_by_type.end(res)
 		    );
 		    add_async_test("test_get_recent_items_image",
@@ -68,7 +68,7 @@ namespace Diodon
 		    //    res => test_get_items_by_search_query.end(res)
 		    //);
 	    }
-	    
+
 	    public override void set_up()
 	    {
 	        this.log = Zeitgeist.Log.get_default();
@@ -82,7 +82,7 @@ namespace Diodon
  	        yield this.storage.add_item(text_item);
  	        yield assert_text_item("test_add_text_item", 1);
 	    }
-	    
+
 	    public async void test_remove_text_item() throws FsoFramework.Test.AssertError
 	    {
 	        string test_text =  "test_remove_text_item";
@@ -91,21 +91,21 @@ namespace Diodon
 	        // add first item
 	        yield this.storage.add_item(text_item);
 	        yield assert_text_item(test_text, 1);
-	        
+
 	        // add another one
 	        yield this.storage.add_item(text_item);
 	        yield assert_text_item(test_text, 2);
-	        
+
 	        // remove item which should delete all (two) added
 	        yield this.storage.remove_item(text_item);
 	        yield assert_text_item(test_text, 0);
 	    }
-	    
+
 	    public async void test_get_recent_items() throws FsoFramework.Test.AssertError
 	    {
 	        const int ITEMS = 10;
 	        const int RECENT_ITEMS = 5;
-	        
+
 	        // add some items
 	        for(int i=1; i<=ITEMS; ++i) {
 	            yield this.storage.add_item(
@@ -114,27 +114,27 @@ namespace Diodon
 	        // add a duplicate to test that duplicates are being ignored
 	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD,
 	            ITEMS.to_string(), "/path/to/app", new DateTime.now_utc()));
-	        
+
 	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(RECENT_ITEMS);
 	        FsoFramework.Test.Assert.are_equal(items.size, RECENT_ITEMS,
 	            "Invalid number of recent items");
-	        
+
 	        // recent items should be in reverse order
 	        int current_item = ITEMS;
 	        foreach(IClipboardItem item in items) {
                 FsoFramework.Test.Assert.is_true(item is TextClipboardItem,
 	                "Should be of type TextClipboardItem");
 	            FsoFramework.Test.Assert.are_equal_string(item.get_text(),
-	                current_item.to_string(), "Invalid clipboard item content");	            
+	                current_item.to_string(), "Invalid clipboard item content");
 	            --current_item;
 	        }
-	        
+
 	        // only number of available items should be returned even when asked for more
 	        items = yield this.storage.get_recent_items(ITEMS + 1);
 	        FsoFramework.Test.Assert.are_equal(items.size, ITEMS,
 	            "Invalid number of recent items");
 	    }
-	    
+
 	    public async void test_get_recent_items_by_type() throws FsoFramework.Test.AssertError, GLib.Error
 	    {
 	        // add test data
@@ -144,42 +144,42 @@ namespace Diodon
 	        Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Config.TEST_DATA_DIR + "Diodon-64x64.png");
 	        yield this.storage.add_item(new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD,
 	            pixbuf, "/path/to/app", new DateTime.now_utc()));
-	       
+
             Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(3, new ClipboardCategory[]{ClipboardCategory.IMAGES});
 	        FsoFramework.Test.Assert.are_equal(items.size, 1, "Invalid number of recent items");
 	        IClipboardItem item = items.get(0);
 	        FsoFramework.Test.Assert.are_equal_string(item.get_label(), "[64x64]", "Invalid image label");
 	    }
-	    
+
 	    public async void test_get_recent_items_image() throws FsoFramework.Test.AssertError, GLib.Error
 	    {
 	        // add image item
             Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Config.TEST_DATA_DIR + "Diodon-64x64.png");
 	        yield this.storage.add_item(new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD,
 	            pixbuf, "/path/to/app", new DateTime.now_utc()));
-	                
+
 	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(100);
 	        FsoFramework.Test.Assert.are_equal(items.size, 1, "Invalid number of recent items");
 	        IClipboardItem item = items.get(0);
 	        FsoFramework.Test.Assert.are_equal_string(item.get_label(), "[64x64]", "Invalid image label");
 	    }
-	    
+
 	    public async void test_get_item_by_checksum() throws FsoFramework.Test.AssertError
 	    {
 	        // add test item
 	        TextClipboardItem text_item = new TextClipboardItem(ClipboardType.CLIPBOARD, "checksum", "/path/to/app", new DateTime.now_utc());
 	        yield this.storage.add_item(text_item);
-	        
+
 	        // check item availability
 	        IClipboardItem item = yield this.storage.get_item_by_checksum(text_item.get_checksum());
 	        FsoFramework.Test.Assert.is_true(item != null, "Item not found");
 	        FsoFramework.Test.Assert.are_equal_string("checksum", item.get_text(), "Invalid content");
-	        
+
 	        // check item which is not available
 	        IClipboardItem not_found = yield this.storage.get_item_by_checksum("invalidchecksum");
 	        FsoFramework.Test.Assert.is_true(not_found == null, "Item was not null");
 	    }
-	    
+
 	    public async void test_clear() throws FsoFramework.Test.AssertError, GLib.Error
 	    {
 	        // add test data
@@ -189,27 +189,27 @@ namespace Diodon
 	        Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Config.TEST_DATA_DIR + "Diodon-64x64.png");
 	        yield this.storage.add_item(new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD,
 	            pixbuf, "/path/to/app", new DateTime.now_utc()));
-	        
+
 	        yield this.storage.clear();
-	        
+
 	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(3);
 	        FsoFramework.Test.Assert.are_equal(0, items.size, "Items found");
 	    }
-	    
+
 	    // TODO: get this up and running
 	    /*public async void test_get_items_by_search_query() throws FsoFramework.Test.AssertError, GLib.Error
 	    {
 	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD, "TestName", "/path/to/app"));
 	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD, "TestName", "/path/to/app"));
 	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD, "SampleName", "/path/to/app"));
-	        
+
 	        Gee.List<IClipboardItem> items = yield this.storage.get_items_by_search_query("name");
 	        FsoFramework.Test.Assert.are_equal(2, items.size, "Invalid number of items found");
-	        
+
 	        items = yield this.storage.get_items_by_search_query("sample");
 	        FsoFramework.Test.Assert.are_equal(1, items.size, "Invalid number of items found");
 	    }*/
-	    
+
 	    public override void tear_down()
 	    {
 	        try {
@@ -220,7 +220,7 @@ namespace Diodon
                 warning(e.message);
             }
         }
-	    
+
 	    /**
 	     * assert whether text item is added to Zeitgeist Log in assigned quantity
          */
@@ -242,7 +242,7 @@ namespace Diodon
                                     text,
                                     null));
             templates.add(template);
-                
+
             try {
 	            ResultSet results = yield this.log.find_events(
                     time_range,
@@ -253,10 +253,10 @@ namespace Diodon
                     1 + qty,
                     ResultType.MOST_RECENT_EVENTS,
                     null);
-                                   
+
                     FsoFramework.Test.Assert.are_equal(results.size(), qty,
                         "Result size did not match expected quantity");
-                    
+
             } catch(GLib.Error e) {
                 FsoFramework.Test.Assert.fail(e.message);
             }

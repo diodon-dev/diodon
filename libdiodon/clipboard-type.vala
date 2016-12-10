@@ -18,7 +18,7 @@
  * Author:
  *  Oliver Sauder <os@esite.ch>
  */
- 
+
 using Gee;
 
 namespace Diodon
@@ -29,18 +29,18 @@ namespace Diodon
          * e.g when item is coming from storage
          */
         NONE,
-        
+
         /**
          * normal clipboard
          */
         CLIPBOARD,
-        
+
         /**
          * primary selection clipboard
          */
         PRIMARY;
     }
-    
+
     public enum ClipboardCategory
     {
         // resp. all items
@@ -48,13 +48,13 @@ namespace Diodon
         TEXT,
         FILES,
         IMAGES;
-        
+
         public static ClipboardCategory[] all()
         {
             // all categories excluding clipboard as it is a placeholder for all
             return { TEXT, FILES, IMAGES };
         }
-        
+
         public string to_string()
         {
             switch (this) {
@@ -74,7 +74,7 @@ namespace Diodon
                     assert_not_reached();
             }
         }
-        
+
         public static ClipboardCategory from_string(string type)
         {
             switch(type) {
@@ -102,19 +102,19 @@ namespace Diodon
         LAST_7_DAYS,
         LAST_30_DAYS,
         LAST_YEAR;
-        
+
         public static ClipboardTimerange[] all()
         {
             // all time ranges excluding all as it represents all
             return { LAST_24_HOURS, LAST_7_DAYS, LAST_30_DAYS, LAST_YEAR };
         }
-        
+
         public string to_string()
         {
             switch (this) {
                 case ALL:
                     return "all";
-                
+
                 case LAST_24_HOURS:
                     return "last-24-hours";
 
@@ -131,7 +131,7 @@ namespace Diodon
                     assert_not_reached();
             }
         }
-        
+
         public static ClipboardTimerange from_string(string type)
         {
             switch(type) {

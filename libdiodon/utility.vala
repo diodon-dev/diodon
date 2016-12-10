@@ -35,7 +35,7 @@ namespace Diodon
         {
             return Path.build_filename(Environment.get_user_data_dir(), Config.PACKAGE_NAME);
         }
-        
+
         /**
          * Create directory with all its parents logging error if not successful.
          * Checks first if directory already exists.
@@ -46,7 +46,7 @@ namespace Diodon
         public static bool make_directory_with_parents(string directory)
         {
             bool result = true;
-             
+
             // make sure that all parent directories exist
             try {
                 File dir = File.new_for_path(directory);
@@ -57,10 +57,10 @@ namespace Diodon
                 warning ("could not create directory %s", directory);
                 result = false;
             }
-            
+
             return result;
         }
-        
+
         /**
          * Get executable path of application which is currently running.
          *
@@ -70,15 +70,15 @@ namespace Diodon
         {
             Gdk.error_trap_push();
             string? path = null;
-            
+
             X.Window window = get_active_window();
             if(window != X.None) {
                 ulong pid = get_pid(window);
-                
+
                 if(pid != 0) {
                     File file = File.new_for_path("/proc/" + pid.to_string() + "/exe");
                     try {
-                        FileInfo info = file.query_info(FileAttribute.STANDARD_SYMLINK_TARGET, 
+                        FileInfo info = file.query_info(FileAttribute.STANDARD_SYMLINK_TARGET,
                             FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
                         if(info != null) {
                             path = info.get_attribute_as_string(
@@ -92,11 +92,11 @@ namespace Diodon
                     }
                 }
             }
-            
+
             Gdk.error_trap_pop_ignored();
             return path;
         }
-        
+
         /**
          * Helper method performing given accelerator on current active
          * window.
@@ -114,26 +114,26 @@ namespace Diodon
             Gtk.accelerator_parse(accelerator, out keysym, out modifiers);
             unowned X.Display display = Gdk.x11_get_default_xdisplay();
             int keycode = display.keysym_to_keycode(keysym);
-            
+
             if(keycode != 0) {
-                
+
                 if(Gdk.ModifierType.CONTROL_MASK in modifiers) {
                     int modcode = display.keysym_to_keycode(Gdk.Key.Control_L);
-                    XTest.fake_key_event(display, modcode, press, delay);  
+                    XTest.fake_key_event(display, modcode, press, delay);
                 }
                 if(Gdk.ModifierType.SHIFT_MASK in modifiers) {
                     int modcode = display.keysym_to_keycode(Gdk.Key.Shift_L);
                     XTest.fake_key_event(display, modcode, press, delay);
                 }
-            
-                XTest.fake_key_event(display, keycode, press, delay);                
-                
+
+                XTest.fake_key_event(display, keycode, press, delay);
+
                 return true;
             }
-            
+
             return false;
         }
-        
+
         private static X.Window get_active_window()
         {
             unowned Gdk.Screen screen = Gdk.Screen.get_default();
@@ -143,15 +143,15 @@ namespace Diodon
                 debug("Active window %#x", (int)xactive_window);
                 return xactive_window;
             }
-            
+
             return X.None;
         }
-        
+
         private static ulong get_pid(X.Window window)
         {
             unowned X.Display display = Gdk.x11_get_default_xdisplay();
             X.Atom wm_pid = display.intern_atom("_NET_WM_PID", false);
-            
+
             if(wm_pid != X.None) {
                 X.Atom actual_type_return;
                 int actual_format_return;
@@ -162,7 +162,7 @@ namespace Diodon
                 int status = display.get_window_property(window, wm_pid, 0,
                     long.MAX, false, 0, out actual_type_return, out actual_format_return,
                     out nitems_return, out bytes_after_return, out prop_return);
-                
+
                 if(status == X.Success) {
                     if(prop_return != null) {
                         ulong pid = *((ulong*)prop_return);
@@ -172,7 +172,7 @@ namespace Diodon
                     }
                 }
             }
-            
+
             return 0;
         }
     }

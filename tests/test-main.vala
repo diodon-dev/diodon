@@ -18,25 +18,25 @@
  * Author:
  *  Oliver Sauder <os@esite.ch>
  */
- 
+
 namespace Diodon
 {
     public static int main(string[] args)
     {
         Test.init(ref args);
         Gtk.init(ref args);
-        
+
 	    TestSuite.get_root().add_suite(new TestImageClipboardItem().get_suite());
 	    TestSuite.get_root().add_suite(new TestController().get_suite());
 	    TestSuite.get_root().add_suite(new TestClipboardConfiguration().get_suite());
-        	    
+
         // run integration tests which needs additional setup of services
         // when requested by option --integration
-        
+
 	    if("--integration" in args) {
 	        TestSuite.get_root().add_suite(new TestZeitgeistClipboardStorage().get_suite());
 	    }
-	    
+
 	    return Test.run ();
     }
 }

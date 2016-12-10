@@ -30,14 +30,14 @@ namespace Diodon
         private string? _origin;
         private ClipboardType _clipboard_type;
         private DateTime _date_copied;
-       
+
         /**
          * Default data constructor needed for reflection.
-         * 
+         *
          * @param clipboard_type clipboard type item is coming from
          * @param data simple text
          * @param origin origin of clipboard item as application path
-         */ 
+         */
         public TextClipboardItem(ClipboardType clipboard_type, string data, string? origin, DateTime date_copied)
         {
             _clipboard_type = clipboard_type;
@@ -45,7 +45,7 @@ namespace Diodon
             _origin = origin;
             _date_copied = date_copied;
         }
-    
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -53,7 +53,7 @@ namespace Diodon
         {
             return _clipboard_type;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -61,7 +61,7 @@ namespace Diodon
         {
             return _date_copied;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -69,7 +69,7 @@ namespace Diodon
         {
             return _text;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -89,7 +89,7 @@ namespace Diodon
                 long index_char = label.index_of_nth_char(50);
                 label = label.substring(0, index_char) + "...";
             }
-            
+
             return label;
         }
 
@@ -100,7 +100,7 @@ namespace Diodon
         {
             return "text/plain";
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -108,7 +108,7 @@ namespace Diodon
         {
             return ClipboardCategory.TEXT;
         }
-      
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -124,7 +124,7 @@ namespace Diodon
         {
             return ContentType.get_icon(get_mime_type());
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -132,7 +132,7 @@ namespace Diodon
         {
             return null;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -140,7 +140,7 @@ namespace Diodon
         {
             return Checksum.compute_for_string(ChecksumType.SHA1, _text);
         }
-                        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -149,21 +149,21 @@ namespace Diodon
             clipboard.set_text(_text, -1);
             clipboard.store();
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
 	    public bool equals(IClipboardItem* item)
         {
             bool equals = false;
-            
+
             if(item is TextClipboardItem) {
                 equals = strcmp(_text, item->get_text()) == 0;
             }
-            
+
             return equals;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -171,5 +171,5 @@ namespace Diodon
         {
             return str_hash(_text);
         }
-    }  
+    }
 }

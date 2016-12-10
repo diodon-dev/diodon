@@ -28,7 +28,7 @@ namespace Diodon
     {
         private Controller controller;
         private Gee.List<Gtk.Widget> static_menu_items;
-        
+
         /**
          * Create clipboard menu
          *
@@ -40,44 +40,44 @@ namespace Diodon
         {
             this.controller = controller;
             this.static_menu_items = static_menu_items;
-            
+
             if(items.size <= 0) {
                 Gtk.MenuItem empty_item = new Gtk.MenuItem.with_label(_("<Empty>"));
                 empty_item.set_sensitive(false);
                 append(empty_item);
             }
-            
+
             foreach(IClipboardItem item in items) {
                 append_clipboard_item(item);
             }
-            
+
             Gtk.SeparatorMenuItem sep_item = new Gtk.SeparatorMenuItem();
             append(sep_item);
-            
+
             if(static_menu_items != null) {
                 foreach(Gtk.MenuItem menu_item in static_menu_items) {
                     append(menu_item);
                 }
             }
-            
+
             Gtk.MenuItem clear_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.CLEAR, null);
             clear_item.activate.connect(on_clicked_clear);
             append(clear_item);
-            
+
             Gtk.MenuItem preferences_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.PREFERENCES, null);
             preferences_item.activate.connect(on_clicked_preferences);
             append(preferences_item);
-            
+
             Gtk.MenuItem quit_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.QUIT, null);
             quit_item.activate.connect(on_clicked_quit);
             append(quit_item);
-            
+
             show_all();
         }
-        
+
         /**
          * Append given clipboard item to menu.
-         * 
+         *
          * @param entry entry to be added
          */
         public void append_clipboard_item(IClipboardItem item)
@@ -87,12 +87,12 @@ namespace Diodon
             menu_item.show();
             append(menu_item);
         }
-        
+
         public void show_menu()
         {
             popup(null, null, null, 0, Gtk.get_current_event_time());
         }
-        
+
         /**
          * Completely destroy menu by cleaning up menu items and menu itself.
          */
@@ -100,7 +100,7 @@ namespace Diodon
         {
             foreach(Gtk.Widget item in get_children()) {
                 remove(item);
-                
+
                 // make sure that static items do not get destroyed
                 if(static_menu_items == null || !static_menu_items.contains(item))
                 {
@@ -108,11 +108,11 @@ namespace Diodon
                     item.dispose();
                 }
             }
-            
+
             destroy();
             dispose();
         }
-        
+
         /**
          * User event: clicked menu item clear
          */
@@ -120,7 +120,7 @@ namespace Diodon
         {
             controller.clear.begin();
         }
-        
+
         /**
          * User event: clicked menu item preferences
          */
@@ -128,7 +128,7 @@ namespace Diodon
         {
             controller.show_preferences();
         }
-        
+
         /**
          * User event: clicked menu item quit
          */
@@ -136,17 +136,17 @@ namespace Diodon
         {
             controller.quit();
         }
-        
+
         /**
          * User event: clicked clipboard menu item
-         * 
+         *
          * @param menu_item menu item clicked
          */
         private void on_clicked_item(Gtk.MenuItem menu_item)
         {
             ClipboardMenuItem clipboard_menu_item = (ClipboardMenuItem)menu_item;
             controller.select_item_by_checksum.begin(clipboard_menu_item.get_item_checksum());
-        }        
+        }
     }
 }
 

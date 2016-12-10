@@ -30,7 +30,7 @@ namespace Diodon
          * a special target type for copying files so nautilus can paste it
          */
         private static Gdk.Atom copy_files = Gdk.Atom.intern_static_string("x-special/gnome-copied-files");
-        
+
         /**
          * file paths separated with \n
          */
@@ -38,21 +38,21 @@ namespace Diodon
         private string? _origin;
         private ClipboardType _clipboard_type;
         private DateTime _date_copied;
-       
+
         /**
          * Default data constructor needed for reflection.
-         * 
+         *
          * @param clipboard_type clipboard type item is coming from
          * @param data paths separated with \n
          * @param origin origin of clipboard item as application path
-         */ 
+         */
         public FileClipboardItem(ClipboardType clipboard_type, string data, string? origin, DateTime date_copied) throws FileError
         {
             _clipboard_type = clipboard_type;
             _paths = data;
             _origin = origin;
             _date_copied = date_copied;
-            
+
             // check if all paths are available
             string[] paths = convert_to_paths(_paths);
             foreach(unowned string path in paths) {
@@ -62,7 +62,7 @@ namespace Diodon
                 }
             }
         }
-    
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -70,7 +70,7 @@ namespace Diodon
         {
             return _clipboard_type;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -78,7 +78,7 @@ namespace Diodon
         {
             return _date_copied;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -86,7 +86,7 @@ namespace Diodon
         {
             return _paths;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -101,21 +101,21 @@ namespace Diodon
         public string get_label()
         {
             string home = Environment.get_home_dir();
-            
+
             // label should not be longer than 50 letters
             string label = _paths.replace("\n", " ");
-            
+
             // replacing home dir with common known tilde
             label = label.replace(home, "~");
-            
+
             if (label.char_count() > 50) {
                 long index_char = label.index_of_nth_char(50);
                 label = label.substring(0, index_char) + "...";
             }
-            
+
             return label;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -132,10 +132,10 @@ namespace Diodon
             } catch(GLib.Error e) {
                 warning("Could not determine mime type of file %s", uris[0]);
             }
-            
+
             return mime_type;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -143,7 +143,7 @@ namespace Diodon
         {
             return ClipboardCategory.FILES;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -152,13 +152,13 @@ namespace Diodon
             Gtk.Image image = new Gtk.Image.from_gicon(get_icon(), Gtk.IconSize.MENU);
             return image;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
         public Icon get_icon()
         {
-            const string FILE_ATTRS = 
+            const string FILE_ATTRS =
               FileAttribute.THUMBNAIL_PATH;
 
             // icon of first file is used
@@ -178,11 +178,11 @@ namespace Diodon
             } catch(GLib.Error e) {
                 warning("Could not determine mime type of file %s", uris[0]);
             }
-            
+
             // default icon of mime type
             return ContentType.get_icon(mime_type);
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -190,7 +190,7 @@ namespace Diodon
         {
             return null;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -198,7 +198,7 @@ namespace Diodon
         {
             return Checksum.compute_for_string(ChecksumType.SHA1, _paths);
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -211,32 +211,32 @@ namespace Diodon
             target_list.add_uri_targets(0);
             target_list.add(copy_files, 0, 0); // add special nautilus target
             targets = Gtk.target_table_new_from_list(target_list);
-            
+
             // set data callbacks with a empty clear func as
             // there is nothing to be cleared
             clipboard.set_with_owner(targets,
                 (Gtk.ClipboardGetFunc)get_clipboard_data_callback,
                 (Gtk.ClipboardClearFunc)clear_clipboard_data_callback, this);
-            
+
             // store data in clipboard so when diodon is closed
             // data still can be pasted
             clipboard.store();
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
 	    public bool equals(IClipboardItem* item)
         {
             bool equals = false;
-            
+
             if(item is FileClipboardItem) {
                 equals = strcmp(_paths, item->get_text()) == 0;
             }
-            
+
             return equals;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -244,7 +244,7 @@ namespace Diodon
         {
             return str_hash(_paths);
         }
-        
+
         /**
          * Callback method called by Gtk.Clipboard to get the clipboard data
          * whereas in this case it is the path as text and the uri for
@@ -255,19 +255,19 @@ namespace Diodon
             uint info, void* user_data)
         {
             FileClipboardItem item = (FileClipboardItem) user_data;
-            
+
             Gdk.Atom[] targets = new Gdk.Atom[1];
             targets[0] = selection_data.get_target();
-            
+
             // set content according to requested target
             if(Gtk.targets_include_text(targets)) {
                 debug("get clipboard file data as text");
-                selection_data.set_text(item._paths, -1);    
+                selection_data.set_text(item._paths, -1);
             }
             else if(Gtk.targets_include_uri(targets)) {
                 debug("get clipboard file data as uris");
                 string[] uris = convert_to_uris(item._paths);
-                selection_data.set_uris(uris);      
+                selection_data.set_uris(uris);
             }
             else {
                 debug("get clipboard file data as copied files");
@@ -278,7 +278,7 @@ namespace Diodon
                 selection_data.set(copy_files, 8, string_to_uchar_array(copy_files_data));
             }
         }
-        
+
         /**
          * Callback method called by Gtk.Clipboard to clear data.
          * Currently empty method as there is nothing to be cleared.
@@ -291,7 +291,7 @@ namespace Diodon
          * Helper method to convert string to uchar array.
          *
          * @param str string to be converted
-         */        
+         */
         private static uchar[] string_to_uchar_array(string str)
         {
             uchar[] data = new uchar[0];
@@ -300,7 +300,7 @@ namespace Diodon
             }
             return data;
         }
-        
+
         /**
          * Helper method to join a array of string together with
          * given separator.
@@ -315,13 +315,13 @@ namespace Diodon
                 result = array[0];
                 for(int i = 1; i < array.length; ++i) {
                     result += separator;
-                    result += array[i];                    
+                    result += array[i];
                 }
             }
-            
+
             return result;
         }
-        
+
         /**
          * Convert given paths to uris
          *
@@ -335,10 +335,10 @@ namespace Diodon
                 uri = "file://" + uri;
                 uris[i] = uri;
             }
-            
+
             return uris;
         }
-        
+
         /**
          * Helper method to convert paths string to a path array
          *
@@ -349,6 +349,6 @@ namespace Diodon
             string[] result = paths.split("\n");
             return result;
         }
-    }  
+    }
 }
 

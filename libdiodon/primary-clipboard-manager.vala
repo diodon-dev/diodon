@@ -30,7 +30,7 @@ namespace Diodon
     {
         private bool stopped = false;
         private string? _last_received = null;
-    
+
         /**
          * Type is alwawys ClipboardType.PRIMARY for this specific primary
          * selection manager.
@@ -39,7 +39,7 @@ namespace Diodon
         {
             base(ClipboardType.PRIMARY, configuration);
         }
-        
+
         /**
          * Owner does not always get changed when selection has been changed
          * therefore we need a timer for the primary selection.
@@ -49,7 +49,7 @@ namespace Diodon
             stopped = false;
             Timeout.add(500, request_text_callback);
         }
-        
+
         /**
          * Owner does not always get changed when selection has been changed
          * therefore we need a timer for the primary selection.
@@ -58,7 +58,7 @@ namespace Diodon
         {
             stopped = true;
         }
-        
+
         /**
          * Primary selection only supports text therefore ignoring
          * all others.
@@ -71,7 +71,7 @@ namespace Diodon
                 base.select_item(item);
             }
         }
-    
+
         /**
          * Check if the mouse button or shift button is pressed
          * before primary selection gets accepted. As otherwise the history
@@ -84,10 +84,10 @@ namespace Diodon
             Gdk.Window rootwin = Gdk.get_default_root_window();
             Gdk.Display display = rootwin.get_display();
             Gdk.ModifierType modifier = 0;
-            
+
             Gdk.Device device = display.get_device_manager().get_client_pointer();
             device.get_state(rootwin, (double[])null, out modifier);
-            
+
             // only accepted when left mouse button and shift button
             // are not pressed
             if((modifier & Gdk.ModifierType.BUTTON1_MASK) == 0) {
@@ -95,13 +95,13 @@ namespace Diodon
                     return true;
                 }
             }
-            
+
             return false;
         }
-        
+
         /**
          * Helper method for requesting primary text within a timer
-         * 
+         *
          * @return false to stop timer if requested; otherwise true.
          */
         private bool request_text_callback()
@@ -127,7 +127,7 @@ namespace Diodon
                     check_clipboard_emptiness();
                 }
             }
-            
+
             return !stopped; // if stopped return false to stop timer
         }
     }

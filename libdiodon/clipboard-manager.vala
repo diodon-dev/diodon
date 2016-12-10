@@ -31,15 +31,15 @@ namespace Diodon
         protected ClipboardType type;
         protected Gtk.Clipboard _clipboard = null;
         protected ClipboardConfiguration _configuration;
-        
+
         /**
          * Called when text from the clipboard has been received
-         * 
+         *
          * @param type type of clipboard text belongs to
          * @param text received text from clipboard which is never null or empty
          */
         public signal void on_text_received(ClipboardType type, string text, string? origin);
-        
+
         /**
          * Called when uris have been received from clipboard.
          * The given paths are not uris appended with file://
@@ -49,7 +49,7 @@ namespace Diodon
          * @param paths paths separated with /n.
          */
         public signal void on_uris_received(ClipboardType type, string paths, string? origin);
-        
+
         /**
          * Called when a image has been received from the clipboard.
          *
@@ -57,19 +57,19 @@ namespace Diodon
          * @param pixbuf image as a pixbuf object
          */
         public signal void on_image_received(ClipboardType type, Gdk.Pixbuf pixbuf, string? origin);
-        
+
         /**
          * Called when the clipboard is empty
          *
          * @param type type of clipboard which is empty
          */
         public signal void on_empty(ClipboardType type);
-        
+
         /**
          * get type of given clipboard manager
          */
         public ClipboardType clipboard_type { get { return type; } }
-        
+
         /**
          * Constructor
          *
@@ -85,11 +85,11 @@ namespace Diodon
             } else if(type == ClipboardType.PRIMARY) {
                 _clipboard = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY);
             }
-            
+
             this.type = type;
             this._configuration = configuration;
         }
-        
+
         /**
          * Starts the process requesting data from encapsulated clipboard.
          * The owner has to change when new data is set in the clipboard
@@ -99,7 +99,7 @@ namespace Diodon
         {
             _clipboard.owner_change.connect(check_clipboard);
         }
-        
+
         /**
          * Stop the process requesting data from encapsulated clipboard.
          */
@@ -107,7 +107,7 @@ namespace Diodon
         {
             _clipboard.owner_change.disconnect(check_clipboard);
         }
-        
+
         /**
          * Select item in the managed clipboard.
          *
@@ -117,9 +117,9 @@ namespace Diodon
         {
             item.to_clipboard(_clipboard);
         }
-        
+
         /**
-         * Clear managed clipboard 
+         * Clear managed clipboard
          */
         public void clear()
         {
@@ -129,7 +129,7 @@ namespace Diodon
             //clipboard.clear();
             _clipboard.set_text("", -1);
         }
-        
+
         /**
          * Request text from managed clipboard. If result is valid
          * on_text_received will be called.
@@ -144,11 +144,11 @@ namespace Diodon
             bool text_available = (text != null && text != "") || _clipboard.wait_is_text_available();
             bool image_available = _configuration.add_images && _clipboard.wait_is_image_available();
             bool uris_available = _clipboard.wait_is_uris_available();
-            
+
             // checking if any content known is available
             if(text_available || image_available || uris_available) {
                 string? origin = Utility.get_path_of_active_application();
-                
+
                 // checking for uris
                 if(text_available) {
                     // check if text is valid
@@ -174,7 +174,7 @@ namespace Diodon
                 check_clipboard_emptiness();
             }
         }
-        
+
         /**
          * Request image from clipboard and return it
          *
@@ -185,7 +185,7 @@ namespace Diodon
             Gdk.Pixbuf? result = _clipboard.wait_for_image();
             return result;
         }
-        
+
         /**
          * request text from clipboard and return it
          *
@@ -196,7 +196,7 @@ namespace Diodon
             string? result = _clipboard.wait_for_text();
             return result;
         }
-        
+
         /**
          * Check if clipboard content has been lost.
          */
@@ -207,6 +207,6 @@ namespace Diodon
                 on_empty(type);
             }
         }
-    }  
+    }
 }
- 
+

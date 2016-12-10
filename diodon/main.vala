@@ -18,7 +18,7 @@
  * Author:
  *  Oliver Sauder <os@esite.ch>
  */
- 
+
 namespace Diodon
 {
     public class DiodonApplication : Gtk.Application
@@ -27,22 +27,22 @@ namespace Diodon
          * collects all non-option arguments which would otherwise be left in argv.
          */
         private const string OPTION_REMAINING = "";
-        
+
         /**
          * determine whether version information should be printed
          */
         private static bool show_version = false;
-        
+
         /**
          * checksums to be pasted. should only be one though
          */
         private static string[] checksums;
-        
+
         /**
          * main clipboard controller
          */
         private Controller? controller = null;
-        
+
         /**
          * list of available command line options
          */
@@ -51,46 +51,46 @@ namespace Diodon
             { "version", 'v', 0, OptionArg.NONE, ref show_version, "Print version information", null },
             { null }
         };
-        
+
         public DiodonApplication()
         {
             Object(application_id: Config.BUSNAME, flags: ApplicationFlags.FLAGS_NONE);
-            
+
             // add supported actions
             SimpleAction paste_action = new SimpleAction("paste-action", VariantType.STRING);
             paste_action.activate.connect(activate_paste_action);
             add_action(paste_action);
         }
-        
+
         public void activate_paste_action(GLib.Variant? parameter)
         {
             hold();
-            
+
             if(parameter != null && controller != null) {
                 string checksum = parameter.get_string();
                 debug("Execute paste-action with checksum %s", checksum);
                 controller.select_item_by_checksum.begin(checksum);
             }
-            
+
             release();
         }
-        
+
         public override void activate()
         {
             debug("Activate DiodonApplication (Version %s)", Config.VERSION);
-            
+
             if(controller == null) {
-                // setup controller            
+                // setup controller
                 controller = new Controller();
                 controller.init.begin();
-                
+
                 Gtk.main();
             } else {
                 // Diodon running already, let's show history
                 controller.show_history();
             }
         }
-        
+
         public static int main(string[] args)
         {
             try {
@@ -99,53 +99,53 @@ namespace Diodon
                 Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
                 Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
                 Intl.setlocale(LocaleCategory.ALL, "");
-                
+
                 // diodon should only show up in gnome
                 DesktopAppInfo.set_desktop_env("GNOME");
-                
+
                 // init vars
                 checksums = new string[1];  // can only process one checksum max
-                
+
                 // init option context
                 OptionContext opt_context = new OptionContext("- GTK+ Clipboard Manager");
                 opt_context.set_help_enabled(true);
                 opt_context.add_main_entries(options, null);
                 opt_context.add_group(Gtk.get_option_group(true));
                 opt_context.parse(ref args);
-                
+
                 if(show_version) {
                     stdout.printf("Diodon %s\n", Config.VERSION);
                     return 0; // bail out
                 }
-                
+
                 // check whether there is a checksum of clipboard content to paste
                 string checksum = null;
                 if(checksums.length > 0 && checksums[0] != null) {
                     checksum = checksums[0];
-                    
+
                     // it might be an uri so we have to remove uri first before
-                    // TODO: 
+                    // TODO:
                     // see ZeitgeistClipboardStorage.CLIPBOARD_URI why clipboard:
                     // is used staticly here
                     checksum = checksum.replace("clipboard:", "");
                 }
-                
+
                 DiodonApplication app = new DiodonApplication();
-                
+
                 if(checksum != null) {
                     debug("activate paste-action with checksum %s", checksum);
                     app.register();
                     app.activate_action("paste-action", new Variant.string(checksum));
                     return 0;
                 }
-                
+
                 return app.run(args);
             } catch(OptionError e) {
                 stdout.printf("Option parsing failed: %s\n", e.message);
             } catch(Error e) {
                 stdout.printf("Unexpected error occured: %s\n", e.message);
             }
-            
+
             return 1;
         }
     }

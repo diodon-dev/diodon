@@ -18,7 +18,7 @@
  * Author:
  *  Oliver Sauder <os@esite.ch>
  */
- 
+
 using Zeitgeist;
 
 namespace Diodon
@@ -34,50 +34,50 @@ namespace Diodon
         // won't be indexed by fts
         // see https://bugs.freedesktop.org/show_bug.cgi?id=70173
         public const string CLIPBOARD_URI = "dav:";
-        
+
         private Zeitgeist.Log log;
         private Index index;
         private Monitor monitor;
-        
+
         private Gee.HashMap<ClipboardType, IClipboardItem> current_items;
         private HashTable<int?, Event> cat_templates;
-        
+
         /**
          * Called when a item has been inserted.
          */
         public signal void on_items_inserted();
-        
+
         /**
          * Called when a item has been deleted.
          */
         public signal void on_items_deleted();
-        
+
         public ZeitgeistClipboardStorage()
         {
             this.cat_templates = new HashTable<int?, Event>(int_hash, int_equal);
             prepare_category_templates(this.cat_templates);
-            
+
             this.monitor = new Monitor(new TimeRange.from_now(),
                 get_items_event_templates());
-            this.monitor.events_inserted.connect(() => { on_items_inserted(); } );   
+            this.monitor.events_inserted.connect(() => { on_items_inserted(); } );
             this.monitor.events_deleted.connect(() => { on_items_deleted(); } );
-            
+
             this.log = Zeitgeist.Log.get_default();
-            
+
             try {
                 this.log.install_monitor(monitor);
             } catch(GLib.Error e) {
                 error("Could not install monitor: %s", e.message);
             }
-            
+
             this.index = new Index();
-            
-            this.current_items = new Gee.HashMap<ClipboardType, IClipboardItem>(); 
+
+            this.current_items = new Gee.HashMap<ClipboardType, IClipboardItem>();
         }
-        
+
         /**
          * Get currently selected item for given clipboard type
-         * 
+         *
          * @param type clipboard type
          * @return clipboard item
          */
@@ -85,7 +85,7 @@ namespace Diodon
         {
             return current_items.get(type);
         }
-        
+
         /**
          * Remove all events matching given clipboard item
          *
@@ -94,7 +94,7 @@ namespace Diodon
         public async void remove_item(IClipboardItem item, Cancellable? cancellable = null)
         {
             debug("Remove item with given checksum %s", item.get_checksum());
-            
+
             try {
                 GenericArray<Event> templates = create_item_event_templates(item);
                 uint32[] ids = yield log.find_event_ids(
@@ -104,7 +104,7 @@ namespace Diodon
                     uint32.MAX,
                     ResultType.MOST_RECENT_EVENTS, // all events
                     cancellable);
-                
+
                 Array<uint32> events = new Array<uint32>();
                 events.append_vals(ids, ids.length);
                 yield log.delete_events(events, cancellable);
@@ -116,7 +116,7 @@ namespace Diodon
                     item.get_checksum(), e.message);
             }
         }
-        
+
         /**
          * Get clipboard item by its given checksum
          *
@@ -126,7 +126,7 @@ namespace Diodon
         public async IClipboardItem? get_item_by_checksum(string checksum, Cancellable? cancellable = null)
         {
             debug("Get item with given checksum %s", checksum);
-            
+
             GenericArray<Event> templates = new GenericArray<Event>();
 	        TimeRange time_range = new TimeRange.anytime();
             Event template = new Event.full(
@@ -142,19 +142,19 @@ namespace Diodon
                                                null,
                                                null));
             templates.add(template);
-            
+
             IClipboardItem item = null;
             try {
 	            ResultSet events = yield log.find_events(
 	                time_range,
-	                templates, 
+	                templates,
                     StorageState.ANY,
                     1,
                     // this will filter duplicates according to their uri
                     ResultType.MOST_RECENT_SUBJECTS,
                     cancellable
                 );
-                
+
                 foreach(Event event in events) {
                     if (event.num_subjects() > 0) {
                         Subject subject = event.get_subject(0);
@@ -164,19 +164,19 @@ namespace Diodon
                 }
             } catch (IOError.CANCELLED ioe) {
                 debug("Get item by checksum '%s' got cancelled, error: %s",
-                    checksum, ioe.message);               
+                    checksum, ioe.message);
             } catch(GLib.Error e) {
                 warning("Get item by checksum not successful, error: %s",
                     e.message);
             }
-            
+
             if(item == null) {
                 debug("Item with checksum %s could not be found", checksum);
             }
-            
+
             return item;
         }
-        
+
         /**
          * Get clipboard items which match given search query
          *
@@ -191,7 +191,7 @@ namespace Diodon
         {
             TimeRange time_range = create_timerange(date_copied);
             GenericArray<Event> templates = get_items_event_templates(cats);
-            
+
             string query = prepare_search_string(search_query);
             if(query != "") {
                 debug("Get items by search query %s", search_query);
@@ -204,8 +204,8 @@ namespace Diodon
                         100, // setting limit to 100 for now, for memory reasons
                         // this will filter duplicates according to their uri
                         ResultType.MOST_RECENT_SUBJECTS,
-                        cancellable); 
-                        
+                        cancellable);
+
                     return create_clipboard_items(events);
                 } catch (IOError.CANCELLED ioe) {
                     debug("Get items with search query '%s' got cancelled, error: %s",
@@ -218,10 +218,10 @@ namespace Diodon
             } else {
                 return yield get_recent_items(100, cats, date_copied, cancellable);
             }
-            
+
             return new Gee.ArrayList<IClipboardItem>();;
         }
-        
+
         /**
          * Get most recent items limited by assigned num_items. List will filter
          * out any duplicates according to their checksum resp. uri in zeitgeist.
@@ -237,42 +237,42 @@ namespace Diodon
             ClipboardTimerange date_copied = ClipboardTimerange.ALL, Cancellable? cancellable = null)
         {
             debug("Get recent %u items", num_items);
-            
+
             TimeRange time_range = create_timerange(date_copied);
             GenericArray<Event> templates = get_items_event_templates(cats);
-            
+
             try {
 	            ResultSet events = yield log.find_events(
 	                time_range,
-	                templates, 
+	                templates,
                     StorageState.ANY,
                     num_items,
                     // this will filter duplicates according to their uri
                     ResultType.MOST_RECENT_SUBJECTS,
                     cancellable
                 );
-                
+
                 return create_clipboard_items(events);
             } catch (IOError.CANCELLED ioe) {
-                    debug("Get recent items got cancelled, error: %s", ioe.message); 
+                    debug("Get recent items got cancelled, error: %s", ioe.message);
             } catch(GLib.Error e) {
                 warning("Get recent items not successful, error: %s",
                     e.message);
             }
-            
+
             return new Gee.ArrayList<IClipboardItem>();;
         }
-        
+
         /**
          * Add clipboard item as Zeitgeist event and subject to zeitgeist log.
          */
         public async void add_item(IClipboardItem item, Cancellable? cancellable = null)
         {
             debug("Add item %s to clipboard", item.get_label());
-            
+
             try {
                 string interpretation = get_interpretation(item);
-                
+
                 Subject subject = new Subject();
                 subject.uri = CLIPBOARD_URI + item.get_checksum();
                 subject.interpretation = interpretation;
@@ -280,14 +280,14 @@ namespace Diodon
                 subject.mimetype = item.get_mime_type();
                 subject.origin = item.get_origin();
                 subject.text = item.get_text();
-                
+
                 Event event = new Event();
                 // TODO: this should actually be a copy event
                 event.interpretation = ZG.CREATE_EVENT;
                 event.manifestation = ZG.USER_ACTIVITY;
                 // event origin is which clipboard manager event comes from
                 event.origin = "application://diodon.desktop";
-                
+
                 // actor is application triggering copy event
                 if(subject.origin != null) {
                     try {
@@ -304,45 +304,45 @@ namespace Diodon
                     event.actor = "application://diodon.desktop";
                 }
                 debug("event actor set to %s", event.actor);
-                
+
                 event.add_subject(subject);
-                
+
                 ByteArray? payload = item.get_payload();
                 if(payload != null) {
                     event.payload = payload;
                 }
-                
+
                 TimeVal cur_time = TimeVal();
                 int64 timestamp = Timestamp.from_timeval(cur_time);
                 event.timestamp = timestamp;
-                
+
                 GenericArray<Event> events = new GenericArray<Event>();
                 events.add(event);
-                
+
                 yield log.insert_events(events, cancellable);
             } catch (IOError.CANCELLED ioe) {
-                debug("Add item got cancelled, error: %s", ioe.message); 
+                debug("Add item got cancelled, error: %s", ioe.message);
             } catch(GLib.Error e) {
                 warning("Add item %s not successful, error: %s",
                     item.get_text(), e.message);
             }
-            
+
             current_items.set(item.get_clipboard_type(), item);
         }
-        
+
         /**
          * Select clipboard item.
-         * 
+         *
          * @param item item to be selected
          * @param use_clipboard whether item gets selected for clipboard
          * @param use_primary whether item gets selected for primary selection
-         */         
+         */
         public async void select_item(IClipboardItem item, bool use_clipboard, bool use_primary, Cancellable? cancellable = null)
-        {  
+        {
             // selected item is always at the end of history, so we need to
             // add it again
             yield add_item(item, cancellable);
-            
+
             // verify that current items are selected correctly
             if(use_clipboard) {
                 current_items.set(ClipboardType.CLIPBOARD, item);
@@ -351,40 +351,40 @@ namespace Diodon
                 current_items.set(ClipboardType.PRIMARY, item);
             }
         }
-        
+
         /**
          * Clear all clipboard items in zeitgeist storage
          */
         public async void clear(Cancellable? cancellable = null)
         {
             debug("Clear clipboard history");
-            
+
             GenericArray<Event> templates = get_items_event_templates();
 	        TimeRange time_range = new TimeRange.anytime();
-            
+
             try {
 	            uint32[] ids = yield log.find_event_ids(
 	                time_range,
-	                templates, 
+	                templates,
                     StorageState.ANY,
                     uint32.MAX,
                     ResultType.MOST_RECENT_EVENTS,
                     cancellable
                 );
-                
+
                 Array<uint32> events = new Array<uint32>();
                 events.append_vals(ids, ids.length);
                 yield log.delete_events(events, cancellable);
-             
+
             } catch (IOError.CANCELLED ioe) {
-                debug("Clear items got cancelled, error: %s", ioe.message);   
+                debug("Clear items got cancelled, error: %s", ioe.message);
             } catch(GLib.Error e) {
                 warning("Failed to clear items: %s", e.message);
             }
-            
+
             current_items.clear();
         }
-        
+
         private static void prepare_category_templates(HashTable<int?, Event> templates)
         {
             // match all
@@ -400,8 +400,8 @@ namespace Diodon
                                                             null,
                                                             null,
                                                             null,
-                                                            null)); 
-            
+                                                            null));
+
             templates[ClipboardCategory.TEXT] = new Event.full(
                                             ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
                                             null,
@@ -415,7 +415,7 @@ namespace Diodon
                                                             null,
                                                             null,
                                                             null));
-                                                            
+
             templates[ClipboardCategory.FILES] = new Event.full(
                                             ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
                                             null,
@@ -429,7 +429,7 @@ namespace Diodon
                                                             null,
                                                             null,
                                                             null));
-                                    
+
             templates[ClipboardCategory.IMAGES] = new Event.full(
                                             ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
                                             null,
@@ -442,9 +442,9 @@ namespace Diodon
                                                             null,
                                                             null,
                                                             null,
-                                                            null)); 
+                                                            null));
         }
-        
+
         private static TimeRange create_timerange(ClipboardTimerange timerange)
         {
             switch(timerange)
@@ -461,7 +461,7 @@ namespace Diodon
                     return new TimeRange.anytime();
             }
         }
-        
+
         private static IClipboardItem? create_clipboard_item(Event event, Subject subject)
         {
             string interpretation = subject.interpretation;
@@ -470,35 +470,35 @@ namespace Diodon
             string? origin = subject.origin;
             unowned ByteArray payload = event.payload;
             DateTime date_copied = new DateTime.from_timeval_utc(Zeitgeist.Timestamp.to_timeval(event.timestamp));
-            
+
             try {
                 if(strcmp(NFO.PLAIN_TEXT_DOCUMENT, interpretation) == 0) {
-                   item = new TextClipboardItem(ClipboardType.NONE, text, origin, date_copied); 
+                   item = new TextClipboardItem(ClipboardType.NONE, text, origin, date_copied);
                 }
-                
+
                 else if(strcmp(NFO.FILE_DATA_OBJECT, interpretation) == 0) {
                     item = new FileClipboardItem(ClipboardType.NONE, text, origin, date_copied);
                 }
-                    
+
                 else if(strcmp(NFO.IMAGE, interpretation) == 0) {
                     item = new ImageClipboardItem.with_payload(ClipboardType.NONE, payload, origin, date_copied);
                 }
-                
+
                 else {
                     warning("Unknown subject with interpretation: %s", interpretation);
                 }
-            } catch(GLib.FileError e) {  
+            } catch(GLib.FileError e) {
                 // file errors happen constantly when e.g. some moved/deleted a file which has been
                 // copied in the past. Therefore we just note this as debug.
-                debug("Could not create FileClipboardItem: %s", e.message);  
+                debug("Could not create FileClipboardItem: %s", e.message);
             } catch (Error e) {
                 warning ("loading of item of interpreation %s with data %s failed. Cause: %s",
                     interpretation, text, e.message);
-            } 
-            
+            }
+
             return item;
         }
-        
+
         private static string get_interpretation(IClipboardItem item)
         {
             string interpretation = NFO.PLAIN_TEXT_DOCUMENT;
@@ -508,14 +508,14 @@ namespace Diodon
             else if (item is ImageClipboardItem) {
                 interpretation = NFO.IMAGE;
             }
-            
+
             return interpretation;
         }
-        
+
         private static Gee.List<IClipboardItem> create_clipboard_items(ResultSet events)
         {
             Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
-            
+
             foreach(Event event in events) {
                 if (event.num_subjects() > 0) {
                     Subject subject = event.get_subject(0);
@@ -528,12 +528,12 @@ namespace Diodon
                   continue;
                 }
             }
-            
+
             debug("Created %d clipboard items", items.size);
-            
+
             return items;
         }
-        
+
         /**
          * Get array of event templates which matches clipboard items with
          * given categories.
@@ -543,7 +543,7 @@ namespace Diodon
         private GenericArray<Event> get_items_event_templates(ClipboardCategory[]? cats = null)
         {
             GenericArray<Event> templates = new GenericArray<Event>();
-            
+
             if(cats == null || cats.length == 0) {
                 templates.add(cat_templates[ClipboardCategory.CLIPBOARD]);
             } else {
@@ -551,14 +551,14 @@ namespace Diodon
                     templates.add(cat_templates[cat]);
                 }
             }
-            
+
             return templates;
         }
-        
+
         private static GenericArray<Event> create_item_event_templates(IClipboardItem item)
         {
             GenericArray<Event> events = new GenericArray<Event>();
-            
+
             Event event = new Event.full(
                 ZG.CREATE_EVENT,
                 ZG.USER_ACTIVITY,
@@ -572,11 +572,11 @@ namespace Diodon
                     null,
                     null,
                     null));
-                    
+
             events.add(event);
             return events;
         }
-        
+
         private static string prepare_search_string(string search_string)
         {
             string s = search_string.strip();
@@ -589,6 +589,6 @@ namespace Diodon
 
             return s;
         }
-    }  
+    }
 }
 

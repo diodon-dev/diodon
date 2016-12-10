@@ -32,10 +32,10 @@ namespace Diodon
         private string _label;
         private string? _origin;
         private DateTime _date_copied;
-        
+
         /**
          * Create image clipboard item by a pixbuf.
-         * 
+         *
          * @param clipboard_type clipboard type item is coming from
          * @param pixbuf image from clipboard
          * @param origin origin of clipboard item as application path
@@ -47,10 +47,10 @@ namespace Diodon
             _date_copied = date_copied;
             extract_pixbuf_info(pixbuf);
         }
-        
+
         /**
          * Create image clipboard item by given payload.
-         * 
+         *
          * @param clipboard_type clipboard type item is coming from
          * @param pixbuf image from clipboard
          * @param origin origin of clipboard item as application path
@@ -60,14 +60,14 @@ namespace Diodon
             _clipboard_type = clipboard_type;
             _origin = origin;
             _date_copied = date_copied;
-            
+
             Gdk.PixbufLoader loader = new Gdk.PixbufLoader();
             loader.write(payload.data);
             loader.close();
             Gdk.Pixbuf pixbuf = loader.get_pixbuf();
             extract_pixbuf_info(pixbuf);
         }
-    
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -75,7 +75,7 @@ namespace Diodon
         {
             return _clipboard_type;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -83,7 +83,7 @@ namespace Diodon
         {
             return _date_copied;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -91,7 +91,7 @@ namespace Diodon
         {
             return _label; // label is representation of image
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -107,7 +107,7 @@ namespace Diodon
         {
             return _label;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -116,7 +116,7 @@ namespace Diodon
             // images are always converted to png
             return "image/png";
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -132,7 +132,7 @@ namespace Diodon
                 return ContentType.get_icon(get_mime_type());
             }
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -140,7 +140,7 @@ namespace Diodon
         {
             return ClipboardCategory.IMAGES;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -149,7 +149,7 @@ namespace Diodon
             Gdk.Pixbuf pixbuf_preview = create_scaled_pixbuf(_pixbuf);
             return new Gtk.Image.from_pixbuf(pixbuf_preview);
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -159,7 +159,7 @@ namespace Diodon
             _pixbuf.save_to_buffer(out buffer, "png");
             return new ByteArray.take(buffer);
         }
-        
+
         /**
          * {@inheritDoc}
          */
@@ -167,7 +167,7 @@ namespace Diodon
         {
             return _checksum;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -176,22 +176,22 @@ namespace Diodon
              clipboard.set_image(_pixbuf);
              clipboard.store();
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
 	    public bool equals(IClipboardItem* item)
         {
             bool equals = false;
-            
+
             if(item is ImageClipboardItem) {
                 ImageClipboardItem* image_item = (ImageClipboardItem*)item;
                 equals = strcmp(_checksum, image_item->_checksum) == 0;
             }
-            
+
             return equals;
         }
-        
+
         /**
 	     * {@inheritDoc}
 	     */
@@ -200,7 +200,7 @@ namespace Diodon
             // use checksum to create hash code
             return str_hash(_checksum);
         }
-        
+
         /**
          * Extracts all pixbuf information which are needed to show image
          * in the view without having the pixbuf in the memory.
@@ -213,12 +213,12 @@ namespace Diodon
             Checksum checksum = new Checksum(ChecksumType.SHA1);
             checksum.update(pixbuf.get_pixels(), pixbuf.height * pixbuf.rowstride);
             _checksum = checksum.get_string().dup();
-            
+
             // label in format [{width}x{height}]
-            _label ="[%dx%d]".printf(pixbuf.width, pixbuf.height); 
+            _label ="[%dx%d]".printf(pixbuf.width, pixbuf.height);
             _pixbuf = pixbuf;
         }
-        
+
         /**
          * Create a menu icon size scaled pix buf
          *
@@ -234,12 +234,12 @@ namespace Diodon
                 width = 16;
                 height = 16;
             }
-            
+
             // scale pixbuf to menu icon size
             Gdk.Pixbuf scaled = pixbuf.scale_simple(width, height, Gdk.InterpType.BILINEAR);
             return scaled;
         }
-        
+
         /**
          * Store pixbuf in tmp folder but only if it does not exist
          *
@@ -250,14 +250,14 @@ namespace Diodon
         {
             string filename = Path.build_filename(Environment.get_tmp_dir(),
                 "diodon-" + _checksum + ".png");
-            
+
             File file = File.new_for_path(filename);
             if(!file.query_exists(null)) {
                 pixbuf.save(filename, "png");
             }
-        
+
             return file;
         }
-    }  
+    }
 }
 

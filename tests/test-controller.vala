@@ -18,7 +18,7 @@
  * Author:
  *  Oliver Sauder <os@esite.ch>
  */
- 
+
 namespace Diodon
 {
     /**
@@ -27,20 +27,20 @@ namespace Diodon
     class TestController : FsoFramework.Test.TestCase
     {
         private Controller controller;
-        
+
 	    public TestController()
 	    {
 		    base("TestController");
 		    add_test("test_filter_item_whitespace", test_filter_item_whitespace);
 		    add_test("test_filter_item_whitespace", test_filter_item_none_whitespace);
 	    }
-	    
+
 	    public override void set_up()
 	    {
 	        ClipboardConfiguration cfg = new ClipboardConfiguration();
 	        this.controller = new Controller.with_configuration(cfg, false);
         }
-        
+
 	    public void test_filter_item_whitespace()
 	    {
 	        assert(controller.filter_item(create_text_item(" ")));
@@ -48,7 +48,7 @@ namespace Diodon
 	        assert(controller.filter_item(create_text_item("  \n ")));
 	        assert(controller.filter_item(create_text_item("\t")));
 	    }
-	    
+
 	    public void test_filter_item_none_whitespace()
 	    {
 	        assert(!controller.filter_item(create_text_item("This is a item\n ")));
@@ -56,7 +56,7 @@ namespace Diodon
 	        assert(!controller.filter_item(create_text_item(" an item ")));
 	        assert(!controller.filter_item(create_text_item("this is a item")));
 	    }
-	    
+
 	    private TextClipboardItem create_text_item(string text)
 	    {
 	        return new TextClipboardItem(ClipboardType.CLIPBOARD, text, null,

@@ -38,23 +38,23 @@ namespace Diodon.Plugins
         public void activate()
         {
             Controller controller = object as Controller;
-           
+
             if(indicator == null) {
                 indicator = new AppIndicator.Indicator("Diodon", "diodon-panel",
                     AppIndicator.IndicatorCategory.APPLICATION_STATUS);
-            
+
                 indicator.set_menu(controller.get_recent_menu());
-                
+
                 controller.on_recent_menu_changed.connect(change_menu);
             }
-            
+
             indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
         }
-        
+
         public void deactivate()
         {
             Controller controller = object as Controller;
-            
+
             if(indicator != null) {
                 indicator.set_status(AppIndicator.IndicatorStatus.PASSIVE);
                 controller.on_recent_menu_changed.disconnect(change_menu);
@@ -64,7 +64,7 @@ namespace Diodon.Plugins
         public void update_state()
         {
         }
-        
+
         private void change_menu(Gtk.Menu recent_menu)
         {
             indicator.set_menu(recent_menu);
