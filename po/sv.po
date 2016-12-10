@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-14 21:18+0100\n"
-"PO-Revision-Date: 2014-03-09 07:52+0000\n"
-"Last-Translator: Oliver Sauder <os@esite.ch>\n"
-"Language-Team: Swedish <sv@li.org>\n"
+"PO-Revision-Date: 2016-12-09 05:54+0000\n"
+"Last-Translator: Åke Engelbrektson <Unknown>\n"
+"Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-01-15 05:18+0000\n"
-"X-Generator: Launchpad (build 17886)\n"
+"X-Launchpad-Export-Date: 2016-12-10 05:10+0000\n"
+"X-Generator: Launchpad (build 18292)\n"
 "Language: sv\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -36,10 +36,12 @@ msgid ""
 "Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
+"Lägg till innehåll som kopieras till urklipp med t.ex. Ctrl + C, i "
+"urklippshistoriken."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
-msgstr "Använd den primära markeringen"
+msgstr "Använd den primär markering"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
 #: ../data/preferences.ui.h:5
@@ -49,10 +51,13 @@ msgid ""
 "continually checks what is selected. This might discharge your battery "
 "quicker."
 msgstr ""
+"Lägger till primär markering (område på skärmen som markerats med musen) "
+"till urklippshistoriken. Aktivering startar en process som kontinuerligt "
+"kontrollerar vad som markeras. Detta kan ladda ur ditt batteri snabbare."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Add images to clipboard history"
-msgstr ""
+msgstr "Lägg till bilder i urklippshistoriken"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:6
 #: ../data/preferences.ui.h:7
@@ -62,10 +67,14 @@ msgid ""
 "option will increase memory consumption. Images already added to clipboard "
 "history will remain even when disabled."
 msgstr ""
+"Lägg till bilder från urklipp till urklippshistoriken (t.ex när du "
+"högerklickar på en bild i webbläsaren och väljer \"Kopiera bild\"). "
+"Aktivering av detta alternativ, ökar minnesanvändningen. Bilder som redan "
+"finns i urklippshistoriken, kvarstår även vid inaktivering."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Synchronize clipboards"
-msgstr "Synkronisera urklippen"
+msgstr "Synkronisera urklipp"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
 #: ../data/preferences.ui.h:11
@@ -75,13 +84,13 @@ msgid ""
 "available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
 "the middle mouse button."
 msgstr ""
-"Synkroniserar markeringen (arean av skärmen som är vald med musen) och "
-"urklippen så att allt i markeringen är direkt inlagt i urklippet samt tvärt "
-"om. Dvs för inklistring med Ctrl + V samt med musens mittknapp."
+"Synkroniserar markeringen (område på skärmen som markerats med musen) och "
+"urklipp så att allt i markeringen blir tillgängligt i urklipp, och tvärt om. "
+"T.ex. för inklistring med Ctrl + V eller med mushjulsknappen."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Keep clipboard content"
-msgstr "Spara urklippets innehåll"
+msgstr "Spara urklippsinnehållet"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 #: ../data/preferences.ui.h:9
@@ -89,12 +98,11 @@ msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
 msgstr ""
-"Förhindrar ett tomt urklipp. Vanligtvis när ett program avslutas så töms "
-"urklippet."
+"Förhindrar tomt urklipp. När ett program avslutas, töms vanligtvis urklipp."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 msgid "Automatically paste selected item"
-msgstr "Klistra in vald del automatiskt"
+msgstr "Klistra automatiskt in markerat objekt"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
 #: ../data/preferences.ui.h:13
@@ -102,80 +110,87 @@ msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
 msgstr ""
-"Klistra in vald del automatisk istället för att bara kopiera det till "
-"urklippet."
+"Klistra automatisk in markerat objekt istället för att bara kopiera det till "
+"urklipp."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Number of recent clipboard items"
-msgstr ""
+msgstr "Antal tidigare urklippsobjekt"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 msgid "Number of recent clipboard items shown in clipboard menu."
-msgstr ""
+msgstr "Antal tidigare urklippsobjekt som visas i urklippsmenyn."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Clipboard content filter pattern"
-msgstr ""
+msgstr "Filtreringsmönster för urklippsinnehåll"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid ""
 "Regex filter pattern whereas all clipboard items matching this pattern will "
 "be filtered and not added to clipboard history."
 msgstr ""
+"Alla urklippsobjekt som matchar detta regex-filter, sållas bort och läggs "
+"inte till i urklippshistoriken."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 msgid "Lookup dictionary for application using different paste keybindings"
 msgstr ""
+"En uppslagsbok för program som använder andra tangentbindningar, för "
+"inklistring."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 msgid ""
 "A lookup dictionary for applications using different paste keybindings than "
 "Ctrl + V. Pattern of each string in this array is path-of-app|keybinding"
 msgstr ""
+"En uppslagsbok för program som använder andra tangentbindningar än Ctrl + V, "
+"för inklistring. Mönstret för varje sträng i denna matris är programsökväg | "
+"tangentbindning"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:19
 msgid "Active plugins"
-msgstr "Aktiva insticksmoduler"
+msgstr "Aktiva instick"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:20
 msgid "List of active plugins."
-msgstr "Lista av aktiva insticksprogram."
+msgstr "Lista över aktiva instick."
 
 #: ../data/preferences.ui.h:1
 msgid "Diodon Preferences"
-msgstr "Diodons inställningar"
+msgstr "Diodon-inställningar"
 
 #: ../data/preferences.ui.h:2
 msgid "_Use clipboard (Ctrl+C)"
-msgstr "_Använd urklipp(Ctrl+C)"
+msgstr "_Använd urklipp (Ctrl+C)"
 
 #: ../data/preferences.ui.h:4
 msgid "Use _primary selection"
-msgstr "Använd _primära markeringen"
+msgstr "Använd _primär markering"
 
 #: ../data/preferences.ui.h:6
 msgid "Add _images to clipboard history"
-msgstr ""
+msgstr "Lägg till _bilder i urklippshistoriken"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
-msgstr "_Spara urklippets innehåll"
+msgstr "_Spara urklippsinnehållet"
 
 #: ../data/preferences.ui.h:10
 msgid "S_ynchronize clipboards"
-msgstr "S_ynkronisera urklippen"
+msgstr "S_ynkronisera urklipp"
 
 #: ../data/preferences.ui.h:12
 msgid "_Automatically paste selected item"
-msgstr "_Automatiskt klistra in vald del"
+msgstr "_Klistra automatiskt in markerat objekt"
 
 #: ../data/preferences.ui.h:14
 msgid "Number of recent clipboard items to be shown in clipboard menu."
-msgstr ""
+msgstr "Antal tidigare urklippsobjekt som skall visas i urklippsmenyn."
 
 #: ../data/preferences.ui.h:15
 msgid "Number of recent items"
-msgstr ""
+msgstr "Antal tidigare objekt"
 
 #: ../data/preferences.ui.h:16
 #: ../unity-scope-diodon/unity-scope-diodon.vala:75
@@ -188,14 +203,17 @@ msgid ""
 "your desktop environment.\n"
 "Use /usr/bin/diodon as command."
 msgstr ""
+"Registrera en anpassad genväg med\n"
+"din skrivbordsmiljö.\n"
+"Använd /usr/bin/diodon som kommando."
 
 #: ../data/preferences.ui.h:20
 msgid "More information"
-msgstr ""
+msgstr "Mer information"
 
 #: ../data/preferences.ui.h:21
 msgid "Hotkeys"
-msgstr ""
+msgstr "Snabbtangenter"
 
 #: ../data/preferences.ui.h:22
 msgid "Plugins"
@@ -211,7 +229,7 @@ msgstr "Programindikator"
 
 #: ../plugins/indicator/indicator.plugin.in.h:2
 msgid "Access clipboard history with an application indicator."
-msgstr "Använd urklippet via en programindikator."
+msgstr "Öppna urklippshistoriken med en programindikator."
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
 msgid "Copyright © 2011 Diodon Team"
@@ -219,73 +237,76 @@ msgstr "Copyright © 2011 Diodon Team"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:1
 msgid "Clipboard History"
-msgstr ""
+msgstr "Urklippshistorik"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:2
 msgid ""
 "This is an Ubuntu search plugin that enables information from Diodon to be "
 "searched and displayed in the Dash underneath the Clipboard header."
 msgstr ""
+"Detta är ett Ubuntu sökinstick som medger att information från Diodon "
+"genomsöks och visas i Dash, under urklippsrubriken."
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:3
 msgid "Search clipboard"
-msgstr "Sök urklipp"
+msgstr "Sök i urklipp"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:4
 #: ../unity-scope-diodon/unity-scope-diodon.vala:79
 #: ../unity-scope-diodon/unity-scope-diodon.vala:104
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:5
 #: ../unity-scope-diodon/unity-scope-diodon.vala:84
 #: ../unity-scope-diodon/unity-scope-diodon.vala:105
 msgid "Files"
-msgstr ""
+msgstr "Filer"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:6
 #: ../unity-scope-diodon/unity-scope-diodon.vala:89
 #: ../unity-scope-diodon/unity-scope-diodon.vala:106
 msgid "Images"
-msgstr ""
+msgstr "Bilder"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:7
 #: ../unity-scope-diodon/unity-scope-diodon.vala:101
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:8
 msgid "Text;Files;Images"
-msgstr ""
+msgstr "Text;Filer;Bilder"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:9
 msgid "Last 24 hours;Last 7 days;Last 30 days;Last year;"
 msgstr ""
+"Senaste 24 timmarna;Senaste 7 dagarna;Senaste 30 dagarna;Senaste året"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:45
 msgid "Search Clipboard"
-msgstr ""
+msgstr "Sök i urklipp"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:110
 #: ../unity-scope-diodon/unity-scope-diodon.vala:231
 msgid "Date copied"
-msgstr ""
+msgstr "Kopieringsdatum"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:112
 msgid "Last 24 hours"
-msgstr ""
+msgstr "Senaste 24 timmarna"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:113
 msgid "Last 7 days"
-msgstr ""
+msgstr "Senaste 7 dagarna"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:114
 msgid "Last 30 days"
-msgstr ""
+msgstr "Senaste 30 dagarna"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:115
 msgid "Last year"
-msgstr ""
+msgstr "Senaste året"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:216
 msgid "Paste"
