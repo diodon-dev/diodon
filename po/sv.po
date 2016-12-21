@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-14 21:18+0100\n"
-"PO-Revision-Date: 2016-12-09 05:54+0000\n"
+"PO-Revision-Date: 2016-12-11 14:34+0000\n"
 "Last-Translator: Åke Engelbrektson <Unknown>\n"
 "Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-12-10 05:10+0000\n"
+"X-Launchpad-Export-Date: 2016-12-12 05:05+0000\n"
 "X-Generator: Launchpad (build 18292)\n"
 "Language: sv\n"
 
@@ -41,7 +41,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
-msgstr "Använd den primär markering"
+msgstr "Använd primär markering"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
 #: ../data/preferences.ui.h:5
@@ -67,7 +67,7 @@ msgid ""
 "option will increase memory consumption. Images already added to clipboard "
 "history will remain even when disabled."
 msgstr ""
-"Lägg till bilder från urklipp till urklippshistoriken (t.ex när du "
+"Lägger till bilder från urklipp i urklippshistoriken (t.ex när du "
 "högerklickar på en bild i webbläsaren och väljer \"Kopiera bild\"). "
 "Aktivering av detta alternativ, ökar minnesanvändningen. Bilder som redan "
 "finns i urklippshistoriken, kvarstår även vid inaktivering."
@@ -136,7 +136,7 @@ msgstr ""
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 msgid "Lookup dictionary for application using different paste keybindings"
 msgstr ""
-"En uppslagsbok för program som använder andra tangentbindningar, för "
+"Uppslagsbok för program som använder andra tangentbindningar, för "
 "inklistring."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
