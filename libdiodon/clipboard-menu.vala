@@ -73,6 +73,8 @@ namespace Diodon
             append(quit_item);
 
             show_all();
+
+            this.key_press_event.connect(on_key_pressed);
         }
 
         /**
@@ -147,6 +149,33 @@ namespace Diodon
             ClipboardMenuItem clipboard_menu_item = (ClipboardMenuItem)menu_item;
             controller.select_item_by_checksum.begin(clipboard_menu_item.get_item_checksum());
         }
+
+        /**
+         * Allow moving of cursor with vi-style j and k keys
+         */
+        private bool on_key_pressed(Gdk.EventKey event)
+        {
+            uint down_keyval = Gdk.keyval_from_name("j");
+            uint up_keyval = Gdk.keyval_from_name("k");
+
+            uint pressed_keyval = Gdk.keyval_to_lower(event.keyval);
+            if(pressed_keyval == down_keyval) {
+                if(get_selected_item() == null) {
+                    select_first(false);
+                } else {
+                    move_selected(1);
+                }
+                return true;
+            }
+            if(pressed_keyval == up_keyval) {
+                if(get_selected_item() == null) {
+                    select_first(false);
+                }
+                move_selected(-1);
+                return true;
+            }
+
+            return false;
+        }
     }
 }
-
