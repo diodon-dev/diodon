@@ -112,7 +112,7 @@ namespace Diodon
             uint keysym;
             Gdk.ModifierType modifiers;
             Gtk.accelerator_parse(accelerator, out keysym, out modifiers);
-            unowned X.Display display = Gdk.x11_get_default_xdisplay();
+            unowned X.Display display = Gdk.X11.get_default_xdisplay();
             int keycode = display.keysym_to_keycode(keysym);
 
             if(keycode != 0) {
@@ -149,7 +149,7 @@ namespace Diodon
 
         private static ulong get_pid(X.Window window)
         {
-            unowned X.Display display = Gdk.x11_get_default_xdisplay();
+            unowned X.Display display = Gdk.X11.get_default_xdisplay();
             X.Atom wm_pid = display.intern_atom("_NET_WM_PID", false);
 
             if(wm_pid != X.None) {
