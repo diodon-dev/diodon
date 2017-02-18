@@ -37,6 +37,7 @@ namespace Diodon
         private Peas.ExtensionSet extension_set;
         private Peas.Engine peas_engine;
         private ClipboardMenu recent_menu = null;
+        private Gee.Map<string,string> command_descriptions;
         private Gee.List<Gtk.MenuItem> static_recent_menu_items;
         private GLib.Regex _filter_pattern = null;
 
@@ -65,10 +66,13 @@ namespace Diodon
          */
         public signal void on_recent_menu_changed(Gtk.Menu recent_menu);
 
+        public delegate void ActionCallback(string[] args);
+
         public Controller()
         {
             string diodon_dir = Utility.get_user_data_dir();
             clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
+            command_descriptions = new Gee.HashMap<string,string>();
 
             settings_clipboard = new Settings("net.launchpad.Diodon.clipboard");
             settings_plugins = new Settings("net.launchpad.Diodon.plugins");
@@ -92,6 +96,7 @@ namespace Diodon
         public Controller.with_configuration(ClipboardConfiguration configuration, bool with_zeitgeist=true)
         {
             clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
+            command_descriptions = new Gee.HashMap<string,string>();
             if(with_zeitgeist) {
                 storage = new ZeitgeistClipboardStorage();
             }
@@ -213,6 +218,22 @@ namespace Diodon
             );
             enable_clipboard_manager(ClipboardType.PRIMARY,
                 configuration.use_primary);
+        }
+
+        /**
+         * Add an action to the application
+         */
+        public void add_command_line_action(string name, string desc, ActionCallback callback)
+        {
+            SimpleAction action = new SimpleAction (name, VariantType.STRING_ARRAY);
+            action.activate.connect((parameter) => callback(parameter.dup_strv()));
+            Application.get_default ().add_action(action);
+            command_descriptions[name] = desc;
+        }
+
+        public Gee.Map<string,string> get_command_descriptions ()
+        {
+            return command_descriptions;
         }
 
         /**

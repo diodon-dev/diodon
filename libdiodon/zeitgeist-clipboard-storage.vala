@@ -268,7 +268,9 @@ namespace Diodon
          */
         public async void add_item(IClipboardItem item, Cancellable? cancellable = null)
         {
-            debug("Add item %s to clipboard", item.get_label());
+            debug("Add item to clipboard (Label: %s Checksum: %s)",
+                item.get_label(), item.get_checksum()
+            );
 
             try {
                 string interpretation = get_interpretation(item);
