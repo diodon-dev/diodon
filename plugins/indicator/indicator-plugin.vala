@@ -49,8 +49,6 @@ namespace Diodon.Plugins
             }
 
             indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
-
-            controller.add_command_line_action("show", "Show indicator", activate_indicator_action);
         }
 
         public void deactivate()
@@ -70,15 +68,6 @@ namespace Diodon.Plugins
         private void change_menu(Gtk.Menu recent_menu)
         {
             indicator.set_menu(recent_menu);
-        }
-
-        public void activate_indicator_action(string[] args)
-        {
-            Controller controller = object as Controller;
-
-            debug("Test %s", string.joinv(",", args));
-
-            controller.show_history();
         }
     }
 }
