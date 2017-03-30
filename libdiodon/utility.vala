@@ -83,6 +83,17 @@ namespace Diodon
                         if(info != null) {
                             path = info.get_attribute_as_string(
                                 FileAttribute.STANDARD_SYMLINK_TARGET);
+                            if(path == null) {
+                                // in case we do not have permission to read exe, we try to parse cmdline
+                                File cmdline = File.new_for_path("/proc/" + pid.to_string() + "/cmdline");
+                                if (file.query_exists()) {
+                                    DataInputStream cmdline_data = new DataInputStream(cmdline.read());
+                                    string cmd = cmdline_data.read_line();
+                                    if(cmd != null) {
+                                        path = Environment.find_program_in_path(cmd);
+                                    }
+                                }
+                            }
                             debug("Path is %s", path);
                         }
                     }
