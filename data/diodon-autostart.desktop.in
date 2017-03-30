@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Diodon
+_GenericName=Clipboard Manager
+_Comment=GTK+ Clipboard Manager
+Icon=diodon
+NotShowIn=KDE;
+Exec=diodon
+Terminal=false
+Categories=GTK;GNOME;Utility;
+StartupNotify=false
+MimeType=x-scheme-handler/clipboard;
+
