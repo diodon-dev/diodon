@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-14 21:18+0100\n"
-"PO-Revision-Date: 2014-04-16 14:31+0000\n"
-"Last-Translator: Jiri Grönroos <Unknown>\n"
+"PO-Revision-Date: 2017-04-06 13:50+0000\n"
+"Last-Translator: rainland <reino.kinner@aalto.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-01-15 05:17+0000\n"
-"X-Generator: Launchpad (build 17886)\n"
+"X-Launchpad-Export-Date: 2017-04-07 06:15+0000\n"
+"X-Generator: Launchpad (build 18343)\n"
 "Language: fi\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -36,6 +36,8 @@ msgid ""
 "Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
+"Lisää leikepöytään kopioidun sisällön esim. näppäinkomennolla Ctrl + C "
+"leikepöydän historiaan."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
@@ -49,6 +51,9 @@ msgid ""
 "continually checks what is selected. This might discharge your battery "
 "quicker."
 msgstr ""
+"Lisää ensisijaisen valinna (maalattu alue) leikepöydän historiaan. Valinta "
+"aloittaa prosessin, joka tarkistaa toistuvasti valinnan. Tämä valinta "
+"saattaa kuluttaa virtaa enemmän."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Add images to clipboard history"
@@ -62,6 +67,10 @@ msgid ""
 "option will increase memory consumption. Images already added to clipboard "
 "history will remain even when disabled."
 msgstr ""
+"Lisää kopioidut kuvat leikepöydälle (ja sen historiaan) (esim. silloin, kun "
+"painat kuvaa oikealla hiiren näppäimellä ja valitset 'kopioi'). Tämä valinta "
+"lisää muistinkäyttöä. Aikaisemmin lisätyt kuvat säilyvät historiassa vaikka "
+"valinta poistettaisiin."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Synchronize clipboards"
@@ -75,6 +84,9 @@ msgid ""
 "available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
 "the middle mouse button."
 msgstr ""
+"Synkronoi valinnan (maalattu alue) ja leikepöydän niin, että kaikki, mikä on "
+"valittuna on heti tavoiteltavissa leikepöydältä ja päinvastoin (esim. "
+"liittämällä Ctrl + V ja hiiren oikea näppäin)."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Keep clipboard content"
@@ -104,31 +116,39 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Number of recent clipboard items"
-msgstr ""
+msgstr "Viimeaikaisten leikepöydän osien lukumäärä"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 msgid "Number of recent clipboard items shown in clipboard menu."
 msgstr ""
+"Viimeaikaisten leikepöydän osien lukumäärä joka näytetään "
+"leikepöytävalikossa."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Clipboard content filter pattern"
-msgstr ""
+msgstr "Leikepöydän sisällön suodattimen kaava"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid ""
 "Regex filter pattern whereas all clipboard items matching this pattern will "
 "be filtered and not added to clipboard history."
 msgstr ""
+"Säännöllisen lausekkeen suodatin missä kaikki leikepöydän kohdat, jotka "
+"vastaavat tätä malliin, suodatetaan eikä niitä lisätä leikepöydän historiaan."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 msgid "Lookup dictionary for application using different paste keybindings"
 msgstr ""
+"Hakusanakirja sovellukselle, joka käyttää eri liittämisen näppäinkomentoja."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 msgid ""
 "A lookup dictionary for applications using different paste keybindings than "
 "Ctrl + V. Pattern of each string in this array is path-of-app|keybinding"
 msgstr ""
+"Hakusanakirja sovellukselle, joka käyttää jotain muuta liittämisen "
+"näppäinkomento kuin Ctrl + V. Jokaisen merkkijonon malli tässä taulukossa on "
+"sovelluksen-polku|pikanäppäin"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:19
 msgid "Active plugins"
@@ -185,14 +205,17 @@ msgid ""
 "your desktop environment.\n"
 "Use /usr/bin/diodon as command."
 msgstr ""
+"Rekisteröi mukautettu pikanäppäin\n"
+"työpöytäympäristössäsi.\n"
+"Käytä komentona /usr/bin/diodon"
 
 #: ../data/preferences.ui.h:20
 msgid "More information"
-msgstr ""
+msgstr "Lisätietoja"
 
 #: ../data/preferences.ui.h:21
 msgid "Hotkeys"
-msgstr ""
+msgstr "Pikanäppäimet"
 
 #: ../data/preferences.ui.h:22
 msgid "Plugins"
