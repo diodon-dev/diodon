@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-14 21:18+0100\n"
+"POT-Creation-Date: 2017-06-05 13:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -169,8 +169,7 @@ msgstr ""
 msgid "Number of recent items"
 msgstr ""
 
-#: ../data/preferences.ui.h:16
-#: ../unity-scope-diodon/unity-scope-diodon.vala:75
+#: ../data/preferences.ui.h:16 ../unity-scope-diodon/unity-scope-diodon.vala:75
 msgid "Clipboard"
 msgstr ""
 
@@ -193,8 +192,12 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
-#: ../libdiodon/clipboard-menu.vala:45
+#: ../libdiodon/clipboard-menu.vala:46
 msgid "<Empty>"
+msgstr ""
+
+#: ../libdiodon/clipboard-menu.vala:53
+msgid "Privacy mode is enabled. No new items will be added to history!"
 msgstr ""
 
 #: ../plugins/indicator/indicator.plugin.in.h:1

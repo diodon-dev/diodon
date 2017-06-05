@@ -527,7 +527,8 @@ namespace Diodon
                 recent_menu.destroy_menu();
             }
 
-            recent_menu = new ClipboardMenu(this, items, static_recent_menu_items);
+            recent_menu = new ClipboardMenu(this, items, static_recent_menu_items,
+                                            storage.is_privacy_mode_enabled());
             on_recent_menu_changed(recent_menu);
         }
 

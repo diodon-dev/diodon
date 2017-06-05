@@ -35,8 +35,9 @@ namespace Diodon
          * @param controller reference to controller
          * @param items clipboard items to be shown
          * @param menu_items additional menu items to be added after separator
+         * @param privacy_mode check whether privacy mode is enabled
          */
-        public ClipboardMenu(Controller controller, Gee.List<IClipboardItem> items, Gee.List<Gtk.MenuItem>? static_menu_items)
+        public ClipboardMenu(Controller controller, Gee.List<IClipboardItem> items, Gee.List<Gtk.MenuItem>? static_menu_items, bool privace_mode)
         {
             this.controller = controller;
             this.static_menu_items = static_menu_items;
@@ -45,6 +46,14 @@ namespace Diodon
                 Gtk.MenuItem empty_item = new Gtk.MenuItem.with_label(_("<Empty>"));
                 empty_item.set_sensitive(false);
                 append(empty_item);
+            }
+
+            if(privace_mode) {
+                Gtk.MenuItem privacy_item = new Gtk.MenuItem.with_label(
+                    _("Privacy mode is enabled. No new items will be added to history!")
+                );
+                privacy_item.set_sensitive(false);
+                append(privacy_item);
             }
 
             foreach(IClipboardItem item in items) {
@@ -161,7 +170,7 @@ namespace Diodon
             uint pressed_keyval = Gdk.keyval_to_lower(event.keyval);
             if(pressed_keyval == down_keyval) {
                 if(get_selected_item() == null) {
-                    select_first(false);
+                    select_first(true);
                 } else {
                     move_selected(1);
                 }
@@ -169,7 +178,7 @@ namespace Diodon
             }
             if(pressed_keyval == up_keyval) {
                 if(get_selected_item() == null) {
-                    select_first(false);
+                    select_first(true);
                 }
                 move_selected(-1);
                 return true;

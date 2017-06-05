@@ -23,6 +23,17 @@ using Zeitgeist;
 
 namespace Diodon
 {
+	[DBus (name = "org.gnome.zeitgeist.Blacklist")]
+	interface BlacklistInterface : Object {
+        public signal void template_added (string blacklist_id, [DBus (signature = "(asaasay)")] Variant blacklist_template);
+
+        public signal void template_removed (string blacklist_id, [DBus (signature = "(asaasay)")] Variant blacklist_template);
+
+		[DBus (signature = "a{s(asaasay)}")]
+	    public abstract Variant get_templates () throws IOError;
+	}
+
+
     /**
      * Zeitgeist clipboard storage implementation using
      * libzeitgeist to store clipboard items as events with subjects.
@@ -38,6 +49,7 @@ namespace Diodon
         private Zeitgeist.Log log;
         private Index index;
         private Monitor monitor;
+        private BlacklistInterface blacklist;
 
         private Gee.HashMap<ClipboardType, IClipboardItem> current_items;
         private HashTable<int?, Event> cat_templates;
@@ -57,6 +69,17 @@ namespace Diodon
             this.cat_templates = new HashTable<int?, Event>(int_hash, int_equal);
             prepare_category_templates(this.cat_templates);
 
+            try {
+                this.blacklist = Bus.get_proxy_sync(
+                    BusType.SESSION, "org.gnome.zeitgeist.Engine",
+                    "/org/gnome/zeitgeist/blacklist"
+                );
+                this.blacklist.template_added.connect((id, variant) => { on_items_inserted(); } );
+                this.blacklist.template_removed.connect((id, variant) => { on_items_deleted(); } );
+            } catch(GLib.Error e) {
+                warning("Could not connect to blacklist interface: %s", e.message);
+            }
+
             this.monitor = new Monitor(new TimeRange.from_now(),
                 get_items_event_templates());
             this.monitor.events_inserted.connect(() => { on_items_inserted(); } );
@@ -73,6 +96,37 @@ namespace Diodon
             this.index = new Index();
 
             this.current_items = new Gee.HashMap<ClipboardType, IClipboardItem>();
+        }
+
+        /**
+         * Check whether privacy mode is enabled or not. When privacy
+         * mode is enabled no new clipboard items will be added to history.
+         *
+         * @return true if privacy mode is enabled; otherwise false.
+         */
+        public bool is_privacy_mode_enabled()
+        {
+            if(this.blacklist == null) {
+                return false;
+            }
+
+            try {
+                Variant var_blacklists = this.blacklist.get_templates();
+
+                foreach(Variant variant in var_blacklists) {
+                    VariantIter iter = variant.iterator();
+                    string template_id = iter.next_value().get_string();
+                    if(template_id == "block-all" || template_id == "interpretation-document") {
+                        debug("Zeitgeist privacy mode is enabled");
+                        return true;
+                    }
+                }
+            } catch(GLib.Error e) {
+                warning("Could not determine state of privacy mode: %s", e.message);
+            }
+
+            debug("Zeitgeist privacy mode is disabled");
+            return false;
         }
 
         /**
@@ -121,7 +175,7 @@ namespace Diodon
          * Get clipboard item by its given checksum
          *
          * @param checksum checksum of clipboard item
-         * @return clipboard item of given checksum; othterwise null if not available
+         * @return clipboard item of given checksum; otherwise null if not available
          */
         public async IClipboardItem? get_item_by_checksum(string checksum, Cancellable? cancellable = null)
         {
