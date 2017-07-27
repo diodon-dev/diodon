@@ -41,7 +41,7 @@
       <_description>Regex filter pattern whereas all clipboard items matching this pattern will be filtered and not added to clipboard history.</_description>
     </key>
     <key name="app-paste-keybindings" type="as">
-      <default>['/usr/bin/gnome-terminal|&lt;Shift&gt;&lt;Ctrl&gt;V','/usr/lib/gnome-terminal/gnome-terminal-server|&lt;Shift&gt;&lt;Ctrl&gt;V']</default>
+      <default>['/usr/bin/gnome-terminal|&lt;Shift&gt;&lt;Ctrl&gt;V','/usr/lib/gnome-terminal/gnome-terminal-server|&lt;Shift&gt;&lt;Ctrl&gt;V', '/usr/bin/xfce4-terminal|&lt;Shift&gt;&lt;Ctrl&gt;V']</default>
       <_summary>Lookup dictionary for application using different paste keybindings</_summary>
       <_description>A lookup dictionary for applications using different paste keybindings than Ctrl + V. Pattern of each string in this array is path-of-app|keybinding</_description>
     </key>
