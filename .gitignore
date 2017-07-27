@@ -1,0 +1,5 @@
+_build_
+*.pyc
+*.swp
+.lock-waf*
+.intlcache
