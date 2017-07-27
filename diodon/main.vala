@@ -92,6 +92,21 @@ namespace Diodon
 
                 Gtk.main();
             } else {
+                // on DEs directly implementing x to grab key there is
+                // a race between XEvent and GEvent which leads to Diodon menu not
+                // opening when run by keyboard shortcut.
+                // this is due to the GTK bug reported here
+                // https://bugzilla.gnome.org/show_bug.cgi?id=699679
+                // This is a very dirty workaround to simply sleep 100ms till the XEvent has
+                // passed which works in most cases.
+                // Unity and GNOME are not affected therefore excluding those here.
+                unowned string desktop = Environment.get_variable("XDG_CURRENT_DESKTOP");
+                string s_desktop = (desktop == null) ? "" : desktop.down();
+                if(strcmp(s_desktop, "unity") != 0 && strcmp(s_desktop, "gnome") != 0) {
+                    debug("Current desktop: %s", desktop);
+                    Thread.usleep(100000);
+                }
+
                 // Diodon running already, let's show history
                 controller.show_history();
             }
