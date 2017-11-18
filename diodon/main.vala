@@ -207,6 +207,9 @@ namespace Diodon
             // diodon should only show up in gnome
             DesktopAppInfo.set_desktop_env("GNOME");
 
+            // requires x11 to run
+            Gdk.set_allowed_backends("x11");
+
             DiodonApplication app = new DiodonApplication();
             return app.run(args);
         }
