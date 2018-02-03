@@ -51,7 +51,7 @@ namespace Diodon
         private Monitor monitor;
         private BlacklistInterface blacklist;
 
-        private Gee.HashMap<ClipboardType, IClipboardItem> current_items;
+        private HashTable<ClipboardType, IClipboardItem> current_items;
         private HashTable<int?, Event> cat_templates;
 
         /**
@@ -95,7 +95,7 @@ namespace Diodon
 
             this.index = new Index();
 
-            this.current_items = new Gee.HashMap<ClipboardType, IClipboardItem>();
+            this.current_items = new HashTable<ClipboardType, IClipboardItem>(null, null);
         }
 
         /**
@@ -240,7 +240,7 @@ namespace Diodon
          * @param cancellable optional cancellable handler
          * @return clipboard items matching given search query
          */
-        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query, ClipboardCategory[]? cats = null,
+        public async List<IClipboardItem> get_items_by_search_query(string search_query, ClipboardCategory[]? cats = null,
             ClipboardTimerange date_copied = ClipboardTimerange.ALL, Cancellable? cancellable = null)
         {
             TimeRange time_range = create_timerange(date_copied);
@@ -273,7 +273,7 @@ namespace Diodon
                 return yield get_recent_items(100, cats, date_copied, cancellable);
             }
 
-            return new Gee.ArrayList<IClipboardItem>();;
+            return new List<IClipboardItem>();
         }
 
         /**
@@ -287,7 +287,7 @@ namespace Diodon
          * @param cancellable optional cancellable handler
          * @return list of recent clipboard items
          */
-        public async Gee.List<IClipboardItem> get_recent_items(uint32 num_items, ClipboardCategory[]? cats = null,
+        public async List<IClipboardItem> get_recent_items(uint32 num_items, ClipboardCategory[]? cats = null,
             ClipboardTimerange date_copied = ClipboardTimerange.ALL, Cancellable? cancellable = null)
         {
             debug("Get recent %u items", num_items);
@@ -314,7 +314,7 @@ namespace Diodon
                     e.message);
             }
 
-            return new Gee.ArrayList<IClipboardItem>();;
+            return new List<IClipboardItem>();
         }
 
         /**
@@ -438,7 +438,7 @@ namespace Diodon
                 warning("Failed to clear items: %s", e.message);
             }
 
-            current_items.clear();
+            current_items.remove_all();
         }
 
         private static void prepare_category_templates(HashTable<int?, Event> templates)
@@ -568,16 +568,16 @@ namespace Diodon
             return interpretation;
         }
 
-        private static Gee.List<IClipboardItem> create_clipboard_items(ResultSet events)
+        private static List<IClipboardItem> create_clipboard_items(ResultSet events)
         {
-            Gee.List<IClipboardItem> items = new Gee.ArrayList<IClipboardItem>();
+            List<IClipboardItem> items = new List<IClipboardItem>();
 
             foreach(Event event in events) {
                 if (event.num_subjects() > 0) {
                     Subject subject = event.get_subject(0);
                     IClipboardItem item = create_clipboard_item(event, subject);
                     if(item != null) {
-                        items.add(item);
+                        items.append(item);
                     }
                 } else {
                   warning ("Unexpected event without subject");
@@ -585,7 +585,7 @@ namespace Diodon
                 }
             }
 
-            debug("Created %d clipboard items", items.size);
+            debug("Created %d clipboard items", (int) items.length());
 
             return items;
         }

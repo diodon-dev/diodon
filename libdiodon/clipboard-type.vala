@@ -19,8 +19,6 @@
  *  Oliver Sauder <os@esite.ch>
  */
 
-using Gee;
-
 namespace Diodon
 {
     public enum ClipboardType

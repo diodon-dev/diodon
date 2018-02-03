@@ -8,7 +8,7 @@ datadir=@DATADIR@
 Name: diodon
 Description: Diodon GTK+ Clipboard Manager
 Version: @VERSION@
-Requires: gtk+-3.0 gee-0.8
+Requires: gtk+-3.0
 Libs: -L${libdir} -ldiodon
 Cflags: -I${includedir}/diodon
 

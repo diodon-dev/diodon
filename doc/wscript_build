@@ -18,7 +18,7 @@ doc = bld.new_task_gen (
     output_dir = '../doc/html',
     package_name = bld.env['PACKAGE_NAME'],
     package_version = bld.env['VERSION'],
-    packages = 'gtk+-3.0 gee-0.8 gdk-x11-3.0 libpeas-gtk-1.0 libpeas-1.0 config xtst gdk-3.0',
+    packages = 'gtk+-3.0 gdk-x11-3.0 libpeas-gtk-1.0 libpeas-1.0 config xtst gdk-3.0',
     vapi_dirs = '../vapi',
     force = True)
 

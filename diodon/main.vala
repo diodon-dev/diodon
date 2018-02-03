@@ -125,11 +125,9 @@ namespace Diodon
             StringBuilder summary = new StringBuilder("Actions:\n");
             if (controller != null)
             {
-                Gee.Map<string,string> descs = controller.get_command_descriptions ();
-                if(descs.size > 0) {
-                    foreach (Gee.Map.Entry<string,string> entry in descs.entries) {
-                        summary.append_printf ("  %-25s%s\n", entry.key, entry.value);
-                    }
+                HashTable<string,string> descs = controller.get_command_descriptions ();
+                if(descs.length > 0) {
+                    descs.foreach((key, val) => summary.append_printf ("  %-25s%s\n", key, val));
                 } else {
                     summary.append ("  None");
                 }

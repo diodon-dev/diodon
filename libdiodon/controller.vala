@@ -30,15 +30,15 @@ namespace Diodon
     {
         private Settings settings_clipboard;
         private Settings settings_plugins;
-        private Gee.Map<ClipboardType, ClipboardManager> clipboard_managers;
+        private HashTable<ClipboardType, ClipboardManager> clipboard_managers;
         private ZeitgeistClipboardStorage storage;
         private ClipboardConfiguration configuration;
         private PreferencesView preferences_view;
         private Peas.ExtensionSet extension_set;
         private Peas.Engine peas_engine;
         private ClipboardMenu recent_menu = null;
-        private Gee.Map<string,string> command_descriptions;
-        private Gee.List<Gtk.MenuItem> static_recent_menu_items;
+        private HashTable<string,string> command_descriptions;
+        private List<Gtk.MenuItem> static_recent_menu_items;
         private GLib.Regex _filter_pattern = null;
 
         /**
@@ -71,8 +71,8 @@ namespace Diodon
         public Controller()
         {
             string diodon_dir = Utility.get_user_data_dir();
-            clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
-            command_descriptions = new Gee.HashMap<string,string>();
+            clipboard_managers = new HashTable<ClipboardType, ClipboardManager>(null, null);
+            command_descriptions = new HashTable<string,string>(GLib.str_hash, GLib.str_equal);
 
             settings_clipboard = new Settings("net.launchpad.Diodon.clipboard");
             settings_plugins = new Settings("net.launchpad.Diodon.plugins");
@@ -95,8 +95,8 @@ namespace Diodon
 
         public Controller.with_configuration(ClipboardConfiguration configuration, bool with_zeitgeist=true)
         {
-            clipboard_managers = new Gee.HashMap<ClipboardType, ClipboardManager>();
-            command_descriptions = new Gee.HashMap<string,string>();
+            clipboard_managers = new HashTable<ClipboardType, ClipboardManager>(null, null);
+            command_descriptions = new HashTable<string,string>(null, null);
             if(with_zeitgeist) {
                 storage = new ZeitgeistClipboardStorage();
             }
@@ -231,7 +231,7 @@ namespace Diodon
             command_descriptions[name] = desc;
         }
 
-        public Gee.Map<string,string> get_command_descriptions ()
+        public HashTable<string,string> get_command_descriptions ()
         {
             return command_descriptions;
         }
@@ -411,7 +411,7 @@ namespace Diodon
          * @param cancellable optional cancellable handler
          * @return list of recent clipboard items
          */
-        public async Gee.List<IClipboardItem> get_recent_items(ClipboardCategory[]? cats = null,
+        public async List<IClipboardItem> get_recent_items(ClipboardCategory[]? cats = null,
             ClipboardTimerange date_copied = ClipboardTimerange.ALL, Cancellable? cancellable = null)
         {
             return yield storage.get_recent_items(configuration.recent_items_size, cats, date_copied, cancellable);
@@ -426,7 +426,7 @@ namespace Diodon
          * @param cancellable optional cancellable handler
          * @return clipboard items matching given search query
          */
-        public async Gee.List<IClipboardItem> get_items_by_search_query(string search_query,
+        public async List<IClipboardItem> get_items_by_search_query(string search_query,
             ClipboardCategory[]? cats = null, ClipboardTimerange date_copied = ClipboardTimerange.ALL,
             Cancellable? cancellable = null)
         {
@@ -471,7 +471,7 @@ namespace Diodon
             // only text clipboard item can be synced
             if(item is TextClipboardItem) {
                 ClipboardType type = item.get_clipboard_type();
-                foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
+                foreach(ClipboardManager clipboard_manager in clipboard_managers.get_values()) {
                     if(type != clipboard_manager.clipboard_type) {
                         // check if item is already active in clipboard
                         // which will be synced to
@@ -521,7 +521,7 @@ namespace Diodon
          */
         public async void rebuild_recent_menu()
         {
-            Gee.List<IClipboardItem> items = yield get_recent_items();
+            List<IClipboardItem> items = yield get_recent_items();
 
             if(recent_menu != null) {
                 recent_menu.destroy_menu();
@@ -541,10 +541,10 @@ namespace Diodon
         public async void add_static_recent_menu_item(Gtk.MenuItem menu_item)
         {
             if(static_recent_menu_items == null) {
-                static_recent_menu_items = new Gee.ArrayList<Gtk.MenuItem>();
+                static_recent_menu_items = new List<Gtk.MenuItem>();
             }
 
-            static_recent_menu_items.add(menu_item);
+            static_recent_menu_items.append(menu_item);
             yield rebuild_recent_menu();
         }
 
@@ -620,7 +620,7 @@ namespace Diodon
          */
         private void enable_keep_clipboard_content(bool enable)
         {
-            foreach(ClipboardManager clipboard_manager in clipboard_managers.values) {
+            foreach(ClipboardManager clipboard_manager in clipboard_managers.get_values()) {
                 if(enable) {
                     clipboard_manager.on_empty.connect(clipboard_empty);
                 }

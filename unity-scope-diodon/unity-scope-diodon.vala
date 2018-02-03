@@ -129,7 +129,7 @@ namespace Diodon
         Cancellable? cancellable = search.search_context.cancellable.get_gcancellable();
         ClipboardCategory[]? cats = get_filter_categories(search.search_context.filter_state);
         ClipboardTimerange date_copied = get_filter_datecopied(search.search_context.filter_state);
-        Gee.List<IClipboardItem> items = yield storage.get_items_by_search_query(
+        List<IClipboardItem> items = yield storage.get_items_by_search_query(
             search.search_context.search_query, cats, date_copied, cancellable);
 
         if(!search.search_context.cancellable.is_cancelled()) {

@@ -27,7 +27,7 @@ namespace Diodon
     class ClipboardMenu : Gtk.Menu
     {
         private Controller controller;
-        private Gee.List<Gtk.Widget> static_menu_items;
+        private unowned List<Gtk.Widget> static_menu_items;
 
         /**
          * Create clipboard menu
@@ -37,12 +37,12 @@ namespace Diodon
          * @param menu_items additional menu items to be added after separator
          * @param privacy_mode check whether privacy mode is enabled
          */
-        public ClipboardMenu(Controller controller, Gee.List<IClipboardItem> items, Gee.List<Gtk.MenuItem>? static_menu_items, bool privace_mode)
+        public ClipboardMenu(Controller controller, List<IClipboardItem> items, List<Gtk.MenuItem>? static_menu_items, bool privace_mode)
         {
             this.controller = controller;
             this.static_menu_items = static_menu_items;
 
-            if(items.size <= 0) {
+            if(items.length() <= 0) {
                 Gtk.MenuItem empty_item = new Gtk.MenuItem.with_label(_("<Empty>"));
                 empty_item.set_sensitive(false);
                 append(empty_item);
@@ -113,7 +113,7 @@ namespace Diodon
                 remove(item);
 
                 // make sure that static items do not get destroyed
-                if(static_menu_items == null || !static_menu_items.contains(item))
+                if(static_menu_items == null || static_menu_items.find(item) == null)
                 {
                     item.destroy();
                     item.dispose();

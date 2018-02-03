@@ -115,8 +115,8 @@ namespace Diodon
 	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD,
 	            ITEMS.to_string(), "/path/to/app", new DateTime.now_utc()));
 
-	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(RECENT_ITEMS);
-	        FsoFramework.Test.Assert.are_equal(items.size, RECENT_ITEMS,
+	        List<IClipboardItem> items = yield this.storage.get_recent_items(RECENT_ITEMS);
+	        FsoFramework.Test.Assert.are_equal(items.length(), RECENT_ITEMS,
 	            "Invalid number of recent items");
 
 	        // recent items should be in reverse order
@@ -131,7 +131,7 @@ namespace Diodon
 
 	        // only number of available items should be returned even when asked for more
 	        items = yield this.storage.get_recent_items(ITEMS + 1);
-	        FsoFramework.Test.Assert.are_equal(items.size, ITEMS,
+	        FsoFramework.Test.Assert.are_equal(items.length(), ITEMS,
 	            "Invalid number of recent items");
 	    }
 
@@ -145,9 +145,9 @@ namespace Diodon
 	        yield this.storage.add_item(new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD,
 	            pixbuf, "/path/to/app", new DateTime.now_utc()));
 
-            Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(3, new ClipboardCategory[]{ClipboardCategory.IMAGES});
-	        FsoFramework.Test.Assert.are_equal(items.size, 1, "Invalid number of recent items");
-	        IClipboardItem item = items.get(0);
+            List<IClipboardItem> items = yield this.storage.get_recent_items(3, new ClipboardCategory[]{ClipboardCategory.IMAGES});
+	        FsoFramework.Test.Assert.are_equal(items.length(), 1, "Invalid number of recent items");
+	        IClipboardItem item = items.nth_data(0);
 	        FsoFramework.Test.Assert.are_equal_string(item.get_label(), "[64x64]", "Invalid image label");
 	    }
 
@@ -158,9 +158,9 @@ namespace Diodon
 	        yield this.storage.add_item(new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD,
 	            pixbuf, "/path/to/app", new DateTime.now_utc()));
 
-	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(100);
-	        FsoFramework.Test.Assert.are_equal(items.size, 1, "Invalid number of recent items");
-	        IClipboardItem item = items.get(0);
+	        List<IClipboardItem> items = yield this.storage.get_recent_items(100);
+	        FsoFramework.Test.Assert.are_equal(items.length(), 1, "Invalid number of recent items");
+	        IClipboardItem item = items.nth_data(0);
 	        FsoFramework.Test.Assert.are_equal_string(item.get_label(), "[64x64]", "Invalid image label");
 	    }
 
@@ -192,8 +192,8 @@ namespace Diodon
 
 	        yield this.storage.clear();
 
-	        Gee.List<IClipboardItem> items = yield this.storage.get_recent_items(3);
-	        FsoFramework.Test.Assert.are_equal(0, items.size, "Items found");
+	        List<IClipboardItem> items = yield this.storage.get_recent_items(3);
+	        FsoFramework.Test.Assert.are_equal(0, (int) items.length(), "Items found");
 	    }
 
 	    // TODO: get this up and running
@@ -204,10 +204,10 @@ namespace Diodon
 	        yield this.storage.add_item(new TextClipboardItem(ClipboardType.CLIPBOARD, "SampleName", "/path/to/app"));
 
 	        Gee.List<IClipboardItem> items = yield this.storage.get_items_by_search_query("name");
-	        FsoFramework.Test.Assert.are_equal(2, items.size, "Invalid number of items found");
+	        FsoFramework.Test.Assert.are_equal(2, items.length(), "Invalid number of items found");
 
 	        items = yield this.storage.get_items_by_search_query("sample");
-	        FsoFramework.Test.Assert.are_equal(1, items.size, "Invalid number of items found");
+	        FsoFramework.Test.Assert.are_equal(1, items.length(), "Invalid number of items found");
 	    }*/
 
 	    public override void tear_down()
