@@ -41,7 +41,7 @@ namespace Diodon
 	        this.controller = new Controller.with_configuration(cfg, false);
         }
 
-	    public void test_filter_item_whitespace()
+	    public void test_filter_item_whitespace() throws GLib.Error
 	    {
 	        assert(controller.filter_item(create_text_item(" ")));
 	        assert(controller.filter_item(create_text_item("   ")));
@@ -49,7 +49,7 @@ namespace Diodon
 	        assert(controller.filter_item(create_text_item("\t")));
 	    }
 
-	    public void test_filter_item_none_whitespace()
+	    public void test_filter_item_none_whitespace() throws GLib.Error
 	    {
 	        assert(!controller.filter_item(create_text_item("This is a item\n ")));
 	        assert(!controller.filter_item(create_text_item("  \nThis is a item")));

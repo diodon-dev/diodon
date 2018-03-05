@@ -51,7 +51,7 @@ namespace Diodon
         /**
          * list of available command line options
          */
-        private static const OptionEntry[] options = {
+        private const OptionEntry[] options = {
             { OPTION_REMAINING, '\0', 0, OptionArg.STRING_ARRAY, ref remaining_options, null, "<action> | [CHECKSUM]" },
             { "help", 'h', 0, OptionArg.NONE, ref show_help, "Show help options", null },
             { "version", 'v', 0, OptionArg.NONE, ref show_version, "Print version information", null },

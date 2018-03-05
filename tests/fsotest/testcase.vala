@@ -34,9 +34,9 @@ public abstract class FsoFramework.Test.TestCase : Object
         this._suite = new GLib.TestSuite (name);
     }
 
-    public void add_test (string name, TestMethod test)
+    public void add_test (string name, owned TestMethod test)
     {
-        var adaptor = new Adaptor (name, test, this);
+        var adaptor = new Adaptor (name, (owned)test, this);
         this._adaptors += adaptor;
 
         this._suite.add (new GLib.TestCase (adaptor.name, adaptor.set_up, adaptor.run, adaptor.tear_down, sizeof(Adaptor)));
