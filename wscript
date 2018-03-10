@@ -17,10 +17,10 @@ from waflib.Build import BuildContext
 from waflib.Tools import waf_unit_test
 
 NAME = 'Diodon'
-VERSION = '1.8.0-daily'
+VERSION = '1.8.0'
 APPNAME = 'diodon'
 WEBSITE = 'https://launchpad.net/diodon'
-COPYRIGHT = 'Copyright \xc2\xa9 2010-2014 Diodon Team'
+COPYRIGHT = 'Copyright \xc2\xa9 2010-2018 Diodon Team'
 BUSNAME = 'net.launchpad.Diodon'
 BUSOBJECTPATH = '/net/launchpad/diodon'
 
