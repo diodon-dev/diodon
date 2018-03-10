@@ -98,7 +98,7 @@ namespace Diodon
                         }
                     }
                     catch(GLib.Error e) {
-                        debug("Error occured while reading %s: %s",
+                        debug("Error occurred while reading %s: %s",
                             file.get_path(), e.message);
                     }
                 }
