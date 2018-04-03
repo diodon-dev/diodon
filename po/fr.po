@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-05 14:18+0200\n"
-"PO-Revision-Date: 2017-04-19 12:08+0000\n"
-"Last-Translator: Olivier Febwin <febwin@free.fr>\n"
+"PO-Revision-Date: 2018-04-01 21:51+0000\n"
+"Last-Translator: Jean-Marc <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-06-06 05:55+0000\n"
-"X-Generator: Launchpad (build 18399)\n"
+"X-Launchpad-Export-Date: 2018-04-02 05:25+0000\n"
+"X-Generator: Launchpad (build 18599)\n"
 "Language: fr\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -51,6 +51,10 @@ msgid ""
 "continually checks what is selected. This might discharge your battery "
 "quicker."
 msgstr ""
+"Ajouter la sélection primaire (une zone de l'écran qui est sélectionnée par "
+"la souris) à l'historique du presse-papier. L'activation lancera le "
+"processus qui vérifie en continu ce qui est sélectionné. Ceci pourrait vider "
+"votre batterie plus rapidement."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Add images to clipboard history"
@@ -125,7 +129,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Clipboard content filter pattern"
-msgstr ""
+msgstr "Modèle de filtre de contenu du presse-papier"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid ""
@@ -136,6 +140,8 @@ msgstr ""
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 msgid "Lookup dictionary for application using different paste keybindings"
 msgstr ""
+"Dictionnaire de recherche pour l'application utilisant différents raccourcis "
+"clavier"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 msgid ""
@@ -197,6 +203,9 @@ msgid ""
 "your desktop environment.\n"
 "Use /usr/bin/diodon as command."
 msgstr ""
+"Veuillez enregistrer un raccourci personnalisé avec\n"
+"votre environnement de bureau.\n"
+"Utilisez /usr/bin/diodon comme commande."
 
 #: ../data/preferences.ui.h:20
 msgid "More information"
@@ -217,6 +226,8 @@ msgstr "<Vide>"
 #: ../libdiodon/clipboard-menu.vala:53
 msgid "Privacy mode is enabled. No new items will be added to history!"
 msgstr ""
+"Le mode de confidentialité est activé. Aucun nouvel article ne sera ajouté à "
+"l'historique !"
 
 #: ../plugins/indicator/indicator.plugin.in.h:1
 msgid "Application Indicator"
