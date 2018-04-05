@@ -1,0 +1,76 @@
+name: diodon
+version: git
+icon: data/icons/hicolor/scalable/apps/diodon.svg
+summary: GTK+ Clipboard manager
+description: |
+  Diodon is a lightweight clipboard manager for Linux written in Vala which
+  "aims to be the best integrated clipboard manager for the Gnome/Unity desktop".
+
+  Diodon features include Ubuntu indicator, clipboard sync (primary selection
+  and Ctrl+C / Ctrl+V clipboard) and a zeitgeist integration for an infinite
+  clipboard history.
+
+grade: stable
+confinement: devmode
+
+apps:
+  diodon:
+    command: desktop-launch diodon
+    desktop: usr/share/applications/diodon.desktop
+    plugs:
+      - desktop
+      - desktop-legacy
+      - gsettings
+      - unity7
+      - wayland
+
+slots:
+  diodon-gapp:
+    interface: dbus
+    bus: session
+    name: net.launchpad.Diodon
+
+parts:
+  diodon:
+    plugin: waf
+    build-packages:
+      - gobject-introspection
+      - intltool
+      - libappindicator3-dev
+      - libgee-0.8-dev
+      - libglib2.0-dev
+      - libgtk-3-dev
+      - libpeas-dev
+      - libx11-dev
+      - libxtst-dev
+      - libzeitgeist-2.0-dev
+      - valac
+      - xvfb
+    configflags:
+      - --nocache
+      - --skiptests
+      - --notests
+      # XXX: This is an hack to have a kind of bind-mount with absolute prefix.
+      - --prefix=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr
+    organize:
+      snap/diodon/current: .
+    stage-packages:
+      - libgirepository-1.0-1
+      - libpeas-1.0-0
+      - libxtst6
+      - libzeitgeist-2.0-0
+    install: |
+      set -x
+      export XDG_DATA_DIRS=$SNAPCRAFT_PART_INSTALL/usr/share
+      update-mime-database $SNAPCRAFT_PART_INSTALL/usr/share/mime
+
+      for dir in $SNAPCRAFT_PART_INSTALL/usr/share/icons/*/; do
+        if [ -f $dir/index.theme ]; then
+          gtk-update-icon-cache-3.0 -q $dir
+        fi
+      done
+    after:
+      - desktop-gtk3
+
+  desktop-gtk3:
+    stage: [-./usr/share/fonts/**]
