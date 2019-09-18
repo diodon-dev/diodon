@@ -4,7 +4,7 @@
 
 import Options
 
-prog = bld.new_task_gen (
+prog = bld(
   features = 'c cprogram',
   target = 'unity-scope-diodon',
   vapi_dirs = '../vapi ../libdiodon',
@@ -16,21 +16,21 @@ prog = bld.new_task_gen (
 
 prog.install_path = bld.env['LIBDIR_DIODON']
 
-bld.new_task_gen (
+bld(
   features = "subst",
   source= "clipboard.scope.in.in",
   target= "clipboard.scope.in",
   BUSNAME = bld.env['BUSNAME'],
   BUSOBJECTPATH = bld.env['BUSOBJECTPATH'])
 
-bld.new_task_gen (
+bld(
   features = 'intltool_in',
   podir = '../po',
   source = 'clipboard.scope.in',
-  flags = ["-d", "-q", "-u", "-c"],
+  flags = ["-d", "-q", "-u"],
   install_path = "${DATADIR}/unity/scopes")
 
-bld.new_task_gen (
+bld(
   features = "subst",
   source= "unity-scope-diodon.service.in",
   target= "unity-scope-diodon.service",

@@ -2,9 +2,9 @@
 # encoding: utf-8
 # Oliver Sauder, 2010
 
-import Options
+from waflib import Options
 
-prog = bld.new_task_gen (
+prog = bld(
   features = 'c cprogram',
   target = 'diodon',
   vapi_dirs = '../vapi ../libdiodon',

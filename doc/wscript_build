@@ -13,7 +13,7 @@ def signature_task(task):
     for x in path.ant_glob('**/*', remove=False):
         x.sig = Utils.h_file(x.abspath())
 
-doc = bld.new_task_gen (
+doc = bld(
     features = 'valadoc',
     output_dir = '../doc/html',
     package_name = bld.env['PACKAGE_NAME'],
@@ -44,7 +44,7 @@ for node in nodes:
 bld.post_mode = Build.POST_LAZY
 bld.add_group()
 
-bld.new_task_gen(
+bld(
   name = 'signature_task',
   always = True,
   rule = signature_task)

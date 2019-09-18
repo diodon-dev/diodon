@@ -3,4 +3,4 @@
 # Oliver Sauder, 2010
 
 if bld.env['INDICATOR']:
-    bld.add_subdirs('indicator')
+    bld.recurse('indicator')

@@ -2,7 +2,7 @@
 # encoding: utf-8
 # Oliver Sauder, 2010
 
-import Options
+from waflib import Options
 
 lib = bld.shlib (
   features = 'c cshlib',
@@ -18,7 +18,7 @@ lib = bld.shlib (
   packages_private = 'zeitgeist-2.0 gdk-x11-3.0 libpeas-gtk-1.0 libpeas-1.0 config xtst gdk-3.0',
   source = bld.path.ant_glob (incl='**/*.vala'))
 
-lib_typelib = bld.new_task_gen(
+lib_typelib = bld(
   name = 'libdiodon_typelib',
   after = 'libdiodon',
   source = 'Diodon-1.0.gir',

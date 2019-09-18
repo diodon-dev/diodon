@@ -17,9 +17,9 @@ lib = bld.shlib (
 
 lib.install_path = os.path.join(bld.env['PLUGINS_DIR'], lib.target)
 
-bld.new_task_gen (
+bld(
   features = 'intltool_in',
   podir = '../../po',
   source = 'indicator.plugin.in',
-  flags = ["-d", "-q", "-u", "-c"],
+  flags = ["-d", "-q", "-u"],
   install_path = lib.install_path)

@@ -3,3 +3,4 @@ _build_
 *.swp
 .lock-waf*
 .intlcache
+.waf-*

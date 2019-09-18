@@ -11,8 +11,8 @@ import time
 import traceback
 from subprocess import PIPE, Popen
 
-import Logs
-import Options
+from waflib import Options
+from waflib import Logs
 from waflib.Build import BuildContext
 from waflib.Tools import waf_unit_test
 
@@ -36,12 +36,12 @@ class CustomBuildContext(BuildContext):
 
 
 def options(opt):
-    opt.tool_options('compiler_c')
-    opt.tool_options('waf_unit_test')
-    opt.tool_options('vala')
-    opt.tool_options('gnu_dirs')
-    opt.tool_options('intltool')
-    opt.tool_options('glib2')
+    opt.load('compiler_c')
+    opt.load('waf_unit_test')
+    opt.load('vala')
+    opt.load('gnu_dirs')
+    opt.load('intltool')
+    opt.load('glib2')
     opt.add_option('--update-po',                action='store_true', default=False, dest='update_po', help='Update localization files')
     opt.add_option('--debug',                    action='store_true', default=False, dest='debug',     help='Debug mode')
     opt.add_option('--disable-indicator-plugin', action='store_true', default=False, dest='disable_indicator', help='Disable build of indicator plugin')
@@ -129,19 +129,19 @@ def configure(conf):
 
 
 def build(ctx):
-    ctx.add_subdirs('po data libdiodon plugins diodon')
+    ctx.recurse('po data libdiodon plugins diodon')
 
     if ctx.env['UNITYSCOPE']:
-        ctx.add_subdirs('unity-scope-diodon')
+        ctx.recurse('unity-scope-diodon')
 
     if not Options.options.skiptests:
-        ctx.add_subdirs('tests')
+        ctx.recurse('tests')
         if ctx.cmd == 'build':
             ctx.add_pre_fun(setup_tests)
             ctx.add_post_fun(teardown_tests)
 
     if ctx.env['VALADOC']:
-        ctx.add_subdirs('doc')
+        ctx.recurse('doc')
     ctx.add_post_fun(post)
 
     # to execute all tests:
