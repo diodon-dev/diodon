@@ -1,0 +1,20 @@
+.TH DIODON 1
+.SH NAME
+Diodon \- GTK+ Clipboard Manager.
+.SH SYNOPSIS
+diodon [OPTIONS] [CHECKSUM]
+.SH DESCRIPTION
+Diodon is a lightweight clipboard manager for Linux written in Vala which "aims to be the best integrated clipboard manager for the Gnome/GTK+ desktop". Diodon features include Ubuntu indicator, clipboard sync (primary selection and Ctrl+C / Ctrl+V clipboard) and a zeitgeist integration for an infinite clipboard history.
+.SH OPTIONS
+.IP "-h, --help"
+Show help options
+.IP "-v, --version"
+Print version information
+.SH CHECKSUM
+Specific clipboard content are identified by their unique SHA-1 checksum. Calling uri clipboard:checksum will trigger Diodon to copy the specific content into clipboard.
+.SH ENVIRONMENT VARIABLES
+.IP G_MESSAGES_DEBUG
+Set to
+.B all
+to enable debug messages.
+

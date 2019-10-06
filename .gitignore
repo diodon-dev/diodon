@@ -1,4 +1,5 @@
 _build_
+builddir
 *.pyc
 *.swp
 .lock-waf*

@@ -1,0 +1,2 @@
+option('disable-indicator-plugin', type : 'boolean', value : false, description : 'Disable build of indicator plugin')
+option('enable-unity-scope', type : 'boolean', value : false, description : 'Disable build of indicator plugin')

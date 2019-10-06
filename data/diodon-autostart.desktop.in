@@ -2,8 +2,8 @@
 Type=Application
 Version=1.0
 Name=Diodon
-_GenericName=Clipboard Manager
-_Comment=GTK+ Clipboard Manager
+GenericName=Clipboard Manager
+Comment=GTK+ Clipboard Manager
 Icon=diodon
 NotShowIn=KDE;
 Exec=diodon
