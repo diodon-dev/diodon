@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: Diodon 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-05 14:18+0200\n"
-"PO-Revision-Date: 2016-05-07 14:06+0000\n"
-"Last-Translator: UweS <Unknown>\n"
+"PO-Revision-Date: 2019-10-11 18:15+0000\n"
+"Last-Translator: Etamuk <trmfach@posteo.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-06-06 05:55+0000\n"
-"X-Generator: Launchpad (build 18399)\n"
+"X-Launchpad-Export-Date: 2019-10-12 06:01+0000\n"
+"X-Generator: Launchpad (build af2eefe214bd95389a09b7c956720881bab16807)\n"
 "Language: de\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -225,6 +225,7 @@ msgstr "<Leer>"
 #: ../libdiodon/clipboard-menu.vala:53
 msgid "Privacy mode is enabled. No new items will be added to history!"
 msgstr ""
+"Der Privat-Modus ist aktiv. Es werden keine Einträge zum Verlauf hinzugefügt!"
 
 #: ../plugins/indicator/indicator.plugin.in.h:1
 msgid "Application Indicator"
