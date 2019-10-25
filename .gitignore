@@ -3,3 +3,8 @@ _build_
 *.swp
 .lock-waf*
 .intlcache
+*.snap
+/parts/
+/prime/
+/stage/
+/snap/.snapcraft
