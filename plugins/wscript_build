@@ -1,6 +1,0 @@
-#! /usr/bin/env python
-# encoding: utf-8
-# Oliver Sauder, 2010
-
-if bld.env['INDICATOR']:
-    bld.add_subdirs('indicator')
