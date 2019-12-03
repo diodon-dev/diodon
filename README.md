@@ -34,7 +34,7 @@ building of the indicator can be disabled by adjusting builddir creation command
 
 For uninstalling type this:
 
-   sudo ninja uninstall
+    sudo ninja uninstall
 
 ## Plugins
 
