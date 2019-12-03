@@ -1,7 +1,0 @@
-#! /usr/bin/env python
-# encoding: utf-8
-
-bld.new_task_gen (
-  features = 'intltool_po',
-  appname = 'diodon')
-

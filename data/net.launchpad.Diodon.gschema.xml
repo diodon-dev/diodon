@@ -1,0 +1,57 @@
+<schemalist>
+  <schema gettext-domain="diodon" id="net.launchpad.Diodon.clipboard" path="/net/launchpad/diodon/clipboard/">
+    <key name="use-clipboard" type="b">
+      <default>true</default>
+      <summary>Use clipboard (Ctrl+C)</summary>
+      <description>Adds content which is copied to the clipboard with e.g. Ctrl + C to the clipboard history.</description>
+    </key>
+    <key name="use-primary" type="b">
+      <default>false</default>
+      <summary>Use primary selection</summary>
+      <description>Adds the primary selection (an area of the screen which is selected with the mouse) to the clipboard history. Enabling will start process which continually checks what is selected. This might discharge your battery quicker.</description>
+    </key>
+    <key name="add-images" type="b">
+      <default>false</default>
+      <summary>Add images to clipboard history</summary>
+      <description>Add images copied to clipboard to clipboard history (e.g. when you right click on an image in your browser and choose copy image). Enabling this option will increase memory consumption. Images already added to clipboard history will remain even when disabled.</description>
+    </key>
+    <key name="synchronize-clipboards" type="b">
+      <default>false</default>
+      <summary>Synchronize clipboards</summary>
+      <description>Synchronizes the selection (an area of the screen which is selected with the mouse) and the clipboard so that anything in the selection is immediately available in the clipboard and vice versa e.g. for pasting with Ctrl + V and the middle mouse button.</description>
+    </key>
+    <key name="keep-clipboard-content" type="b">
+      <default>true</default>
+      <summary>Keep clipboard content</summary>
+      <description>Prevents an empty clipboard. For instance when an application exits, the clipboard would usually be emptied.</description>
+    </key>
+    <key name="instant-paste" type="b">
+      <default>true</default>
+      <summary>Automatically paste selected item</summary>
+      <description>Automatically paste selected item instead of just copying it to the clipboard.</description>
+    </key>
+    <key name="recent-items-size" type="u">
+      <default>25</default>
+      <summary>Number of recent clipboard items</summary>
+      <description>Number of recent clipboard items shown in clipboard menu.</description>
+    </key>
+    <key name="filter-pattern" type="s">
+      <default>'^\\s+$'</default>
+      <summary>Clipboard content filter pattern</summary>
+      <description>Regex filter pattern whereas all clipboard items matching this pattern will be filtered and not added to clipboard history.</description>
+    </key>
+    <key name="app-paste-keybindings" type="as">
+      <default>['/usr/bin/gnome-terminal|&lt;Shift&gt;&lt;Ctrl&gt;V','/usr/lib/gnome-terminal/gnome-terminal-server|&lt;Shift&gt;&lt;Ctrl&gt;V', '/usr/bin/xfce4-terminal|&lt;Shift&gt;&lt;Ctrl&gt;V']</default>
+      <summary>Lookup dictionary for application using different paste keybindings</summary>
+      <description>A lookup dictionary for applications using different paste keybindings than Ctrl + V. Pattern of each string in this array is path-of-app|keybinding</description>
+    </key>
+  </schema>
+  <schema gettext-domain="diodon" id="net.launchpad.Diodon.plugins" path="/net/launchpad/diodon/plugins/">
+    <key name="active-plugins" type="as">
+      <default>['indicator']</default>
+      <summary>Active plugins</summary>
+      <description>List of active plugins.</description>
+    </key>
+  </schema>
+</schemalist>
+

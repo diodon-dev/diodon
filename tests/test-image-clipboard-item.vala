@@ -34,7 +34,7 @@ namespace Diodon
 
 	    public void test_image_clipboard_item_new_with_payload() throws GLib.Error
 	    {
-            Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Config.TEST_DATA_DIR + "Diodon-64x64.png");
+            Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(Path.build_filename(Config.TEST_DATA_DIR, "Diodon-64x64.png"));
 
             ImageClipboardItem item1 = new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD, pixbuf, null, new DateTime.now_utc());
             string checksum1 = item1.get_checksum();

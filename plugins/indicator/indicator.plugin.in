@@ -1,7 +1,7 @@
 [Plugin]
 Module=indicator
-_Name=Application Indicator
-_Description=Access clipboard history with an application indicator.
+Name=Application Indicator
+Description=Access clipboard history with an application indicator.
 Authors=Oliver Sauder <os@esite.ch>
-_Copyright=Copyright © 2011 Diodon Team
+Copyright=Copyright © 2011 Diodon Team
 

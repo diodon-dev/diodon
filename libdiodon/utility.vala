@@ -33,7 +33,7 @@ namespace Diodon
          */
         public static string get_user_data_dir()
         {
-            return Path.build_filename(Environment.get_user_data_dir(), Config.PACKAGE_NAME);
+            return Path.build_filename(Environment.get_user_data_dir(), Config.PACKAGE);
         }
 
         /**

@@ -60,7 +60,7 @@ namespace Diodon
 
         public DiodonApplication()
         {
-            Object(application_id: Config.BUSNAME, flags: ApplicationFlags.HANDLES_COMMAND_LINE);
+            Object(application_id: "net.launchpad.Diodon", flags: ApplicationFlags.HANDLES_COMMAND_LINE);
 
             command_line.connect (handle_command_line);
 
@@ -198,7 +198,7 @@ namespace Diodon
         {
             // setup gettext
             Intl.textdomain(Config.GETTEXT_PACKAGE);
-            Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+            Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALE_DIR);
             Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
             Intl.setlocale(LocaleCategory.ALL, "");
 

@@ -1,4 +1,5 @@
 # Diodon
+
 Aiming to be the best integrated clipboard manager for the Unity desktop.
 
 ## Installing
@@ -14,13 +15,26 @@ To install Diodon on other systems download a release tarball from [launchpad](h
 
 ## Building
 
-Diodon uses the [waf](https://waf.io) build system.
+Diodon uses the [Meson](https://mesonbuild.com/) build system.
 
-    git clone https://github.com/diodon-dev/diodon.git
-    cd diodon
-    ./waf configure
-    ./waf build
-    sudo ./waf install
+    git clone https://github.com/diodon-dev/diodon.git && cd diodon
+    meson builddir && cd builddir
+    ninja
+    ninja test
+    sudo ninja install
+
+The unity scope needs to be explicitly enabled if you want to build it
+
+    meson configure -Denable-unity-scope=true
+
+On distributions which do not provide packages for application-indicator
+building of the indicator can be disabled by adjusting builddir creation command:
+
+    meson builddir -Ddisable-indicator-plugin=true && cd builddir
+
+For uninstalling type this:
+
+   sudo ninja uninstall
 
 ## Plugins
 

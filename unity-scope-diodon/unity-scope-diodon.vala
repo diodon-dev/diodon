@@ -22,8 +22,8 @@
 namespace Diodon
 {
     private static ZeitgeistClipboardStorage storage;
-    const string GROUP_NAME = Config.BUSNAME + ".Unity.Scope.Clipboard";
-    const string UNIQUE_NAME = Config.BUSOBJECTPATH + "/unity/scope/clipboard";
+    const string GROUP_NAME ="net.launchpad.Diodon.Unity.Scope.Clipboard";
+    const string UNIQUE_NAME = "/net/launchpad/diodon/unity/scope/clipboard";
     const string ICON_PATH = "/usr/share/icons/unity-icon-theme/places/svg/";
 
     /**

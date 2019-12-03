@@ -78,7 +78,7 @@ namespace Diodon
             settings_plugins = new Settings("net.launchpad.Diodon.plugins");
 
             peas_engine = Peas.Engine.get_default();
-            peas_engine.add_search_path(Config.PLUGINS_DIR, Config.PLUGINS_DATA_DIR);
+            peas_engine.add_search_path(Config.PKG_PLUGINS_LIB_DIR, Config.PKG_PLUGINS_DATA_DIR);
             string user_plugins_dir = Path.build_filename(diodon_dir, "plugins");
             peas_engine.add_search_path(user_plugins_dir, user_plugins_dir);
             peas_engine.enable_loader("python");
