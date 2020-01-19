@@ -47,7 +47,7 @@ libdiodon = shared_library('diodon',
         zeitgeist_dep,
     ],
     install: true,
-    install_dir: libdir,
+    install_dir: [true, pkgincludedir, true, true],
 )
 
 libdiodon_inc = include_directories('.')

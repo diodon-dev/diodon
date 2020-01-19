@@ -18,6 +18,7 @@
 
 install_man('diodon.1')
 install_data('preferences.ui', install_dir: pkgdatadir)
+install_data('diodon.deps', install_dir: join_paths(datadir, 'vala', 'vapi'))
 
 diodon_autostart_desktop = 'diodon-autostart.desktop'
 
