@@ -29,7 +29,7 @@ public abstract class FsoFramework.Test.TestCase : Object
 
     public delegate void TestMethod () throws GLib.Error;
 
-    public TestCase (string name)
+    protected TestCase (string name)
     {
         this._suite = new GLib.TestSuite (name);
     }

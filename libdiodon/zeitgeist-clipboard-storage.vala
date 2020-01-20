@@ -29,8 +29,8 @@ namespace Diodon
 
         public signal void template_removed (string blacklist_id, [DBus (signature = "(asaasay)")] Variant blacklist_template);
 
-		[DBus (signature = "a{s(asaasay)}")]
-	    public abstract Variant get_templates () throws IOError;
+        [DBus (signature = "a{s(asaasay)}")]
+        public abstract Variant get_templates () throws Error;
 	}
 
 
