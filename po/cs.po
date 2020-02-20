@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-05 14:18+0200\n"
-"PO-Revision-Date: 2014-05-04 19:57+0000\n"
-"Last-Translator: Vojta Staněk <Unknown>\n"
+"PO-Revision-Date: 2020-02-19 14:04+0000\n"
+"Last-Translator: Pavel Borecki <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-06-06 05:55+0000\n"
-"X-Generator: Launchpad (build 18399)\n"
+"X-Launchpad-Export-Date: 2020-02-20 05:51+0000\n"
+"X-Generator: Launchpad (build 19413b719a8df7423ab1390528edadce9e0e4aca)\n"
 "Language: cs\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -37,7 +37,7 @@ msgid ""
 "clipboard history."
 msgstr ""
 "Přidává obsah, který je zkopírovaný do schránky pomocí např. Ctrl + C, do "
-"historie schránky"
+"historie schránky."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
@@ -51,6 +51,9 @@ msgid ""
 "continually checks what is selected. This might discharge your battery "
 "quicker."
 msgstr ""
+"Přidává primární výběr (oblast obrazovky, která je vybrána myší) do historie "
+"schránky. Zapnutí spustí proces, který neustále zjišťuje, co je vybráno. To "
+"může vést k rychlejšímu vybíjení akumulátoru počítače."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Add images to clipboard history"
@@ -64,6 +67,10 @@ msgid ""
 "option will increase memory consumption. Images already added to clipboard "
 "history will remain even when disabled."
 msgstr ""
+"Přidat obrázky zkopírované do schránky do historie schránky (např. když "
+"kliknete pravým tlačítkem na obrázek ve webovém prohlížeči a zvolíte "
+"zkopírovat obrázek). Zapnutí této volby zvýší spotřebu operační paměti. "
+"Obrázky přidané do historie schránky v ní zůstanou i po vypnutí této funkce."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Synchronize clipboards"
@@ -83,7 +90,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Keep clipboard content"
-msgstr "Udržujte obsah schránky"
+msgstr "Ponechávat obsah schránky"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:10
 #: ../data/preferences.ui.h:9
@@ -96,7 +103,7 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 msgid "Automatically paste selected item"
-msgstr "Automaticky vložit vybranou položku"
+msgstr "Vybranout položku automaticky vložit"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:12
 #: ../data/preferences.ui.h:13
@@ -108,43 +115,51 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Number of recent clipboard items"
-msgstr "Počet posledních zkopírovaných položek"
+msgstr "Počet nedávných zkopírovaných položek"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 msgid "Number of recent clipboard items shown in clipboard menu."
-msgstr "Počet posledních zkopírovaných položek zobrazený v menu schránky."
+msgstr ""
+"Počet nedávných zkopírovaných položek zobrazovaný v nabídce schránky."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Clipboard content filter pattern"
-msgstr ""
+msgstr "Vzor filtrování obsahu schránky"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid ""
 "Regex filter pattern whereas all clipboard items matching this pattern will "
 "be filtered and not added to clipboard history."
 msgstr ""
+"Vzor - regulární výraz – všechny položky, které mu odpovídají, nebudou "
+"přidány do historie schránky."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 msgid "Lookup dictionary for application using different paste keybindings"
 msgstr ""
+"Vyhledávací slovník pro aplikace, využívající odlišné klávesové zkratky pro "
+"vložení"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 msgid ""
 "A lookup dictionary for applications using different paste keybindings than "
 "Ctrl + V. Pattern of each string in this array is path-of-app|keybinding"
 msgstr ""
+"Vyhledávací slovník pro aplikace, které používají jiné klávesové zkratky, "
+"než CTRL+V. Vzor pro každý řetězec v poli je popis-umístění-"
+"aplikace|klávesová-zkratka"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:19
 msgid "Active plugins"
-msgstr "Aktivní pluginy"
+msgstr "Aktivní zásuvné moduly"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:20
 msgid "List of active plugins."
-msgstr "Seznam aktivních pluginů"
+msgstr "Seznam aktivních zásuvných modulů."
 
 #: ../data/preferences.ui.h:1
 msgid "Diodon Preferences"
-msgstr "Nastavení aplikace Diodon"
+msgstr "Předvolby aplikace Diodon"
 
 #: ../data/preferences.ui.h:2
 msgid "_Use clipboard (Ctrl+C)"
@@ -156,7 +171,7 @@ msgstr "_Použít primární výběr"
 
 #: ../data/preferences.ui.h:6
 msgid "Add _images to clipboard history"
-msgstr ""
+msgstr "P_řidávat do historie schránky obrázky"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
@@ -164,19 +179,20 @@ msgstr "_Uchovat obsah schránky"
 
 #: ../data/preferences.ui.h:10
 msgid "S_ynchronize clipboards"
-msgstr "S_ynchronizovat schránky."
+msgstr "S_ynchronizovat schránky"
 
 #: ../data/preferences.ui.h:12
 msgid "_Automatically paste selected item"
-msgstr "_Automaticky vložit vybranou položku"
+msgstr "Vybranout položku _automaticky vložit"
 
 #: ../data/preferences.ui.h:14
 msgid "Number of recent clipboard items to be shown in clipboard menu."
-msgstr "Počet posledních zkopírovaných položek k zobrazení v menu schránky."
+msgstr ""
+"Počet nedávných zkopírovaných položek které zobrazovat v nabídce schránky."
 
 #: ../data/preferences.ui.h:15
 msgid "Number of recent items"
-msgstr "Počet posledních položek"
+msgstr "Počet nedávných položek"
 
 #: ../data/preferences.ui.h:16 ../unity-scope-diodon/unity-scope-diodon.vala:75
 msgid "Clipboard"
@@ -188,18 +204,21 @@ msgid ""
 "your desktop environment.\n"
 "Use /usr/bin/diodon as command."
 msgstr ""
+"Zaregistrujte uživatelsky určenou zkratku\n"
+"ve vámi používaném desktopovém prostředí.\n"
+"Jako příkaz nastavte /usr/bin/diodon"
 
 #: ../data/preferences.ui.h:20
 msgid "More information"
-msgstr ""
+msgstr "Další informace"
 
 #: ../data/preferences.ui.h:21
 msgid "Hotkeys"
-msgstr ""
+msgstr "Klávesové zkratky"
 
 #: ../data/preferences.ui.h:22
 msgid "Plugins"
-msgstr "Pluginy"
+msgstr "Zásuvné moduly"
 
 #: ../libdiodon/clipboard-menu.vala:46
 msgid "<Empty>"
@@ -208,6 +227,8 @@ msgstr "<Prázdná>"
 #: ../libdiodon/clipboard-menu.vala:53
 msgid "Privacy mode is enabled. No new items will be added to history!"
 msgstr ""
+"Režim pro ochranu soukromý je zapnut. Do historie nebudou přidávány žádné "
+"nové položky!"
 
 #: ../plugins/indicator/indicator.plugin.in.h:1
 msgid "Application Indicator"
@@ -215,11 +236,11 @@ msgstr "Indikátor aplikace"
 
 #: ../plugins/indicator/indicator.plugin.in.h:2
 msgid "Access clipboard history with an application indicator."
-msgstr "Přistupujte k historii schránky přes indikátor aplikací."
+msgstr "Přistupujte k historii schránky přes indikátor aplikace."
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
 msgid "Copyright © 2011 Diodon Team"
-msgstr ""
+msgstr "Autorská práva © 2011 Diodon Team"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:1
 msgid "Clipboard History"
@@ -230,6 +251,8 @@ msgid ""
 "This is an Ubuntu search plugin that enables information from Diodon to be "
 "searched and displayed in the Dash underneath the Clipboard header."
 msgstr ""
+"Toto je zásuvný modul do vyhledávání v Ubuntu, který umožňuje, aby informace "
+"z Diodon bylo možné vyhledat a zobrazit v Dash pod hlavičkou Schránka."
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:3
 msgid "Search clipboard"
@@ -260,41 +283,41 @@ msgstr "Kategorie"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:8
 msgid "Text;Files;Images"
-msgstr ""
+msgstr "Text;Soubory;Obrázky"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:9
 msgid "Last 24 hours;Last 7 days;Last 30 days;Last year;"
-msgstr ""
+msgstr "Uplynulých 24 hodin;Uplynulých 7 dnů;Uplynulých 30 dnů;Minulý rok;"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:45
 msgid "Search Clipboard"
-msgstr ""
+msgstr "Hledat ve schránce"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:110
 #: ../unity-scope-diodon/unity-scope-diodon.vala:231
 msgid "Date copied"
-msgstr ""
+msgstr "Datum zkopírováno"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:112
 msgid "Last 24 hours"
-msgstr ""
+msgstr "Uplynulých 24 hodin"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:113
 msgid "Last 7 days"
-msgstr ""
+msgstr "Posledních 7 dnů"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:114
 msgid "Last 30 days"
-msgstr ""
+msgstr "Uplynulých 30 dnů"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:115
 msgid "Last year"
-msgstr ""
+msgstr "Minulý rok"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:216
 msgid "Paste"
-msgstr ""
+msgstr "Vložit"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:224
 msgid "Origin"
-msgstr ""
+msgstr "Původ"
