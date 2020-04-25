@@ -49,7 +49,7 @@ pkgpluginsdatadir = join_paths(pkgdatadir, 'plugins')
 
 # Dependencies
 if not get_option('disable-indicator-plugin')
-	appindicator_dep = dependency('appindicator3-0.1', version: '>=0.3.0')
+	appindicator_dep = dependency('ayatana-appindicator3-0.1', version: '>=0.5.3')
 endif
 if get_option('enable-unity-scope')
 	unity_dep = dependency('unity', version: '>=7.1.0')
