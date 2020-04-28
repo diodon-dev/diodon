@@ -133,10 +133,8 @@ namespace Diodon
         /**
          * Request text from managed clipboard. If result is valid
          * on_text_received will be called.
-         *
-         * @param event owner change event
          */
-        protected void check_clipboard()
+        protected virtual void check_clipboard()
         {
             // on java applications such as jEdit wait_is_text_available returns
             // false even when some text is available
