@@ -17,7 +17,7 @@
 #   Oliver Sauder <os@esite.ch>
 
 project('diodon', ['vala', 'c'],
-    version: '1.9.0',
+    version: '1.10.0-daily',
     license: 'GPLv2+',
     default_options: [
         'warning_level=1',
