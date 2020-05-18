@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-05 14:18+0200\n"
-"PO-Revision-Date: 2018-05-25 07:48+0000\n"
-"Last-Translator: rob <linuxned@gmail.com>\n"
+"PO-Revision-Date: 2020-05-15 19:59+0000\n"
+"Last-Translator: Pjotr12345 <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2018-05-26 05:19+0000\n"
-"X-Generator: Launchpad (build 18667)\n"
+"X-Launchpad-Export-Date: 2020-05-16 05:47+0000\n"
+"X-Generator: Launchpad (build 0385b538081bc4718df6fb844a3afc89729c94ce)\n"
 "Language: nl\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -36,8 +36,8 @@ msgid ""
 "Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
-"Voegt items die gekopieerd zijn naar het klembord met bijvoorbeeld Ctrl + C, "
-"toe aan de klembordgeschiedenis."
+"Voegt elementen die gekopieerd zijn naar het klembord met bijvoorbeeld Ctrl "
+"+ C, toe aan de klembordgeschiedenis."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
@@ -120,11 +120,11 @@ msgstr ""
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
 msgid "Number of recent clipboard items"
-msgstr "Aantal recente klemborditems"
+msgstr "Aantal recente klembordelementen"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 msgid "Number of recent clipboard items shown in clipboard menu."
-msgstr "Aantal getoonde recente klemborditems in het klembordmenu."
+msgstr "Aantal getoonde recente klembordelementen in het klembordmenu."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Clipboard content filter pattern"
@@ -135,14 +135,14 @@ msgid ""
 "Regex filter pattern whereas all clipboard items matching this pattern will "
 "be filtered and not added to clipboard history."
 msgstr ""
-"Alle klemborditems die overeenkomen met dit filterpatroon zullen niet "
+"Alle klembordelementen die overeenkomen met dit filterpatroon zullen niet "
 "toegevoegd worden aan de klembordgeschiedenis."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 msgid "Lookup dictionary for application using different paste keybindings"
 msgstr ""
 "Opzoeklijst met mogelijkheden voor toepassingen die een andere "
-"toetsencombinatie gebruiken voor het plakken"
+"toetscombinatie gebruiken voor het plakken"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 msgid ""
@@ -150,16 +150,16 @@ msgid ""
 "Ctrl + V. Pattern of each string in this array is path-of-app|keybinding"
 msgstr ""
 "Opzoeklijst met mogelijkheden voor toepassingen die een andere "
-"toetsencombinatie gebruiken voor het plakken dan Ctrl + V. Patroon van elke "
+"toetscombinatie gebruiken voor het plakken dan Ctrl + V. Patroon van elke "
 "regel in deze lijst is path-of-app|keybinding"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:19
 msgid "Active plugins"
-msgstr "Actieve plug-ins"
+msgstr "Actieve invoegsels"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:20
 msgid "List of active plugins."
-msgstr "Lijst met actieve plug-ins"
+msgstr "Lijst met actieve invoegsels."
 
 #: ../data/preferences.ui.h:1
 msgid "Diodon Preferences"
@@ -191,11 +191,11 @@ msgstr "Geselecteerde onderdeel _automatisch plakken"
 
 #: ../data/preferences.ui.h:14
 msgid "Number of recent clipboard items to be shown in clipboard menu."
-msgstr "Aantal recente klemborditems om te tonen in het klembordmenu."
+msgstr "Aantal recente klembordelementen om te tonen in het klembordmenu."
 
 #: ../data/preferences.ui.h:15
 msgid "Number of recent items"
-msgstr "Aantal recente items"
+msgstr "Aantal recente elementen"
 
 #: ../data/preferences.ui.h:16 ../unity-scope-diodon/unity-scope-diodon.vala:75
 msgid "Clipboard"
@@ -221,7 +221,7 @@ msgstr "Sneltoetsen"
 
 #: ../data/preferences.ui.h:22
 msgid "Plugins"
-msgstr "Plug-ins"
+msgstr "Invoegsels"
 
 #: ../libdiodon/clipboard-menu.vala:46
 msgid "<Empty>"
@@ -230,7 +230,7 @@ msgstr "<Leeg>"
 #: ../libdiodon/clipboard-menu.vala:53
 msgid "Privacy mode is enabled. No new items will be added to history!"
 msgstr ""
-"Privémodus is ingeschakeld. Er zullen geen nieuwe items meer toegevoegd "
+"Privémodus is ingeschakeld. Er zullen geen nieuwe elementen meer toegevoegd "
 "worden aan de geschiedenis!"
 
 #: ../plugins/indicator/indicator.plugin.in.h:1
@@ -243,7 +243,7 @@ msgstr "Toegang tot de klembordgeschiedenis via een toepassingsindicator."
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
 msgid "Copyright © 2011 Diodon Team"
-msgstr "Copyright © 2011 Diodon-team"
+msgstr "Copyright © 2011 Diodon-ploeg"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:1
 msgid "Clipboard History"
@@ -254,8 +254,9 @@ msgid ""
 "This is an Ubuntu search plugin that enables information from Diodon to be "
 "searched and displayed in the Dash underneath the Clipboard header."
 msgstr ""
-"Dit is een Ubuntu-zoekplug-in waarmee naar informatie van Diodon gezocht kan "
-"worden en die dan wordt getoond in de Snelzoeker onder de klembordkopregel."
+"Dit is een Ubuntu-zoekinvoegsel waarmee naar informatie in Diodon gezocht "
+"kan worden en die dan wordt getoond in de Snelzoeker onder de "
+"klembordkopregel."
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:3
 msgid "Search clipboard"
@@ -323,4 +324,4 @@ msgstr "Plakken"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:224
 msgid "Origin"
-msgstr "Vindplaats:"
+msgstr "Oorsprong"
