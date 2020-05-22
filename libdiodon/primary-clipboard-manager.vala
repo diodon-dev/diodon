@@ -28,9 +28,6 @@ namespace Diodon
      */
     class PrimaryClipboardManager : ClipboardManager
     {
-        private bool stopped = false;
-        private string? _last_received = null;
-
         /**
          * Type is alwawys ClipboardType.PRIMARY for this specific primary
          * selection manager.
@@ -38,25 +35,6 @@ namespace Diodon
         public PrimaryClipboardManager(ClipboardConfiguration configuration)
         {
             base(ClipboardType.PRIMARY, configuration);
-        }
-
-        /**
-         * Owner does not always get changed when selection has been changed
-         * therefore we need a timer for the primary selection.
-         */
-        public override void start()
-        {
-            stopped = false;
-            Timeout.add(500, request_text_callback);
-        }
-
-        /**
-         * Owner does not always get changed when selection has been changed
-         * therefore we need a timer for the primary selection.
-         */
-        public override void stop()
-        {
-            stopped = true;
         }
 
         /**
@@ -99,36 +77,24 @@ namespace Diodon
             return false;
         }
 
-        /**
+        /*
+         * Check requesting of primary tes
          * Helper method for requesting primary text within a timer
-         *
-         * @return false to stop timer if requested; otherwise true.
          */
-        private bool request_text_callback()
+        protected override void check_clipboard()
         {
-            if(!stopped) {
-                // checking for text
-                string? text = request_text();
-                if(text != null && text != "") {
-                    // check if text can be accepted
-                    if(check_button_state()) {
-                        // we are in a timer here and because of performance
-                        // reasons we want to make sure that this is not the same
-                        // content again before we check path_of_active_application
-                        if(_last_received == null || strcmp(text, _last_received) != 0) {
-                            string? origin = Utility.get_path_of_active_application();
-                            _last_received = text;
-                            on_text_received(type, text, origin);
-                        }
-                   }
-                }
-                // checking if clipboard might be empty
-                else {
-                    check_clipboard_emptiness();
+            // checking for text
+            string? text = request_text();
+            if(text != null && text != "") {
+                if(check_button_state()) {
+                    string? origin = Utility.get_path_of_active_application();
+                    on_text_received(type, text, origin);
                 }
             }
-
-            return !stopped; // if stopped return false to stop timer
+            // checking if clipboard might be empty
+            else {
+                check_clipboard_emptiness();
+            }
         }
     }
 }
