@@ -51,3 +51,8 @@ install_data(join_paths('ubuntu-mono-light', 'status', '22', 'diodon-panel.svg')
     install_dir: join_paths(datadir, 'icons', 'ubuntu-mono-light', 'status', '22'))
 install_data(join_paths('ubuntu-mono-light', 'status', '24', 'diodon-panel.svg'),
     install_dir: join_paths(datadir, 'icons', 'ubuntu-mono-light', 'status', '24'))
+
+install_data(join_paths('Yaru', 'scalable', 'status', 'diodon-panel.svg'),
+    install_dir: join_paths(datadir, 'icons', 'Yaru', 'scalable', 'status'))
+install_data(join_paths('Yaru', 'scalable', 'apps', 'diodon.svg'),
+    install_dir: join_paths(datadir, 'icons', 'Yaru', 'scalable', 'apps'))
