@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-05 14:18+0200\n"
-"PO-Revision-Date: 2013-12-29 00:12+0000\n"
-"Last-Translator: Oliver Sauder <os@esite.ch>\n"
+"PO-Revision-Date: 2021-02-08 20:53+0000\n"
+"Last-Translator: Christopher Forster <Unknown>\n"
 "Language-Team: Northern Sami <se@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-06-06 05:56+0000\n"
-"X-Generator: Launchpad (build 18399)\n"
+"X-Launchpad-Export-Date: 2021-02-09 06:42+0000\n"
+"X-Generator: Launchpad (build e34ce994f03aae76d4610a97bccf86c0f2cf9f70)\n"
 "Language: se\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -195,7 +195,7 @@ msgstr "Lassemoduvllat"
 
 #: ../libdiodon/clipboard-menu.vala:46
 msgid "<Empty>"
-msgstr "<guorus>"
+msgstr "<Guorus>"
 
 #: ../libdiodon/clipboard-menu.vala:53
 msgid "Privacy mode is enabled. No new items will be added to history!"
@@ -211,7 +211,7 @@ msgstr ""
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
 msgid "Copyright © 2011 Diodon Team"
-msgstr ""
+msgstr "Dahkkivuoigatvuohta © 2011 Diodon Bargojoavku"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:1
 msgid "Clipboard History"
@@ -225,30 +225,30 @@ msgstr ""
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:3
 msgid "Search clipboard"
-msgstr ""
+msgstr "Oza čuohpusgirji"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:4
 #: ../unity-scope-diodon/unity-scope-diodon.vala:79
 #: ../unity-scope-diodon/unity-scope-diodon.vala:104
 msgid "Text"
-msgstr ""
+msgstr "Teaksta"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:5
 #: ../unity-scope-diodon/unity-scope-diodon.vala:84
 #: ../unity-scope-diodon/unity-scope-diodon.vala:105
 msgid "Files"
-msgstr ""
+msgstr "Fiillat"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:6
 #: ../unity-scope-diodon/unity-scope-diodon.vala:89
 #: ../unity-scope-diodon/unity-scope-diodon.vala:106
 msgid "Images"
-msgstr ""
+msgstr "Govat"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:7
 #: ../unity-scope-diodon/unity-scope-diodon.vala:101
 msgid "Category"
-msgstr ""
+msgstr "Láhki"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:8
 msgid "Text;Files;Images"
@@ -260,7 +260,7 @@ msgstr ""
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:45
 msgid "Search Clipboard"
-msgstr ""
+msgstr "Oza Čuohpusgirji"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:110
 #: ../unity-scope-diodon/unity-scope-diodon.vala:231
@@ -273,20 +273,20 @@ msgstr ""
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:113
 msgid "Last 7 days"
-msgstr ""
+msgstr "Maŋemuš 7 beaivvi"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:114
 msgid "Last 30 days"
-msgstr ""
+msgstr "Maŋemuš 30 beaivvi"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:115
 msgid "Last year"
-msgstr ""
+msgstr "Maŋemuš jahki"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:216
 msgid "Paste"
-msgstr ""
+msgstr "Liibme"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:224
 msgid "Origin"
-msgstr ""
+msgstr "Álgovuolggalaš"
