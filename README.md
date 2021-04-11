@@ -51,5 +51,3 @@ If you would like to write your own Diodon plugin please refer to [the original 
 ## Support
 
 Take part in the discussion or report a bug on the [launchpad](https://bugs.launchpad.net/diodon) page.
-
-Join us in #diodon on irc.freenode.net if you want to get involved or need any help.
