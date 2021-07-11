@@ -56,7 +56,6 @@ test('validate-gschema', glib_compile_schemas,
            join_paths(meson.current_source_dir(), diodon_gschema)])
 
 subdir('icons')
-subdir('apport')
 
 meson.add_install_script('post-install.sh', datadir)
 message('''You may need to recompile your gsettings schemas or regenerate
