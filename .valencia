@@ -1,4 +1,0 @@
-version = 1
-build_command = ./waf build
-clean_command = ./waf clean
-pkg_blacklist = gdk-2.0.vapi;gdk-x11-2.0.vapi;gtk+-2.0.vapi
