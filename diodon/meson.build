@@ -26,5 +26,4 @@ diodon = executable('diodon',
     ],
     link_with: [libdiodon],
     include_directories: [libdiodon_inc],
-    install: true,
-    install_rpath: bindir)
+    install: true)
