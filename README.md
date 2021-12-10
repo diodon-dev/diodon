@@ -48,6 +48,11 @@ If you would like to write your own Diodon plugin please refer to [the original 
 | [Paste All](https://github.com/RedHatter/diodon-plugins) | Paste all recent items at once                     |
 | [Edit](https://github.com/RedHatter/diodon-plugins)      | Prompts to edit the active item.                   |
 
+## Known problems
+
+* Using hotkey shortcut as described in this [blog post](https://esite.ch/2015/07/using-custom-shortcuts-of-de-as-diodon-hotkey/) does not always work on some desktop environemnts. See more details [here](https://bugs.launchpad.net/diodon/+bug/1630375).
+* Sometimes, but only on the very first run of Diodon, added clipboard items do not show up in the history. A reboot will resolve this issue. See more details [here](https://bugs.launchpad.net/diodon/+bug/1435033).  
+
 ## Support
 
 Take part in the discussion or report a bug on the [launchpad](https://bugs.launchpad.net/diodon) page.
