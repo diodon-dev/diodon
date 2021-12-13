@@ -101,7 +101,12 @@ namespace Diodon
 
         public void show_menu()
         {
-            popup(null, null, null, 0, Gtk.get_current_event_time());
+            // timer is needed to workaround race condition between X11 and Gdk event
+            // otherwise popup does not open
+            Timeout.add(
+                250,
+                () => { popup(null, null, null, 0, Gtk.get_current_event_time()); return false; }
+            );
         }
 
         /**
