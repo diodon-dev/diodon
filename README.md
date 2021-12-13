@@ -48,6 +48,12 @@ If you would like to write your own Diodon plugin please refer to [the original 
 | [Paste All](https://github.com/RedHatter/diodon-plugins) | Paste all recent items at once                     |
 | [Edit](https://github.com/RedHatter/diodon-plugins)      | Prompts to edit the active item.                   |
 
+## Store clipoard items in memory
+
+Diodon uses [Zeitgeist](https://gitlab.freedesktop.org/zeitgeist/zeitgeist) to store clipboard items. Per default Zeitgeist persists all events in a database on the hard disc so it is available after a reboot. If you want to store it to memory you need to set environment variable `ZEITGEIST_DATABASE_PATH` to `:memory:` with a command like the following (might differ depending on your setup):
+
+    echo "ZEITGEIST_DATABASE_PATH=:memory:" >> ~/.pam_environment
+
 ## Known problems
 
 * Using hotkey shortcut as described in this [blog post](https://esite.ch/2015/07/using-custom-shortcuts-of-de-as-diodon-hotkey/) does not always work on some desktop environemnts. See more details [here](https://bugs.launchpad.net/diodon/+bug/1630375).
