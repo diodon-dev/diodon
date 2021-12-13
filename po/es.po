@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: diodon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-05 14:18+0200\n"
-"PO-Revision-Date: 2018-03-01 12:55+0000\n"
-"Last-Translator: Marcos <ciltocruz@hotmail.com>\n"
+"PO-Revision-Date: 2021-12-12 10:16+0000\n"
+"Last-Translator: Toni Estevez <toni.estevez@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2018-03-02 05:31+0000\n"
-"X-Generator: Launchpad (build 18561)\n"
+"X-Launchpad-Export-Date: 2021-12-13 04:39+0000\n"
+"X-Generator: Launchpad (build 8f6fee684a73b76558cd76956bac729ae9beb70b)\n"
 "Language: es\n"
 
 #: ../data/diodon.desktop.in.h:1
@@ -36,12 +36,12 @@ msgid ""
 "Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
-"Añade el contenido copiado en el portapapeles mediante, p. ej., Ctrl+C, al "
-"historial del portapapeles."
+"Añade al historial el contenido copiado en el portapapeles con, por ejemplo, "
+"Ctrl+C."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
-msgstr "Usar selección primaria"
+msgstr "Usar la selección primaria"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:4
 #: ../data/preferences.ui.h:5
@@ -51,9 +51,10 @@ msgid ""
 "continually checks what is selected. This might discharge your battery "
 "quicker."
 msgstr ""
-"Agrega lo seleccionado con el ratón al historial del portapapeles. Habilitar "
-"comenzará un proceso que continuamente observa lo que selecciona. Esto "
-"podría descargar su batería más rápido."
+"Añade la selección primaria (un área de la pantalla seleccionada con el "
+"ratón) al historial del portapapeles. Si se activa, se iniciará un proceso "
+"que comprobará continuamente qué se selecciona. Esto podría descargar la "
+"batería más rápido."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Add images to clipboard history"
@@ -67,14 +68,14 @@ msgid ""
 "option will increase memory consumption. Images already added to clipboard "
 "history will remain even when disabled."
 msgstr ""
-"Añadir imágenes al historial del portapapeles, (p.e. cuando haces click "
-"derecho sobre una imagen en tu navegador y seleccionas copiar imagen). Esta "
-"opción aumenta el consumo de memoria. Las imágenes ya agregadas al historial "
-"del portapapeles permanecerán incluso cuando estén deshabilitadas."
+"Añade las imágenes copiadas al historial del portapapeles (por ejemplo, al "
+"hacer clic derecho sobre una imagen en el navegador y elegir copiar la "
+"imagen). Activar esta opción aumentará el consumo de memoria. Las imágenes "
+"ya añadidas al historial del portapapeles se mantendrán aunque se desactive."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Synchronize clipboards"
-msgstr "Sincronizar portapapeles"
+msgstr "Sincronizar los portapapeles"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:8
 #: ../data/preferences.ui.h:11
@@ -85,9 +86,9 @@ msgid ""
 "the middle mouse button."
 msgstr ""
 "Sincroniza la selección (un área de la pantalla seleccionada con el ratón) y "
-"el portapapeles de forma que cualquier cosa en la selección esté "
-"inmediatamente disponible en el portapapeles y viceversa, por ejemplo para "
-"pegar con Ctrl + V y el botón central del ratón."
+"el portapapeles de manera que el contenido de la selección esté "
+"inmediatamente disponible en el portapapeles y al revés para, por ejemplo, "
+"pegar con Ctrl+V y con el botón central del ratón."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Keep clipboard content"
@@ -99,8 +100,8 @@ msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
 msgstr ""
-"Evita que el portapapeles quede vacío. Por ejemplo, cuando una aplicación se "
-"cierra, por lo general el portapapeles puede vaciarse."
+"Evita que se vacíe el portapapeles. Al salir de una aplicación, por ejemplo, "
+"el portapapeles se suele vaciar."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 msgid "Automatically paste selected item"
@@ -112,7 +113,7 @@ msgid ""
 "Automatically paste selected item instead of just copying it to the "
 "clipboard."
 msgstr ""
-"Pegar automáticamente el elemento seleccionado en lugar de copiarlo al "
+"Pega automáticamente el elemento seleccionado en vez de copiarlo en el "
 "portapapeles."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:13
@@ -122,28 +123,34 @@ msgstr "Número de elementos recientes del portapapeles"
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:14
 msgid "Number of recent clipboard items shown in clipboard menu."
 msgstr ""
-"Número de elementos recientes del portapapeles que se muestran en el menú "
-"del portapapeles."
+"Número de elementos recientes del portapapeles que se muestran en el menú."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:15
 msgid "Clipboard content filter pattern"
-msgstr ""
+msgstr "Patrón de filtrado del contenido del portapapeles"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:16
 msgid ""
 "Regex filter pattern whereas all clipboard items matching this pattern will "
 "be filtered and not added to clipboard history."
 msgstr ""
+"Expresión regular con la se filtrarán todos los elementos coincidentes del "
+"portapapeles para que no se añadan al historial."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 msgid "Lookup dictionary for application using different paste keybindings"
 msgstr ""
+"Catálogo de aplicaciones que usan combinaciones de teclas diferentes para "
+"pegar"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 msgid ""
 "A lookup dictionary for applications using different paste keybindings than "
 "Ctrl + V. Pattern of each string in this array is path-of-app|keybinding"
 msgstr ""
+"Catálogo de aplicaciones que usan combinaciones de teclas diferentes de "
+"Ctrl+V para pegar. El patrón de cada cadena de esta tabla es ruta-de-la-"
+"aplicación|combinación-de-teclas"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:19
 msgid "Active plugins"
@@ -159,15 +166,15 @@ msgstr "Preferencias de Diodon"
 
 #: ../data/preferences.ui.h:2
 msgid "_Use clipboard (Ctrl+C)"
-msgstr "_Usar portapapeles (Ctrl+C)"
+msgstr "_Usar el portapapeles (Ctrl+C)"
 
 #: ../data/preferences.ui.h:4
 msgid "Use _primary selection"
-msgstr "Usa_r selección primaria"
+msgstr "Usa_r la selección primaria"
 
 #: ../data/preferences.ui.h:6
 msgid "Add _images to clipboard history"
-msgstr "Agregar _imágenes al historial del portapapeles"
+msgstr "_Añadir las imágenes al historial del portapapeles"
 
 #: ../data/preferences.ui.h:8
 msgid "_Keep clipboard content"
@@ -175,21 +182,20 @@ msgstr "_Mantener el contenido del portapapeles"
 
 #: ../data/preferences.ui.h:10
 msgid "S_ynchronize clipboards"
-msgstr "Si_ncronizar portapapeles"
+msgstr "_Sincronizar los portapapeles"
 
 #: ../data/preferences.ui.h:12
 msgid "_Automatically paste selected item"
-msgstr "Pegar _automáticamente el elemento seleccionado"
+msgstr "_Pegar automáticamente el elemento seleccionado"
 
 #: ../data/preferences.ui.h:14
 msgid "Number of recent clipboard items to be shown in clipboard menu."
 msgstr ""
-"Número de elementos recientes del portapapeles que se mostrarán en el menú "
-"del portapapeles."
+"Número de elementos recientes del portapapeles que se mostrarán en el menú."
 
 #: ../data/preferences.ui.h:15
 msgid "Number of recent items"
-msgstr "N.º de elementos recientes"
+msgstr "Número de elementos recientes"
 
 #: ../data/preferences.ui.h:16 ../unity-scope-diodon/unity-scope-diodon.vala:75
 msgid "Clipboard"
@@ -201,9 +207,9 @@ msgid ""
 "your desktop environment.\n"
 "Use /usr/bin/diodon as command."
 msgstr ""
-"Registre un atajo personalizado con\n"
-"los atajos de teclado.\n"
-"Use / usr/bin/diodon como comando para reconocer diodon."
+"Registre un atajo personalizado\n"
+"en el entorno de escritorio.\n"
+"Use /usr/bin/diodon como orden para Diodon."
 
 #: ../data/preferences.ui.h:20
 msgid "More information"
@@ -219,22 +225,21 @@ msgstr "Complementos"
 
 #: ../libdiodon/clipboard-menu.vala:46
 msgid "<Empty>"
-msgstr "<Vacío>"
+msgstr "<Historial vacío>"
 
 #: ../libdiodon/clipboard-menu.vala:53
 msgid "Privacy mode is enabled. No new items will be added to history!"
 msgstr ""
-"El modo de privacidad está habilitado. ¡No se agregarán nuevos elementos al "
-"portapapeles!"
+"El modo privado está activado. No se añadirán nuevos elementos al historial."
 
 #: ../plugins/indicator/indicator.plugin.in.h:1
 msgid "Application Indicator"
-msgstr "Indicador de aplicación"
+msgstr "Indicador de la aplicación"
 
 #: ../plugins/indicator/indicator.plugin.in.h:2
 msgid "Access clipboard history with an application indicator."
 msgstr ""
-"Acceder al historial del portapapeles mediante un indicador de aplicación."
+"Acceder al historial del portapapeles mediante un indicador de la aplicación."
 
 #: ../plugins/indicator/indicator.plugin.in.h:3
 msgid "Copyright © 2011 Diodon Team"
@@ -242,15 +247,15 @@ msgstr "Copyright © 2011 Equipo de Diodon"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:1
 msgid "Clipboard History"
-msgstr "Histórico del portapapeles"
+msgstr "Historial del portapapeles"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:2
 msgid ""
 "This is an Ubuntu search plugin that enables information from Diodon to be "
 "searched and displayed in the Dash underneath the Clipboard header."
 msgstr ""
-"Este es un complemento de búsqueda de Ubuntu que permite buscar y mostrar "
-"información de Diodon bajo la cabecera Portapapeles."
+"Este es un complemento de búsqueda de Ubuntu que permite buscar información "
+"de Diodon y mostrarla en el tablero debajo del encabezado del portapapeles."
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:3
 msgid "Search clipboard"
@@ -285,7 +290,7 @@ msgstr "Texto;Archivos;Imágenes"
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:9
 msgid "Last 24 hours;Last 7 days;Last 30 days;Last year;"
-msgstr "Últimas 24 horas;Últimos 7 días;Últimos 30 días;El año pasado;"
+msgstr "Últimas 24 horas;Últimos 7 días;Últimos 30 días;Último año;"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:45
 msgid "Search Clipboard"
@@ -294,7 +299,7 @@ msgstr "Buscar en el portapapeles"
 #: ../unity-scope-diodon/unity-scope-diodon.vala:110
 #: ../unity-scope-diodon/unity-scope-diodon.vala:231
 msgid "Date copied"
-msgstr "Fecha de copia"
+msgstr "Fecha de la copia"
 
 #: ../unity-scope-diodon/unity-scope-diodon.vala:112
 msgid "Last 24 hours"
