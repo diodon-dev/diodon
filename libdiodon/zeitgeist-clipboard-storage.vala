@@ -343,6 +343,7 @@ namespace Diodon
                 event.manifestation = ZG.USER_ACTIVITY;
                 // event origin is which clipboard manager event comes from
                 event.origin = "application://diodon.desktop";
+                event.timestamp = Timestamp.from_now();
 
                 // actor is application triggering copy event
                 if(subject.origin != null) {
@@ -367,10 +368,6 @@ namespace Diodon
                 if(payload != null) {
                     event.payload = payload;
                 }
-
-                TimeVal cur_time = TimeVal();
-                int64 timestamp = Timestamp.from_timeval(cur_time);
-                event.timestamp = timestamp;
 
                 GenericArray<Event> events = new GenericArray<Event>();
                 events.add(event);
@@ -525,7 +522,7 @@ namespace Diodon
             string text = subject.text;
             string? origin = subject.origin;
             unowned ByteArray payload = event.payload;
-            DateTime date_copied = new DateTime.from_timeval_utc(Zeitgeist.Timestamp.to_timeval(event.timestamp));
+            DateTime date_copied = new DateTime.from_unix_utc(event.timestamp);
 
             try {
                 if(strcmp(NFO.PLAIN_TEXT_DOCUMENT, interpretation) == 0) {
