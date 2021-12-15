@@ -66,6 +66,10 @@ namespace Diodon
 
         public ZeitgeistClipboardStorage()
         {
+            // disables local Zeitgeist database reader to avoid race condition
+            // when database is initially created.
+            Environment.set_variable("ZEITGEIST_LOG_DIRECT_READ", "0", false);
+
             this.cat_templates = new HashTable<int?, Event>(int_hash, int_equal);
             prepare_category_templates(this.cat_templates);
 
