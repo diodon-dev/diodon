@@ -66,9 +66,15 @@ namespace Diodon
 
         public ZeitgeistClipboardStorage()
         {
+            File file = File.new_for_path (Utils.get_database_file_path());
+
             // disables local Zeitgeist database reader to avoid race condition
             // when database is initially created.
-            Environment.set_variable("ZEITGEIST_LOG_DIRECT_READ", "0", false);
+            // only do this if database file is not already created
+            if(!Utils.using_in_memory_database() && !file.query_exists()) {
+                debug("Setting default value of ZEITGEIST_LOG_DIRECT_READ to 0");
+                Environment.set_variable("ZEITGEIST_LOG_DIRECT_READ", "0", false);
+            }
 
             this.cat_templates = new HashTable<int?, Event>(int_hash, int_equal);
             prepare_category_templates(this.cat_templates);
