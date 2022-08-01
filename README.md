@@ -22,6 +22,8 @@ Diodon uses the [Meson](https://mesonbuild.com/) build system.
     ninja
     ninja test
     sudo ninja install
+    # only needed after the first ninja install
+    sudo ldconfig
 
 The unity scope needs to be explicitly enabled if you want to build it
 
