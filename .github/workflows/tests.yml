@@ -1,0 +1,27 @@
+name: Tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Run test
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get update --quiet
+          sudo apt-get install --yes \
+                desktop-file-utils \
+                intltool \
+                libayatana-appindicator3-dev \
+                libglib2.0-dev \
+                libgtk-3-dev \
+                libpeas-dev \
+                libunity-dev \
+                libxtst-dev \
+                libzeitgeist-2.0-dev \
+                meson \
+                valac \
+                xvfb at-spi2-core
+      - name: Build & Test
+        run: meson builddir && ninja -C builddir test
