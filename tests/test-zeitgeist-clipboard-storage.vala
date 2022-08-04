@@ -101,7 +101,7 @@ namespace Diodon
 	        yield assert_text_item(test_text, 0);
 	    }
 
-	    public async void test_get_recent_items() throws FsoFramework.Test.AssertError
+	    public async void test_get_recent_items() throws FsoFramework.Test.AssertError, GLib.Error
 	    {
 	        const int ITEMS = 10;
 	        const int RECENT_ITEMS = 5;

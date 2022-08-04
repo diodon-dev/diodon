@@ -412,7 +412,7 @@ namespace Diodon
          * @return list of recent clipboard items
          */
         public async List<IClipboardItem> get_recent_items(ClipboardCategory[]? cats = null,
-            ClipboardTimerange date_copied = ClipboardTimerange.ALL, Cancellable? cancellable = null)
+            ClipboardTimerange date_copied = ClipboardTimerange.ALL, Cancellable? cancellable = null) throws Error
         {
             return yield storage.get_recent_items(configuration.recent_items_size, cats, date_copied, cancellable);
         }
@@ -521,14 +521,22 @@ namespace Diodon
          */
         public async void rebuild_recent_menu()
         {
-            List<IClipboardItem> items = yield get_recent_items();
+            string? error = null;
+            List<IClipboardItem> items = null;
+            try {
+                items = yield get_recent_items();
+            } catch(GLib.Error e) {
+                warning("Get recent items not successful, error: %s", e.message);
+                error = e.message;
+                items = new List<IClipboardItem>();
+            }
 
             if(recent_menu != null) {
                 recent_menu.destroy_menu();
             }
 
             recent_menu = new ClipboardMenu(this, items, static_recent_menu_items,
-                                            storage.is_privacy_mode_enabled());
+                                            storage.is_privacy_mode_enabled(), error);
             on_recent_menu_changed(recent_menu);
         }
 
