@@ -280,7 +280,12 @@ namespace Diodon
                 }
             // when there is no search query show last 100 items
             } else {
-                return yield get_recent_items(100, cats, date_copied, cancellable);
+                try {
+                    return yield get_recent_items(100, cats, date_copied, cancellable);
+                } catch (GLib.Error e) {
+                    warning("Get items by search query 'show last 100 items' not successful, error: %s",
+                        e.message);
+                }
             }
 
             return new List<IClipboardItem>();
@@ -298,7 +303,7 @@ namespace Diodon
          * @return list of recent clipboard items
          */
         public async List<IClipboardItem> get_recent_items(uint32 num_items, ClipboardCategory[]? cats = null,
-            ClipboardTimerange date_copied = ClipboardTimerange.ALL, Cancellable? cancellable = null)
+            ClipboardTimerange date_copied = ClipboardTimerange.ALL, Cancellable? cancellable = null) throws Error
         {
             debug("Get recent %u items", num_items);
 
@@ -318,10 +323,7 @@ namespace Diodon
 
                 return create_clipboard_items(events);
             } catch (IOError.CANCELLED ioe) {
-                    debug("Get recent items got cancelled, error: %s", ioe.message);
-            } catch(GLib.Error e) {
-                warning("Get recent items not successful, error: %s",
-                    e.message);
+                debug("Get recent items got cancelled, error: %s", ioe.message);
             }
 
             return new List<IClipboardItem>();

@@ -37,12 +37,16 @@ namespace Diodon
          * @param menu_items additional menu items to be added after separator
          * @param privacy_mode check whether privacy mode is enabled
          */
-        public ClipboardMenu(Controller controller, List<IClipboardItem> items, List<Gtk.MenuItem>? static_menu_items, bool privace_mode)
+        public ClipboardMenu(Controller controller, List<IClipboardItem> items, List<Gtk.MenuItem>? static_menu_items, bool privace_mode, string? error = null)
         {
             this.controller = controller;
             this.static_menu_items = static_menu_items;
 
-            if(items.length() <= 0) {
+            if(error != null) {
+                Gtk.MenuItem error_item = new Gtk.MenuItem.with_label(wrap_label(error));
+                error_item.set_sensitive(false);
+                append(error_item);
+            } else if(items.length() <= 0) {
                 Gtk.MenuItem empty_item = new Gtk.MenuItem.with_label(_("<Empty>"));
                 empty_item.set_sensitive(false);
                 append(empty_item);
@@ -55,6 +59,7 @@ namespace Diodon
                 privacy_item.set_sensitive(false);
                 append(privacy_item);
             }
+
 
             foreach(IClipboardItem item in items) {
                 append_clipboard_item(item);
@@ -128,6 +133,17 @@ namespace Diodon
             destroy();
             dispose();
         }
+
+        /**
+         * Wrap label at colons and dots.
+         */
+        private string wrap_label(string label)
+        {
+           string _label = label.replace(": ", ":\n");
+           _label.replace(". ", ".\n");
+           return _label;
+        }
+
 
         /**
          * User event: clicked menu item clear
