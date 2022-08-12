@@ -1,23 +1,21 @@
-# Icelandic translation for diodon
-# Copyright (c) 2022 Rosetta Contributors and Canonical Ltd 2022
+# Copyright (C) 2022 Icelandic translators of Diodon
 # This file is distributed under the same license as the diodon package.
 #
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
 # Sveinn í Felli <sv1@fellsnet.is>, 2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: diodon\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-05 14:18+0200\n"
-"PO-Revision-Date: 2022-08-11 19:18+0000\n"
+"PO-Revision-Date: 2022-08-12 07:55+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic\n"
+"Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2022-08-12 06:56+0000\n"
-"X-Generator: Launchpad (build 70fcfda0dab878e9072e0f29b48d0ec714e91034)\n"
-"Language: is\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #: ../data/diodon.desktop.in.h:1
 msgid "Clipboard Manager"
@@ -37,8 +35,8 @@ msgid ""
 "Adds content which is copied to the clipboard with e.g. Ctrl + C to the "
 "clipboard history."
 msgstr ""
-"Bætir efni sem afritað er á klippispjaldið t.d. með Ctrl+C í ferilskrá "
-"klippispjalds."
+"Bætir efni sem afritað er á klippispjaldið t.d. með Ctrl+C í ferilskrá"
+" klippispjalds."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:3
 msgid "Use primary selection"
@@ -52,6 +50,10 @@ msgid ""
 "continually checks what is selected. This might discharge your battery "
 "quicker."
 msgstr ""
+"Bætir aðalvali (svæðinu á skjánum sem valið hefur verið með músarbendlinum) í"
+" feril klippispjalds. Sé þetta virkjað fer í gang ferli sem athugar í sífellu"
+" hvað sé valið þá stundina. Það getur eytt hleðslu óþarflega hratt út af"
+" rafhlöðum."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:5
 msgid "Add images to clipboard history"
@@ -65,10 +67,10 @@ msgid ""
 "option will increase memory consumption. Images already added to clipboard "
 "history will remain even when disabled."
 msgstr ""
-"Bætir myndum sem afritaðar hafa verið á klippispjaldið í feril klippispjalds "
-"(t.d. þegar þú hægri-smellir á mynd og velur að afrita hana). Sé þetta "
-"virkjað getur minnisnotkun aukist nokkuð. Myndum sem þegar hefur verið bætt "
-"í feril klippispjalds munu haldast þar þegar þetta er síðan gert óvirkt."
+"Bætir myndum sem afritaðar hafa verið á klippispjaldið í feril klippispjalds"
+" (t.d. þegar þú hægri-smellir á mynd og velur að afrita hana). Sé þetta"
+" virkjað getur minnisnotkun aukist nokkuð. Myndum sem þegar hefur verið bætt"
+" í feril klippispjalds munu haldast þar þegar þetta er síðan gert óvirkt."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:7
 msgid "Synchronize clipboards"
@@ -82,6 +84,10 @@ msgid ""
 "available in the clipboard and vice versa e.g. for pasting with Ctrl + V and "
 "the middle mouse button."
 msgstr ""
+"Samstillir aðalval (svæðið á skjánum sem valið hefur verið með"
+" músarbendlinum) og sjálft klippispjaldið, þannig að um leið og eitthvað er"
+" valið verður það tiltækt á klippispjaldinu og öfugt, til dæmis er þá hægt að"
+" líma það með Ctrl+V eða miðjuhnapp músar."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:9
 msgid "Keep clipboard content"
@@ -93,8 +99,8 @@ msgid ""
 "Prevents an empty clipboard. For instance when an application exits, the "
 "clipboard would usually be emptied."
 msgstr ""
-"Þegar þetta er valið er ekki hægt að tæma klippispjaldið. Þ.e.a.s. þegar "
-"forrit hættir, tæmist venjulega klippispjaldið."
+"Þegar þetta er valið er ekki hægt að tæma klippispjaldið. Þ.e.a.s. þegar"
+" forrit hættir, tæmist venjulega klippispjaldið."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:11
 msgid "Automatically paste selected item"
@@ -126,16 +132,22 @@ msgid ""
 "Regex filter pattern whereas all clipboard items matching this pattern will "
 "be filtered and not added to clipboard history."
 msgstr ""
+"Mynstur reglulegrar segðar sem öll atriði klippispjalds sem því samsvara"
+" verða síuð og ekki bætt í feril klippispjaldsins."
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:17
 msgid "Lookup dictionary for application using different paste keybindings"
 msgstr ""
+"Uppflettiorðasafn fyrir þau forrit sem nota aðrar lyklabindingar til límingar"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:18
 msgid ""
 "A lookup dictionary for applications using different paste keybindings than "
 "Ctrl + V. Pattern of each string in this array is path-of-app|keybinding"
 msgstr ""
+"Uppflettiorðasafn fyrir þau forrit sem nota til límingar aðrar lyklabindingar"
+" en Ctrl+V. Form hvers strengs í þessum línum á að vera"
+" slóð-á-forrit|lyklabinding"
 
 #: ../data/net.launchpad.Diodon.gschema.xml.in.in.h:19
 msgid "Active plugins"
@@ -238,6 +250,8 @@ msgid ""
 "This is an Ubuntu search plugin that enables information from Diodon to be "
 "searched and displayed in the Dash underneath the Clipboard header."
 msgstr ""
+"Þetta er Ubuntu-leitarviðbót sem gerir kleift að leita íupplýsingum frá"
+" Diodon og birta þær í stjórntexta/Dash undir haus klippispjaldsins."
 
 #: ../unity-scope-diodon/clipboard.scope.in.in.h:3
 msgid "Search clipboard"
