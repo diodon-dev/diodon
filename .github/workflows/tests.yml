@@ -1,12 +1,15 @@
 name: Tests
-on: [push, pull_request]
-
+on: [push, pull_request, workflow_dispatch]
 jobs:
   test:
-    name: Run test
-    runs-on: ubuntu-20.04
+    name: Run test - Ubuntu ${{ matrix.ubuntu-version }}
+    runs-on: ubuntu-${{ matrix.ubuntu-version }}
+    strategy:
+      matrix:
+        ubuntu-version: ['22.04', '24.04']
+      fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install dependencies
         run: |
           sudo apt-get update --quiet
