@@ -59,6 +59,7 @@ gdk_x11_dep = dependency('gdk-x11-3.0', version: '>=3.0.8')
 gio_dep = dependency('gio-2.0', version: '>= 2.46')
 gio_unix_dep = dependency('gio-unix-2.0', version: '>=2.46')
 glib_dep = dependency('glib-2.0', version: '>=2.46.0')
+gobj_dep = dependency('gobject-introspection-1.0')
 gtk_dep = dependency('gtk+-3.0', version: '>= 3.22')
 libpeas_dep = dependency('libpeas-1.0', version: '>=1.1.0')
 libpeas_gtk_dep = dependency('libpeas-gtk-1.0', version: '>=1.1.0')
@@ -70,7 +71,11 @@ zeitgeist_dep = dependency('zeitgeist-2.0', version: '>=0.9.14')
 
 glib_compile_schemas = find_program('glib-compile-schemas')
 desktop_file_validate = find_program('desktop-file-validate')
-g_ir_compiler = find_program('g-ir-compiler')
+if gobj_dep.found()
+  g_ir_compiler = gobj_dep.get_variable('g_ir_compiler')
+else
+  g_ir_compiler = find_program('g-ir-compiler')
+endif
 xvfb_run = find_program('xvfb-run')
 
 common_vflags = [
