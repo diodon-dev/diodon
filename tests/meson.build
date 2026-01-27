@@ -41,7 +41,7 @@ test_diodon = executable('test-diodon', [
 
 
 test('test-diodon', xvfb_run,
-    env: ['top_builddir=' + meson.build_root(),
-          'top_srcdir=' + meson.source_root(),
+    env: ['top_builddir=' + meson.project_build_root(),
+          'top_srcdir=' + meson.project_source_root(),
           'srcdir=' + meson.current_source_dir()],
     args: [test_diodon.full_path()])

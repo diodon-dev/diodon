@@ -23,7 +23,7 @@ project('diodon', ['vala', 'c'],
         'warning_level=1',
         'buildtype=debugoptimized',
     ],
-    meson_version: '>= 0.45')
+    meson_version: '>= 0.58')
 
 gnome = import('gnome')
 i18n = import('i18n')

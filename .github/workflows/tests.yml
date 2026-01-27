@@ -27,4 +27,4 @@ jobs:
                 valac \
                 xvfb at-spi2-core
       - name: Build & Test
-        run: meson builddir && ninja -C builddir test
+        run: meson setup builddir && ninja -C builddir test
