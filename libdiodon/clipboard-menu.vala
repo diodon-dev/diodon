@@ -110,7 +110,12 @@ namespace Diodon
             // otherwise popup does not open
             Timeout.add(
                 250,
-                () => { popup(null, null, null, 0, Gtk.get_current_event_time()); return false; }
+                () => {
+                    popup(null, null, null, 0, Gtk.get_current_event_time());
+                    // Focus the first item by default for keyboard navigation
+                    select_first(true);
+                    return false;
+                }
             );
         }
 

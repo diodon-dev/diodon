@@ -25,7 +25,7 @@ namespace Diodon
      * A gtk menu item holding a checksum of a clipboard item. It only keeps
      * the checksum as it would waste memory to keep the hole item available.
      */
-    class ClipboardMenuItem : Gtk.ImageMenuItem
+    class ClipboardMenuItem : Gtk.MenuItem
     {
         private string _checksum;
 
@@ -53,6 +53,7 @@ namespace Diodon
                 var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 2);
                 box.set_halign(Gtk.Align.CENTER);
                 box.set_valign(Gtk.Align.CENTER);
+                box.set_can_focus(false);
                 box.margin_top = 4;
                 box.margin_bottom = 4;
                 box.margin_start = 8;
@@ -61,11 +62,19 @@ namespace Diodon
                 // Center the thumbnail within the full tile width
                 image.set_halign(Gtk.Align.CENTER);
                 image.set_valign(Gtk.Align.CENTER);
-                box.pack_start(image, true, true, 0);
+                image.set_can_focus(false);
+
+                // Request explicit size so the menu allocates enough space
+                Gdk.Pixbuf? pix = image.get_pixbuf();
+                if (pix != null) {
+                    image.set_size_request(pix.width, pix.height);
+                }
+
+                box.pack_start(image, false, false, 0);
 
                 add(box);
 
-                // Show dimensions on hover via tooltip
+                // Show image dimensions on hover
                 set_tooltip_text(item.get_label());
             } else {
                 // Remove default child to replace with a wrapping label

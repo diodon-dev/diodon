@@ -191,6 +191,16 @@ namespace Diodon
         {
             debug("Get item with given checksum %s", checksum);
 
+            // Fast path: if the pixbuf is already cached in memory,
+            // skip the entire Zeitgeist query + PNG decode.
+            // This makes paste from history nearly instant.
+            ImageClipboardItem? cached_item = ImageClipboardItem.from_cache(
+                checksum, null, new DateTime.now_utc());
+            if (cached_item != null) {
+                debug("Cache hit for checksum %s, skipping Zeitgeist query", checksum);
+                return cached_item;
+            }
+
             GenericArray<Event> templates = new GenericArray<Event>();
 	        TimeRange time_range = new TimeRange.anytime();
             Event template = new Event.full(

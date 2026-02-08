@@ -33,6 +33,61 @@ namespace Diodon
         private string? _origin;
         private DateTime _date_copied;
 
+        // Cached PNG payload bytes — avoids re-encoding on every get_payload() call
+        private uint8[]? _cached_png = null;
+
+        // Static in-memory cache: checksum → {pixbuf, png_bytes}
+        // Keeps full-res data alive so paste from history is a dict
+        // lookup instead of Zeitgeist query + PNG decode + PNG re-encode.
+        private static GLib.HashTable<string, Gdk.Pixbuf>? _pixbuf_cache = null;
+        private static GLib.HashTable<string, GLib.Bytes>? _png_cache = null;
+
+        private static unowned GLib.HashTable<string, Gdk.Pixbuf> get_pixbuf_cache() {
+            if (_pixbuf_cache == null) {
+                _pixbuf_cache = new GLib.HashTable<string, Gdk.Pixbuf>(str_hash, str_equal);
+            }
+            return _pixbuf_cache;
+        }
+
+        private static unowned GLib.HashTable<string, GLib.Bytes> get_png_cache() {
+            if (_png_cache == null) {
+                _png_cache = new GLib.HashTable<string, GLib.Bytes>(str_hash, str_equal);
+            }
+            return _png_cache;
+        }
+
+        /**
+         * Try to build an ImageClipboardItem from the in-memory cache.
+         * Returns null if the checksum is not cached.
+         * Bypasses extract_pixbuf_info() entirely — no SHA1 rehash of
+         * the full pixel data. Both pixbuf AND PNG bytes are restored
+         * from cache so get_payload() never needs to re-encode either.
+         */
+        public static ImageClipboardItem? from_cache(string checksum, string? origin, DateTime date_copied) {
+            unowned Gdk.Pixbuf? cached_pix = get_pixbuf_cache().lookup(checksum);
+            if (cached_pix == null) {
+                return null;
+            }
+            // Build item directly — do NOT call with_image/extract_pixbuf_info
+            // which would SHA1-hash 33MB of pixel data for nothing.
+            var item = new ImageClipboardItem._from_cache_internal();
+            item._clipboard_type = ClipboardType.NONE;
+            item._origin = origin;
+            item._date_copied = date_copied;
+            item._checksum = checksum;
+            item._label = "[%dx%d]".printf(cached_pix.width, cached_pix.height);
+            item._pixbuf = cached_pix;
+
+            // PNG bytes live in the static cache — get_payload() reads
+            // them by checksum. No copying needed here.
+            return item;
+        }
+
+        // Private no-op constructor for from_cache() to avoid
+        // the expensive extract_pixbuf_info() path.
+        private ImageClipboardItem._from_cache_internal() {
+        }
+
         /**
          * Create image clipboard item by a pixbuf.
          *
@@ -61,11 +116,20 @@ namespace Diodon
             _origin = origin;
             _date_copied = date_copied;
 
+            // Cache the raw PNG bytes on the instance AND in the
+            // static cache so get_payload() never re-encodes.
+            _cached_png = new uint8[payload.data.length];
+            GLib.Memory.copy(_cached_png, payload.data, payload.data.length);
+
             Gdk.PixbufLoader loader = new Gdk.PixbufLoader();
             loader.write(payload.data);
             loader.close();
             Gdk.Pixbuf pixbuf = loader.get_pixbuf();
             extract_pixbuf_info(pixbuf);
+
+            // Also put PNG bytes in the static cache keyed by checksum
+            // (checksum is set by extract_pixbuf_info above)
+            get_png_cache().replace(_checksum, new GLib.Bytes(payload.data));
         }
 
         /**
@@ -155,8 +219,31 @@ namespace Diodon
 	     */
         public ByteArray? get_payload() throws GLib.Error
         {
+            // 1. Check instance cache
+            if (_cached_png != null) {
+                ByteArray ba = new ByteArray.sized((uint) _cached_png.length);
+                ba.append(_cached_png);
+                return ba;
+            }
+
+            // 2. Check static cache (from_cache items land here)
+            GLib.Bytes? cached = get_png_cache().lookup(_checksum);
+            if (cached != null) {
+                unowned uint8[] data = cached.get_data();
+                ByteArray ba = new ByteArray.sized((uint) data.length);
+                ba.append(data);
+                return ba;
+            }
+
+            // 3. Last resort: encode (first time only, e.g. fresh copy)
             uint8[] buffer;
             _pixbuf.save_to_buffer(out buffer, "png");
+
+            // Cache for future
+            _cached_png = new uint8[buffer.length];
+            GLib.Memory.copy(_cached_png, buffer, buffer.length);
+            get_png_cache().replace(_checksum, new GLib.Bytes(buffer));
+
             return new ByteArray.take(buffer);
         }
 
@@ -173,8 +260,72 @@ namespace Diodon
 	     */
         public void to_clipboard(Gtk.Clipboard clipboard)
         {
-             clipboard.set_image(_pixbuf);
-             clipboard.store();
+             // Use set_with_owner so WE control what data gets served
+             // to requesting apps. When an app asks for image/png,
+             // we serve our pre-encoded cached bytes directly —
+             // no re-encoding of 33MB of raw pixels on the main thread.
+             Gtk.TargetList target_list = new Gtk.TargetList(null);
+             target_list.add_image_targets(0, true);
+             Gtk.TargetEntry[] entries = Gtk.target_table_new_from_list(target_list);
+
+             clipboard.set_with_owner(
+                 entries,
+                 clipboard_get_func,
+                 clipboard_clear_func,
+                 this
+             );
+        }
+
+        /**
+         * Called by GTK when a target app requests clipboard data.
+         * Serves cached PNG bytes directly for image/png requests,
+         * falls back to pixbuf encoding only for rare other formats.
+         */
+        private static void clipboard_get_func(
+            Gtk.Clipboard clipboard,
+            Gtk.SelectionData selection_data,
+            uint info,
+            void* user_data_or_owner)
+        {
+            ImageClipboardItem self = (ImageClipboardItem) user_data_or_owner;
+
+            // Try serving cached PNG for image/png requests (the common case)
+            string target_name = selection_data.get_target().name();
+            if (target_name == "image/png") {
+                // Check static cache first, then instance
+                GLib.Bytes? cached = get_png_cache().lookup(self._checksum);
+                if (cached != null) {
+                    unowned uint8[] data = cached.get_data();
+                    selection_data.set(
+                        selection_data.get_target(),
+                        8,
+                        data
+                    );
+                    return;
+                }
+                if (self._cached_png != null) {
+                    selection_data.set(
+                        selection_data.get_target(),
+                        8,
+                        self._cached_png
+                    );
+                    return;
+                }
+            }
+
+            // Fallback for other formats (image/bmp, image/jpeg, etc.)
+            // Let GDK encode from pixbuf — rare path
+            selection_data.set_pixbuf(self._pixbuf);
+        }
+
+        /**
+         * Called by GTK when clipboard ownership is lost.
+         */
+        private static void clipboard_clear_func(
+            Gtk.Clipboard clipboard,
+            void* user_data_or_owner)
+        {
+            // Nothing to clean up — data lives in the static cache
         }
 
         /**
@@ -217,6 +368,10 @@ namespace Diodon
             // label in format [{width}x{height}]
             _label ="[%dx%d]".printf(pixbuf.width, pixbuf.height);
             _pixbuf = pixbuf;
+
+            // Cache the pixbuf so future pastes from history are instant
+            // (dict lookup instead of Zeitgeist query + PNG decode)
+            get_pixbuf_cache().replace(_checksum, pixbuf);
         }
 
         /**
@@ -230,9 +385,10 @@ namespace Diodon
          */
         private static Gdk.Pixbuf create_scaled_pixbuf(Gdk.Pixbuf pixbuf)
         {
-            // Large preview area for crisp, clear thumbnails
-            int max_height = 360;
-            int max_width = 480;
+            // Thumbnail size that fits comfortably in a GTK menu
+            // without clipping, even with multiple items visible
+            int max_height = 150;
+            int max_width = 200;
 
             int src_width = pixbuf.width;
             int src_height = pixbuf.height;
@@ -251,8 +407,7 @@ namespace Diodon
             int dest_width = int.max((int)(src_width * scale), 1);
             int dest_height = int.max((int)(src_height * scale), 1);
 
-            // HYPER provides the highest quality downscaling
-            return pixbuf.scale_simple(dest_width, dest_height, Gdk.InterpType.HYPER);
+            return pixbuf.scale_simple(dest_width, dest_height, Gdk.InterpType.BILINEAR);
         }
 
         /**
