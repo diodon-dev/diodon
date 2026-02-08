@@ -102,14 +102,14 @@ namespace Diodon
         {
             string home = Environment.get_home_dir();
 
-            // label should not be longer than 50 letters
+            // label should not be longer than 100 letters
             string label = _paths.replace("\n", " ");
 
             // replacing home dir with common known tilde
             label = label.replace(home, "~");
 
-            if (label.char_count() > 50) {
-                long index_char = label.index_of_nth_char(50);
+            if (label.char_count() > 100) {
+                long index_char = label.index_of_nth_char(100);
                 label = label.substring(0, index_char) + "...";
             }
 

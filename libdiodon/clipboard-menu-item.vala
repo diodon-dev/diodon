@@ -68,7 +68,20 @@ namespace Diodon
                 // Show dimensions on hover via tooltip
                 set_tooltip_text(item.get_label());
             } else {
-                set_label(item.get_label());
+                // Remove default child to replace with a wrapping label
+                var existing_child = get_child();
+                if (existing_child != null) {
+                    remove(existing_child);
+                }
+
+                var label = new Gtk.Label(item.get_label());
+                label.set_xalign(0);
+                label.set_line_wrap(true);
+                label.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
+                label.set_max_width_chars(50);
+                label.set_lines(4);
+                label.set_ellipsize(Pango.EllipsizeMode.END);
+                add(label);
             }
         }
 

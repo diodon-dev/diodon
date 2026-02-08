@@ -83,10 +83,10 @@ namespace Diodon
 	     */
         public string get_label()
         {
-            // label should not be longer than 50 letters
+            // label should not be longer than 100 letters
             string label = _text.replace("\n", " ");
-            if (label.char_count() > 50) {
-                long index_char = label.index_of_nth_char(50);
+            if (label.char_count() > 100) {
+                long index_char = label.index_of_nth_char(100);
                 label = label.substring(0, index_char) + "...";
             }
 
