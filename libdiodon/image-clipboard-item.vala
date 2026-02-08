@@ -220,24 +220,47 @@ namespace Diodon
         }
 
         /**
-         * Create a menu icon size scaled pix buf
+         * Create a thumbnail-sized scaled pixbuf that fits within the
+         * preview area while maintaining aspect ratio (contain fit).
+         * The thumbnail is sized at 3x the normal menu item height
+         * for clearly visible image previews.
          *
-         * @param pixbuf scaled pixbuf
+         * @param pixbuf source pixbuf to scale
+         * @return scaled pixbuf preserving aspect ratio
          */
         private static Gdk.Pixbuf create_scaled_pixbuf(Gdk.Pixbuf pixbuf)
         {
-            // get menu icon size
+            // Use menu icon size as baseline reference
             Gtk.IconSize size = Gtk.IconSize.MENU;
-            int width, height;
-            if(!Gtk.icon_size_lookup(size, out width, out height)) {
-                // set default when icon size lookup fails
-                width = 16;
-                height = 16;
+            int icon_width, icon_height;
+            if(!Gtk.icon_size_lookup(size, out icon_width, out icon_height)) {
+                icon_width = 16;
+                icon_height = 16;
             }
 
-            // scale pixbuf to menu icon size
-            Gdk.Pixbuf scaled = pixbuf.scale_simple(width, height, Gdk.InterpType.BILINEAR);
-            return scaled;
+            // 3x the normal menu item height (~6x icon size, since a
+            // menu item is roughly 2x the icon height with padding)
+            int max_height = icon_height * 6;
+            int max_width = icon_width * 12;
+
+            int src_width = pixbuf.width;
+            int src_height = pixbuf.height;
+
+            // Object-fit contain: scale to fill as much of the bounding
+            // box as possible while preserving the original aspect ratio
+            double scale_x = (double) max_width / src_width;
+            double scale_y = (double) max_height / src_height;
+            double scale = double.min(scale_x, scale_y);
+
+            // Never upscale beyond original resolution
+            if (scale > 1.0) {
+                scale = 1.0;
+            }
+
+            int dest_width = int.max((int)(src_width * scale), 1);
+            int dest_height = int.max((int)(src_height * scale), 1);
+
+            return pixbuf.scale_simple(dest_width, dest_height, Gdk.InterpType.BILINEAR);
         }
 
         /**

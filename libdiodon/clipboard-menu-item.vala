@@ -37,13 +37,38 @@ namespace Diodon
         public ClipboardMenuItem(IClipboardItem item)
         {
             _checksum = item.get_checksum();
-            set_label(item.get_label());
 
-            // check if image needs to be shown
             Gtk.Image? image = item.get_image();
             if(image != null) {
-                set_image(image);
-                set_always_show_image(true);
+                // For image items: display a large centered thumbnail
+                // spanning the full tile, instead of a small icon on the left
+
+                // Remove any default child widget from the menu item
+                var existing_child = get_child();
+                if (existing_child != null) {
+                    remove(existing_child);
+                }
+
+                // Vertical box: thumbnail on top, dimension label below
+                var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 2);
+                box.set_halign(Gtk.Align.CENTER);
+                box.set_valign(Gtk.Align.CENTER);
+                box.margin_top = 4;
+                box.margin_bottom = 4;
+                box.margin_start = 8;
+                box.margin_end = 8;
+
+                // Center the thumbnail within the full tile width
+                image.set_halign(Gtk.Align.CENTER);
+                image.set_valign(Gtk.Align.CENTER);
+                box.pack_start(image, true, true, 0);
+
+                add(box);
+
+                // Show dimensions on hover via tooltip
+                set_tooltip_text(item.get_label());
+            } else {
+                set_label(item.get_label());
             }
         }
 
