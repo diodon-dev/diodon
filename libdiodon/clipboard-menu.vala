@@ -29,6 +29,12 @@ namespace Diodon
         private Controller controller;
         private unowned List<Gtk.Widget> static_menu_items;
 
+        // Debounce source ID for speculative warm-up.
+        // Prevents the "Thundering Herd" when user holds Down Arrow
+        // and rapidly scrolls through 50 items — only the item they
+        // stop on (after 150ms of no movement) triggers a decode.
+        private uint _warmup_source_id = 0;
+
         /**
          * Create clipboard menu
          *
@@ -106,14 +112,22 @@ namespace Diodon
             ClipboardMenuItem menu_item = new ClipboardMenuItem(item);
             menu_item.activate.connect(on_clicked_item);
 
-            // Speculative decode: when user hovers an image item,
-            // pre-decode the full pixbuf from LRU cache in an idle callback.
-            // This eliminates decode latency when they click to paste.
+            // Speculative decode with debounce: when user hovers an
+            // image item, schedule warm-up after 150ms of no movement.
+            // This prevents the "Thundering Herd" — holding Down Arrow
+            // through 50 items won't spawn 50 decode tasks. Only the
+            // item the user stops on actually triggers a decode.
             if (menu_item.is_image_item()) {
                 menu_item.select.connect(() => {
+                    // Cancel any pending warm-up from a previous item
+                    if (_warmup_source_id != 0) {
+                        GLib.Source.remove(_warmup_source_id);
+                        _warmup_source_id = 0;
+                    }
                     string cs = menu_item.get_item_checksum();
-                    GLib.Idle.add(() => {
+                    _warmup_source_id = GLib.Timeout.add(150, () => {
                         ImageCache.get_default().warm_pixbuf(cs);
+                        _warmup_source_id = 0;
                         return GLib.Source.REMOVE;
                     });
                 });
@@ -143,6 +157,12 @@ namespace Diodon
          */
         public void destroy_menu()
         {
+            // Cancel any pending warm-up before destroying
+            if (_warmup_source_id != 0) {
+                GLib.Source.remove(_warmup_source_id);
+                _warmup_source_id = 0;
+            }
+
             foreach(Gtk.Widget item in get_children()) {
                 remove(item);
 

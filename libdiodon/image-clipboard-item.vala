@@ -484,12 +484,19 @@ namespace Diodon
 
         /**
          * Called by GTK when clipboard ownership is lost.
+         *
+         * Nulls out _pixbuf to prevent zombie data after Clear History.
+         * Without this, a Ctrl+V after Clear could still paste the
+         * sensitive image from the lingering pixbuf reference.
          */
         private static void clipboard_clear_func(
             Gtk.Clipboard clipboard,
             void* user_data_or_owner)
         {
-            // Nothing to clean up — data lives in the global LRU cache
+            ImageClipboardItem self = (ImageClipboardItem) user_data_or_owner;
+            self._pixbuf = null;
+            // Also clear warm pixbuf in case it references this item
+            ImageCache.get_default().clear_warm_pixbuf();
         }
 
         /**
@@ -567,10 +574,10 @@ namespace Diodon
         {
             string thumb_path = get_thumbnail_path(checksum);
 
-            // Skip if already saved (idempotent)
-            if (FileUtils.test(thumb_path, FileTest.EXISTS)) {
-                return;
-            }
+            // Always overwrite — handles the Resurrection scenario where
+            // user deletes an image, then copies the exact same pixels again.
+            // The old thumbnail was deleted by remove_item(); we must
+            // regenerate it unconditionally to avoid a broken menu icon.
 
             string thumb_dir = Path.get_dirname(thumb_path);
             Utility.make_directory_with_parents(thumb_dir);
@@ -588,10 +595,47 @@ namespace Diodon
          * @param checksum content checksum
          * @return absolute path to thumbnail file
          */
-        private static string get_thumbnail_path(string checksum)
+        public static string get_thumbnail_path(string checksum)
         {
             return Path.build_filename(
                 Utility.get_user_data_dir(), "thumbnails", checksum + ".png");
+        }
+
+        /**
+         * Delete the thumbnail file for a given checksum.
+         * Called when an item is removed from history to prevent
+         * orphaned thumbnails accumulating on disk.
+         *
+         * @param checksum content checksum of the item being removed
+         */
+        public static void delete_thumbnail(string checksum)
+        {
+            string thumb_path = get_thumbnail_path(checksum);
+            if (FileUtils.test(thumb_path, FileTest.EXISTS)) {
+                FileUtils.unlink(thumb_path);
+            }
+        }
+
+        /**
+         * Delete ALL thumbnail files from disk.
+         * Called when the entire clipboard history is cleared.
+         */
+        public static void delete_all_thumbnails()
+        {
+            string thumb_dir = Path.build_filename(
+                Utility.get_user_data_dir(), "thumbnails");
+            try {
+                Dir dir = Dir.open(thumb_dir);
+                string? name = null;
+                while ((name = dir.read_name()) != null) {
+                    if (name.has_suffix(".png")) {
+                        string path = Path.build_filename(thumb_dir, name);
+                        FileUtils.unlink(path);
+                    }
+                }
+            } catch (GLib.FileError e) {
+                debug("Could not clean thumbnails dir: %s", e.message);
+            }
         }
 
         /**

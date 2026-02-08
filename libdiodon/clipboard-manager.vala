@@ -119,14 +119,23 @@ namespace Diodon
         }
 
         /**
-         * Clear managed clipboard
+         * Clear managed clipboard.
+         *
+         * Releases Diodon's clipboard ownership first (triggering
+         * clipboard_clear_func which nulls _pixbuf), then sets empty
+         * text. This prevents the "Zombie Clipboard" bug where
+         * Ctrl+V after Clear History could still paste sensitive data
+         * from a lingering pixbuf reference.
          */
         public void clear()
         {
-            // clearing only works when clipboard is called by a callback
-            // from clipboard itself. This is not the case here
-            // so therefore we just set an empty text to clear the clipboard
-            //clipboard.clear();
+            // Release ownership — triggers clipboard_clear_func on the
+            // current owner (ImageClipboardItem), nulling its _pixbuf.
+            // This is safe to call even if Diodon doesn't own the clipboard.
+            _clipboard.clear();
+
+            // Set empty text so the clipboard isn't completely blank
+            // (some apps crash on truly empty selections).
             _clipboard.set_text("", -1);
         }
 

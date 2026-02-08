@@ -179,6 +179,12 @@ namespace Diodon
                 warning("Remove item %s not successful, error: %s",
                     item.get_checksum(), e.message);
             }
+
+            // Clean up thumbnail file and LRU cache entry
+            if (item is ImageClipboardItem) {
+                ImageClipboardItem.delete_thumbnail(item.get_checksum());
+                ImageCache.get_default().remove(item.get_checksum());
+            }
         }
 
         /**
@@ -451,6 +457,10 @@ namespace Diodon
             } catch(GLib.Error e) {
                 warning("Failed to clear items: %s", e.message);
             }
+
+            // Clean up all thumbnails and LRU cache
+            ImageClipboardItem.delete_all_thumbnails();
+            ImageCache.get_default().clear();
 
             current_items.remove_all();
         }
