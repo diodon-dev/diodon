@@ -94,12 +94,31 @@ namespace Diodon
         /**
          * Append given clipboard item to menu.
          *
+         * For image items, also hooks the `select` signal to trigger
+         * speculative pixbuf warm-up when the user hovers/navigates
+         * to the item. This pre-decodes the full image in an idle
+         * callback so paste is instant when they click.
+         *
          * @param entry entry to be added
          */
         public void append_clipboard_item(IClipboardItem item)
         {
             ClipboardMenuItem menu_item = new ClipboardMenuItem(item);
             menu_item.activate.connect(on_clicked_item);
+
+            // Speculative decode: when user hovers an image item,
+            // pre-decode the full pixbuf from LRU cache in an idle callback.
+            // This eliminates decode latency when they click to paste.
+            if (menu_item.is_image_item()) {
+                menu_item.select.connect(() => {
+                    string cs = menu_item.get_item_checksum();
+                    GLib.Idle.add(() => {
+                        ImageCache.get_default().warm_pixbuf(cs);
+                        return GLib.Source.REMOVE;
+                    });
+                });
+            }
+
             menu_item.show();
             append(menu_item);
         }

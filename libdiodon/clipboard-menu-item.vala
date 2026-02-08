@@ -24,10 +24,14 @@ namespace Diodon
     /**
      * A gtk menu item holding a checksum of a clipboard item. It only keeps
      * the checksum as it would waste memory to keep the hole item available.
+     *
+     * For image items, also exposes is_image_item() so the menu can
+     * hook the `select` signal for speculative pixbuf warm-up.
      */
     class ClipboardMenuItem : Gtk.MenuItem
     {
         private string _checksum;
+        private bool _is_image;
 
         /**
          * Clipboard item constructor
@@ -37,6 +41,7 @@ namespace Diodon
         public ClipboardMenuItem(IClipboardItem item)
         {
             _checksum = item.get_checksum();
+            _is_image = (item.get_category() == ClipboardCategory.IMAGES);
 
             Gtk.Image? image = item.get_image();
             if(image != null) {
@@ -102,6 +107,17 @@ namespace Diodon
         public string get_item_checksum()
         {
             return _checksum;
+        }
+
+        /**
+         * Check if this menu item represents an image clipboard item.
+         * Used for speculative pixbuf warm-up on hover.
+         *
+         * @return true if the item is an image
+         */
+        public bool is_image_item()
+        {
+            return _is_image;
         }
 
         /**

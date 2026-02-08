@@ -191,15 +191,10 @@ namespace Diodon
         {
             debug("Get item with given checksum %s", checksum);
 
-            // Fast path: if the pixbuf is already cached in memory,
-            // skip the entire Zeitgeist query + PNG decode.
-            // This makes paste from history nearly instant.
-            ImageClipboardItem? cached_item = ImageClipboardItem.from_cache(
-                checksum, null, new DateTime.now_utc());
-            if (cached_item != null) {
-                debug("Cache hit for checksum %s, skipping Zeitgeist query", checksum);
-                return cached_item;
-            }
+            // Payload is loaded lazily: the Zeitgeist query returns the
+            // PNG payload which gets stored in the global LRU cache.
+            // No in-process cache shortcuts — always query Zeitgeist
+            // for correctness (it's fast, local DB).
 
             GenericArray<Event> templates = new GenericArray<Event>();
 	        TimeRange time_range = new TimeRange.anytime();
@@ -537,7 +532,7 @@ namespace Diodon
             }
         }
 
-        private static IClipboardItem? create_clipboard_item(Event event, Subject subject)
+        private static IClipboardItem? create_clipboard_item(Event event, Subject subject, bool lightweight = false)
         {
             string interpretation = subject.interpretation;
             IClipboardItem item = null;
@@ -556,7 +551,25 @@ namespace Diodon
                 }
 
                 else if(strcmp(NFO.IMAGE, interpretation) == 0) {
-                    item = new ImageClipboardItem.with_payload(ClipboardType.NONE, payload, origin, date_copied);
+                    // Extract checksum from Zeitgeist URI ("dav:<checksum>")
+                    string checksum = subject.uri.substring(CLIPBOARD_URI.length);
+
+                    if (lightweight) {
+                        // Menu display path: load ONLY thumbnail from disk (~5 KB).
+                        // Never touches the full PNG payload. Makes menu open instant.
+                        item = new ImageClipboardItem.with_metadata(
+                            ClipboardType.NONE, checksum, text, origin, date_copied);
+                    } else if (payload != null) {
+                        // Paste path: full decode with known checksum.
+                        // Skips redundant SHA1 re-computation since checksum
+                        // is already embedded in the Zeitgeist URI.
+                        item = new ImageClipboardItem.with_known_payload(
+                            ClipboardType.NONE, checksum, payload, origin, date_copied);
+                    } else {
+                        warning("Image item %s has no payload, using metadata fallback", checksum);
+                        item = new ImageClipboardItem.with_metadata(
+                            ClipboardType.NONE, checksum, text, origin, date_copied);
+                    }
                 }
 
                 else {
@@ -594,7 +607,9 @@ namespace Diodon
             foreach(Event event in events) {
                 if (event.num_subjects() > 0) {
                     Subject subject = event.get_subject(0);
-                    IClipboardItem item = create_clipboard_item(event, subject);
+                    // lightweight=true: for menu display, load only thumbnails
+                    // from disk. Never decode full PNG payloads here.
+                    IClipboardItem item = create_clipboard_item(event, subject, true);
                     if(item != null) {
                         items.append(item);
                     }

@@ -136,6 +136,24 @@ namespace Diodon
          */
         protected virtual void check_clipboard()
         {
+            // === Ownership Check (self-loop detection) ===
+            // When Diodon sets the clipboard via set_with_owner(),
+            // the owner_change signal fires back. Instead of reading
+            // the clipboard data and hashing pixels (expensive!),
+            // we check if WE still own the clipboard. If so, this is
+            // our own feedback loop — skip immediately.
+            //
+            // get_owner() returns the GObject passed to set_with_owner().
+            // For ImageClipboardItem: returns the item instance.
+            // For text (set_text): returns null (no ownership tracking).
+            // When another app takes ownership: GTK clears the owner.
+            GLib.Object? owner = _clipboard.get_owner();
+            if (owner != null && owner is IClipboardItem) {
+                debug("Clipboard owned by Diodon (%s), skipping self-feedback",
+                      owner.get_type().name());
+                return;
+            }
+
             // on java applications such as jEdit wait_is_text_available returns
             // false even when some text is available
             string? text = request_text();
