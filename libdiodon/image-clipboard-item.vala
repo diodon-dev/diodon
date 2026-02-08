@@ -230,18 +230,9 @@ namespace Diodon
          */
         private static Gdk.Pixbuf create_scaled_pixbuf(Gdk.Pixbuf pixbuf)
         {
-            // Use menu icon size as baseline reference
-            Gtk.IconSize size = Gtk.IconSize.MENU;
-            int icon_width, icon_height;
-            if(!Gtk.icon_size_lookup(size, out icon_width, out icon_height)) {
-                icon_width = 16;
-                icon_height = 16;
-            }
-
-            // 3x the normal menu item height (~6x icon size, since a
-            // menu item is roughly 2x the icon height with padding)
-            int max_height = icon_height * 6;
-            int max_width = icon_width * 12;
+            // Large preview area for crisp, clear thumbnails
+            int max_height = 360;
+            int max_width = 480;
 
             int src_width = pixbuf.width;
             int src_height = pixbuf.height;
@@ -260,7 +251,8 @@ namespace Diodon
             int dest_width = int.max((int)(src_width * scale), 1);
             int dest_height = int.max((int)(src_height * scale), 1);
 
-            return pixbuf.scale_simple(dest_width, dest_height, Gdk.InterpType.BILINEAR);
+            // HYPER provides the highest quality downscaling
+            return pixbuf.scale_simple(dest_width, dest_height, Gdk.InterpType.HYPER);
         }
 
         /**
