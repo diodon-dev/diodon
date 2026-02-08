@@ -582,10 +582,18 @@ namespace Diodon
             string thumb_dir = Path.get_dirname(thumb_path);
             Utility.make_directory_with_parents(thumb_dir);
 
+            // Atomic write: write to .tmp, then rename.
+            // rename() is atomic on POSIX — the file either exists
+            // fully or not at all. Prevents half-written thumbnails
+            // if the process is killed mid-write (SIGKILL, shutdown).
+            string tmp_path = thumb_path + ".tmp";
             try {
-                thumbnail.save(thumb_path, "png");
+                thumbnail.save(tmp_path, "png");
+                FileUtils.rename(tmp_path, thumb_path);
             } catch (GLib.Error e) {
                 warning("Failed to save thumbnail for %s: %s", checksum, e.message);
+                // Clean up partial temp file
+                FileUtils.unlink(tmp_path);
             }
         }
 

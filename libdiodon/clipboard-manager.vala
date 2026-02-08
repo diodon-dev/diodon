@@ -32,6 +32,12 @@ namespace Diodon
         protected Gtk.Clipboard _clipboard = null;
         protected ClipboardConfiguration _configuration;
 
+        // Refractory period: when true, check_clipboard() is suppressed.
+        // Engaged during execute_paste() to prevent the synthetic Ctrl+V
+        // keystroke from triggering a "Paste-to-Self" feedback loop.
+        private bool _suppressed = false;
+        private uint _suppress_source_id = 0;
+
         /**
          * Called when text from the clipboard has been received
          *
@@ -140,11 +146,47 @@ namespace Diodon
         }
 
         /**
+         * Suppress clipboard monitoring for the given duration.
+         *
+         * Used as a "refractory period" during execute_paste() to
+         * prevent the synthetic Ctrl+V from triggering a feedback loop
+         * where the target app re-announces ownership and Diodon
+         * re-reads and re-adds the same item.
+         *
+         * @param duration_ms suppression duration in milliseconds
+         */
+        public void suppress_for(uint duration_ms)
+        {
+            // Cancel any existing suppression timer
+            if (_suppress_source_id != 0) {
+                GLib.Source.remove(_suppress_source_id);
+            }
+
+            _suppressed = true;
+            debug("Clipboard %d suppressed for %ums", type, duration_ms);
+
+            _suppress_source_id = GLib.Timeout.add(duration_ms, () => {
+                _suppressed = false;
+                _suppress_source_id = 0;
+                debug("Clipboard %d suppression lifted", type);
+                return GLib.Source.REMOVE;
+            });
+        }
+
+        /**
          * Request text from managed clipboard. If result is valid
          * on_text_received will be called.
          */
         protected virtual void check_clipboard()
         {
+            // === Refractory Period ===
+            // Suppressed during execute_paste() to prevent the synthetic
+            // keystroke from causing a "Paste-to-Self" feedback loop.
+            if (_suppressed) {
+                debug("Clipboard %d check suppressed (refractory period)", type);
+                return;
+            }
+
             // === Ownership Check (self-loop detection) ===
             // When Diodon sets the clipboard via set_with_owner(),
             // the owner_change signal fires back. Instead of reading

@@ -269,6 +269,12 @@ namespace Diodon
         /**
          * Execute paste instantly according to set preferences.
          *
+         * Engages a 500ms refractory period on all clipboard managers
+         * BEFORE injecting the synthetic keystroke. This prevents the
+         * "Paste-to-Self" feedback loop where the target app receives
+         * the paste, re-announces clipboard ownership, and Diodon
+         * re-reads and re-adds the same content.
+         *
          * @param item item to be pasted
          */
         public void execute_paste(IClipboardItem item)
@@ -292,6 +298,13 @@ namespace Diodon
             }
 
             if(key != null) {
+                // Engage refractory period on all clipboard managers
+                // BEFORE the keystroke. 500ms is enough for the target
+                // app to process the paste and settle its ownership.
+                foreach(ClipboardManager manager in clipboard_managers.get_values()) {
+                    manager.suppress_for(500);
+                }
+
                 debug("Execute paste with keybinding %s", key);
                 Utility.perform_key_event(key, true, 100);
                 Utility.perform_key_event(key, false, 0);
