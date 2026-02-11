@@ -93,7 +93,10 @@ namespace Diodon
             this.monitor = new Monitor(new TimeRange.from_now(),
                 get_items_event_templates());
             this.monitor.events_inserted.connect(() => { on_items_inserted(); } );
-            this.monitor.events_deleted.connect(() => { on_items_deleted(); } );
+            this.monitor.events_deleted.connect(() => {
+                on_items_deleted();
+                purge_orphaned_thumbnails.begin();
+            });
 
             this.log = Zeitgeist.Log.get_default();
 
@@ -179,6 +182,12 @@ namespace Diodon
                 warning("Remove item %s not successful, error: %s",
                     item.get_checksum(), e.message);
             }
+
+            // Clean up thumbnail file and LRU cache entry
+            if (item is ImageClipboardItem) {
+                ImageClipboardItem.delete_thumbnail(item.get_checksum());
+                ImageCache.get_default().remove(item.get_checksum());
+            }
         }
 
         /**
@@ -190,6 +199,11 @@ namespace Diodon
         public async IClipboardItem? get_item_by_checksum(string checksum, Cancellable? cancellable = null)
         {
             debug("Get item with given checksum %s", checksum);
+
+            // Payload is loaded lazily: the Zeitgeist query returns the
+            // PNG payload which gets stored in the global LRU cache.
+            // No in-process cache shortcuts — always query Zeitgeist
+            // for correctness (it's fast, local DB).
 
             GenericArray<Event> templates = new GenericArray<Event>();
 	        TimeRange time_range = new TimeRange.anytime();
@@ -447,7 +461,66 @@ namespace Diodon
                 warning("Failed to clear items: %s", e.message);
             }
 
+            // Clean up all thumbnails and LRU cache
+            ImageClipboardItem.delete_all_thumbnails();
+            ImageCache.get_default().clear();
+
             current_items.remove_all();
+        }
+
+        /**
+         * Remove thumbnail files that no longer have a corresponding
+         * Zeitgeist event.  Called at startup and when Zeitgeist's
+         * events_deleted monitor fires (e.g., auto-expiry, privacy
+         * purge, external deletion via zeitgeist-daemon).
+         *
+         * Queries Zeitgeist for all live image event URIs, extracts
+         * the checksum set, then removes any thumbnail on disk whose
+         * checksum is not in that set.
+         */
+        public async void purge_orphaned_thumbnails(Cancellable? cancellable = null)
+        {
+            try {
+                // Query for all live image events
+                GenericArray<Event> img_templates = new GenericArray<Event>();
+                img_templates.add(new Event.full(
+                    ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
+                    null,
+                    "application://diodon.desktop",
+                    new Subject.full(
+                        CLIPBOARD_URI + "*",
+                        NFO.IMAGE,
+                        NFO.DATA_CONTAINER,
+                        null, null, null, null)));
+
+                ResultSet events = yield log.find_events(
+                    new TimeRange.anytime(),
+                    img_templates,
+                    StorageState.ANY,
+                    1000,  // generous upper bound
+                    ResultType.MOST_RECENT_SUBJECTS,
+                    cancellable);
+
+                // Collect live checksums from URIs ("dav:<checksum>")
+                var live = new GenericSet<string>(str_hash, str_equal);
+                foreach (Event ev in events) {
+                    if (ev.num_subjects() > 0) {
+                        Subject subj = ev.get_subject(0);
+                        string uri = subj.uri;
+                        if (uri != null && uri.has_prefix(CLIPBOARD_URI)) {
+                            live.add(uri.substring(CLIPBOARD_URI.length));
+                        }
+                    }
+                }
+
+                ImageClipboardItem.cleanup_orphaned_thumbnails(live);
+                debug("Orphaned thumbnail purge complete, %u live images",
+                      live.length);
+            } catch (IOError.CANCELLED ioe) {
+                debug("Orphaned thumbnail purge cancelled: %s", ioe.message);
+            } catch (GLib.Error e) {
+                warning("Orphaned thumbnail purge failed: %s", e.message);
+            }
         }
 
         private static void prepare_category_templates(HashTable<int?, Event> templates)
@@ -527,7 +600,7 @@ namespace Diodon
             }
         }
 
-        private static IClipboardItem? create_clipboard_item(Event event, Subject subject)
+        private static IClipboardItem? create_clipboard_item(Event event, Subject subject, bool lightweight = false)
         {
             string interpretation = subject.interpretation;
             IClipboardItem item = null;
@@ -546,7 +619,25 @@ namespace Diodon
                 }
 
                 else if(strcmp(NFO.IMAGE, interpretation) == 0) {
-                    item = new ImageClipboardItem.with_payload(ClipboardType.NONE, payload, origin, date_copied);
+                    // Extract checksum from Zeitgeist URI ("dav:<checksum>")
+                    string checksum = subject.uri.substring(CLIPBOARD_URI.length);
+
+                    if (lightweight) {
+                        // Menu display path: load ONLY thumbnail from disk (~5 KB).
+                        // Never touches the full PNG payload. Makes menu open instant.
+                        item = new ImageClipboardItem.with_metadata(
+                            ClipboardType.NONE, checksum, text, origin, date_copied);
+                    } else if (payload != null) {
+                        // Paste path: full decode with known checksum.
+                        // Skips redundant SHA1 re-computation since checksum
+                        // is already embedded in the Zeitgeist URI.
+                        item = new ImageClipboardItem.with_known_payload(
+                            ClipboardType.NONE, checksum, payload, origin, date_copied);
+                    } else {
+                        warning("Image item %s has no payload, using metadata fallback", checksum);
+                        item = new ImageClipboardItem.with_metadata(
+                            ClipboardType.NONE, checksum, text, origin, date_copied);
+                    }
                 }
 
                 else {
@@ -584,7 +675,9 @@ namespace Diodon
             foreach(Event event in events) {
                 if (event.num_subjects() > 0) {
                     Subject subject = event.get_subject(0);
-                    IClipboardItem item = create_clipboard_item(event, subject);
+                    // lightweight=true: for menu display, load only thumbnails
+                    // from disk. Never decode full PNG payloads here.
+                    IClipboardItem item = create_clipboard_item(event, subject, true);
                     if(item != null) {
                         items.append(item);
                     }

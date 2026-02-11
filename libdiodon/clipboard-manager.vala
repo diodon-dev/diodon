@@ -32,6 +32,12 @@ namespace Diodon
         protected Gtk.Clipboard _clipboard = null;
         protected ClipboardConfiguration _configuration;
 
+        // Refractory period: when true, check_clipboard() is suppressed.
+        // Engaged during execute_paste() to prevent the synthetic Ctrl+V
+        // keystroke from triggering a "Paste-to-Self" feedback loop.
+        private bool _suppressed = false;
+        private uint _suppress_source_id = 0;
+
         /**
          * Called when text from the clipboard has been received
          *
@@ -119,15 +125,52 @@ namespace Diodon
         }
 
         /**
-         * Clear managed clipboard
+         * Clear managed clipboard.
+         *
+         * Releases Diodon's clipboard ownership first (triggering
+         * clipboard_clear_func which nulls _pixbuf), then sets empty
+         * text. This prevents the "Zombie Clipboard" bug where
+         * Ctrl+V after Clear History could still paste sensitive data
+         * from a lingering pixbuf reference.
          */
         public void clear()
         {
-            // clearing only works when clipboard is called by a callback
-            // from clipboard itself. This is not the case here
-            // so therefore we just set an empty text to clear the clipboard
-            //clipboard.clear();
+            // Release ownership — triggers clipboard_clear_func on the
+            // current owner (ImageClipboardItem), nulling its _pixbuf.
+            // This is safe to call even if Diodon doesn't own the clipboard.
+            _clipboard.clear();
+
+            // Set empty text so the clipboard isn't completely blank
+            // (some apps crash on truly empty selections).
             _clipboard.set_text("", -1);
+        }
+
+        /**
+         * Suppress clipboard monitoring for the given duration.
+         *
+         * Used as a "refractory period" during execute_paste() to
+         * prevent the synthetic Ctrl+V from triggering a feedback loop
+         * where the target app re-announces ownership and Diodon
+         * re-reads and re-adds the same item.
+         *
+         * @param duration_ms suppression duration in milliseconds
+         */
+        public void suppress_for(uint duration_ms)
+        {
+            // Cancel any existing suppression timer
+            if (_suppress_source_id != 0) {
+                GLib.Source.remove(_suppress_source_id);
+            }
+
+            _suppressed = true;
+            debug("Clipboard %d suppressed for %ums", type, duration_ms);
+
+            _suppress_source_id = GLib.Timeout.add(duration_ms, () => {
+                _suppressed = false;
+                _suppress_source_id = 0;
+                debug("Clipboard %d suppression lifted", type);
+                return GLib.Source.REMOVE;
+            });
         }
 
         /**
@@ -136,6 +179,32 @@ namespace Diodon
          */
         protected virtual void check_clipboard()
         {
+            // === Refractory Period ===
+            // Suppressed during execute_paste() to prevent the synthetic
+            // keystroke from causing a "Paste-to-Self" feedback loop.
+            if (_suppressed) {
+                debug("Clipboard %d check suppressed (refractory period)", type);
+                return;
+            }
+
+            // === Ownership Check (self-loop detection) ===
+            // When Diodon sets the clipboard via set_with_owner(),
+            // the owner_change signal fires back. Instead of reading
+            // the clipboard data and hashing pixels (expensive!),
+            // we check if WE still own the clipboard. If so, this is
+            // our own feedback loop — skip immediately.
+            //
+            // get_owner() returns the GObject passed to set_with_owner().
+            // For ImageClipboardItem: returns the item instance.
+            // For text (set_text): returns null (no ownership tracking).
+            // When another app takes ownership: GTK clears the owner.
+            GLib.Object? owner = _clipboard.get_owner();
+            if (owner != null && owner is IClipboardItem) {
+                debug("Clipboard owned by Diodon (%s), skipping self-feedback",
+                      owner.get_type().name());
+                return;
+            }
+
             // on java applications such as jEdit wait_is_text_available returns
             // false even when some text is available
             string? text = request_text();

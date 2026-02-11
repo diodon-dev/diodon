@@ -29,6 +29,12 @@ namespace Diodon
         private Controller controller;
         private unowned List<Gtk.Widget> static_menu_items;
 
+        // Debounce source ID for speculative warm-up.
+        // Prevents the "Thundering Herd" when user holds Down Arrow
+        // and rapidly scrolls through 50 items — only the item they
+        // stop on (after 150ms of no movement) triggers a decode.
+        private uint _warmup_source_id = 0;
+
         /**
          * Create clipboard menu
          *
@@ -94,12 +100,39 @@ namespace Diodon
         /**
          * Append given clipboard item to menu.
          *
+         * For image items, also hooks the `select` signal to trigger
+         * speculative pixbuf warm-up when the user hovers/navigates
+         * to the item. This pre-decodes the full image in an idle
+         * callback so paste is instant when they click.
+         *
          * @param entry entry to be added
          */
         public void append_clipboard_item(IClipboardItem item)
         {
             ClipboardMenuItem menu_item = new ClipboardMenuItem(item);
             menu_item.activate.connect(on_clicked_item);
+
+            // Speculative decode with debounce: when user hovers an
+            // image item, schedule warm-up after 150ms of no movement.
+            // This prevents the "Thundering Herd" — holding Down Arrow
+            // through 50 items won't spawn 50 decode tasks. Only the
+            // item the user stops on actually triggers a decode.
+            if (menu_item.is_image_item()) {
+                menu_item.select.connect(() => {
+                    // Cancel any pending warm-up from a previous item
+                    if (_warmup_source_id != 0) {
+                        GLib.Source.remove(_warmup_source_id);
+                        _warmup_source_id = 0;
+                    }
+                    string cs = menu_item.get_item_checksum();
+                    _warmup_source_id = GLib.Timeout.add(150, () => {
+                        ImageCache.get_default().warm_pixbuf(cs);
+                        _warmup_source_id = 0;
+                        return GLib.Source.REMOVE;
+                    });
+                });
+            }
+
             menu_item.show();
             append(menu_item);
         }
@@ -110,7 +143,12 @@ namespace Diodon
             // otherwise popup does not open
             Timeout.add(
                 250,
-                () => { popup(null, null, null, 0, Gtk.get_current_event_time()); return false; }
+                () => {
+                    popup(null, null, null, 0, Gtk.get_current_event_time());
+                    // Focus the first item by default for keyboard navigation
+                    select_first(true);
+                    return false;
+                }
             );
         }
 
@@ -119,6 +157,12 @@ namespace Diodon
          */
         public void destroy_menu()
         {
+            // Cancel any pending warm-up before destroying
+            if (_warmup_source_id != 0) {
+                GLib.Source.remove(_warmup_source_id);
+                _warmup_source_id = 0;
+            }
+
             foreach(Gtk.Widget item in get_children()) {
                 remove(item);
 

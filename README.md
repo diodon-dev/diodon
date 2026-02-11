@@ -1,6 +1,17 @@
-# Diodon
+# Diodon (Enhanced Edition)
 
-Aiming to be the best integrated clipboard manager for the Unity desktop.
+A high-performance GTK+ clipboard manager — forked from [diodon-dev/diodon](https://github.com/diodon-dev/diodon) with major image handling improvements.
+
+## What's New in This Version
+
+- **3× larger image thumbnails** — 200×150 previews with contain-fit scaling, centered in the menu
+- **Instant 4K image paste** — lazy clipboard serving via `set_with_owner()` eliminates desktop freezes
+- **90% less memory** — single-slot PNG cache (~10 MB) replaces unbounded pixbuf storage (was 200+ MB)
+- **No CPU spikes** — cached PNG bytes served directly to apps requesting `image/png`, zero re-encoding
+- **Correct paste-from-history** — each item retains its own PNG data, no more stale image bugs
+- **Wider text labels** — 100-char labels with 4-line word wrapping
+
+See [IMPLEMENTATION.md](IMPLEMENTATION.md) for the full technical architecture and lifecycle documentation.
 
 ## Installing
 

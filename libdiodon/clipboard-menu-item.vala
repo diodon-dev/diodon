@@ -24,10 +24,14 @@ namespace Diodon
     /**
      * A gtk menu item holding a checksum of a clipboard item. It only keeps
      * the checksum as it would waste memory to keep the hole item available.
+     *
+     * For image items, also exposes is_image_item() so the menu can
+     * hook the `select` signal for speculative pixbuf warm-up.
      */
-    class ClipboardMenuItem : Gtk.ImageMenuItem
+    class ClipboardMenuItem : Gtk.MenuItem
     {
         private string _checksum;
+        private bool _is_image;
 
         /**
          * Clipboard item constructor
@@ -37,13 +41,61 @@ namespace Diodon
         public ClipboardMenuItem(IClipboardItem item)
         {
             _checksum = item.get_checksum();
-            set_label(item.get_label());
+            _is_image = (item.get_category() == ClipboardCategory.IMAGES);
 
-            // check if image needs to be shown
             Gtk.Image? image = item.get_image();
             if(image != null) {
-                set_image(image);
-                set_always_show_image(true);
+                // For image items: display a large centered thumbnail
+                // spanning the full tile, instead of a small icon on the left
+
+                // Remove any default child widget from the menu item
+                var existing_child = get_child();
+                if (existing_child != null) {
+                    remove(existing_child);
+                }
+
+                // Vertical box: thumbnail on top, dimension label below
+                var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 2);
+                box.set_halign(Gtk.Align.CENTER);
+                box.set_valign(Gtk.Align.CENTER);
+                box.set_can_focus(false);
+                box.margin_top = 4;
+                box.margin_bottom = 4;
+                box.margin_start = 8;
+                box.margin_end = 8;
+
+                // Center the thumbnail within the full tile width
+                image.set_halign(Gtk.Align.CENTER);
+                image.set_valign(Gtk.Align.CENTER);
+                image.set_can_focus(false);
+
+                // Request explicit size so the menu allocates enough space
+                Gdk.Pixbuf? pix = image.get_pixbuf();
+                if (pix != null) {
+                    image.set_size_request(pix.width, pix.height);
+                }
+
+                box.pack_start(image, false, false, 0);
+
+                add(box);
+
+                // Show image dimensions on hover
+                set_tooltip_text(item.get_label());
+            } else {
+                // Remove default child to replace with a wrapping label
+                var existing_child = get_child();
+                if (existing_child != null) {
+                    remove(existing_child);
+                }
+
+                var label = new Gtk.Label(item.get_label());
+                label.set_xalign(0);
+                label.set_line_wrap(true);
+                label.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
+                label.set_max_width_chars(50);
+                label.set_lines(4);
+                label.set_ellipsize(Pango.EllipsizeMode.END);
+                add(label);
             }
         }
 
@@ -55,6 +107,17 @@ namespace Diodon
         public string get_item_checksum()
         {
             return _checksum;
+        }
+
+        /**
+         * Check if this menu item represents an image clipboard item.
+         * Used for speculative pixbuf warm-up on hover.
+         *
+         * @return true if the item is an image
+         */
+        public bool is_image_item()
+        {
+            return _is_image;
         }
 
         /**
