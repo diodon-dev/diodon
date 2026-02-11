@@ -93,7 +93,10 @@ namespace Diodon
             this.monitor = new Monitor(new TimeRange.from_now(),
                 get_items_event_templates());
             this.monitor.events_inserted.connect(() => { on_items_inserted(); } );
-            this.monitor.events_deleted.connect(() => { on_items_deleted(); } );
+            this.monitor.events_deleted.connect(() => {
+                on_items_deleted();
+                purge_orphaned_thumbnails.begin();
+            });
 
             this.log = Zeitgeist.Log.get_default();
 
@@ -463,6 +466,61 @@ namespace Diodon
             ImageCache.get_default().clear();
 
             current_items.remove_all();
+        }
+
+        /**
+         * Remove thumbnail files that no longer have a corresponding
+         * Zeitgeist event.  Called at startup and when Zeitgeist's
+         * events_deleted monitor fires (e.g., auto-expiry, privacy
+         * purge, external deletion via zeitgeist-daemon).
+         *
+         * Queries Zeitgeist for all live image event URIs, extracts
+         * the checksum set, then removes any thumbnail on disk whose
+         * checksum is not in that set.
+         */
+        public async void purge_orphaned_thumbnails(Cancellable? cancellable = null)
+        {
+            try {
+                // Query for all live image events
+                GenericArray<Event> img_templates = new GenericArray<Event>();
+                img_templates.add(new Event.full(
+                    ZG.CREATE_EVENT, ZG.USER_ACTIVITY,
+                    null,
+                    "application://diodon.desktop",
+                    new Subject.full(
+                        CLIPBOARD_URI + "*",
+                        NFO.IMAGE,
+                        NFO.DATA_CONTAINER,
+                        null, null, null, null)));
+
+                ResultSet events = yield log.find_events(
+                    new TimeRange.anytime(),
+                    img_templates,
+                    StorageState.ANY,
+                    1000,  // generous upper bound
+                    ResultType.MOST_RECENT_SUBJECTS,
+                    cancellable);
+
+                // Collect live checksums from URIs ("dav:<checksum>")
+                var live = new GenericSet<string>(str_hash, str_equal);
+                foreach (Event ev in events) {
+                    if (ev.num_subjects() > 0) {
+                        Subject subj = ev.get_subject(0);
+                        string uri = subj.uri;
+                        if (uri != null && uri.has_prefix(CLIPBOARD_URI)) {
+                            live.add(uri.substring(CLIPBOARD_URI.length));
+                        }
+                    }
+                }
+
+                ImageClipboardItem.cleanup_orphaned_thumbnails(live);
+                debug("Orphaned thumbnail purge complete, %u live images",
+                      live.length);
+            } catch (IOError.CANCELLED ioe) {
+                debug("Orphaned thumbnail purge cancelled: %s", ioe.message);
+            } catch (GLib.Error e) {
+                warning("Orphaned thumbnail purge failed: %s", e.message);
+            }
         }
 
         private static void prepare_category_templates(HashTable<int?, Event> templates)

@@ -647,6 +647,42 @@ namespace Diodon
         }
 
         /**
+         * Remove orphaned thumbnails from disk.
+         *
+         * Scans the thumbnails directory and deletes any file whose
+         * checksum is not in the given live set.  Called at daemon
+         * startup and when Zeitgeist fires events_deleted so that
+         * thumbnails belonging to expired or externally-purged events
+         * don't accumulate forever.
+         *
+         * @param live_checksums set of checksums that still have a
+         *        corresponding Zeitgeist event (i.e., are still in history)
+         */
+        public static void cleanup_orphaned_thumbnails(GenericSet<string> live_checksums)
+        {
+            string thumb_dir = Path.build_filename(
+                Utility.get_user_data_dir(), "thumbnails");
+            try {
+                Dir dir = Dir.open(thumb_dir);
+                string? name = null;
+                while ((name = dir.read_name()) != null) {
+                    if (!name.has_suffix(".png")) continue;
+
+                    // Extract checksum from filename: "<checksum>.png"
+                    string checksum = name.substring(0, name.length - 4);
+                    if (!live_checksums.contains(checksum)) {
+                        string path = Path.build_filename(thumb_dir, name);
+                        debug("Removing orphaned thumbnail: %s", name);
+                        FileUtils.unlink(path);
+                        ImageCache.get_default().remove(checksum);
+                    }
+                }
+            } catch (GLib.FileError e) {
+                debug("Could not scan thumbnails dir for orphans: %s", e.message);
+            }
+        }
+
+        /**
          * Create a thumbnail-sized scaled pixbuf (contain-fit).
          * Max 200x150, bilinear interpolation, never upscales.
          */

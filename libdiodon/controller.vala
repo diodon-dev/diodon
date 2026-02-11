@@ -133,6 +133,11 @@ namespace Diodon
             // make sure that recent menu gets rebuild when recent history changes
             yield rebuild_recent_menu();
 
+            // Deferred maintenance: wait 60 s after startup to let the
+            // boot storm settle, then purge orphaned thumbnails at most
+            // once every 24 h.  See schedule_background_maintenance().
+            schedule_background_maintenance();
+
             storage.on_items_deleted.connect(() => { rebuild_recent_menu.begin(); } );
             storage.on_items_inserted.connect(() => { rebuild_recent_menu.begin(); } );
 
@@ -671,6 +676,89 @@ namespace Diodon
             // in some rare circumstances doesn't the recent menu get refreshed
             // when clear is executed; therefore forcing it here as a workaround
             yield rebuild_recent_menu();
+        }
+
+        /* ── Lazy-Janitor maintenance scheduler ─────────────── */
+
+        private const uint  MAINTENANCE_DELAY_S   = 60;       // seconds after boot
+        private const int64 MAINTENANCE_INTERVAL  = 24 * 3600; // 24 h in seconds
+
+        /**
+         * Returns the path to the maintenance stamp file:
+         * ~/.local/share/diodon/maintenance.stamp
+         */
+        private static string get_stamp_path()
+        {
+            return Path.build_filename(
+                Utility.get_user_data_dir(), "maintenance.stamp");
+        }
+
+        /**
+         * Schedule a one-shot, low-priority background maintenance task.
+         *
+         * 1. Wait MAINTENANCE_DELAY_S seconds (60 s) so the boot storm
+         *    has settled and we are not competing for disk I/O.
+         * 2. Check the mtime of the stamp file; if the last run was
+         *    less than 24 h ago, abort.
+         * 3. Spawn a dedicated thread to run the purge so the main
+         *    loop is never blocked.
+         * 4. Touch the stamp file on success to reset the 24 h timer.
+         */
+        private void schedule_background_maintenance()
+        {
+            GLib.Timeout.add_seconds(MAINTENANCE_DELAY_S, () => {
+                debug("Maintenance timer fired – checking stamp");
+
+                string stamp = get_stamp_path();
+                int64  now   = GLib.get_real_time() / 1000000; // µs → s
+
+                // ── 24-hour gate ──────────────────────────────
+                try {
+                    var info = File.new_for_path(stamp)
+                        .query_info(FileAttribute.TIME_MODIFIED,
+                                    FileQueryInfoFlags.NONE);
+                    int64 mtime = (int64) info.get_modification_date_time()
+                                              .to_unix();
+                    if ((now - mtime) < MAINTENANCE_INTERVAL) {
+                        debug("Maintenance stamp is fresh (age %" + int64.FORMAT +
+                              " s < %" + int64.FORMAT + " s), skipping",
+                              now - mtime, MAINTENANCE_INTERVAL);
+                        return Source.REMOVE;
+                    }
+                } catch (GLib.Error e) {
+                    // File missing or unreadable → first run, proceed.
+                    debug("No valid stamp file (%s), proceeding", e.message);
+                }
+
+                // ── Spawn background thread ──────────────────
+                new Thread<void>("maintenance", () => {
+                    debug("Maintenance thread started");
+
+                    // Drive the async purge with a private MainLoop
+                    // so this thread does not block the UI.
+                    var loop = new MainLoop(null, false);
+                    storage.purge_orphaned_thumbnails.begin(null, () => {
+                        loop.quit();
+                    });
+                    loop.run();
+
+                    // Touch the stamp file to reset the 24 h window.
+                    try {
+                        string dir = Path.get_dirname(stamp);
+                        DirUtils.create_with_parents(dir, 0755);
+                        FileUtils.set_contents(stamp,
+                            new DateTime.now_utc().to_string());
+                        debug("Maintenance stamp updated: %s", stamp);
+                    } catch (GLib.Error e) {
+                        warning("Could not update maintenance stamp: %s",
+                                e.message);
+                    }
+
+                    debug("Maintenance thread finished");
+                });
+
+                return Source.REMOVE;   // one-shot timer
+            });
         }
 
         /**
