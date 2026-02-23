@@ -51,13 +51,15 @@ namespace Diodon
                 _checksum = Checksum.compute_for_string(ChecksumType.SHA1, _text);
             }
 
-            // label should not be longer than 50 letters
-            _label = _text;
+            string label_text = _text;
+            if (label_text.length > 200) {
+                label_text = label_text.substring(0, 200);
+            }
+            _label = string.joinv(" ", label_text.split("\n"));
             if (_label.char_count() > 50) {
                 long index_char = _label.index_of_nth_char(50);
                 _label = _label.substring(0, index_char) + "...";
             }
-            _label = _label.replace("\n", " ");
         }
 
         /**
