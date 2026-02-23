@@ -48,12 +48,20 @@ namespace Diodon
             _date_copied = date_copied;
             _checksum = Checksum.compute_for_string(ChecksumType.SHA1, _text);
 
-            // label should not be longer than 50 letters
-            _label = _text;
-            if (_label.char_count() > 50) {
-                _label = _label.substring(0, 50) + "...";
+            // Truncate early to avoid processing large strings.
+            // Vala's string.replace() uses g_regex_replace_literal() internally
+            // which runs the entire string through PCRE2. For large clipboard
+            // items (e.g. 74KB of text), this causes excessive CPU usage.
+            // 200 bytes is enough to contain 50 UTF-8 chars (max 4 bytes each).
+            string label_text = _text;
+            if (label_text.length > 200) {
+                label_text = label_text.substring(0, 200);
             }
-            _label = _label.replace("\n", " ");
+            _label = string.joinv(" ", label_text.split("\n"));
+            if (_label.char_count() > 50) {
+                long index_char = _label.index_of_nth_char(50);
+                _label = _label.substring(0, index_char) + "...";
+            }
         }
 
         /**
