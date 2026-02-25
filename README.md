@@ -18,7 +18,7 @@ To install Diodon on other systems download a release tarball from [launchpad](h
 Diodon uses the [Meson](https://mesonbuild.com/) build system.
 
     git clone https://github.com/diodon-dev/diodon.git && cd diodon
-    meson builddir && cd builddir
+    meson setup builddir && cd builddir
     ninja
     ninja test
     sudo ninja install
