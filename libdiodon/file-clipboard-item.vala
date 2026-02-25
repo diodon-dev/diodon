@@ -36,6 +36,8 @@ namespace Diodon
          */
         private string _paths;
         private string? _origin;
+        private string _label;
+        private string _checksum;
         private ClipboardType _clipboard_type;
         private DateTime _date_copied;
 
@@ -52,6 +54,7 @@ namespace Diodon
             _paths = data;
             _origin = origin;
             _date_copied = date_copied;
+            _checksum = Checksum.compute_for_string(ChecksumType.SHA1, _paths);
 
             // check if all paths are available
             string[] paths = convert_to_paths(_paths);
@@ -59,6 +62,21 @@ namespace Diodon
                 File file = File.new_for_path(path);
                 if(!file.query_exists()) {
                     throw new FileError.NOENT("No such file or directory " + path);
+                }
+            }
+
+            // label should not be longer than 50
+            string home = Environment.get_home_dir();
+            _label = "";
+            foreach(string p in paths) {
+                if(_label.length > 0) {
+                    _label += " ";
+                }
+                _label += p.replace(home, "~");
+
+                if (_label.char_count() > 50) {
+                    _label = _label.substring(0, 50) + "...";
+                    break;
                 }
             }
         }
@@ -100,20 +118,7 @@ namespace Diodon
 	     */
         public string get_label()
         {
-            string home = Environment.get_home_dir();
-
-            // label should not be longer than 50 letters
-            string label = _paths.replace("\n", " ");
-
-            // replacing home dir with common known tilde
-            label = label.replace(home, "~");
-
-            if (label.char_count() > 50) {
-                long index_char = label.index_of_nth_char(50);
-                label = label.substring(0, index_char) + "...";
-            }
-
-            return label;
+            return _label;
         }
 
         /**
@@ -196,7 +201,7 @@ namespace Diodon
 	     */
         public string get_checksum()
         {
-            return Checksum.compute_for_string(ChecksumType.SHA1, _paths);
+            return _checksum;
         }
 
         /**

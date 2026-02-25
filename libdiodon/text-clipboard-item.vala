@@ -28,6 +28,8 @@ namespace Diodon
     {
         private string _text;
         private string? _origin;
+        private string _label;
+        private string _checksum;
         private ClipboardType _clipboard_type;
         private DateTime _date_copied;
 
@@ -44,6 +46,14 @@ namespace Diodon
             _text = data;
             _origin = origin;
             _date_copied = date_copied;
+            _checksum = Checksum.compute_for_string(ChecksumType.SHA1, _text);
+
+            // label should not be longer than 50 letters
+            _label = _text;
+            if (_label.char_count() > 50) {
+                _label = _label.substring(0, 50) + "...";
+            }
+            _label = _label.replace("\n", " ");
         }
 
         /**
@@ -83,14 +93,7 @@ namespace Diodon
 	     */
         public string get_label()
         {
-            // label should not be longer than 50 letters
-            string label = _text.replace("\n", " ");
-            if (label.char_count() > 50) {
-                long index_char = label.index_of_nth_char(50);
-                label = label.substring(0, index_char) + "...";
-            }
-
-            return label;
+            return _label;
         }
 
         /**
@@ -138,7 +141,7 @@ namespace Diodon
 	     */
         public string get_checksum()
         {
-            return Checksum.compute_for_string(ChecksumType.SHA1, _text);
+            return _checksum;
         }
 
         /**
