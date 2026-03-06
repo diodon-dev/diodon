@@ -75,7 +75,8 @@ namespace Diodon
                 _label += p.replace(home, "~");
 
                 if (_label.char_count() > 50) {
-                    _label = _label.substring(0, 50) + "...";
+                    long index_char = _label.index_of_nth_char(50);
+                    _label = _label.substring(0, index_char) + "...";
                     break;
                 }
             }
