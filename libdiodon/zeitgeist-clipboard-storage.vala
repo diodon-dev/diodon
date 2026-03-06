@@ -532,21 +532,22 @@ namespace Diodon
             string interpretation = subject.interpretation;
             IClipboardItem item = null;
             string text = subject.text;
+            string checksum = subject.uri.split(":")[1];
             string? origin = subject.origin;
             unowned ByteArray payload = event.payload;
             DateTime date_copied = new DateTime.from_unix_utc(event.timestamp);
 
             try {
                 if(strcmp(NFO.PLAIN_TEXT_DOCUMENT, interpretation) == 0) {
-                   item = new TextClipboardItem(ClipboardType.NONE, text, origin, date_copied);
+                   item = new TextClipboardItem(ClipboardType.NONE, text, origin, date_copied, checksum);
                 }
 
                 else if(strcmp(NFO.FILE_DATA_OBJECT, interpretation) == 0) {
-                    item = new FileClipboardItem(ClipboardType.NONE, text, origin, date_copied);
+                    item = new FileClipboardItem(ClipboardType.NONE, text, origin, date_copied, checksum);
                 }
 
                 else if(strcmp(NFO.IMAGE, interpretation) == 0) {
-                    item = new ImageClipboardItem.with_payload(ClipboardType.NONE, payload, origin, date_copied);
+                    item = new ImageClipboardItem.with_payload(ClipboardType.NONE, text, payload, origin, date_copied, checksum);
                 }
 
                 else {
