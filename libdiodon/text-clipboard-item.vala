@@ -40,13 +40,16 @@ namespace Diodon
          * @param data simple text
          * @param origin origin of clipboard item as application path
          */
-        public TextClipboardItem(ClipboardType clipboard_type, string data, string? origin, DateTime date_copied)
+        public TextClipboardItem(ClipboardType clipboard_type, string data, string? origin, DateTime date_copied, string? checksum = null)
         {
             _clipboard_type = clipboard_type;
             _text = data;
             _origin = origin;
             _date_copied = date_copied;
-            _checksum = Checksum.compute_for_string(ChecksumType.SHA1, _text);
+            _checksum = checksum;
+            if(_checksum == null) {
+                _checksum = Checksum.compute_for_string(ChecksumType.SHA1, _text);
+            }
 
             // label should not be longer than 50 letters
             _label = _text;

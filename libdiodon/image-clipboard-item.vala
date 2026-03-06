@@ -45,27 +45,37 @@ namespace Diodon
             _clipboard_type = clipboard_type;
             _origin = origin;
             _date_copied = date_copied;
-            extract_pixbuf_info(pixbuf);
+
+            // create checksum of picture
+            Checksum checksum = new Checksum(ChecksumType.SHA1);
+            checksum.update(pixbuf.get_pixels(), pixbuf.height * pixbuf.rowstride);
+            _checksum = checksum.get_string().dup();
+
+            // label in format [{width}x{height}]
+            _label ="[%dx%d]".printf(pixbuf.width, pixbuf.height);
+            _pixbuf = pixbuf;
         }
 
         /**
          * Create image clipboard item by given payload.
          *
          * @param clipboard_type clipboard type item is coming from
+         * @param clipboard_type label how it will be shown to user
          * @param pixbuf image from clipboard
          * @param origin origin of clipboard item as application path
          */
-        public ImageClipboardItem.with_payload(ClipboardType clipboard_type, ByteArray payload, string? origin, DateTime date_copied) throws GLib.Error
+        public ImageClipboardItem.with_payload(ClipboardType clipboard_type, string label, ByteArray payload, string? origin, DateTime date_copied, string checksum) throws GLib.Error
         {
             _clipboard_type = clipboard_type;
             _origin = origin;
             _date_copied = date_copied;
+            _label = label;
+            _checksum = checksum;
 
             Gdk.PixbufLoader loader = new Gdk.PixbufLoader();
             loader.write(payload.data);
             loader.close();
-            Gdk.Pixbuf pixbuf = loader.get_pixbuf();
-            extract_pixbuf_info(pixbuf);
+            _pixbuf = loader.get_pixbuf();
         }
 
         /**
@@ -199,24 +209,6 @@ namespace Diodon
         {
             // use checksum to create hash code
             return str_hash(_checksum);
-        }
-
-        /**
-         * Extracts all pixbuf information which are needed to show image
-         * in the view without having the pixbuf in the memory.
-         *
-         * @param pixbuf pixbuf to extract info from
-         */
-        private void extract_pixbuf_info(Gdk.Pixbuf pixbuf)
-        {
-            // create checksum of picture
-            Checksum checksum = new Checksum(ChecksumType.SHA1);
-            checksum.update(pixbuf.get_pixels(), pixbuf.height * pixbuf.rowstride);
-            _checksum = checksum.get_string().dup();
-
-            // label in format [{width}x{height}]
-            _label ="[%dx%d]".printf(pixbuf.width, pixbuf.height);
-            _pixbuf = pixbuf;
         }
 
         /**

@@ -39,10 +39,13 @@ namespace Diodon
             ImageClipboardItem item1 = new ImageClipboardItem.with_image(ClipboardType.CLIPBOARD, pixbuf, null, new DateTime.now_utc());
             string checksum1 = item1.get_checksum();
 
-            ImageClipboardItem item2 = new ImageClipboardItem.with_payload(ClipboardType.CLIPBOARD, item1.get_payload(), null, new DateTime.now_utc());
+            ImageClipboardItem item2 = new ImageClipboardItem.with_payload(
+                ClipboardType.CLIPBOARD, "[64x64]", item1.get_payload(), null, new DateTime.now_utc(), item1.get_checksum()
+            );
             string checksum2 = item2.get_checksum();
 
             FsoFramework.Test.Assert.are_equal_string(checksum1, checksum2, "Images are not the same");
+            FsoFramework.Test.Assert.are_equal_string(item1.get_label(), item2.get_label(), "Labels are not the same");
 	    }
 	}
 }

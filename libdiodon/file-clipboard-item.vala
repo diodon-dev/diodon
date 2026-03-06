@@ -48,13 +48,16 @@ namespace Diodon
          * @param data paths separated with \n
          * @param origin origin of clipboard item as application path
          */
-        public FileClipboardItem(ClipboardType clipboard_type, string data, string? origin, DateTime date_copied) throws FileError
+        public FileClipboardItem(ClipboardType clipboard_type, string data, string? origin, DateTime date_copied, string? checksum = null) throws FileError
         {
             _clipboard_type = clipboard_type;
             _paths = data;
             _origin = origin;
             _date_copied = date_copied;
-            _checksum = Checksum.compute_for_string(ChecksumType.SHA1, _paths);
+            _checksum = checksum;
+            if(_checksum == null) {
+                _checksum = Checksum.compute_for_string(ChecksumType.SHA1, _paths);
+            }
 
             // check if all paths are available
             string[] paths = convert_to_paths(_paths);
