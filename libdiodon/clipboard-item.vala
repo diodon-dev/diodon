@@ -67,6 +67,13 @@ namespace Diodon
         public abstract Gtk.Image? get_image();
 
         /**
+         * preview pixbuf for tooltip display
+         *
+         * @return scaled preview pixbuf or null if not available
+         */
+        public abstract Gdk.Pixbuf? get_preview_pixbuf();
+
+        /**
          * icon to represent type of clipboard item
          *
          * @return icon of clipboard type

@@ -89,6 +89,7 @@ namespace Diodon
             show_all();
 
             this.key_press_event.connect(on_key_pressed);
+            this.hide.connect(() => { ClipboardMenuItem.hide_preview(); });
         }
 
         /**
