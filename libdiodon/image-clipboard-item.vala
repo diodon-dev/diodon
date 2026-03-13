@@ -29,6 +29,7 @@ namespace Diodon
         private ClipboardType _clipboard_type;
         private string _checksum; // checksum to identify pic content
         private Gdk.Pixbuf _pixbuf;
+        private ByteArray? _raw_payload; // kept for lazy pixbuf loading
         private string _label;
         private string? _origin;
         private DateTime _date_copied;
@@ -72,10 +73,8 @@ namespace Diodon
             _label = label;
             _checksum = checksum;
 
-            Gdk.PixbufLoader loader = new Gdk.PixbufLoader();
-            loader.write(payload.data);
-            loader.close();
-            _pixbuf = loader.get_pixbuf();
+            _raw_payload = payload;
+            _pixbuf = null;
         }
 
         /**
@@ -133,7 +132,7 @@ namespace Diodon
         public Icon get_icon()
         {
             try {
-                File file = save_tmp_pixbuf(_pixbuf);
+                File file = save_tmp_pixbuf(ensure_pixbuf());
                 FileIcon icon = new FileIcon(file);
                 return icon;
             } catch(Error e) {
@@ -156,7 +155,7 @@ namespace Diodon
 	     */
         public Gtk.Image? get_image()
         {
-            Gdk.Pixbuf pixbuf_preview = create_scaled_pixbuf(_pixbuf);
+            Gdk.Pixbuf pixbuf_preview = create_scaled_pixbuf(ensure_pixbuf());
             return new Gtk.Image.from_pixbuf(pixbuf_preview);
         }
 
@@ -165,8 +164,11 @@ namespace Diodon
 	     */
         public ByteArray? get_payload() throws GLib.Error
         {
+            if (_raw_payload != null) {
+                return _raw_payload;
+            }
             uint8[] buffer;
-            _pixbuf.save_to_buffer(out buffer, "png");
+            ensure_pixbuf().save_to_buffer(out buffer, "png");
             return new ByteArray.take(buffer);
         }
 
@@ -183,7 +185,7 @@ namespace Diodon
 	     */
         public void to_clipboard(Gtk.Clipboard clipboard)
         {
-             clipboard.set_image(_pixbuf);
+             clipboard.set_image(ensure_pixbuf());
              clipboard.store();
         }
 
@@ -209,6 +211,23 @@ namespace Diodon
         {
             // use checksum to create hash code
             return str_hash(_checksum);
+        }
+
+        private Gdk.Pixbuf ensure_pixbuf()
+        {
+            if (_pixbuf != null) {
+                return _pixbuf;
+            }
+            try {
+                Gdk.PixbufLoader loader = new Gdk.PixbufLoader();
+                loader.write(_raw_payload.data);
+                loader.close();
+                _pixbuf = loader.get_pixbuf();
+            } catch (Error e) {
+                warning("Failed to decode image payload: %s", e.message);
+                _pixbuf = new Gdk.Pixbuf(Gdk.Colorspace.RGB, false, 8, 1, 1);
+            }
+            return _pixbuf;
         }
 
         /**
