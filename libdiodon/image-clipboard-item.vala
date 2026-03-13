@@ -153,6 +153,14 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public Gdk.Pixbuf? get_preview_pixbuf()
+        {
+            return create_preview_pixbuf(_pixbuf);
+        }
+
+        /**
+	     * {@inheritDoc}
+	     */
         public ByteArray? get_payload() throws GLib.Error
         {
             uint8[] buffer;
@@ -224,6 +232,20 @@ namespace Diodon
          *
          * @param pixbuf scaled pixbuf
          */
+        public static Gdk.Pixbuf create_preview_pixbuf(Gdk.Pixbuf pixbuf)
+        {
+            int max_size = 500;
+            int width = pixbuf.width;
+            int height = pixbuf.height;
+            if (width <= max_size && height <= max_size) {
+                return pixbuf;
+            }
+            double scale = double.min((double) max_size / width, (double) max_size / height);
+            int new_width = (int) (width * scale);
+            int new_height = (int) (height * scale);
+            return pixbuf.scale_simple(new_width, new_height, Gdk.InterpType.BILINEAR);
+        }
+
         private static Gdk.Pixbuf create_scaled_pixbuf(Gdk.Pixbuf pixbuf)
         {
             // get menu icon size

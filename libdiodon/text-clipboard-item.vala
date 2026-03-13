@@ -120,6 +120,14 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public Gdk.Pixbuf? get_preview_pixbuf()
+        {
+            return null;
+        }
+
+        /**
+	     * {@inheritDoc}
+	     */
         public Icon get_icon()
         {
             return ContentType.get_icon(get_mime_type());

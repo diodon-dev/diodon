@@ -156,6 +156,29 @@ namespace Diodon
         /**
 	     * {@inheritDoc}
 	     */
+        public Gdk.Pixbuf? get_preview_pixbuf()
+        {
+            string[] paths = convert_to_paths(_paths);
+            if (paths.length == 0) {
+                return null;
+            }
+            string path = paths[0];
+            string mime_type = get_mime_type();
+            if (!mime_type.has_prefix("image/")) {
+                return null;
+            }
+            try {
+                Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.from_file(path);
+                return ImageClipboardItem.create_preview_pixbuf(pixbuf);
+            } catch (Error e) {
+                warning("Could not load preview for file %s: %s", path, e.message);
+                return null;
+            }
+        }
+
+        /**
+	     * {@inheritDoc}
+	     */
         public Icon get_icon()
         {
             const string FILE_ATTRS =
