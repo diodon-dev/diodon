@@ -28,16 +28,19 @@ namespace Diodon
     {
         private Controller controller;
         private unowned List<Gtk.Widget> static_menu_items;
+        private int _saved_menu_x = -1;
+        private int _saved_menu_y = -1;
 
         /**
          * Create clipboard menu
          *
          * @param controller reference to controller
+         * @param pinned_items pinned clipboard items shown at the top
          * @param items clipboard items to be shown
          * @param menu_items additional menu items to be added after separator
          * @param privacy_mode check whether privacy mode is enabled
          */
-        public ClipboardMenu(Controller controller, List<IClipboardItem> items, List<Gtk.MenuItem>? static_menu_items, bool privace_mode, string? error = null)
+        public ClipboardMenu(Controller controller, List<IClipboardItem> pinned_items, List<IClipboardItem> items, List<Gtk.MenuItem>? static_menu_items, bool privace_mode, string? error = null)
         {
             this.controller = controller;
             this.static_menu_items = static_menu_items;
@@ -46,7 +49,7 @@ namespace Diodon
                 Gtk.MenuItem error_item = new Gtk.MenuItem.with_label(wrap_label(error));
                 error_item.set_sensitive(false);
                 append(error_item);
-            } else if(items.length() <= 0) {
+            } else if(pinned_items.length() <= 0 && items.length() <= 0) {
                 Gtk.MenuItem empty_item = new Gtk.MenuItem.with_label(_("<Empty>"));
                 empty_item.set_sensitive(false);
                 append(empty_item);
@@ -60,9 +63,17 @@ namespace Diodon
                 append(privacy_item);
             }
 
+            foreach(IClipboardItem item in pinned_items) {
+                append_clipboard_item(item, true);
+            }
+
+            if (pinned_items.length() > 0 && items.length() > 0) {
+                Gtk.SeparatorMenuItem pin_sep = new Gtk.SeparatorMenuItem();
+                append(pin_sep);
+            }
 
             foreach(IClipboardItem item in items) {
-                append_clipboard_item(item);
+                append_clipboard_item(item, false);
             }
 
             Gtk.SeparatorMenuItem sep_item = new Gtk.SeparatorMenuItem();
@@ -90,19 +101,65 @@ namespace Diodon
 
             this.key_press_event.connect(on_key_pressed);
             this.hide.connect(() => { ClipboardMenuItem.hide_preview(); });
+            this.map.connect(() => {
+                if (get_window() != null) {
+                    int x, y;
+                    get_window().get_origin(out x, out y);
+                    _saved_menu_x = x;
+                    _saved_menu_y = y;
+                }
+            });
         }
 
         /**
          * Append given clipboard item to menu.
          *
-         * @param entry entry to be added
+         * @param item clipboard item to add
+         * @param pinned whether the item is pinned
          */
-        public void append_clipboard_item(IClipboardItem item)
+        public void append_clipboard_item(IClipboardItem item, bool pinned = false)
         {
             ClipboardMenuItem menu_item = new ClipboardMenuItem(item);
             menu_item.activate.connect(on_clicked_item);
+            menu_item.button_press_event.connect((event) => {
+                if (event.button == 3) {
+                    show_pin_context_menu(menu_item, pinned, event);
+                    return true;
+                }
+                return false;
+            });
             menu_item.show();
             append(menu_item);
+        }
+
+        private void show_pin_context_menu(ClipboardMenuItem menu_item, bool pinned, Gdk.EventButton event)
+        {
+            Gtk.Menu ctx = new Gtk.Menu();
+            string label = pinned ? _("Unpin") : _("Pin");
+            Gtk.MenuItem pin_item = new Gtk.MenuItem.with_label(label);
+            int reopen_x = _saved_menu_x;
+            int reopen_y = _saved_menu_y;
+            pin_item.activate.connect(() => {
+                controller.toggle_pin_item.begin(menu_item.get_item_checksum(), false);
+            });
+            ctx.append(pin_item);
+            ctx.show_all();
+            ctx.deactivate.connect(() => {
+                controller.rebuild_recent_menu.begin((obj, res) => {
+                    controller.rebuild_recent_menu.end(res);
+                    if (reopen_x >= 0 && reopen_y >= 0) {
+                        Gtk.Menu new_menu = controller.get_recent_menu() as Gtk.Menu;
+                        if (new_menu != null) {
+                            new_menu.popup(null, null, (menu, ref x, ref y, out push_in) => {
+                                x = reopen_x;
+                                y = reopen_y;
+                                push_in = false;
+                            }, 0, Gtk.get_current_event_time());
+                        }
+                    }
+                });
+            });
+            ctx.popup_at_pointer(event);
         }
 
         public void show_menu()
@@ -182,12 +239,14 @@ namespace Diodon
         }
 
         /**
-         * Allow moving of cursor with vi-style j and k keys
+         * Allow moving of cursor with vi-style j and k keys,
+         * and p to toggle pin on selected item.
          */
         private bool on_key_pressed(Gdk.EventKey event)
         {
             uint down_keyval = Gdk.keyval_from_name("j");
             uint up_keyval = Gdk.keyval_from_name("k");
+            uint pin_keyval = Gdk.keyval_from_name("p");
 
             uint pressed_keyval = Gdk.keyval_to_lower(event.keyval);
             if(pressed_keyval == down_keyval) {
@@ -203,6 +262,14 @@ namespace Diodon
                     select_first(true);
                 }
                 move_selected(-1);
+                return true;
+            }
+            if(pressed_keyval == pin_keyval) {
+                Gtk.MenuItem? selected = get_selected_item() as Gtk.MenuItem;
+                if (selected != null && selected is ClipboardMenuItem) {
+                    ClipboardMenuItem clip_item = (ClipboardMenuItem) selected;
+                    controller.toggle_pin_item.begin(clip_item.get_item_checksum());
+                }
                 return true;
             }
 

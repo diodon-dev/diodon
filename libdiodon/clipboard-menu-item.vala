@@ -74,6 +74,20 @@ namespace Diodon
                 return;
             }
             debug("on_item_select: preview %dx%d", preview.width, preview.height);
+            show_preview_pixbuf(preview);
+        }
+
+        public static void show_preview_for(IClipboardItem item)
+        {
+            Gdk.Pixbuf? preview = item.get_preview_pixbuf();
+            if (preview == null) {
+                return;
+            }
+            show_preview_pixbuf(preview);
+        }
+
+        private static void show_preview_pixbuf(Gdk.Pixbuf preview)
+        {
             if (_preview_window == null) {
                 _preview_window = new Gtk.Window(Gtk.WindowType.POPUP);
                 _preview_window.set_type_hint(Gdk.WindowTypeHint.TOOLTIP);
