@@ -66,6 +66,8 @@ namespace Diodon
          */
         public signal void on_recent_menu_changed(Gtk.Menu recent_menu);
 
+        public signal void on_pinned_items_changed();
+
         public delegate void ActionCallback(string[] args);
 
         public Controller()
@@ -531,11 +533,30 @@ namespace Diodon
                 items = new List<IClipboardItem>();
             }
 
+            List<IClipboardItem> pinned = yield get_pinned_items();
+
+            // remove pinned items from the regular list to avoid duplicates
+            string[] pinned_checksums = settings_clipboard.get_strv("pinned-items");
+            List<IClipboardItem> filtered_items = new List<IClipboardItem>();
+            foreach (IClipboardItem item in items) {
+                bool is_pinned = false;
+                foreach (string pc in pinned_checksums) {
+                    if (item.get_checksum() == pc) {
+                        is_pinned = true;
+                        break;
+                    }
+                }
+                if (!is_pinned) {
+                    filtered_items.append(item);
+                }
+            }
+
             if(recent_menu != null) {
                 recent_menu.destroy_menu();
             }
 
-            recent_menu = new ClipboardMenu(this, items, static_recent_menu_items,
+            recent_menu = new ClipboardMenu(this, pinned, filtered_items,
+                                            static_recent_menu_items,
                                             storage.is_privacy_mode_enabled(), error);
             on_recent_menu_changed(recent_menu);
         }
@@ -643,7 +664,73 @@ namespace Diodon
          */
         public void show_preferences()
         {
-            preferences_view.show(configuration);
+            preferences_view.show(configuration, this);
+        }
+
+        public void set_pinned_checksums(string[] checksums)
+        {
+            settings_clipboard.set_strv("pinned-items", checksums);
+            rebuild_recent_menu.begin();
+        }
+
+        public bool is_item_pinned(string checksum)
+        {
+            string[] pinned = settings_clipboard.get_strv("pinned-items");
+            foreach (string c in pinned) {
+                if (c == checksum) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public async void toggle_pin_item(string checksum, bool rebuild = true)
+        {
+            string[] pinned = settings_clipboard.get_strv("pinned-items");
+            string[] new_pinned = {};
+            bool found = false;
+            foreach (string c in pinned) {
+                if (c == checksum) {
+                    found = true;
+                }
+                else {
+                    new_pinned += c;
+                }
+            }
+            if (!found) {
+                new_pinned += checksum;
+            }
+            settings_clipboard.set_strv("pinned-items", new_pinned);
+            on_pinned_items_changed();
+            if (rebuild) {
+                yield rebuild_recent_menu();
+            }
+        }
+
+        public async void add_and_pin_text(string text)
+        {
+            IClipboardItem item = new TextClipboardItem(ClipboardType.CLIPBOARD, text, null, new DateTime.now_utc());
+            yield storage.add_item(item);
+            string checksum = item.get_checksum();
+            if (!is_item_pinned(checksum)) {
+                yield toggle_pin_item(checksum);
+            }
+            else {
+                yield rebuild_recent_menu();
+            }
+        }
+
+        public async List<IClipboardItem> get_pinned_items()
+        {
+            string[] pinned = settings_clipboard.get_strv("pinned-items");
+            List<IClipboardItem> items = new List<IClipboardItem>();
+            foreach (string checksum in pinned) {
+                IClipboardItem? item = yield storage.get_item_by_checksum(checksum);
+                if (item != null) {
+                    items.append(item);
+                }
+            }
+            return items;
         }
 
         /**
@@ -651,12 +738,13 @@ namespace Diodon
          */
         public async void clear()
         {
+            List<IClipboardItem> pinned = yield get_pinned_items();
             yield storage.clear();
             on_clear();
-
-            // Bug #1383013:
-            // in some rare circumstances doesn't the recent menu get refreshed
-            // when clear is executed; therefore forcing it here as a workaround
+            foreach (IClipboardItem item in pinned) {
+                yield storage.add_item(item);
+            }
+            // Bug #1383013: force menu refresh as workaround
             yield rebuild_recent_menu();
         }
 
