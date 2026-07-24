@@ -2,6 +2,14 @@
 
 Aiming to be the best integrated clipboard manager for the Unity desktop.
 
+⚠️  **Low Maintenance Mode**: This project is in low maintenance mode and only following issues will be addressed:
+
+ * packaging issues, so Diodon will remain in the Debian and Ubuntu repositories
+ * Updating of translations
+ * Addressing of security issues
+
+For more details read this [blog post](https://esite.ch/2026/07/a-little-bit-about-diodon-and-its-future/).
+
 ## Installing
 
 For Ubuntu based distributes there is an official [stable PPA](https://launchpad.net/~diodon-team/+archive/stable).
